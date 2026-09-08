@@ -8,10 +8,19 @@
 *
 * CURRENT NORMAL RULES
 * - Refreshed 100mm Toughened prices are the base selling-price anchors.
-* - Laminated = equivalent Toughened price +5%.
-* - 125mm border = equivalent 100mm price +5%.
-* - 150mm border = 125mm price +7% further
-* (100mm × 1.05 × 1.07 = ×1.1235).
+* - Pricing size band is determined from the 100mm-border REFERENCE external size:
+* reference external width = internal width + 200mm
+* reference external length = internal length + 200mm
+* - If reference external size is up to and including 1200 x 2200mm:
+* Laminated = equivalent Toughened price +15%.
+* 125mm border = equivalent 100mm price +12%.
+* 150mm border = 125mm price +8% further
+* (100mm x 1.12 x 1.08 = x1.2096).
+* - If reference external size is above 1200 x 2200mm in either dimension:
+* Laminated = equivalent Toughened price +8%.
+* 125mm border = equivalent 100mm price +8%.
+* 150mm border = 125mm price +5% further
+* (100mm x 1.08 x 1.05 = x1.134).
 * - Custom calculator = interpolated configured price +7%.
 * - Retail prices round to nearest £5.
 *
@@ -29,7 +38,7 @@
 * 4 Blue DG, 5 Blue TG,
 * 6 Satin DG, 7 Satin TG.
 *
-* Public PRICE_MATRIX still exposes the historic 16-column layout:
+* Public PRICE_MATRIX exposes the historic 16-column layout:
 * 0 Clear Toughened DG 1 Clear Toughened TG
 * 2 Clear Laminated DG 3 Clear Laminated TG
 * 4 Grey Toughened DG 5 Grey Toughened TG
@@ -55,7 +64,7 @@ globalScope.FactoryRooflightsPricingNormal = api;
 
 const STRATEGY_ID = "normal";
 const STRATEGY_LABEL = "Normal";
-const STRATEGY_VERSION = "2026-09-08-3";
+const STRATEGY_VERSION = "2026-09-08-4";
 const PRICE_UNAVAILABLE = "PRICE_UNAVAILABLE";
 
 const NORMAL_OVER_CHEAP_PROFIT_MULTIPLIER = 1.30;
@@ -73,15 +82,40 @@ toughened: 1.00,
 laminated: 1.00
 });
 
+/*
+* Backwards-compatible public shape:
+* - .laminated represents the <=1200x2200 reference-external band.
+* - .laminatedAboveReference is used above that band.
+*/
 const TYPE_PRICE_MULTIPLIERS = Object.freeze({
 toughened: 1.00,
-laminated: 1.05
+laminated: 1.15,
+laminatedAboveReference: 1.08
 });
 
+/*
+* Backwards-compatible public shape:
+* top-level 100/125/150 represent the <=1200x2200 band.
+*/
 const BORDER_PRICE_MULTIPLIERS = Object.freeze({
 "100": 1.00,
-"125": 1.05,
-"150": 1.05 * 1.07
+"125": 1.12,
+"150": 1.12 * 1.08,
+
+aboveReference: Object.freeze({
+"100": 1.00,
+"125": 1.08,
+"150": 1.08 * 1.05
+})
+});
+
+const PRICE_SIZE_BAND_CONFIG = Object.freeze({
+referenceBorder: 100,
+externalAdditionPerDimension: 200,
+maxExternalWidth: 1200,
+maxExternalLength: 2200,
+withinReferenceId: "within-reference",
+aboveReferenceId: "above-reference"
 });
 
 const PROVISIONAL_RATE_POLICY = Object.freeze({
@@ -107,77 +141,234 @@ customPriceMultiplier: 1.07
 
 const VARIANT_INDEX = Object.freeze({
 clear: Object.freeze({
-toughened: Object.freeze({ double: 0, triple: 1 }),
-laminated: Object.freeze({ double: 2, triple: 3 })
+toughened: Object.freeze({
+double: 0,
+triple: 1
 }),
+laminated: Object.freeze({
+double: 2,
+triple: 3
+})
+}),
+
 grey: Object.freeze({
-toughened: Object.freeze({ double: 4, triple: 5 }),
-laminated: Object.freeze({ double: 6, triple: 7 })
+toughened: Object.freeze({
+double: 4,
+triple: 5
 }),
+laminated: Object.freeze({
+double: 6,
+triple: 7
+})
+}),
+
 blue: Object.freeze({
-toughened: Object.freeze({ double: 8, triple: 9 }),
-laminated: Object.freeze({ double: 10, triple: 11 })
+toughened: Object.freeze({
+double: 8,
+triple: 9
 }),
+laminated: Object.freeze({
+double: 10,
+triple: 11
+})
+}),
+
 satin: Object.freeze({
-toughened: Object.freeze({ double: 12, triple: 13 }),
-laminated: Object.freeze({ double: 14, triple: 15 })
+toughened: Object.freeze({
+double: 12,
+triple: 13
+}),
+laminated: Object.freeze({
+double: 14,
+triple: 15
+})
 })
 });
 
 const TOUGHENED_BASE_100 = Object.freeze({
-"300x800": Object.freeze([180,220,215,255,230,270,210,255]),
-"300x1000": Object.freeze([220,250,260,290,275,305,250,285]),
-"300x1200": Object.freeze([245,285,285,330,300,345,275,325]),
-"300x1500": Object.freeze([280,340,330,390,350,410,325,385]),
+"300x800": Object.freeze([
+180, 220, 215, 255, 230, 270, 210, 255
+]),
 
-"400x800": Object.freeze([190,235,225,275,240,290,220,265]),
-"400x1000": Object.freeze([240,280,280,325,300,345,275,320]),
-"400x1200": Object.freeze([265,315,310,365,330,385,300,360]),
-"400x1500": Object.freeze([355,395,410,455,435,485,405,445]),
-"400x1800": Object.freeze([410,465,470,530,495,560,465,520]),
+"300x1000": Object.freeze([
+220, 250, 260, 290, 275, 305, 250, 285
+]),
 
-"500x800": Object.freeze([230,260,270,305,285,320,260,300]),
-"500x1000": Object.freeze([250,290,295,340,315,360,290,335]),
-"500x1200": Object.freeze([280,355,330,410,355,430,325,400]),
-"500x1500": Object.freeze([345,425,405,490,435,520,400,480]),
-"500x2000": Object.freeze([425,555,500,640,535,675,490,630]),
-"500x2500": Object.freeze([530,600,640,690,695,735,655,680]),
+"300x1200": Object.freeze([
+245, 285, 285, 330, 300, 345, 275, 325
+]),
 
-"600x600": Object.freeze([220,255,260,295,275,310,250,285]),
-"600x900": Object.freeze([255,285,305,330,325,355,300,325]),
-"600x1200": Object.freeze([350,465,405,520,435,550,400,515]),
-"600x1500": Object.freeze([420,515,485,580,515,615,475,575]),
-"600x1800": Object.freeze([460,570,535,650,575,695,530,640]),
-"600x2000": Object.freeze([495,610,605,705,660,745,615,695]),
-"600x2500": Object.freeze([590,670,725,775,785,825,740,760]),
+"300x1500": Object.freeze([
+280, 340, 330, 390, 350, 410, 325, 385
+]),
 
-"800x800": Object.freeze([290,320,340,370,365,395,335,365]),
-"800x1000": Object.freeze([335,385,390,440,420,470,385,435]),
-"800x1200": Object.freeze([360,420,425,485,460,520,420,480]),
-"800x1500": Object.freeze([460,520,560,600,615,640,575,590]),
-"800x1800": Object.freeze([530,595,655,690,710,740,670,675]),
-"800x2000": Object.freeze([570,665,700,770,765,820,715,760]),
-"800x2500": Object.freeze([705,825,865,945,940,1010,880,930]),
+"400x800": Object.freeze([
+190, 235, 225, 275, 240, 290, 220, 265
+]),
 
-"1000x1000": Object.freeze([350,405,420,475,450,515,410,470]),
-"1000x1200": Object.freeze([440,505,520,585,560,620,510,575]),
-"1000x1500": Object.freeze([535,625,655,720,715,765,670,710]),
-"1000x1800": Object.freeze([590,670,730,780,800,835,745,770]),
-"1000x2000": Object.freeze([615,705,755,815,835,875,780,805]),
-"1000x2500": Object.freeze([775,960,990,1180,1105,1290,1020,1205]),
-"1000x3000": Object.freeze([980,1285,1180,1480,1285,1580,1210,1495]),
+"400x1000": Object.freeze([
+240, 280, 280, 325, 300, 345, 275, 320
+]),
 
-"1200x1200": Object.freeze([480,565,605,665,660,710,615,650]),
-"1200x1500": Object.freeze([590,705,725,815,800,870,745,805]),
-"1200x1800": Object.freeze([695,815,855,945,935,1005,870,930]),
-"1200x2000": Object.freeze([775,915,985,1075,1090,1165,1015,1060]),
-"1200x2500": Object.freeze([970,1175,1215,1435,1350,1570,1255,1470]),
+"400x1200": Object.freeze([
+265, 315, 310, 365, 330, 385, 300, 360
+]),
 
-"1500x1500": Object.freeze([750,875,955,1035,1055,1120,975,1015]),
-"1500x1800": Object.freeze([875,1085,1110,1325,1230,1445,1145,1360]),
-"1500x2000": Object.freeze([1125,1485,1385,1755,1510,1885,1420,1790]),
-"1500x2500": Object.freeze([1445,1700,1780,2030,1955,2195,1860,2070]),
-"1500x3000": Object.freeze([1795,1975,2190,2375,2395,2585,2280,2470])
+"400x1500": Object.freeze([
+355, 395, 410, 455, 435, 485, 405, 445
+]),
+
+"400x1800": Object.freeze([
+410, 465, 470, 530, 495, 560, 465, 520
+]),
+
+"500x800": Object.freeze([
+230, 260, 270, 305, 285, 320, 260, 300
+]),
+
+"500x1000": Object.freeze([
+250, 290, 295, 340, 315, 360, 290, 335
+]),
+
+"500x1200": Object.freeze([
+280, 355, 330, 410, 355, 430, 325, 400
+]),
+
+"500x1500": Object.freeze([
+345, 425, 405, 490, 435, 520, 400, 480
+]),
+
+"500x2000": Object.freeze([
+425, 555, 500, 640, 535, 675, 490, 630
+]),
+
+"500x2500": Object.freeze([
+530, 600, 640, 690, 695, 735, 655, 680
+]),
+
+"600x600": Object.freeze([
+220, 255, 260, 295, 275, 310, 250, 285
+]),
+
+"600x900": Object.freeze([
+255, 285, 305, 330, 325, 355, 300, 325
+]),
+
+"600x1200": Object.freeze([
+350, 465, 405, 520, 435, 550, 400, 515
+]),
+
+"600x1500": Object.freeze([
+420, 515, 485, 580, 515, 615, 475, 575
+]),
+
+"600x1800": Object.freeze([
+460, 570, 535, 650, 575, 695, 530, 640
+]),
+
+"600x2000": Object.freeze([
+495, 610, 605, 705, 660, 745, 615, 695
+]),
+
+"600x2500": Object.freeze([
+590, 670, 725, 775, 785, 825, 740, 760
+]),
+
+"800x800": Object.freeze([
+290, 320, 340, 370, 365, 395, 335, 365
+]),
+
+"800x1000": Object.freeze([
+335, 385, 390, 440, 420, 470, 385, 435
+]),
+
+"800x1200": Object.freeze([
+360, 420, 425, 485, 460, 520, 420, 480
+]),
+
+"800x1500": Object.freeze([
+460, 520, 560, 600, 615, 640, 575, 590
+]),
+
+"800x1800": Object.freeze([
+530, 595, 655, 690, 710, 740, 670, 675
+]),
+
+"800x2000": Object.freeze([
+570, 665, 700, 770, 765, 820, 715, 760
+]),
+
+"800x2500": Object.freeze([
+705, 825, 865, 945, 940, 1010, 880, 930
+]),
+
+"1000x1000": Object.freeze([
+350, 405, 420, 475, 450, 515, 410, 470
+]),
+
+"1000x1200": Object.freeze([
+440, 505, 520, 585, 560, 620, 510, 575
+]),
+
+"1000x1500": Object.freeze([
+535, 625, 655, 720, 715, 765, 670, 710
+]),
+
+"1000x1800": Object.freeze([
+590, 670, 730, 780, 800, 835, 745, 770
+]),
+
+"1000x2000": Object.freeze([
+615, 705, 755, 815, 835, 875, 780, 805
+]),
+
+"1000x2500": Object.freeze([
+775, 960, 990, 1180, 1105, 1290, 1020, 1205
+]),
+
+"1000x3000": Object.freeze([
+980, 1285, 1180, 1480, 1285, 1580, 1210, 1495
+]),
+
+"1200x1200": Object.freeze([
+480, 565, 605, 665, 660, 710, 615, 650
+]),
+
+"1200x1500": Object.freeze([
+590, 705, 725, 815, 800, 870, 745, 805
+]),
+
+"1200x1800": Object.freeze([
+695, 815, 855, 945, 935, 1005, 870, 930
+]),
+
+"1200x2000": Object.freeze([
+775, 915, 985, 1075, 1090, 1165, 1015, 1060
+]),
+
+"1200x2500": Object.freeze([
+970, 1175, 1215, 1435, 1350, 1570, 1255, 1470
+]),
+
+"1500x1500": Object.freeze([
+750, 875, 955, 1035, 1055, 1120, 975, 1015
+]),
+
+"1500x1800": Object.freeze([
+875, 1085, 1110, 1325, 1230, 1445, 1145, 1360
+]),
+
+"1500x2000": Object.freeze([
+1125, 1485, 1385, 1755, 1510, 1885, 1420, 1790
+]),
+
+"1500x2500": Object.freeze([
+1445, 1700, 1780, 2030, 1955, 2195, 1860, 2070
+]),
+
+"1500x3000": Object.freeze([
+1795, 1975, 2190, 2375, 2395, 2585, 2280, 2470
+])
 });
 
 const STANDARD_SIZE_KEYS = Object.freeze(
@@ -185,22 +376,27 @@ Object.keys(TOUGHENED_BASE_100)
 );
 
 const TOUGHENED_PRICES_100 = Object.freeze(
-STANDARD_SIZE_KEYS.map(size =>
-TOUGHENED_BASE_100[size]
+STANDARD_SIZE_KEYS.map(
+size => TOUGHENED_BASE_100[size]
 )
 );
 
 const NORMAL_BASE_PRICES_100 = Object.freeze(
-STANDARD_SIZE_KEYS.reduce((map, size) => {
-const row = TOUGHENED_BASE_100[size];
+STANDARD_SIZE_KEYS.reduce(
+(map, size) => {
+const row =
+TOUGHENED_BASE_100[size];
 
-map[size] = Object.freeze({
+map[size] =
+Object.freeze({
 double: row[0],
 triple: row[1]
 });
 
 return map;
-}, {})
+},
+{}
+)
 );
 
 const SELF_CLEANING_POLICY = Object.freeze({
@@ -268,15 +464,24 @@ const SELF_CLEANING_ADDONS = Object.freeze({
 });
 
 const SIZE_INDEX = Object.freeze(
-STANDARD_SIZE_KEYS.reduce((map, size, index) => {
+STANDARD_SIZE_KEYS.reduce(
+(map, size, index) => {
 map[size] = index;
 return map;
-}, {})
+},
+{}
+)
 );
 
-function normalizeDimensionPair(width, length) {
-const first = Number(width);
-const second = Number(length);
+function normalizeDimensionPair(
+width,
+length
+) {
+const first =
+Number(width);
+
+const second =
+Number(length);
 
 if (
 !Number.isFinite(first) ||
@@ -288,13 +493,25 @@ return null;
 }
 
 return {
-width: Math.min(first, second),
-length: Math.max(first, second)
+width:
+Math.min(
+first,
+second
+),
+
+length:
+Math.max(
+first,
+second
+)
 };
 }
 
-function parseSizeKey(sizeKey) {
-const parts = String(sizeKey ?? "")
+function parseSizeKey(
+sizeKey
+) {
+const parts =
+String(sizeKey ?? "")
 .trim()
 .toLowerCase()
 .replace(/mm/g, "")
@@ -303,7 +520,9 @@ const parts = String(sizeKey ?? "")
 .split("x")
 .map(Number);
 
-if (parts.length !== 2) {
+if (
+parts.length !== 2
+) {
 return null;
 }
 
@@ -313,14 +532,18 @@ parts[1]
 );
 }
 
-function normalizeSize(sizeOrWidth, maybeLength) {
+function normalizeSize(
+sizeOrWidth,
+maybeLength
+) {
 let dimensions;
 
 if (
 maybeLength !== undefined &&
 maybeLength !== null
 ) {
-dimensions = normalizeDimensionPair(
+dimensions =
+normalizeDimensionPair(
 sizeOrWidth,
 maybeLength
 );
@@ -329,15 +552,18 @@ else if (
 sizeOrWidth &&
 typeof sizeOrWidth === "object"
 ) {
-dimensions = normalizeDimensionPair(
+dimensions =
+normalizeDimensionPair(
 sizeOrWidth.width ??
 sizeOrWidth.internalWidth,
+
 sizeOrWidth.length ??
 sizeOrWidth.internalLength
 );
 }
 else {
-dimensions = parseSizeKey(
+dimensions =
+parseSizeKey(
 sizeOrWidth
 );
 }
@@ -346,11 +572,16 @@ if (!dimensions) {
 return null;
 }
 
-return `${dimensions.width}x${dimensions.length}`;
+return (
+`${dimensions.width}x${dimensions.length}`
+);
 }
 
-function normalizeGlazing(glazing) {
-const value = String(glazing ?? "")
+function normalizeGlazing(
+glazing
+) {
+const value =
+String(glazing ?? "")
 .trim()
 .toLowerCase()
 .replace(/[\s_-]+/g, "");
@@ -376,15 +607,20 @@ return "triple";
 return null;
 }
 
-function normalizeFinish(finish) {
-const value = String(
+function normalizeFinish(
+finish
+) {
+const value =
+String(
 finish ?? "clear"
 )
 .trim()
 .toLowerCase()
 .replace(/[\s_-]+/g, "");
 
-if (value === "clear") {
+if (
+value === "clear"
+) {
 return "clear";
 }
 
@@ -414,8 +650,11 @@ return "satin";
 return null;
 }
 
-function normalizeType(type) {
-const value = String(
+function normalizeType(
+type
+) {
+const value =
+String(
 type ?? "toughened"
 )
 .trim()
@@ -441,15 +680,20 @@ return "laminated";
 return null;
 }
 
-function normalizeBorder(border) {
-const value = Number(
+function normalizeBorder(
+border
+) {
+const value =
+Number(
 border ?? 100
 );
 
 if (
 !Number.isFinite(value) ||
-value < SUPPORTED_BORDER_RANGE.min ||
-value > SUPPORTED_BORDER_RANGE.max
+value <
+SUPPORTED_BORDER_RANGE.min ||
+value >
+SUPPORTED_BORDER_RANGE.max
 ) {
 return null;
 }
@@ -462,16 +706,23 @@ finish,
 type,
 glazing
 ) {
-const f = normalizeFinish(finish);
-const t = normalizeType(type);
-const g = normalizeGlazing(glazing);
+const f =
+normalizeFinish(finish);
+
+const t =
+normalizeType(type);
+
+const g =
+normalizeGlazing(glazing);
 
 const index =
 f && t && g
 ? VARIANT_INDEX[f]?.[t]?.[g]
 : null;
 
-return Number.isInteger(index)
+return Number.isInteger(
+index
+)
 ? index
 : null;
 }
@@ -480,8 +731,11 @@ function roundToIncrement(
 value,
 increment
 ) {
-const number = Number(value);
-const step = Number(increment);
+const number =
+Number(value);
+
+const step =
+Number(increment);
 
 if (
 !Number.isFinite(number) ||
@@ -492,12 +746,16 @@ return null;
 }
 
 return (
-Math.round(number / step) *
+Math.round(
+number / step
+) *
 step
 );
 }
 
-function roundRetailPrice(value) {
+function roundRetailPrice(
+value
+) {
 return roundToIncrement(
 value,
 CUSTOM_PRICING_CONFIG.retailRoundTo
@@ -508,7 +766,8 @@ function hasStandardSize(
 sizeOrWidth,
 maybeLength
 ) {
-const sizeKey = normalizeSize(
+const sizeKey =
+normalizeSize(
 sizeOrWidth,
 maybeLength
 );
@@ -522,11 +781,85 @@ sizeKey
 );
 }
 
-function getBorderAnchors(border) {
-const value =
-normalizeBorder(border);
+function getReferenceExternalDimensions(
+sizeOrWidth,
+maybeLength
+) {
+const sizeKey =
+normalizeSize(
+sizeOrWidth,
+maybeLength
+);
 
-if (value === null) {
+const dimensions =
+sizeKey
+? parseSizeKey(
+sizeKey
+)
+: null;
+
+if (!dimensions) {
+return null;
+}
+
+return {
+width:
+dimensions.width +
+PRICE_SIZE_BAND_CONFIG
+.externalAdditionPerDimension,
+
+length:
+dimensions.length +
+PRICE_SIZE_BAND_CONFIG
+.externalAdditionPerDimension
+};
+}
+
+function getPricingSizeBand(
+sizeOrWidth,
+maybeLength
+) {
+const external =
+getReferenceExternalDimensions(
+sizeOrWidth,
+maybeLength
+);
+
+if (!external) {
+return null;
+}
+
+if (
+external.width <=
+PRICE_SIZE_BAND_CONFIG
+.maxExternalWidth &&
+external.length <=
+PRICE_SIZE_BAND_CONFIG
+.maxExternalLength
+) {
+return (
+PRICE_SIZE_BAND_CONFIG
+.withinReferenceId
+);
+}
+
+return (
+PRICE_SIZE_BAND_CONFIG
+.aboveReferenceId
+);
+}
+
+function getBorderAnchors(
+border
+) {
+const value =
+normalizeBorder(
+border
+);
+
+if (
+value === null
+) {
 return null;
 }
 
@@ -536,59 +869,120 @@ value === 125 ||
 value === 150
 ) {
 return {
-lower: value,
-upper: value,
-ratio: 0
+lower:
+value,
+
+upper:
+value,
+
+ratio:
+0
 };
 }
 
-if (value < 125) {
+if (
+value < 125
+) {
 return {
-lower: 100,
-upper: 125,
+lower:
+100,
+
+upper:
+125,
+
 ratio:
 (value - 100) / 25
 };
 }
 
 return {
-lower: 125,
-upper: 150,
+lower:
+125,
+
+upper:
+150,
+
 ratio:
 (value - 125) / 25
 };
 }
 
-function getBorderPriceMultiplier(border) {
-const value =
-normalizeBorder(border);
+function getBorderMultiplierTable(
+pricingSizeBand
+) {
+return (
+pricingSizeBand ===
+PRICE_SIZE_BAND_CONFIG
+.aboveReferenceId
+)
+? BORDER_PRICE_MULTIPLIERS
+.aboveReference
 
-if (value === null) {
+: BORDER_PRICE_MULTIPLIERS;
+}
+
+function getBorderPriceMultiplier(
+border,
+sizeOrWidth = null,
+maybeLength = null
+) {
+const value =
+normalizeBorder(
+border
+);
+
+if (
+value === null
+) {
 return null;
 }
 
-if (value <= 125) {
+/*
+* Legacy one-argument calls default to
+* the <=1200 x 2200 reference band.
+*
+* All live internal calls pass a size
+* so the correct band is used.
+*/
+const pricingSizeBand =
+getPricingSizeBand(
+sizeOrWidth,
+maybeLength
+) ||
+PRICE_SIZE_BAND_CONFIG
+.withinReferenceId;
+
+const table =
+getBorderMultiplierTable(
+pricingSizeBand
+);
+
+if (
+value <= 125
+) {
 const ratio =
-(value - 100) / 25;
+(value - 100) /
+25;
 
 return (
-BORDER_PRICE_MULTIPLIERS["100"] +
+table["100"] +
 (
-BORDER_PRICE_MULTIPLIERS["125"] -
-BORDER_PRICE_MULTIPLIERS["100"]
+table["125"] -
+table["100"]
 ) *
 ratio
 );
 }
 
 const ratio =
-(value - 125) / 25;
+(value - 125) /
+25;
 
 return (
-BORDER_PRICE_MULTIPLIERS["125"] +
+table["125"] +
 (
-BORDER_PRICE_MULTIPLIERS["150"] -
-BORDER_PRICE_MULTIPLIERS["125"]
+table["150"] -
+table["125"]
 ) *
 ratio
 );
@@ -598,7 +992,9 @@ function getToughenedSourceIndex(
 variantIndex
 ) {
 if (
-!Number.isInteger(variantIndex) ||
+!Number.isInteger(
+variantIndex
+) ||
 variantIndex < 0 ||
 variantIndex > 15
 ) {
@@ -610,7 +1006,10 @@ Math.floor(
 variantIndex / 4
 ) *
 2 +
-(variantIndex % 2)
+(
+variantIndex %
+2
+)
 );
 }
 
@@ -618,7 +1017,9 @@ function isLaminatedVariant(
 variantIndex
 ) {
 return (
-Number.isInteger(variantIndex) &&
+Number.isInteger(
+variantIndex
+) &&
 variantIndex >= 0 &&
 variantIndex <= 15 &&
 variantIndex % 4 >= 2
@@ -626,41 +1027,76 @@ variantIndex % 4 >= 2
 }
 
 function getTypeMultiplierForVariantIndex(
-variantIndex
+variantIndex,
+sizeOrWidth = null,
+maybeLength = null
 ) {
 if (
-!Number.isInteger(variantIndex) ||
+!Number.isInteger(
+variantIndex
+) ||
 variantIndex < 0 ||
 variantIndex > 15
 ) {
 return null;
 }
 
-return isLaminatedVariant(
+if (
+!isLaminatedVariant(
 variantIndex
 )
-? TYPE_PRICE_MULTIPLIERS.laminated
-: TYPE_PRICE_MULTIPLIERS.toughened;
+) {
+return (
+TYPE_PRICE_MULTIPLIERS
+.toughened
+);
+}
+
+const pricingSizeBand =
+getPricingSizeBand(
+sizeOrWidth,
+maybeLength
+) ||
+PRICE_SIZE_BAND_CONFIG
+.withinReferenceId;
+
+return (
+pricingSizeBand ===
+PRICE_SIZE_BAND_CONFIG
+.aboveReferenceId
+)
+? TYPE_PRICE_MULTIPLIERS
+.laminatedAboveReference
+
+: TYPE_PRICE_MULTIPLIERS
+.laminated;
 }
 
 function getAnchorPriceAtBorder(
 sizeKey,
 variantIndex,
-border
+border,
+pricingSizeReference = null
 ) {
 const sourceIndex =
 getToughenedSourceIndex(
 variantIndex
 );
 
+const reference =
+pricingSizeReference ||
+sizeKey;
+
 const borderMultiplier =
 getBorderPriceMultiplier(
-border
+border,
+reference
 );
 
 const typeMultiplier =
 getTypeMultiplierForVariantIndex(
-variantIndex
+variantIndex,
+reference
 );
 
 const baseRow =
@@ -685,7 +1121,9 @@ return null;
 
 const baseToughenedPrice =
 Number(
-baseRow[sourceIndex]
+baseRow[
+sourceIndex
+]
 );
 
 if (
@@ -703,14 +1141,22 @@ typeMultiplier
 );
 }
 
-function buildPriceMatrix(border) {
+function buildPriceMatrix(
+border
+) {
 return Object.freeze(
 STANDARD_SIZE_KEYS.map(
 sizeKey =>
 Object.freeze(
 Array.from(
-{ length: 16 },
-(_, variantIndex) =>
+{
+length: 16
+},
+
+(
+_,
+variantIndex
+) =>
 getAnchorPriceAtBorder(
 sizeKey,
 variantIndex,
@@ -723,18 +1169,30 @@ border
 }
 
 const PRICES_100 =
-buildPriceMatrix(100);
+buildPriceMatrix(
+100
+);
 
 const PRICES_125 =
-buildPriceMatrix(125);
+buildPriceMatrix(
+125
+);
 
 const PRICES_150 =
-buildPriceMatrix(150);
+buildPriceMatrix(
+150
+);
 
-const PRICE_MATRIX = Object.freeze({
-"100": PRICES_100,
-"125": PRICES_125,
-"150": PRICES_150
+const PRICE_MATRIX =
+Object.freeze({
+"100":
+PRICES_100,
+
+"125":
+PRICES_125,
+
+"150":
+PRICES_150
 });
 
 function getRawMatrixPrice(
@@ -743,18 +1201,24 @@ sizeKey,
 variantIndex
 ) {
 const sizeIndex =
-SIZE_INDEX[sizeKey];
+SIZE_INDEX[
+sizeKey
+];
 
 const rows =
 PRICE_MATRIX[
-String(borderAnchor)
+String(
+borderAnchor
+)
 ];
 
 if (
 !Number.isInteger(
 sizeIndex
 ) ||
-!Array.isArray(rows) ||
+!Array.isArray(
+rows
+) ||
 !Number.isInteger(
 variantIndex
 )
@@ -762,13 +1226,18 @@ variantIndex
 return null;
 }
 
-const value = Number(
-rows[sizeIndex]?.[
+const value =
+Number(
+rows[
+sizeIndex
+]?.[
 variantIndex
 ]
 );
 
-return Number.isFinite(value)
+return Number.isFinite(
+value
+)
 ? value
 : null;
 }
@@ -783,9 +1252,12 @@ sizeKey
 );
 
 return Object.freeze({
-size: sizeKey,
+size:
+sizeKey,
+
 width:
 dimensions.width,
+
 length:
 dimensions.length
 });
@@ -848,9 +1320,14 @@ return null;
 return (
 STANDARD_SIZE_ANCHORS
 .map(
-(anchor, index) => ({
+(
+anchor,
+index
+) => ({
 ...anchor,
+
 index,
+
 distance:
 getRelativeAnchorDistance(
 dimensions.width,
@@ -861,7 +1338,10 @@ anchor.length
 })
 )
 .sort(
-(first, second) => {
+(
+first,
+second
+) => {
 const distanceDifference =
 first.distance -
 second.distance;
@@ -870,7 +1350,9 @@ if (
 distanceDifference !==
 0
 ) {
-return distanceDifference;
+return (
+distanceDifference
+);
 }
 
 return (
@@ -894,6 +1376,7 @@ options.size
 : normalizeSize(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
@@ -916,37 +1399,63 @@ amount
 )
 ) {
 return {
-available: false,
-strategy: STRATEGY_ID,
+available:
+false,
+
+strategy:
+STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "standard-self-cleaning",
+
 reasonCode:
 PRICE_UNAVAILABLE,
-size: sizeKey,
+
+size:
+sizeKey,
+
 selfCleaningAddOn:
 null,
-amount: null
+
+amount:
+null
 };
 }
 
 return {
-available: true,
-strategy: STRATEGY_ID,
+available:
+true,
+
+strategy:
+STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 strategyVersion:
 STRATEGY_VERSION,
+
 source:
 "standard-self-cleaning",
-reasonCode: null,
-size: sizeKey,
+
+reasonCode:
+null,
+
+size:
+sizeKey,
+
 nearestStandardSize:
 sizeKey,
-distance: 0,
+
+distance:
+0,
+
 selfCleaningAddOn:
 amount,
+
 amount
 };
 }
@@ -962,23 +1471,33 @@ options.size
 : normalizeDimensionPair(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
 
 if (!dimensions) {
 return {
-available: false,
-strategy: STRATEGY_ID,
+available:
+false,
+
+strategy:
+STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "custom-self-cleaning-nearest-size",
+
 reasonCode:
 PRICE_UNAVAILABLE,
+
 selfCleaningAddOn:
 null,
-amount: null
+
+amount:
+null
 };
 }
 
@@ -1004,30 +1523,47 @@ amount
 )
 ) {
 return {
-available: false,
-strategy: STRATEGY_ID,
+available:
+false,
+
+strategy:
+STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "custom-self-cleaning-nearest-size",
+
 reasonCode:
 PRICE_UNAVAILABLE,
+
 selfCleaningAddOn:
 null,
-amount: null
+
+amount:
+null
 };
 }
 
 return {
-available: true,
-strategy: STRATEGY_ID,
+available:
+true,
+
+strategy:
+STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 strategyVersion:
 STRATEGY_VERSION,
+
 source:
 "custom-self-cleaning-nearest-size",
-reasonCode: null,
+
+reasonCode:
+null,
 
 size:
 normalizeSize(
@@ -1057,7 +1593,8 @@ amount
 function getSelfCleaningAddOn(
 options = {}
 ) {
-const mode = String(
+const mode =
+String(
 options.pricingMode ??
 options.mode ??
 ""
@@ -1066,18 +1603,24 @@ options.mode ??
 .toLowerCase();
 
 if (
-mode === "standard"
+mode ===
+"standard"
 ) {
-return getStandardSelfCleaningAddOn(
+return (
+getStandardSelfCleaningAddOn(
 options
+)
 );
 }
 
 if (
-mode === "custom"
+mode ===
+"custom"
 ) {
-return getCustomSelfCleaningAddOn(
+return (
+getCustomSelfCleaningAddOn(
 options
+)
 );
 }
 
@@ -1089,6 +1632,7 @@ options.size
 : normalizeSize(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
@@ -1099,14 +1643,19 @@ hasStandardSize(
 sizeKey
 )
 ) {
-return getStandardSelfCleaningAddOn({
+return (
+getStandardSelfCleaningAddOn({
 ...options,
-size: sizeKey
-});
+size:
+sizeKey
+})
+);
 }
 
-return getCustomSelfCleaningAddOn(
+return (
+getCustomSelfCleaningAddOn(
 options
+)
 );
 }
 
@@ -1134,6 +1683,7 @@ options.size
 : normalizeSize(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
@@ -1184,16 +1734,23 @@ border === null ||
 variantIndex === null
 ) {
 return {
-available: false,
+available:
+false,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "standard",
+
 reasonCode:
 PRICE_UNAVAILABLE,
-price: null
+
+price:
+null
 };
 }
 
@@ -1210,35 +1767,55 @@ price
 )
 ) {
 return {
-available: false,
+available:
+false,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "standard",
+
 reasonCode:
 PRICE_UNAVAILABLE,
-price: null
+
+price:
+null
 };
 }
 
 const selfCleaningResult =
 getStandardSelfCleaningAddOn({
-size: sizeKey
+size:
+sizeKey
 });
 
+const referenceExternalDimensions =
+getReferenceExternalDimensions(
+sizeKey
+);
+
 return {
-available: true,
+available:
+true,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 strategyVersion:
 STRATEGY_VERSION,
+
 source:
 "standard",
-reasonCode: null,
+
+reasonCode:
+null,
 
 size:
 sizeKey,
@@ -1248,13 +1825,22 @@ finish,
 type,
 border,
 
+pricingSizeBand:
+getPricingSizeBand(
+sizeKey
+),
+
+referenceExternalDimensions,
+
 price,
+
 basePrice:
 price,
 
 selfCleaningAddOn:
 selfCleaningResult.available
-? selfCleaningResult.selfCleaningAddOn
+? selfCleaningResult
+.selfCleaningAddOn
 : null
 };
 }
@@ -1265,7 +1851,8 @@ length,
 variantIndex,
 border,
 neighbourCount =
-CUSTOM_PRICING_CONFIG.neighbourCount
+CUSTOM_PRICING_CONFIG
+.neighbourCount
 ) {
 const dimensions =
 normalizeDimensionPair(
@@ -1291,23 +1878,32 @@ return [];
 const count =
 Math.max(
 1,
+
 Math.floor(
 Number(
 neighbourCount
-) || 1
+) ||
+1
 )
 );
 
-return STANDARD_SIZE_ANCHORS
+return (
+STANDARD_SIZE_ANCHORS
 .map(
 anchor => ({
 ...anchor,
 
+/*
+* For CUSTOM pricing, the border and laminated
+* size-band multipliers are determined by the
+* TARGET custom dimensions, not each neighbour.
+*/
 price:
 getAnchorPriceAtBorder(
 anchor.size,
 variantIndex,
-normalizedBorder
+normalizedBorder,
+dimensions
 ),
 
 distance:
@@ -1326,13 +1922,17 @@ anchor.price
 )
 )
 .sort(
-(first, second) =>
+(
+first,
+second
+) =>
 first.distance -
 second.distance
 )
 .slice(
 0,
 count
+)
 );
 }
 
@@ -1381,7 +1981,8 @@ const exactPrice =
 getAnchorPriceAtBorder(
 sizeKey,
 variantIndex,
-normalizedBorder
+normalizedBorder,
+dimensions
 );
 
 if (
@@ -1413,6 +2014,11 @@ dimensions.length,
 
 border:
 normalizedBorder,
+
+pricingSizeBand:
+getPricingSizeBand(
+dimensions
+),
 
 anchors:
 Object.freeze([
@@ -1447,11 +2053,13 @@ CUSTOM_PRICING_CONFIG
 const distancePower =
 Math.max(
 0.0001,
+
 Number(
 options.distancePower ??
 CUSTOM_PRICING_CONFIG
 .distancePower
-) || 2
+) ||
+2
 );
 
 const anchors =
@@ -1472,10 +2080,13 @@ return null;
 const exactAnchor =
 anchors.find(
 anchor =>
-anchor.distance === 0
+anchor.distance ===
+0
 );
 
-if (exactAnchor) {
+if (
+exactAnchor
+) {
 return {
 source:
 "exact-anchor",
@@ -1498,11 +2109,17 @@ dimensions.length,
 border:
 normalizedBorder,
 
+pricingSizeBand:
+getPricingSizeBand(
+dimensions
+),
+
 anchors:
 Object.freeze([
 Object.freeze({
 ...exactAnchor,
-weight: 1
+weight:
+1
 })
 ])
 };
@@ -1520,6 +2137,7 @@ Math.max(
 anchor.distance,
 0.000001
 ),
+
 distancePower
 )
 })
@@ -1533,6 +2151,7 @@ anchor
 ) =>
 total +
 anchor.weight,
+
 0
 );
 
@@ -1556,6 +2175,7 @@ total +
 anchor.price *
 anchor.weight
 ),
+
 0
 ) /
 totalWeight;
@@ -1583,6 +2203,11 @@ dimensions.length,
 border:
 normalizedBorder,
 
+pricingSizeBand:
+getPricingSizeBand(
+dimensions
+),
+
 anchors:
 Object.freeze(
 weightedAnchors.map(
@@ -1602,6 +2227,7 @@ const dimensions =
 normalizeDimensionPair(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
@@ -1649,15 +2275,21 @@ border === null ||
 variantIndex === null
 ) {
 return {
-available: false,
+available:
+false,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "custom",
+
 reasonCode:
 PRICE_UNAVAILABLE,
+
 price:
 null
 };
@@ -1680,15 +2312,21 @@ result.rawPrice
 )
 ) {
 return {
-available: false,
+available:
+false,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "custom",
+
 reasonCode:
 PRICE_UNAVAILABLE,
+
 price:
 null
 };
@@ -1697,12 +2335,9 @@ null
 /*
 * CUSTOM +7%
 *
-* Border and laminated uplifts
-* are already represented in
-* the configured anchor prices.
-*
-* Apply the custom uplift after
-* interpolation, then round once.
+* Border and laminated uplifts are already
+* represented in the configured anchor prices
+* using the TARGET custom unit's size band.
 */
 const price =
 roundRetailPrice(
@@ -1717,28 +2352,26 @@ price
 )
 ) {
 return {
-available: false,
+available:
+false,
+
 strategy:
 STRATEGY_ID,
+
 strategyLabel:
 STRATEGY_LABEL,
+
 source:
 "custom",
+
 reasonCode:
 PRICE_UNAVAILABLE,
+
 price:
 null
 };
 }
 
-/*
-* SELF CLEANING
-*
-* Use exactly one nearest
-* standard-size SC amount.
-* Do not interpolate it and
-* do not apply +7% to it.
-*/
 const selfCleaningResult =
 getCustomSelfCleaningAddOn({
 width:
@@ -1752,7 +2385,8 @@ pricingMode:
 });
 
 return {
-available: true,
+available:
+true,
 
 strategy:
 STRATEGY_ID,
@@ -1783,7 +2417,16 @@ finish,
 type,
 border,
 
+pricingSizeBand:
+result.pricingSizeBand,
+
+referenceExternalDimensions:
+getReferenceExternalDimensions(
+dimensions
+),
+
 price,
+
 basePrice:
 price,
 
@@ -1832,7 +2475,8 @@ options.mode ??
 .toLowerCase();
 
 if (
-mode === "standard"
+mode ===
+"standard"
 ) {
 return getStandardPrice(
 options
@@ -1840,7 +2484,8 @@ options
 }
 
 if (
-mode === "custom"
+mode ===
+"custom"
 ) {
 return getCustomPrice(
 options
@@ -1855,6 +2500,7 @@ options.size
 : normalizeSize(
 options.width ??
 options.internalWidth,
+
 options.length ??
 options.internalLength
 );
@@ -1867,7 +2513,8 @@ sizeKey
 ) {
 return getStandardPrice({
 ...options,
-size: sizeKey
+size:
+sizeKey
 });
 }
 
@@ -1926,6 +2573,7 @@ NORMAL_FINISH_PROFIT_MULTIPLIERS,
 TYPE_PROFIT_MULTIPLIERS,
 TYPE_PRICE_MULTIPLIERS,
 BORDER_PRICE_MULTIPLIERS,
+PRICE_SIZE_BAND_CONFIG,
 PROVISIONAL_RATE_POLICY,
 
 SUPPORTED_BORDER_RANGE,
@@ -1954,6 +2602,8 @@ roundToIncrement,
 roundRetailPrice,
 hasStandardSize,
 
+getReferenceExternalDimensions,
+getPricingSizeBand,
 getBorderAnchors,
 getBorderPriceMultiplier,
 getRawMatrixPrice,
