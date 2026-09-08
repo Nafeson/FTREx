@@ -11,6 +11,7 @@
 * pricing-normal.js
 * pricing-expensive.js
 * - Supports both standard Order Page prices and custom-calculator prices.
+* - Routes Self Cleaning add-on requests to the active strategy.
 * - Returns final customer PRODUCT prices only.
 * - Customer delivery remains separate in master-delivery-rates.js.
 *
@@ -22,6 +23,8 @@
 * - This file does NOT calculate customer delivery charges.
 * - This file does NOT calculate actual delivery costs.
 * - This file does NOT alter the prices returned by a strategy file.
+* - Self Cleaning remains a separate strategy-owned add-on and is not baked
+* into the base product price by this router.
 * - There is NO automatic fallback to another pricing strategy.
 *
 * EXPECTED BROWSER LOAD ORDER
@@ -111,7 +114,7 @@ globalScope.FactoryRooflightsMasterPricing = api;
 "use strict";
 
 const MASTER_ID = "master-pricing";
-const MASTER_VERSION = "2026-09-04";
+const MASTER_VERSION = "2026-09-08-1";
 
 const PRICE_UNAVAILABLE = "PRICE_UNAVAILABLE";
 const STRATEGY_UNAVAILABLE = "STRATEGY_UNAVAILABLE";
@@ -397,6 +400,21 @@ request
 });
 }
 
+const price =
+Number(
+strategyResult.price
+);
+
+const basePriceCandidate =
+Number(
+strategyResult.basePrice
+);
+
+const selfCleaningAddOnCandidate =
+Number(
+strategyResult.selfCleaningAddOn
+);
+
 return {
 available: true,
 
@@ -456,15 +474,250 @@ border:
 strategyResult.border ??
 null,
 
-price:
-Number(
-strategyResult.price
-),
+price,
+
+basePrice:
+Number.isFinite(
+basePriceCandidate
+)
+? basePriceCandidate
+: price,
+
+selfCleaningAddOn:
+Number.isFinite(
+selfCleaningAddOnCandidate
+)
+? selfCleaningAddOnCandidate
+: null,
+
+selfCleaningNearestStandardSize:
+strategyResult.selfCleaningNearestStandardSize ??
+strategyResult.nearestStandardSize ??
+null,
+
+selfCleaningReasonCode:
+strategyResult.selfCleaningReasonCode ??
+null,
+
+pricingSizeBand:
+strategyResult.pricingSizeBand ??
+null,
+
+referenceExternalDimensions:
+strategyResult.referenceExternalDimensions ??
+null,
+
+customPriceMultiplier:
+strategyResult.customPriceMultiplier ??
+null,
+
+priceBeforeCustomUplift:
+strategyResult.priceBeforeCustomUplift ??
+null,
 
 interpolationAnchors:
-strategyResult
-.interpolationAnchors ??
+strategyResult.interpolationAnchors ??
 null,
+
+request,
+strategyResult
+};
+}
+
+function buildUnavailableSelfCleaningResult({
+strategyId = null,
+pricingMode = null,
+reasonCode = PRICE_UNAVAILABLE,
+reason = "Self Cleaning price unavailable.",
+strategyResult = null,
+request = null
+} = {}) {
+return {
+available: false,
+
+master: MASTER_ID,
+masterVersion: MASTER_VERSION,
+
+strategy: strategyId,
+
+strategyLabel:
+getStrategyModule(
+strategyId
+)?.STRATEGY_LABEL ||
+null,
+
+strategyVersion:
+getStrategyModule(
+strategyId
+)?.STRATEGY_VERSION ||
+null,
+
+pricingMode,
+
+source:
+strategyResult?.source ||
+`${pricingMode || "self-cleaning"}-self-cleaning`,
+
+reasonCode,
+reason,
+
+selfCleaningAddOn: null,
+addOn: null,
+addon: null,
+amount: null,
+price: null,
+
+nearestStandardSize:
+strategyResult?.nearestStandardSize ??
+strategyResult?.selfCleaningNearestStandardSize ??
+null,
+
+request,
+strategyResult
+};
+}
+
+function wrapSelfCleaningStrategyResult({
+strategyId,
+pricingMode,
+request,
+strategyResult
+}) {
+if (
+!strategyResult ||
+strategyResult.available !== true
+) {
+return buildUnavailableSelfCleaningResult({
+strategyId,
+pricingMode,
+
+reasonCode:
+strategyResult?.reasonCode ||
+PRICE_UNAVAILABLE,
+
+reason:
+strategyResult?.reason ||
+"The selected pricing strategy could not return a Self Cleaning price.",
+
+strategyResult,
+request
+});
+}
+
+const amountCandidates = [
+strategyResult.selfCleaningAddOn,
+strategyResult.addOn,
+strategyResult.addon,
+strategyResult.addOnPrice,
+strategyResult.addonPrice,
+strategyResult.selfCleaningPrice,
+strategyResult.surcharge,
+strategyResult.amount,
+strategyResult.price
+];
+
+const amount =
+amountCandidates
+.map(Number)
+.find(
+candidate =>
+Number.isFinite(candidate) &&
+candidate > 0
+);
+
+if (
+!Number.isFinite(
+amount
+)
+) {
+return buildUnavailableSelfCleaningResult({
+strategyId,
+pricingMode,
+
+reasonCode:
+strategyResult.reasonCode ||
+PRICE_UNAVAILABLE,
+
+reason:
+strategyResult.reason ||
+"The selected pricing strategy did not return a valid Self Cleaning add-on.",
+
+strategyResult,
+request
+});
+}
+
+return {
+available: true,
+
+master: MASTER_ID,
+masterVersion: MASTER_VERSION,
+
+strategy: strategyId,
+
+strategyLabel:
+strategyResult.strategyLabel ||
+getStrategyModule(
+strategyId
+)?.STRATEGY_LABEL ||
+null,
+
+strategyVersion:
+strategyResult.strategyVersion ||
+getStrategyModule(
+strategyId
+)?.STRATEGY_VERSION ||
+null,
+
+pricingMode,
+
+source:
+strategyResult.source ||
+`${pricingMode || "self-cleaning"}-self-cleaning`,
+
+reasonCode: null,
+reason: null,
+
+size:
+strategyResult.size ??
+request?.size ??
+null,
+
+width:
+strategyResult.width ??
+request?.width ??
+request?.internalWidth ??
+null,
+
+length:
+strategyResult.length ??
+request?.length ??
+request?.internalLength ??
+null,
+
+nearestStandardSize:
+strategyResult.nearestStandardSize ??
+strategyResult.selfCleaningNearestStandardSize ??
+null,
+
+distance:
+strategyResult.distance ??
+null,
+
+selfCleaningAddOn:
+amount,
+
+addOn:
+amount,
+
+addon:
+amount,
+
+amount:
+amount,
+
+price:
+amount,
 
 request,
 strategyResult
@@ -641,6 +894,291 @@ strategyResult
 }
 
 /* =========================================
+* SELF CLEANING ROUTING
+*
+* The active strategy remains authoritative.
+* No cross-strategy fallback is used.
+* ========================================= */
+
+function inferSelfCleaningPricingMode(
+request,
+forcedMode = null
+) {
+if (
+forcedMode === "standard" ||
+forcedMode === "custom"
+) {
+return forcedMode;
+}
+
+const explicitMode =
+normalizePricingMode(
+request?.pricingMode ??
+request?.mode
+);
+
+if (explicitMode) {
+return explicitMode;
+}
+
+const source =
+String(
+request?.source ??
+""
+)
+.trim()
+.toLowerCase();
+
+if (
+source === "standard" ||
+source === "standard-self-cleaning"
+) {
+return "standard";
+}
+
+if (
+source === "custom" ||
+source === "custom-self-cleaning" ||
+source === "custom-self-cleaning-nearest-size"
+) {
+return "custom";
+}
+
+if (
+request?.custom === true
+) {
+return "custom";
+}
+
+return null;
+}
+
+function getStrategySelfCleaningMethod(
+strategy,
+pricingMode
+) {
+if (!strategy) {
+return null;
+}
+
+if (
+pricingMode === "standard" &&
+typeof strategy.getStandardSelfCleaningAddOn ===
+"function"
+) {
+return {
+name:
+"getStandardSelfCleaningAddOn",
+
+method:
+strategy.getStandardSelfCleaningAddOn
+};
+}
+
+if (
+pricingMode === "custom" &&
+typeof strategy.getCustomSelfCleaningAddOn ===
+"function"
+) {
+return {
+name:
+"getCustomSelfCleaningAddOn",
+
+method:
+strategy.getCustomSelfCleaningAddOn
+};
+}
+
+if (
+typeof strategy.getSelfCleaningAddOn ===
+"function"
+) {
+return {
+name:
+"getSelfCleaningAddOn",
+
+method:
+strategy.getSelfCleaningAddOn
+};
+}
+
+if (
+typeof strategy.getSelfCleaningAddOnValue ===
+"function"
+) {
+return {
+name:
+"getSelfCleaningAddOnValue",
+
+method:
+strategy.getSelfCleaningAddOnValue
+};
+}
+
+return null;
+}
+
+function routeSelfCleaningRequest(
+options = {},
+forcedMode = null
+) {
+const request =
+normalizeRequest(options);
+
+if (!request) {
+return buildUnavailableSelfCleaningResult({
+strategyId:
+getActiveStrategyId(),
+
+pricingMode:
+forcedMode,
+
+reasonCode:
+INVALID_PRICING_REQUEST,
+
+reason:
+"Invalid Self Cleaning pricing request.",
+
+request: null
+});
+}
+
+const strategyId =
+resolveStrategyId(request);
+
+const strategy =
+getStrategyModule(
+strategyId
+);
+
+const pricingMode =
+inferSelfCleaningPricingMode(
+request,
+forcedMode
+);
+
+if (
+!strategyId ||
+!strategy
+) {
+return buildUnavailableSelfCleaningResult({
+strategyId,
+pricingMode,
+
+reasonCode:
+STRATEGY_UNAVAILABLE,
+
+reason:
+"The requested pricing strategy is unavailable.",
+
+request
+});
+}
+
+const strategyMethod =
+getStrategySelfCleaningMethod(
+strategy,
+pricingMode
+);
+
+if (!strategyMethod) {
+return buildUnavailableSelfCleaningResult({
+strategyId,
+pricingMode,
+
+reasonCode:
+PRICE_UNAVAILABLE,
+
+reason:
+"The active pricing strategy does not expose Self Cleaning pricing.",
+
+request
+});
+}
+
+let strategyResult;
+
+try {
+strategyResult =
+strategyMethod.method.call(
+strategy,
+{
+...request,
+
+pricingMode:
+pricingMode ||
+request.pricingMode,
+
+mode:
+pricingMode ||
+request.mode,
+
+custom:
+pricingMode === "custom"
+? true
+: request.custom
+}
+);
+}
+catch (error) {
+return buildUnavailableSelfCleaningResult({
+strategyId,
+pricingMode,
+
+reasonCode:
+PRICE_UNAVAILABLE,
+
+reason:
+error instanceof Error
+? error.message
+: "The selected pricing strategy failed to calculate the Self Cleaning add-on.",
+
+request
+});
+}
+
+/*
+* Some strategy modules may expose a numeric
+* value helper. Convert that into the same
+* object shape used by the full add-on methods.
+*/
+if (
+Number.isFinite(
+Number(
+strategyResult
+)
+)
+) {
+strategyResult = {
+available:
+Number(
+strategyResult
+) > 0,
+
+source:
+`${pricingMode || "self-cleaning"}-self-cleaning`,
+
+selfCleaningAddOn:
+Number(
+strategyResult
+),
+
+amount:
+Number(
+strategyResult
+)
+};
+}
+
+return wrapSelfCleaningStrategyResult({
+strategyId,
+pricingMode,
+request,
+strategyResult
+});
+}
+
+/* =========================================
 * PUBLIC PRICE METHODS
 * ========================================= */
 
@@ -702,6 +1240,113 @@ return result.available
 }
 
 /* =========================================
+* PUBLIC SELF CLEANING METHODS
+*
+* The ...Price aliases are intentionally
+* exposed because existing Order Page code
+* checks those names first. They return the
+* Self Cleaning ADD-ON result, not a full
+* product price.
+* ========================================= */
+
+function getStandardSelfCleaningAddOn(
+options = {}
+) {
+return routeSelfCleaningRequest(
+options,
+"standard"
+);
+}
+
+function getCustomSelfCleaningAddOn(
+options = {}
+) {
+return routeSelfCleaningRequest(
+options,
+"custom"
+);
+}
+
+function getSelfCleaningAddOn(
+options = {}
+) {
+return routeSelfCleaningRequest(
+options
+);
+}
+
+function getStandardSelfCleaningAddOnValue(
+options = {}
+) {
+const result =
+getStandardSelfCleaningAddOn(
+options
+);
+
+return result.available
+? result.selfCleaningAddOn
+: null;
+}
+
+function getCustomSelfCleaningAddOnValue(
+options = {}
+) {
+const result =
+getCustomSelfCleaningAddOn(
+options
+);
+
+return result.available
+? result.selfCleaningAddOn
+: null;
+}
+
+function getSelfCleaningAddOnValue(
+options = {}
+) {
+const result =
+getSelfCleaningAddOn(
+options
+);
+
+return result.available
+? result.selfCleaningAddOn
+: null;
+}
+
+function getStandardSelfCleaningPrice(
+options = {}
+) {
+return getStandardSelfCleaningAddOn(
+options
+);
+}
+
+function getCustomSelfCleaningPrice(
+options = {}
+) {
+return getCustomSelfCleaningAddOn(
+options
+);
+}
+
+function getSelfCleaningPrice(
+options = {}
+) {
+return getSelfCleaningAddOn(
+options
+);
+}
+
+function getSelfCleaningAddon(
+options = {}
+) {
+return getSelfCleaningAddOn(
+options
+);
+}
+
+/* =========================================
 * STRATEGY COMPARISON / ADMIN HELPERS
 *
 * These do NOT change the active strategy.
@@ -745,6 +1390,43 @@ strategyId
 });
 }
 
+function getSelfCleaningAddOnForStrategy(
+strategy,
+options = {}
+) {
+const strategyId =
+normalizeStrategy(
+strategy
+);
+
+if (!strategyId) {
+return buildUnavailableSelfCleaningResult({
+strategyId: null,
+
+pricingMode:
+normalizePricingMode(
+options.pricingMode ??
+options.mode
+),
+
+reasonCode:
+STRATEGY_UNAVAILABLE,
+
+reason:
+"Invalid pricing strategy.",
+
+request:
+options
+});
+}
+
+return routeSelfCleaningRequest({
+...options,
+strategyOverride:
+strategyId
+});
+}
+
 function compareStrategies(
 options = {}
 ) {
@@ -769,9 +1451,51 @@ options
 });
 }
 
+function compareSelfCleaningStrategies(
+options = {}
+) {
+return Object.freeze({
+cheap:
+getSelfCleaningAddOnForStrategy(
+"cheap",
+options
+),
+
+normal:
+getSelfCleaningAddOnForStrategy(
+"normal",
+options
+),
+
+expensive:
+getSelfCleaningAddOnForStrategy(
+"expensive",
+options
+)
+});
+}
+
 /* =========================================
 * STATUS / DEBUG HELPERS
 * ========================================= */
+
+function strategyHasSelfCleaningSupport(
+strategyModule
+) {
+return Boolean(
+strategyModule &&
+(
+typeof strategyModule.getSelfCleaningAddOn ===
+"function" ||
+typeof strategyModule.getStandardSelfCleaningAddOn ===
+"function" ||
+typeof strategyModule.getCustomSelfCleaningAddOn ===
+"function" ||
+typeof strategyModule.getSelfCleaningAddOnValue ===
+"function"
+)
+);
+}
 
 function getSystemStatus() {
 const activeStrategy =
@@ -802,6 +1526,11 @@ validateStrategyModule(
 STRATEGIES.cheap
 ),
 
+selfCleaning:
+strategyHasSelfCleaningSupport(
+STRATEGIES.cheap
+),
+
 version:
 STRATEGIES.cheap
 ?.STRATEGY_VERSION ||
@@ -816,6 +1545,11 @@ validateStrategyModule(
 STRATEGIES.normal
 ),
 
+selfCleaning:
+strategyHasSelfCleaningSupport(
+STRATEGIES.normal
+),
+
 version:
 STRATEGIES.normal
 ?.STRATEGY_VERSION ||
@@ -827,6 +1561,11 @@ Object.freeze({
 loaded:
 validateStrategyModule(
 "expensive",
+STRATEGIES.expensive
+),
+
+selfCleaning:
+strategyHasSelfCleaningSupport(
 STRATEGIES.expensive
 ),
 
@@ -870,8 +1609,23 @@ getPriceValue,
 getStandardPriceValue,
 getCustomPriceValue,
 
+getStandardSelfCleaningAddOn,
+getCustomSelfCleaningAddOn,
+getSelfCleaningAddOn,
+
+getStandardSelfCleaningAddOnValue,
+getCustomSelfCleaningAddOnValue,
+getSelfCleaningAddOnValue,
+
+getStandardSelfCleaningPrice,
+getCustomSelfCleaningPrice,
+getSelfCleaningPrice,
+getSelfCleaningAddon,
+
 getPriceForStrategy,
+getSelfCleaningAddOnForStrategy,
 compareStrategies,
+compareSelfCleaningStrategies,
 
 getSystemStatus
 });
