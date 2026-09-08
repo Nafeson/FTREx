@@ -1,491 +1,513 @@
 /* =========================================
-OP-3A MASTER INTEGRATION
-MASTER FILE LOADER + PRICING / MAKE-UP /
-SELF CLEANING
+OP-3B MASTER DELIVERY INTEGRATION
+LIVE DELIVERY VALIDATION + ACTIVATION
 
-PASTE THIS DIRECTLY ABOVE THE EXISTING
-"INITIALISE PAGE" BLOCK AT THE BOTTOM OF OP-2.
+PASTE THIS DIRECTLY BELOW OP-3A AND
+DIRECTLY ABOVE THE EXISTING
+"INITIALISE PAGE" BLOCK.
 
+KEEP OP-3A IN PLACE.
 KEEP THE EXISTING OP-2 INITIALISATION BLOCK.
 
-PURPOSE:
-- Confirm all seven shared master files.
-- Route STANDARD pricing through
-master-pricing.js.
-- Route CUSTOM pricing through
-master-pricing.js.
-- Route Self Cleaning surcharge pricing
-through master-pricing.js.
-- Route displayed top-glass thickness through
-master-makeup-logic.js.
-- Confirm master-delivery-rates.js.
-
-IMPORTANT:
-OP-2 now already uses MasterDeliveryRates for
-live delivery pricing. OP-3A does not create a
-second delivery engine.
+CURRENT ARCHITECTURE:
+- OP-2 is already written to use the shared
+MasterDeliveryRates public API.
+- OP-3B therefore no longer carries or
+activates a second low-level delivery
+engine.
+- OP-3B waits for OP-3A, validates the
+delivery master, installs only the live
+Order Page delivery adapters actually used
+by OP-2, then refreshes the existing page.
 
 SELF CLEANING:
-- No Self Cleaning rates are stored here.
-- No nearest-size logic is stored here.
-- No interpolation logic is stored here.
-- No surcharge is trusted from a URL or basket.
-- Master pricing remains authoritative.
-- If the master cannot return a Self Cleaning
-surcharge, the option fails closed.
+- Self Cleaning does not alter delivery
+category, mileage, grouping or delivery
+charge.
+- OP-3B never recalculates product prices.
+- OP-3B verifies that a delivery refresh does
+not alter an item's Self Cleaning choice,
+Self Cleaning surcharge or final unit price.
 ========================================= */
 
-const OP3A_TEST_MASTER_FILES = Object.freeze([
-{
-src:"js/masters/master-makeup-logic.js",
-requiredGlobal:"MasterMakeupLogic"
-},
-{
-src:"js/masters/master-delivery-rates.js",
-requiredGlobal:"MasterDeliveryRates"
-},
-{
-src:"js/pricing/pricing-cheap.js",
-requiredGlobal:null
-},
-{
-src:"js/pricing/pricing-normal.js",
-requiredGlobal:null
-},
-{
-src:"js/pricing/pricing-expensive.js",
-requiredGlobal:null
-},
-{
-src:"js/pricing/site-pricing-config.js",
-requiredGlobal:null
-},
-{
-src:"js/pricing/master-pricing.js",
-requiredGlobal:"FactoryRooflightsMasterPricing"
+let op3bTestReady =
+false;
+
+let op3bTestFailed =
+false;
+
+let op3bDeliveryOverridesInstalled =
+false;
+
+globalThis.OP3B_DELIVERY_MASTER_ACTIVE =
+false;
+
+function op3bGetDeliveryMaster() {
+
+const delivery =
+globalThis
+.MasterDeliveryRates;
+
+if (
+!delivery ||
+typeof delivery !==
+"object"
+) {
+
+return null;
+
 }
-]);
 
-let op3aTestReady =
-false;
+return delivery;
 
-let op3aTestFailed =
-false;
+}
 
-let op3aTestOverridesInstalled =
-false;
+function op3bRequireDeliveryMaster() {
 
-let op3aOriginalUpdateUI =
-null;
+const delivery =
+op3bGetDeliveryMaster();
 
-/* =========================================
-GLOBAL / SCRIPT HELPERS
-========================================= */
+if (
+!delivery
+) {
 
-function op3aGetGlobal(
-name
+throw new Error(
+"MasterDeliveryRates is unavailable."
+);
+
+}
+
+return delivery;
+
+}
+
+function op3bInstallGlobalFunction(
+name,
+replacement
 ) {
 
 if (
-!name
+typeof replacement !==
+"function"
 ) {
 
-return undefined;
+return false;
 
 }
+
+if (
+typeof globalThis[
+name
+] !==
+"function"
+) {
+
+console.warn(
+`OP-3B could not find existing Order Page function ${name}().`
+);
+
+return false;
+
+}
+
+try {
+
+globalThis[
+name
+] =
+replacement;
 
 return globalThis[
 name
-];
+] ===
+replacement;
 
 }
-
-function op3aFindExistingScript(
-source
+catch (
+error
 ) {
 
-const expected =
-String(
-source ||
-""
-)
-.replace(
-/^\.\//,
-""
+console.warn(
+`OP-3B could not replace ${name}().`,
+error
 );
 
-return Array.from(
-document.scripts
-).find(
-script => {
-
-const currentSource =
-String(
-script.getAttribute(
-"src"
-) ||
-""
-)
-.replace(
-/^\.\//,
-""
-);
-
-return (
-currentSource ===
-expected ||
-currentSource.endsWith(
-"/" +
-expected
-)
-);
-
-}
-) ||
-null;
-
-}
-
-function op3aLoadScript(
-source,
-requiredGlobal = null
-) {
-
-if (
-requiredGlobal &&
-op3aGetGlobal(
-requiredGlobal
-)
-) {
-
-return Promise.resolve();
-
-}
-
-const existingScript =
-op3aFindExistingScript(
-source
-);
-
-if (
-existingScript
-) {
-
-if (
-!requiredGlobal ||
-op3aGetGlobal(
-requiredGlobal
-)
-) {
-
-return Promise.resolve();
-
-}
-
-return new Promise(
-(
-resolve,
-reject
-) => {
-
-const handleLoad =
-() => {
-
-if (
-requiredGlobal &&
-!op3aGetGlobal(
-requiredGlobal
-)
-) {
-
-reject(
-new Error(
-`${source} loaded, but ${requiredGlobal} was not created.`
-)
-);
-
-return;
-
-}
-
-resolve();
-
-};
-
-const handleError =
-() => {
-
-reject(
-new Error(
-`Unable to load ${source}.`
-)
-);
-
-};
-
-existingScript.addEventListener(
-"load",
-handleLoad,
-{
-once:true
-}
-);
-
-existingScript.addEventListener(
-"error",
-handleError,
-{
-once:true
-}
-);
-
-}
-);
-
-}
-
-return new Promise(
-(
-resolve,
-reject
-) => {
-
-const script =
-document.createElement(
-"script"
-);
-
-script.src =
-source;
-
-script.async =
-false;
-
-script.dataset.op3aTestMasterSource =
-source;
-
-script.addEventListener(
-"load",
-() => {
-
-if (
-requiredGlobal &&
-!op3aGetGlobal(
-requiredGlobal
-)
-) {
-
-reject(
-new Error(
-`${source} loaded, but ${requiredGlobal} was not created.`
-)
-);
-
-return;
-
-}
-
-resolve();
-
-},
-{
-once:true
-}
-);
-
-script.addEventListener(
-"error",
-() => {
-
-reject(
-new Error(
-`Unable to load ${source}.`
-)
-);
-
-},
-{
-once:true
-}
-);
-
-document.head.appendChild(
-script
-);
-
-}
-);
-
-}
-
-async function op3aLoadMasterFiles() {
-
-for (
-const file of
-OP3A_TEST_MASTER_FILES
-) {
-
-await op3aLoadScript(
-file.src,
-file.requiredGlobal
-);
+return false;
 
 }
 
 }
 
 /* =========================================
-NORMALISATION
+MASTER-BACKED POSTCODE ADAPTERS
 ========================================= */
 
-function op3aNormalizeSize(
+function op3bNormalizePostcode(
+postcode
+) {
+
+return op3bRequireDeliveryMaster()
+.normalizePostcode(
+postcode
+);
+
+}
+
+function op3bFormatPostcode(
+postcode
+) {
+
+return op3bRequireDeliveryMaster()
+.formatPostcode(
+postcode
+);
+
+}
+
+function op3bIsCompleteUKPostcode(
+postcode
+) {
+
+return (
+op3bRequireDeliveryMaster()
+.isCompleteUKPostcode(
+postcode
+) ===
+true
+);
+
+}
+
+/* =========================================
+MASTER-BACKED DELIVERY CATEGORIES
+========================================= */
+
+function op3bGetDeliveryCategoryForSize(
 size
 ) {
 
-return String(
-size ??
-""
-)
-.trim()
-.toLowerCase()
-.replace(
-/mm/g,
-""
-)
-.replace(
-/×/g,
-"x"
-)
-.replace(
-/\s+/g,
-""
-);
+return op3bRequireDeliveryMaster()
+.getDeliveryCategoryForSize(
+size
+) ||
+null;
 
 }
 
-function op3aNormalizeTint(
-finish
+function op3bGetDeliveryCategoryForCustomDimensions(
+width,
+length
 ) {
 
-const value =
-String(
-finish ??
-""
-)
-.trim()
-.toLowerCase();
+return op3bRequireDeliveryMaster()
+.getDeliveryCategoryForCustomDimensions(
+width,
+length
+) ||
+null;
+
+}
+
+/* =========================================
+MASTER-BACKED PER-ITEM DELIVERY CONTRIBUTION
+
+Preserves OP-2's existing public signature:
+getResolvedDeliveryContributionForItem(item)
+========================================= */
+
+function op3bGetResolvedDeliveryContributionForItem(
+targetItem
+) {
 
 if (
-value ===
-"blue" ||
-value ===
-"blue tinted" ||
-value ===
-"blue-tinted"
+!state.deliveryResolved ||
+state.deliveryRequiresQuote
 ) {
 
-return "blue";
+return null;
 
 }
 
-if (
-value ===
-"grey" ||
-value ===
-"gray" ||
-value ===
-"grey tinted" ||
-value ===
-"grey-tinted" ||
-value ===
-"gray tinted" ||
-value ===
-"gray-tinted"
-) {
-
-return "grey";
-
-}
-
-if (
-value ===
-"satin" ||
-value ===
-"satin tinted" ||
-value ===
-"satin-tinted" ||
-value ===
-"privacy"
-) {
-
-return "satin";
-
-}
-
-return "clear";
-
-}
-
-function op3aNormalizeGlazing(
-glazing
-) {
-
-return String(
-glazing ??
-""
-)
-.trim()
-.toLowerCase() ===
-"triple"
-?
-"triple"
-:
-"double";
-
-}
-
-function op3aNormalizeGlassType(
-type
-) {
-
-return String(
-type ??
-""
-)
-.trim()
-.toLowerCase() ===
-"laminated"
-?
-"laminated"
-:
-"toughened";
-
-}
-
-function op3aNormalizeBorder(
-border
-) {
-
-const numericBorder =
+const chargeableMiles =
 Number(
-border
+state.deliveryChargeableMiles
 );
 
-return [
-100,
-125,
-150
-].includes(
-numericBorder
+if (
+!Number.isFinite(
+chargeableMiles
 )
-?
-numericBorder
-:
-100;
+) {
+
+return null;
 
 }
 
-function op3aNormalizeSelfCleaning(
+const contribution =
+op3bRequireDeliveryMaster()
+.getResolvedDeliveryContributionForItem(
+getAllBasketItems(),
+targetItem,
+chargeableMiles
+);
+
+const numericContribution =
+Number(
+contribution
+);
+
+return Number.isFinite(
+numericContribution
+)
+?
+Math.max(
+0,
+numericContribution
+)
+:
+null;
+
+}
+
+/* =========================================
+MASTER-BACKED POSTCODE DELIVERY
+
+Uses the same MasterDeliveryRates.calculateDelivery()
+public contract already expected by OP-2.
+
+No secondary postcode/distance algorithm is
+retained in OP-3B.
+========================================= */
+
+async function op3bCalculatePostcodeDelivery(
+postcode
+) {
+
+const delivery =
+op3bRequireDeliveryMaster();
+
+try {
+
+const result =
+await delivery.calculateDelivery(
+{
+postcode:
+postcode,
+items:
+getAllBasketItems(),
+currentSelection:
+state,
+normalizeTint:
+normalizeTint,
+getEstimatedDeliveryTextForLeadTime:
+getEstimatedDeliveryTextForLeadTime
+}
+);
+
+if (
+!result ||
+typeof result !==
+"object"
+) {
+
+if (
+typeof createUnavailableMasterDeliveryResult ===
+"function"
+) {
+
+return createUnavailableMasterDeliveryResult(
+postcode,
+"INVALID_MASTER_DELIVERY_RESULT",
+"Delivery pricing is temporarily unavailable. Please contact us for a delivery quotation."
+);
+
+}
+
+throw new Error(
+"MasterDeliveryRates.calculateDelivery() returned an invalid result."
+);
+
+}
+
+return result;
+
+}
+catch (
+error
+) {
+
+console.warn(
+"OP-3B master postcode delivery calculation failed.",
+error
+);
+
+if (
+typeof createUnavailableMasterDeliveryResult ===
+"function"
+) {
+
+return createUnavailableMasterDeliveryResult(
+postcode,
+"MASTER_DELIVERY_ERROR",
+"Delivery pricing is temporarily unavailable. Please contact us for a delivery quotation."
+);
+
+}
+
+throw error;
+
+}
+
+}
+
+/* =========================================
+MASTER-BACKED ESTIMATED DELIVERY / LEAD TIME
+
+The date arithmetic / working-day formatter
+remains on the Order Page. The lead-time
+rules themselves come from MasterDeliveryRates.
+========================================= */
+
+function op3bGetLeadTimeForSelection(
+selection
+) {
+
+const result =
+op3bRequireDeliveryMaster()
+.getLeadTimeForSelection(
+selection,
+{
+normalizeTint:
+normalizeTint
+}
+);
+
+const min =
+Number(
+result?.min
+);
+
+const max =
+Number(
+result?.max
+);
+
+if (
+!Number.isFinite(
+min
+) ||
+!Number.isFinite(
+max
+) ||
+min <=
+0 ||
+max <
+min
+) {
+
+throw new Error(
+"MasterDeliveryRates returned an invalid lead-time result."
+);
+
+}
+
+return {
+min:
+min,
+max:
+max
+};
+
+}
+
+function op3bGetBasketLeadTime() {
+
+const result =
+op3bRequireDeliveryMaster()
+.getBasketLeadTime(
+getAllBasketItems(),
+state,
+{
+normalizeTint:
+normalizeTint
+}
+);
+
+const min =
+Number(
+result?.min
+);
+
+const max =
+Number(
+result?.max
+);
+
+if (
+!Number.isFinite(
+min
+) ||
+!Number.isFinite(
+max
+) ||
+min <
+0 ||
+max <
+min
+) {
+
+throw new Error(
+"MasterDeliveryRates returned an invalid basket lead-time result."
+);
+
+}
+
+return {
+min:
+min,
+max:
+max
+};
+
+}
+
+function op3bGetBasketEstimatedDeliveryText() {
+
+const result =
+op3bRequireDeliveryMaster()
+.getBasketEstimatedDeliveryText(
+getAllBasketItems(),
+state,
+getEstimatedDeliveryTextForLeadTime,
+{
+normalizeTint:
+normalizeTint
+}
+);
+
+return typeof result ===
+"string"
+?
+result
+:
+"";
+
+}
+
+/* =========================================
+SELF CLEANING / PRODUCT-PRICE PRESERVATION
+
+Delivery is not allowed to rewrite any of:
+- selfCleaning
+- selfCleaningAddOn
+- unitPrice
+- price
+
+The snapshot is keyed by the persistent basket
+item ID already created by OP-2.
+========================================= */
+
+function op3bNormalizeSelfCleaningState(
 value
 ) {
 
@@ -543,2100 +565,724 @@ normalized ===
 
 }
 
-function op3aSplitSize(
-size
-) {
+function op3bCaptureCommercialBasketState() {
 
-const normalizedSize =
-op3aNormalizeSize(
-size
-);
-
-const [
-width,
-length
-] =
-normalizedSize
-.split(
-"x"
-)
+return getAllBasketItems()
 .map(
-Number
-);
+(
+item,
+index
+) => {
 
-if (
-!Number.isFinite(
-width
-) ||
-!Number.isFinite(
-length
-) ||
-width <=
-0 ||
-length <=
-0
-) {
-
-return null;
-
-}
-
-return {
-
-size:
-`${width}x${length}`,
-
-width:
-width,
-
-length:
-length
-
-};
-
-}
-
-/* =========================================
-MASTER REFERENCES
-========================================= */
-
-function op3aGetPricingMaster() {
-
-const pricing =
-globalThis
-.FactoryRooflightsMasterPricing;
-
-if (
-!pricing ||
-typeof pricing !==
-"object"
-) {
-
-return null;
-
-}
-
-return pricing;
-
-}
-
-function op3aGetMakeupMaster() {
-
-const makeup =
-globalThis
-.MasterMakeupLogic;
-
-if (
-!makeup ||
-typeof makeup !==
-"object"
-) {
-
-return null;
-
-}
-
-return makeup;
-
-}
-
-function op3aGetDeliveryMaster() {
-
-const delivery =
-globalThis
-.MasterDeliveryRates;
-
-if (
-!delivery ||
-typeof delivery !==
-"object"
-) {
-
-return null;
-
-}
-
-return delivery;
-
-}
-
-/* =========================================
-PRICE RESULT NORMALISATION
-========================================= */
-
-function op3aNormalizePriceResult(
-result,
-source
-) {
-
-if (
-Number.isFinite(
-Number(
-result
-)
-) &&
-Number(
-result
-) >
-0
-) {
-
-return {
-
-available:true,
-
-source:
-source,
-
-price:
-Number(
-result
-)
-
-};
-
-}
-
-if (
-!result ||
-typeof result !==
-"object"
-) {
-
-return {
-
-available:false,
-
-source:
-source,
-
-price:null,
-
-reasonCode:
-"INVALID_MASTER_PRICE_RESULT"
-
-};
-
-}
-
-const price =
-Number(
-result.price
-);
-
-if (
-result.available !==
+const kind =
+item?.isCustom ===
 true ||
-!Number.isFinite(
-price
-) ||
-price <=
-0
-) {
-
-return {
-
-...result,
-
-available:false,
-
-source:
-result.source ||
-source,
-
-price:null
-
-};
-
-}
-
-return {
-
-...result,
-
-available:true,
-
-source:
-result.source ||
-source,
-
-price:
-price
-
-};
-
-}
-
-function op3aNormalizeSelfCleaningResult(
-result,
-source
-) {
-
-if (
-Number.isFinite(
-Number(
-result
+item?.custom ===
+true ||
+String(
+item?.source ||
+""
 )
+.toLowerCase()
+.includes(
+"custom"
 )
-) {
+?
+"custom"
+:
+"standard";
 
-const amount =
-Number(
-result
+const id =
+typeof ensureBasketOrderItemId ===
+"function"
+?
+ensureBasketOrderItemId(
+item,
+kind
+)
+:
+String(
+item?.id ??
+item?._id ??
+`${kind}-${index}`
 );
 
 return {
-
-available:
-amount >
-0,
-
-source:
-source,
-
-addOn:
-amount >
-0
+id:
+String(
+id
+),
+selfCleaning:
+op3bNormalizeSelfCleaningState(
+item?.selfCleaning
+),
+selfCleaningAddOn:
+Number.isFinite(
+Number(
+item?.selfCleaningAddOn
+)
+)
 ?
-amount
+Number(
+item.selfCleaningAddOn
+)
+:
+null,
+unitPrice:
+Number.isFinite(
+Number(
+item?.unitPrice
+)
+)
+?
+Number(
+item.unitPrice
+)
+:
+null,
+price:
+Number.isFinite(
+Number(
+item?.price
+)
+)
+?
+Number(
+item.price
+)
 :
 null
-
 };
 
 }
+);
 
-if (
-!result ||
-typeof result !==
-"object"
+}
+
+function op3bAssertCommercialBasketStatePreserved(
+snapshot
 ) {
 
-return {
+if (
+!Array.isArray(
+snapshot
+)
+) {
 
-available:false,
-
-source:
-source,
-
-addOn:null,
-
-reasonCode:
-"INVALID_SELF_CLEANING_RESULT"
-
-};
+return;
 
 }
 
-const candidates = [
+const currentItems =
+getAllBasketItems();
 
-result.addOn,
-result.addon,
-result.addOnPrice,
-result.addonPrice,
-result.selfCleaningAddOn,
-result.selfCleaningAddon,
-result.selfCleaningPrice,
-result.surcharge,
-result.amount,
-result.price
+if (
+currentItems.length !==
+snapshot.length
+) {
 
-];
+throw new Error(
+"OP-3B delivery refresh changed the number of product lines."
+);
 
-const addOn =
-candidates
-.map(
-Number
-)
-.find(
-candidate =>
+}
+
+snapshot.forEach(
+stored => {
+
+const current =
+currentItems.find(
+item =>
+String(
+item?.id ??
+item?._id ??
+""
+) ===
+stored.id
+);
+
+if (
+!current
+) {
+
+throw new Error(
+`OP-3B delivery refresh lost basket item ${stored.id}.`
+);
+
+}
+
+const currentSelfCleaning =
+op3bNormalizeSelfCleaningState(
+current.selfCleaning
+);
+
+const currentSelfCleaningAddOn =
 Number.isFinite(
-candidate
-) &&
-candidate >
-0
-);
-
-if (
-!Number.isFinite(
-addOn
-)
-) {
-
-return {
-
-...result,
-
-available:false,
-
-source:
-result.source ||
-source,
-
-addOn:null
-
-};
-
-}
-
-return {
-
-...result,
-
-available:true,
-
-source:
-result.source ||
-source,
-
-addOn:
-addOn
-
-};
-
-}
-
-/* =========================================
-MASTER PRICING OPTION BUILDERS
-========================================= */
-
-function op3aBuildStandardPricingOptions(
-selection
-) {
-
-const sizeData =
-op3aSplitSize(
-selection?.size
-);
-
-if (
-!sizeData
-) {
-
-return null;
-
-}
-
-const finish =
-op3aNormalizeTint(
-selection?.tint ??
-selection?.finish
-);
-
-return {
-
-width:
-sizeData.width,
-
-length:
-sizeData.length,
-
-internalWidth:
-sizeData.width,
-
-internalLength:
-sizeData.length,
-
-size:
-sizeData.size,
-
-glazing:
-op3aNormalizeGlazing(
-selection?.glazing
-),
-
-finish:
-finish,
-
-tint:
-finish,
-
-type:
-op3aNormalizeGlassType(
-selection?.type ??
-selection?.glazingConstruction
-),
-
-border:
-op3aNormalizeBorder(
-selection?.border
-)
-
-};
-
-}
-
-function op3aBuildCustomPricingOptions(
-selection
-) {
-
-const width =
 Number(
-selection?.width ??
-selection?.internalWidth
-);
-
-const length =
-Number(
-selection?.length ??
-selection?.internalLength
-);
-
-if (
-!Number.isFinite(
-width
-) ||
-!Number.isFinite(
-length
-) ||
-width <=
-0 ||
-length <=
-0
-) {
-
-return null;
-
-}
-
-const finish =
-op3aNormalizeTint(
-selection?.tint ??
-selection?.finish
-);
-
-return {
-
-width:
-width,
-
-length:
-length,
-
-internalWidth:
-width,
-
-internalLength:
-length,
-
-size:
-`${width}x${length}`,
-
-glazing:
-op3aNormalizeGlazing(
-selection?.glazing
-),
-
-finish:
-finish,
-
-tint:
-finish,
-
-type:
-op3aNormalizeGlassType(
-selection?.type ??
-selection?.glazingConstruction
-),
-
-border:
-op3aNormalizeBorder(
-selection?.border
+current.selfCleaningAddOn
 )
-
-};
-
-}
-
-/* =========================================
-BASE STANDARD MASTER PRICE
-
-Self Cleaning is explicitly OFF here.
-
-This guarantees OP-3A always obtains the
-base rooflight price first and therefore
-cannot accidentally add the surcharge twice
-if the shared master later supports
-Self Cleaning directly in getStandardPrice().
-========================================= */
-
-function op3aGetStandardBasePriceResult(
-selection
-) {
-
-const pricing =
-op3aGetPricingMaster();
-
-if (
-!pricing ||
-typeof pricing.getStandardPrice !==
-"function"
-) {
-
-return {
-
-available:false,
-
-source:"standard",
-
-price:null,
-
-reasonCode:
-"MASTER_PRICING_UNAVAILABLE"
-
-};
-
-}
-
-const pricingOptions =
-op3aBuildStandardPricingOptions(
-selection
-);
-
-if (
-!pricingOptions
-) {
-
-return {
-
-available:false,
-
-source:"standard",
-
-price:null,
-
-reasonCode:
-"INVALID_STANDARD_SIZE"
-
-};
-
-}
-
-try {
-
-const result =
-pricing.getStandardPrice(
-{
-
-...pricingOptions,
-
-selfCleaning:false,
-
-includeSelfCleaning:false,
-
-selfCleaningSelected:false
-
-}
-);
-
-return op3aNormalizePriceResult(
-result,
-"standard"
-);
-
-}
-catch (
-error
-) {
-
-console.error(
-"OP-3A master standard pricing failed.",
-error
-);
-
-return {
-
-available:false,
-
-source:"standard",
-
-price:null,
-
-reasonCode:
-"MASTER_STANDARD_PRICE_ERROR"
-
-};
-
-}
-
-}
-
-/* =========================================
-BASE CUSTOM MASTER PRICE
-
-Self Cleaning explicitly OFF.
-========================================= */
-
-function op3aGetCustomBasePriceResult(
-selection
-) {
-
-const pricing =
-op3aGetPricingMaster();
-
-if (
-!pricing ||
-typeof pricing.getCustomPrice !==
-"function"
-) {
-
-return {
-
-available:false,
-
-source:"custom",
-
-price:null,
-
-reasonCode:
-"MASTER_PRICING_UNAVAILABLE"
-
-};
-
-}
-
-const pricingOptions =
-op3aBuildCustomPricingOptions(
-selection
-);
-
-if (
-!pricingOptions
-) {
-
-return {
-
-available:false,
-
-source:"custom",
-
-price:null,
-
-reasonCode:
-"INVALID_CUSTOM_SIZE"
-
-};
-
-}
-
-try {
-
-const result =
-pricing.getCustomPrice(
-{
-
-...pricingOptions,
-
-selfCleaning:false,
-
-includeSelfCleaning:false,
-
-selfCleaningSelected:false
-
-}
-);
-
-return op3aNormalizePriceResult(
-result,
-"custom"
-);
-
-}
-catch (
-error
-) {
-
-console.error(
-"OP-3A master custom pricing failed.",
-error
-);
-
-return {
-
-available:false,
-
-source:"custom",
-
-price:null,
-
-reasonCode:
-"MASTER_CUSTOM_PRICE_ERROR"
-
-};
-
-}
-
-}
-
-/* =========================================
-SELF CLEANING MASTER METHOD DISCOVERY
-
-Preferred:
-- getStandardSelfCleaningPrice()
-- getCustomSelfCleaningPrice()
-
-Compatible generic names:
-- getSelfCleaningPrice()
-- getSelfCleaningAddOn()
-- getSelfCleaningAddon()
-========================================= */
-
-function op3aGetDedicatedSelfCleaningMethod(
-pricing,
-source
-) {
-
-if (
-!pricing
-) {
-
-return null;
-
-}
-
-const methodNames =
-source ===
-"custom"
+)
 ?
-[
-"getCustomSelfCleaningPrice",
-"getSelfCleaningPrice",
-"getSelfCleaningAddOn",
-"getSelfCleaningAddon"
-]
+Number(
+current.selfCleaningAddOn
+)
 :
-[
-"getStandardSelfCleaningPrice",
-"getSelfCleaningPrice",
-"getSelfCleaningAddOn",
-"getSelfCleaningAddon"
+null;
+
+const currentUnitPrice =
+Number.isFinite(
+Number(
+current.unitPrice
+)
+)
+?
+Number(
+current.unitPrice
+)
+:
+null;
+
+const currentPrice =
+Number.isFinite(
+Number(
+current.price
+)
+)
+?
+Number(
+current.price
+)
+:
+null;
+
+if (
+currentSelfCleaning !==
+stored.selfCleaning ||
+currentSelfCleaningAddOn !==
+stored.selfCleaningAddOn ||
+currentUnitPrice !==
+stored.unitPrice ||
+currentPrice !==
+stored.price
+) {
+
+throw new Error(
+`OP-3B delivery refresh altered the product pricing or Self Cleaning state for ${stored.id}.`
+);
+
+}
+
+}
+);
+
+}
+
+/* =========================================
+STATIC MASTER DELIVERY VALIDATION
+
+Only the public master API now used by the
+Order Page is required.
+
+No live postcode lookup is performed here.
+========================================= */
+
+function op3bValidateMasterDelivery() {
+
+const delivery =
+op3bRequireDeliveryMaster();
+
+const requiredFunctions = [
+"normalizePostcode",
+"formatPostcode",
+"isCompleteUKPostcode",
+"getDeliveryCategoryForSize",
+"getDeliveryCategoryForCustomDimensions",
+"calculateBasketDelivery",
+"getResolvedDeliveryContributionForItem",
+"calculateDelivery",
+"getLeadTimeForSelection",
+"getBasketLeadTime",
+"getBasketEstimatedDeliveryText"
 ];
 
-for (
-const methodName of
-methodNames
-) {
-
-if (
-typeof pricing[
-methodName
-] ===
-"function"
-) {
-
-return {
-
-name:
-methodName,
-
-method:
-pricing[
-methodName
-]
-
-};
-
-}
-
-}
-
-return null;
-
-}
-
-/* =========================================
-SELF CLEANING MASTER BRIDGE
-
-No local surcharge table or nearest-size
-decision exists here.
-
-Preferred route:
-Use a dedicated master Self Cleaning method.
-
-Compatibility route:
-Ask master-pricing.js for the same product
-once with Self Cleaning off and once with it
-on. Only a positive master-returned
-difference is accepted.
-
-If the master ignores Self Cleaning flags,
-the difference is zero and Self Cleaning
-fails closed.
-========================================= */
-
-function op3aGetSelfCleaningAddOnResult(
-selection,
-source = "custom"
-) {
-
-const normalizedSource =
-source ===
-"standard"
-?
-"standard"
-:
-"custom";
-
-const pricing =
-op3aGetPricingMaster();
-
-if (
-!pricing
-) {
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-"MASTER_PRICING_UNAVAILABLE"
-
-};
-
-}
-
-const pricingOptions =
-normalizedSource ===
-"standard"
-?
-op3aBuildStandardPricingOptions(
-selection
-)
-:
-op3aBuildCustomPricingOptions(
-selection
-);
-
-if (
-!pricingOptions
-) {
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-normalizedSource ===
-"standard"
-?
-"INVALID_STANDARD_SIZE"
-:
-"INVALID_CUSTOM_SIZE"
-
-};
-
-}
-
-const dedicatedMethod =
-op3aGetDedicatedSelfCleaningMethod(
-pricing,
-normalizedSource
-);
-
-if (
-dedicatedMethod
-) {
-
-try {
-
-const dedicatedResult =
-dedicatedMethod.method.call(
-pricing,
-{
-
-...pricingOptions,
-
-source:
-normalizedSource,
-
-custom:
-normalizedSource ===
-"custom",
-
-selfCleaning:true,
-
-includeSelfCleaning:true,
-
-selfCleaningSelected:true
-
-}
-);
-
-const normalizedDedicatedResult =
-op3aNormalizeSelfCleaningResult(
-dedicatedResult,
-normalizedSource
-);
-
-if (
-normalizedDedicatedResult.available
-) {
-
-return normalizedDedicatedResult;
-
-}
-
-}
-catch (
-error
-) {
-
-console.warn(
-`OP-3A dedicated ${normalizedSource} Self Cleaning pricing failed.`,
-error
-);
-
-}
-
-}
-
-const productMethod =
-normalizedSource ===
-"standard"
-?
-pricing.getStandardPrice
-:
-pricing.getCustomPrice;
-
-if (
-typeof productMethod !==
-"function"
-) {
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-"SELF_CLEANING_MASTER_METHOD_UNAVAILABLE"
-
-};
-
-}
-
-try {
-
-const baseResult =
-op3aNormalizePriceResult(
-productMethod.call(
-pricing,
-{
-
-...pricingOptions,
-
-selfCleaning:false,
-
-includeSelfCleaning:false,
-
-selfCleaningSelected:false
-
-}
-),
-normalizedSource
-);
-
-const selfCleaningResult =
-op3aNormalizePriceResult(
-productMethod.call(
-pricing,
-{
-
-...pricingOptions,
-
-selfCleaning:true,
-
-includeSelfCleaning:true,
-
-selfCleaningSelected:true
-
-}
-),
-normalizedSource
-);
-
-if (
-!baseResult.available ||
-!selfCleaningResult.available
-) {
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-"SELF_CLEANING_PRICE_UNAVAILABLE"
-
-};
-
-}
-
-const addOn =
-Number(
-selfCleaningResult.price
-) -
-Number(
-baseResult.price
-);
-
-if (
-!Number.isFinite(
-addOn
-) ||
-addOn <=
-0
-) {
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-"SELF_CLEANING_SURCHARGE_NOT_RETURNED"
-
-};
-
-}
-
-return {
-
-available:true,
-
-source:
-normalizedSource,
-
-addOn:
-addOn
-
-};
-
-}
-catch (
-error
-) {
-
-console.warn(
-`OP-3A ${normalizedSource} Self Cleaning compatibility pricing failed.`,
-error
-);
-
-return {
-
-available:false,
-
-source:
-normalizedSource,
-
-addOn:null,
-
-reasonCode:
-"SELF_CLEANING_MASTER_ERROR"
-
-};
-
-}
-
-}
-
-/* =========================================
-FINAL STANDARD PRICE
-
-Final unit price =
-master base price
-+
-master Self Cleaning surcharge when Yes.
-========================================= */
-
-function op3aGetStandardPriceResult(
-selection
-) {
-
-const baseResult =
-op3aGetStandardBasePriceResult(
-selection
-);
-
-if (
-!baseResult.available
-) {
-
-return baseResult;
-
-}
-
-const basePrice =
-Number(
-baseResult.price
-);
-
-const selfCleaning =
-op3aNormalizeSelfCleaning(
-selection?.selfCleaning
-);
-
-if (
-selfCleaning !==
-"yes"
-) {
-
-return {
-
-...baseResult,
-
-available:true,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"no",
-
-selfCleaningAddOn:
-0,
-
-price:
-basePrice
-
-};
-
-}
-
-const selfCleaningResult =
-op3aGetSelfCleaningAddOnResult(
-selection,
-"standard"
-);
-
-if (
-!selfCleaningResult.available
-) {
-
-return {
-
-...baseResult,
-
-available:false,
-
-price:null,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"yes",
-
-selfCleaningAddOn:
-null,
-
-reasonCode:
-selfCleaningResult.reasonCode ||
-"SELF_CLEANING_PRICE_UNAVAILABLE"
-
-};
-
-}
-
-const addOn =
-Number(
-selfCleaningResult.addOn
-);
-
-return {
-
-...baseResult,
-
-available:true,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"yes",
-
-selfCleaningAddOn:
-addOn,
-
-price:
-basePrice +
-addOn
-
-};
-
-}
-
-/* =========================================
-FINAL CUSTOM PRICE
-========================================= */
-
-function op3aGetCustomPriceResult(
-selection
-) {
-
-const baseResult =
-op3aGetCustomBasePriceResult(
-selection
-);
-
-if (
-!baseResult.available
-) {
-
-return baseResult;
-
-}
-
-const basePrice =
-Number(
-baseResult.price
-);
-
-const selfCleaning =
-op3aNormalizeSelfCleaning(
-selection?.selfCleaning
-);
-
-if (
-selfCleaning !==
-"yes"
-) {
-
-return {
-
-...baseResult,
-
-available:true,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"no",
-
-selfCleaningAddOn:
-0,
-
-price:
-basePrice
-
-};
-
-}
-
-const selfCleaningResult =
-op3aGetSelfCleaningAddOnResult(
-selection,
-"custom"
-);
-
-if (
-!selfCleaningResult.available
-) {
-
-return {
-
-...baseResult,
-
-available:false,
-
-price:null,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"yes",
-
-selfCleaningAddOn:
-null,
-
-reasonCode:
-selfCleaningResult.reasonCode ||
-"SELF_CLEANING_PRICE_UNAVAILABLE"
-
-};
-
-}
-
-const addOn =
-Number(
-selfCleaningResult.addOn
-);
-
-return {
-
-...baseResult,
-
-available:true,
-
-basePrice:
-basePrice,
-
-selfCleaning:
-"yes",
-
-selfCleaningAddOn:
-addOn,
-
-price:
-basePrice +
-addOn
-
-};
-
-}
-
-/* =========================================
-STANDARD / CUSTOM PRICE WRAPPERS
-========================================= */
-
-function op3aCalculateStandardPriceForSelection(
-selection
-) {
-
-const result =
-op3aGetStandardPriceResult(
-selection
-);
-
-return result.available
-?
-result.price
-:
-null;
-
-}
-
-function op3aSelectedPrice() {
-
-return op3aCalculateStandardPriceForSelection(
-state
-);
-
-}
-
-function op3aCalculateCustomPriceForSelection(
-selection
-) {
-
-const result =
-op3aGetCustomPriceResult(
-selection
-);
-
-return result.available
-?
-result.price
-:
-null;
-
-}
-
-function op3aSelectedCustomPrice() {
-
-return op3aCalculateCustomPriceForSelection(
-{
-
-width:
-customState.width,
-
-length:
-customState.length,
-
-glazing:
-customState.glazing,
-
-type:
-customState.type,
-
-tint:
-customState.tint,
-
-finish:
-customState.tint,
-
-border:
-customState.border,
-
-selfCleaning:
-op3aNormalizeSelfCleaning(
-customState.selfCleaning
-)
-
-}
-);
-
-}
-
-/* =========================================
-MASTER MAKE-UP
-========================================= */
-
-function op3aResolveMasterMakeup(
-size,
-border,
-glazing,
-type = "toughened",
-finish = "clear"
-) {
-
-const makeup =
-op3aGetMakeupMaster();
-
-if (
-!makeup ||
-typeof makeup.getUnitMakeup !==
-"function"
-) {
-
-return null;
-
-}
-
-const sizeData =
-op3aSplitSize(
-size
-);
-
-if (
-!sizeData
-) {
-
-return null;
-
-}
-
-const normalizedFinish =
-op3aNormalizeTint(
-finish
-);
-
-const normalizedType =
-op3aNormalizeGlassType(
-type
-);
-
-const bottomType =
-normalizedType ===
-"laminated"
-?
-"lam"
-:
-"tough";
-
-try {
-
-const result =
-makeup.getUnitMakeup(
-{
-
-internalWidth:
-sizeData.width,
-
-internalLength:
-sizeData.length,
-
-border:
-op3aNormalizeBorder(
-border
-),
-
-glazing:
-op3aNormalizeGlazing(
-glazing
-),
-
-finish:
-normalizedFinish,
-
-bottomType:
-bottomType
-
-}
-);
-
-if (
-result?.supported ===
-true &&
-result?.panes?.top
-) {
-
-return result;
-
-}
-
-/*
-Top Glass is a display-only top-pane value.
-
-If the complete configuration is unsupported
-because of its bottom construction, retry with
-a toughened bottom solely to obtain the top
-pane specification.
-
-This does not make the unsupported complete
-unit purchasable.
-*/
-const topOnlyResult =
-makeup.getUnitMakeup(
-{
-
-internalWidth:
-sizeData.width,
-
-internalLength:
-sizeData.length,
-
-border:
-op3aNormalizeBorder(
-border
-),
-
-glazing:
-op3aNormalizeGlazing(
-glazing
-),
-
-finish:
-normalizedFinish,
-
-bottomType:
-"tough"
-
-}
-);
-
-return (
-topOnlyResult?.supported ===
-true &&
-topOnlyResult?.panes?.top
-)
-?
-topOnlyResult
-:
-null;
-
-}
-catch (
-error
-) {
-
-console.error(
-"OP-3A master make-up calculation failed.",
-error
-);
-
-return null;
-
-}
-
-}
-
-function op3aFormatTopGlassLabel(
-makeupResult
-) {
-
-const topPane =
-makeupResult?.panes?.top;
-
-const thickness =
-Number(
-topPane?.thickness
-);
-
-if (
-!Number.isFinite(
-thickness
-) ||
-thickness <=
-0
-) {
-
-return "Glass Specification Unavailable";
-
-}
-
-let materialLabel =
-String(
-topPane?.materialLabel ||
-""
-)
-.trim();
-
-if (
-!materialLabel
-) {
-
-const material =
-String(
-topPane?.material ||
-""
-)
-.trim()
-.replace(
-/-/g,
-" "
-);
-
-if (
-material
-) {
-
-materialLabel =
-material.replace(
-/\b\w/g,
-character =>
-character.toUpperCase()
-);
-
-}
-
-}
-
-materialLabel =
-materialLabel.replace(
-/^Clear\s+/i,
-""
-);
-
-if (
-/Toughened/i.test(
-materialLabel
-)
-) {
-
-return (
-`${thickness}mm ` +
-`${materialLabel} Safety Glass`
-);
-
-}
-
-if (
-materialLabel
-) {
-
-if (
-/Glass$/i.test(
-materialLabel
-)
-) {
-
-return (
-`${thickness}mm ` +
-materialLabel
-);
-
-}
-
-return (
-`${thickness}mm ` +
-`${materialLabel} Glass`
-);
-
-}
-
-return `${thickness}mm Toughened Safety Glass`;
-
-}
-
-function op3aGetTopGlassLabelFor(
-size,
-border,
-glazing,
-type = "toughened",
-finish = "clear"
-) {
-
-return op3aFormatTopGlassLabel(
-op3aResolveMasterMakeup(
-size,
-border,
-glazing,
-type,
-finish
-)
-);
-
-}
-
-function op3aGetTopGlassLabel() {
-
-return op3aGetTopGlassLabelFor(
-state.size,
-state.border,
-state.glazing,
-state.type,
-state.tint
-);
-
-}
-
-/* =========================================
-GLOBAL FUNCTION INSTALLATION
-========================================= */
-
-function op3aInstallGlobalFunction(
-name,
-replacement
-) {
-
-if (
-typeof replacement !==
-"function"
-) {
-
-return false;
-
-}
-
-if (
-typeof globalThis[
+const missingFunctions =
+requiredFunctions.filter(
+name =>
+typeof delivery[
 name
 ] !==
 "function"
-) {
-
-console.warn(
-`OP-3A could not find existing function ${name}().`
-);
-
-return false;
-
-}
-
-try {
-
-globalThis[
-name
-] =
-replacement;
-
-return globalThis[
-name
-] ===
-replacement;
-
-}
-catch (
-error
-) {
-
-console.warn(
-`OP-3A could not replace ${name}().`,
-error
-);
-
-return false;
-
-}
-
-}
-
-/* =========================================
-STANDARD DISPLAY FAIL-CLOSED
-========================================= */
-
-function op3aBlankStandardPriceDisplay() {
-
-if (
-priceWhole
-) {
-
-priceWhole.textContent =
-"";
-
-}
-
-if (
-pricePence
-) {
-
-pricePence.textContent =
-"";
-
-}
-
-if (
-unitPriceLine
-) {
-
-unitPriceLine.setAttribute(
-"aria-label",
-"Price unavailable for this configuration"
-);
-
-}
-
-if (
-totalPriceBlock
-) {
-
-totalPriceBlock.hidden =
-true;
-
-totalPriceBlock.classList.remove(
-"is-visible"
-);
-
-totalPriceBlock.setAttribute(
-"aria-hidden",
-"true"
-);
-
-}
-
-}
-
-function op3aApplyCurrentStandardAvailability() {
-
-if (
-!op3aTestReady
-) {
-
-return;
-
-}
-
-const result =
-op3aGetStandardPriceResult(
-state
 );
 
 if (
-addToOrder
+missingFunctions.length
 ) {
 
-addToOrder.disabled =
-!result.available;
-
-}
-
-if (
-!result.available
-) {
-
-op3aBlankStandardPriceDisplay();
-
-}
-
-}
-
-function op3aUpdateUI(
-options = {}
-) {
-
-if (
-typeof op3aOriginalUpdateUI !==
-"function"
-) {
-
-return;
-
-}
-
-op3aOriginalUpdateUI(
-options
-);
-
-op3aApplyCurrentStandardAvailability();
-
-}
-
-/* =========================================
-BASKET REPRICING
-
-Every item is re-derived from the masters.
-
-Stored:
-- unitPrice
-- price
-- selfCleaningAddOn
-
-are all rebuilt.
-
-Self Cleaning choice itself is retained.
-Old items default to No.
-========================================= */
-
-function op3aRepriceBasketItem(
-item,
-kind
-) {
-
-if (
-!item ||
-typeof item !==
-"object"
-) {
-
-return false;
-
-}
-
-const selfCleaning =
-op3aNormalizeSelfCleaning(
-item.selfCleaning
-);
-
-const result =
-kind ===
-"custom"
-?
-op3aGetCustomPriceResult(
-{
-
-width:
-item.width ??
-item.internalWidth,
-
-length:
-item.length ??
-item.internalLength,
-
-glazing:
-item.glazing ??
-item.glazingConfiguration,
-
-type:
-item.type ??
-item.glazingConstruction,
-
-tint:
-item.tint ??
-item.finish,
-
-finish:
-item.tint ??
-item.finish,
-
-border:
-item.border,
-
-selfCleaning:
-selfCleaning
-
-}
+throw new Error(
+"MasterDeliveryRates is missing required public functions: " +
+missingFunctions.join(
+", "
 )
-:
-op3aGetStandardPriceResult(
+);
+
+}
+
+/* =========================================
+STANDARD DELIVERY CATEGORY CHECKS
+========================================= */
+
+if (
+delivery.getDeliveryCategoryForSize(
+"600x900"
+) !==
+"small"
+) {
+
+throw new Error(
+"OP-3B delivery category test failed for 600x900."
+);
+
+}
+
+if (
+delivery.getDeliveryCategoryForSize(
+"1000x1500"
+) !==
+"large"
+) {
+
+throw new Error(
+"OP-3B delivery category test failed for 1000x1500."
+);
+
+}
+
+if (
+delivery.getDeliveryCategoryForSize(
+"1500x2500"
+) !==
+"extraLarge"
+) {
+
+throw new Error(
+"OP-3B delivery category test failed for 1500x2500."
+);
+
+}
+
+/* =========================================
+CUSTOM DELIVERY CATEGORY CHECKS
+========================================= */
+
+if (
+delivery.getDeliveryCategoryForCustomDimensions(
+777,
+1333
+) !==
+"medium"
+) {
+
+throw new Error(
+"OP-3B custom delivery category test failed for 777x1333."
+);
+
+}
+
+if (
+delivery.getDeliveryCategoryForCustomDimensions(
+500,
+3000
+) !==
+"extraLarge"
+) {
+
+throw new Error(
+"OP-3B custom delivery category test failed for 500x3000."
+);
+
+}
+
+/* =========================================
+BASKET DELIVERY CHECKS
+========================================= */
+
+const customOnlyDelivery =
+delivery.calculateBasketDelivery(
+[
 {
+source:"order-page-custom",
+isCustom:true,
+custom:true,
+width:777,
+length:1333,
+quantity:2
+}
+],
+300
+);
 
-size:
-item.size,
+if (
+customOnlyDelivery?.requiresQuote ||
+customOnlyDelivery?.price !==
+90
+) {
 
-glazing:
-item.glazing ??
-item.glazingConfiguration,
+throw new Error(
+"OP-3B custom-only delivery calculation test failed."
+);
 
-type:
-item.type ??
-item.glazingConstruction,
+}
 
-tint:
-item.tint ??
-item.finish,
+const splitDelivery =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1500x2500",
+quantity:1
+},
+{
+size:"600x900",
+quantity:1
+}
+],
+34
+);
 
-finish:
-item.tint ??
-item.finish,
+if (
+splitDelivery?.requiresQuote ||
+splitDelivery?.groupCount !==
+2 ||
+splitDelivery?.price !==
+80
+) {
 
-border:
-item.border,
+throw new Error(
+"OP-3B Extra-Large split-group delivery test failed."
+);
 
-selfCleaning:
-selfCleaning
+}
 
+const groupedAdditionalDelivery =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1500x2500",
+quantity:2
+},
+{
+size:"1000x1500",
+quantity:1
+},
+{
+size:"600x900",
+quantity:1
+}
+],
+34
+);
+
+if (
+groupedAdditionalDelivery?.requiresQuote ||
+groupedAdditionalDelivery?.groupCount !==
+2 ||
+groupedAdditionalDelivery?.price !==
+170
+) {
+
+throw new Error(
+"OP-3B grouped additional-unit delivery test failed."
+);
+
+}
+
+/* =========================================
+DISTANCE LIMIT CHECKS
+========================================= */
+
+const largeAt400 =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1000x1500",
+quantity:1
+}
+],
+400
+);
+
+if (
+largeAt400?.requiresQuote ||
+largeAt400?.price !==
+85
+) {
+
+throw new Error(
+"OP-3B 400-mile Large delivery test failed."
+);
+
+}
+
+const largeAt401 =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1000x1500",
+quantity:1
+}
+],
+401
+);
+
+if (
+largeAt401?.requiresQuote !==
+true
+) {
+
+throw new Error(
+"OP-3B 401-mile Large delivery-limit test failed."
+);
+
+}
+
+const extraLargeAt200 =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1500x2500",
+quantity:1
+}
+],
+200
+);
+
+if (
+extraLargeAt200?.requiresQuote ||
+extraLargeAt200?.price !==
+115
+) {
+
+throw new Error(
+"OP-3B 200-mile Extra Large delivery test failed."
+);
+
+}
+
+const extraLargeAt201 =
+delivery.calculateBasketDelivery(
+[
+{
+size:"1500x2500",
+quantity:1
+}
+],
+201
+);
+
+if (
+extraLargeAt201?.requiresQuote !==
+true
+) {
+
+throw new Error(
+"OP-3B 201-mile Extra Large delivery-limit test failed."
+);
+
+}
+
+/* =========================================
+SELF CLEANING MUST NOT CHANGE DELIVERY
+
+Compare an otherwise-identical two-unit basket
+with and without separate Yes/No Self Cleaning
+states. Delivery must remain identical.
+========================================= */
+
+const selfCleaningBaseline =
+delivery.calculateBasketDelivery(
+[
+{
+size:"600x900",
+quantity:2
+}
+],
+34
+);
+
+const selfCleaningVariant =
+delivery.calculateBasketDelivery(
+[
+{
+size:"600x900",
+quantity:1,
+selfCleaning:"no",
+selfCleaningAddOn:0,
+unitPrice:285
+},
+{
+size:"600x900",
+quantity:1,
+selfCleaning:"yes",
+selfCleaningAddOn:35,
+unitPrice:320
+}
+],
+34
+);
+
+if (
+selfCleaningVariant?.requiresQuote !==
+selfCleaningBaseline?.requiresQuote ||
+selfCleaningVariant?.price !==
+selfCleaningBaseline?.price ||
+selfCleaningVariant?.groupCount !==
+selfCleaningBaseline?.groupCount
+) {
+
+throw new Error(
+"OP-3B Self Cleaning delivery-isolation test failed. Self Cleaning must not alter delivery pricing or grouping."
+);
+
+}
+
+/* =========================================
+LEAD-TIME CHECKS
+========================================= */
+
+const toughenedClearLeadTime =
+delivery.getLeadTimeForSelection(
+{
+type:"toughened",
+tint:"clear",
+selfCleaning:"no"
+},
+{
+normalizeTint:
+normalizeTint
 }
 );
 
-item.selfCleaning =
-selfCleaning;
-
 if (
-!result.available
-) {
-
-item.unitPrice =
-null;
-
-item.price =
-null;
-
-item.selfCleaningAddOn =
-selfCleaning ===
-"yes"
-?
-null
-:
-0;
-
-return false;
-
-}
-
-item.unitPrice =
-result.price;
-
-item.price =
-result.price;
-
-item.selfCleaningAddOn =
-selfCleaning ===
-"yes"
-?
 Number(
-result.selfCleaningAddOn
+toughenedClearLeadTime?.min
+) !==
+4 ||
+Number(
+toughenedClearLeadTime?.max
+) !==
+6
+) {
+
+throw new Error(
+"OP-3B Toughened Clear lead-time test failed."
+);
+
+}
+
+const toughenedClearSelfCleaningLeadTime =
+delivery.getLeadTimeForSelection(
+{
+type:"toughened",
+tint:"clear",
+selfCleaning:"yes"
+},
+{
+normalizeTint:
+normalizeTint
+}
+);
+
+if (
+Number(
+toughenedClearSelfCleaningLeadTime?.min
+) !==
+Number(
+toughenedClearLeadTime?.min
+) ||
+Number(
+toughenedClearSelfCleaningLeadTime?.max
+) !==
+Number(
+toughenedClearLeadTime?.max
 )
-:
-0;
+) {
 
-return true;
-
-}
-
-function op3aRepriceCurrentBasket() {
-
-state.orderItems.forEach(
-item => {
-
-op3aRepriceBasketItem(
-item,
-"standard"
+throw new Error(
+"OP-3B Self Cleaning lead-time isolation test failed."
 );
 
 }
+
+const laminatedBlueLeadTime =
+delivery.getLeadTimeForSelection(
+{
+type:"laminated",
+tint:"blue",
+selfCleaning:"no"
+},
+{
+normalizeTint:
+normalizeTint
+}
 );
 
-state.customOrderItems.forEach(
-item => {
+if (
+Number(
+laminatedBlueLeadTime?.min
+) !==
+8 ||
+Number(
+laminatedBlueLeadTime?.max
+) !==
+10
+) {
 
-op3aRepriceBasketItem(
-item,
-"custom"
+throw new Error(
+"OP-3B Laminated Blue lead-time test failed."
 );
+
+}
+
+/* =========================================
+POSTCODE COMPLETENESS CHECKS
+========================================= */
+
+const postcodeChecks = [
+{
+postcode:"EC1V 2NX",
+expected:true
+},
+{
+postcode:"EC1V2NX",
+expected:true
+},
+{
+postcode:"EC1V 2N",
+expected:false
+},
+{
+postcode:"SL9 7BB",
+expected:true
+}
+];
+
+postcodeChecks.forEach(
+check => {
+
+const actual =
+delivery.isCompleteUKPostcode(
+check.postcode
+);
+
+if (
+actual !==
+check.expected
+) {
+
+throw new Error(
+`OP-3B postcode validation failed for ${check.postcode}.`
+);
+
+}
 
 }
 );
@@ -2644,114 +1290,75 @@ item,
 }
 
 /* =========================================
-INSTALL MASTER OVERRIDES
+INSTALL LIVE ORDER PAGE DELIVERY ADAPTERS
 
-OP-2 itself already uses master functions.
-
-These overrides ensure OP-3A's validated
-master bridge becomes the active route for:
-- final standard pricing
-- final custom pricing
-- Self Cleaning surcharge resolution
-- selected-price wrappers
-- top glass display
+Only functions that OP-2 actually owns and
+calls are replaced. Low-level private master
+functions are no longer mirrored into OP-2.
 ========================================= */
 
-function op3aInstallPricingAndMakeupOverrides() {
+function op3bInstallDeliveryOverrides() {
 
 if (
-op3aTestOverridesInstalled
+op3bDeliveryOverridesInstalled
 ) {
 
 return;
 
 }
 
-const pricing =
-op3aGetPricingMaster();
-
-const makeup =
-op3aGetMakeupMaster();
-
-if (
-!pricing ||
-typeof pricing.getStandardPrice !==
-"function" ||
-typeof pricing.getCustomPrice !==
-"function"
-) {
-
-throw new Error(
-"FactoryRooflightsMasterPricing must provide getStandardPrice() and getCustomPrice()."
-);
-
-}
-
-if (
-!makeup ||
-typeof makeup.getUnitMakeup !==
-"function"
-) {
-
-throw new Error(
-"MasterMakeupLogic.getUnitMakeup() is unavailable."
-);
-
-}
-
-op3aOriginalUpdateUI =
-globalThis.updateUI;
+op3bValidateMasterDelivery();
 
 const installedFunctions = [
 
-op3aInstallGlobalFunction(
-"getMasterStandardPriceResult",
-op3aGetStandardPriceResult
+op3bInstallGlobalFunction(
+"normalizePostcode",
+op3bNormalizePostcode
 ),
 
-op3aInstallGlobalFunction(
-"getMasterCustomPriceResult",
-op3aGetCustomPriceResult
+op3bInstallGlobalFunction(
+"formatPostcode",
+op3bFormatPostcode
 ),
 
-op3aInstallGlobalFunction(
-"getMasterSelfCleaningAddOnResult",
-op3aGetSelfCleaningAddOnResult
+op3bInstallGlobalFunction(
+"isCompleteUKPostcode",
+op3bIsCompleteUKPostcode
 ),
 
-op3aInstallGlobalFunction(
-"calculateStandardPriceForSelection",
-op3aCalculateStandardPriceForSelection
+op3bInstallGlobalFunction(
+"getDeliveryCategoryForSize",
+op3bGetDeliveryCategoryForSize
 ),
 
-op3aInstallGlobalFunction(
-"selectedPrice",
-op3aSelectedPrice
+op3bInstallGlobalFunction(
+"getDeliveryCategoryForCustomDimensions",
+op3bGetDeliveryCategoryForCustomDimensions
 ),
 
-op3aInstallGlobalFunction(
-"calculateCustomPriceForSelection",
-op3aCalculateCustomPriceForSelection
+op3bInstallGlobalFunction(
+"getResolvedDeliveryContributionForItem",
+op3bGetResolvedDeliveryContributionForItem
 ),
 
-op3aInstallGlobalFunction(
-"selectedCustomPrice",
-op3aSelectedCustomPrice
+op3bInstallGlobalFunction(
+"calculatePostcodeDelivery",
+op3bCalculatePostcodeDelivery
 ),
 
-op3aInstallGlobalFunction(
-"getTopGlassLabelFor",
-op3aGetTopGlassLabelFor
+op3bInstallGlobalFunction(
+"getLeadTimeForSelection",
+op3bGetLeadTimeForSelection
 ),
 
-op3aInstallGlobalFunction(
-"getTopGlassLabel",
-op3aGetTopGlassLabel
+op3bInstallGlobalFunction(
+"getBasketLeadTime",
+op3bGetBasketLeadTime
 ),
 
-op3aInstallGlobalFunction(
-"updateUI",
-op3aUpdateUI
+op3bInstallGlobalFunction(
+"getBasketEstimatedDeliveryText",
+op3bGetBasketEstimatedDeliveryText
 )
 
 ];
@@ -2765,438 +1372,112 @@ true
 ) {
 
 throw new Error(
-"OP-3A could not install one or more Order Page function overrides."
+"OP-3B could not install one or more live delivery-master adapters."
 );
 
 }
 
-op3aTestOverridesInstalled =
+op3bDeliveryOverridesInstalled =
+true;
+
+globalThis.OP3B_DELIVERY_MASTER_ACTIVE =
 true;
 
 }
 
 /* =========================================
-SELF CLEANING VALIDATION
+REFRESH EXISTING ORDER PAGE FROM MASTER
 
-This is intentionally separate from the
-core pricing / make-up validation.
-
-Missing Self Cleaning pricing does NOT cause
-the whole Order Page master integration to
-fall back.
-
-Instead:
-- Self Cleaning remains unavailable.
-- OP-2 disables Yes once a priced
-configuration is known.
-- No surcharge is invented.
+No duplicate listeners.
+No second delivery clock.
+No product repricing.
+No Self Cleaning rewrite.
 ========================================= */
 
-function op3aValidateSelfCleaningPricing() {
-
-const standardResult =
-op3aGetSelfCleaningAddOnResult(
-{
-
-size:"600x900",
-
-glazing:"triple",
-
-type:"toughened",
-
-finish:"clear",
-
-border:100
-
-},
-"standard"
-);
-
-const customResult =
-op3aGetSelfCleaningAddOnResult(
-{
-
-width:1000,
-
-length:1000,
-
-glazing:"double",
-
-type:"toughened",
-
-finish:"clear",
-
-border:100
-
-},
-"custom"
-);
-
-const standardAvailable =
-standardResult.available ===
-true &&
-Number.isFinite(
-Number(
-standardResult.addOn
-)
-) &&
-Number(
-standardResult.addOn
-) >
-0;
-
-const customAvailable =
-customResult.available ===
-true &&
-Number.isFinite(
-Number(
-customResult.addOn
-)
-) &&
-Number(
-customResult.addOn
-) >
-0;
-
-globalThis.OP3A_STANDARD_SELF_CLEANING_AVAILABLE =
-standardAvailable;
-
-globalThis.OP3A_CUSTOM_SELF_CLEANING_AVAILABLE =
-customAvailable;
-
-globalThis.OP3A_SELF_CLEANING_PRICING_AVAILABLE =
-standardAvailable &&
-customAvailable;
+async function op3bRefreshDeliveryFromMaster() {
 
 if (
-!standardAvailable
-) {
-
-console.warn(
-"OP-3A: Standard Self Cleaning pricing is not currently available from FactoryRooflightsMasterPricing.",
-standardResult
-);
-
-}
-
-if (
-!customAvailable
-) {
-
-console.warn(
-"OP-3A: Custom Self Cleaning pricing is not currently available from FactoryRooflightsMasterPricing.",
-customResult
-);
-
-}
-
-return {
-
-standardAvailable:
-standardAvailable,
-
-customAvailable:
-customAvailable,
-
-fullyAvailable:
-standardAvailable &&
-customAvailable
-
-};
-
-}
-
-/* =========================================
-MASTER SYSTEM VALIDATION
-========================================= */
-
-function op3aValidateMasterSystems() {
-
-const standardTest =
-op3aGetStandardPriceResult(
-{
-
-size:"600x900",
-
-glazing:"triple",
-
-type:"toughened",
-
-finish:"clear",
-
-border:100,
-
-selfCleaning:"no"
-
-}
-);
-
-if (
-!standardTest.available ||
-!Number.isFinite(
-Number(
-standardTest.price
-)
-) ||
-Number(
-standardTest.price
-) <=
-0
-) {
-
-throw new Error(
-"OP-3A standard master-pricing test failed for 600x900 Triple / Toughened / Clear / 100mm."
-);
-
-}
-
-const customTest =
-op3aGetCustomPriceResult(
-{
-
-width:725,
-
-length:1375,
-
-glazing:"double",
-
-type:"toughened",
-
-finish:"clear",
-
-border:100,
-
-selfCleaning:"no"
-
-}
-);
-
-if (
-!customTest.available ||
-!Number.isFinite(
-Number(
-customTest.price
-)
-) ||
-Number(
-customTest.price
-) <=
-0
-) {
-
-throw new Error(
-"OP-3A custom master-pricing test failed for 725x1375 Double / Toughened / Clear / 100mm."
-);
-
-}
-
-const makeupChecks = [
-
-{
-size:"600x900",
-border:100,
-glazing:"triple",
-expectedThickness:6
-},
-
-{
-size:"1000x2500",
-border:100,
-glazing:"triple",
-expectedThickness:8
-},
-
-{
-size:"1500x2500",
-border:100,
-glazing:"double",
-expectedThickness:10
-}
-
-];
-
-makeupChecks.forEach(
-check => {
-
-const result =
-op3aResolveMasterMakeup(
-check.size,
-check.border,
-check.glazing,
-"toughened",
-"clear"
-);
-
-const actualThickness =
-Number(
-result?.panes?.top?.thickness
-);
-
-if (
-actualThickness !==
-check.expectedThickness
-) {
-
-throw new Error(
-`OP-3A make-up test failed for ${check.size}. Expected ${check.expectedThickness}mm top glass, received ${actualThickness}mm.`
-);
-
-}
-
-}
-);
-
-const delivery =
-op3aGetDeliveryMaster();
-
-if (
-!delivery ||
-typeof delivery.getDeliveryCategoryForSize !==
-"function" ||
-typeof delivery.calculateBasketDelivery !==
-"function" ||
-typeof delivery.calculateDelivery !==
+typeof invalidateDeliveryLookup ===
 "function"
 ) {
 
-throw new Error(
-"MasterDeliveryRates is loaded incorrectly."
+invalidateDeliveryLookup();
+
+}
+
+const commercialSnapshot =
+op3bCaptureCommercialBasketState();
+
+state.orderItems.forEach(
+item => {
+
+item.deliveryCategory =
+getDeliveryCategoryForSize(
+item.size
 );
 
 }
+);
 
-if (
-delivery.getDeliveryCategoryForSize(
-"600x900"
-) !==
-"small"
-) {
+state.customOrderItems.forEach(
+item => {
 
-throw new Error(
-"OP-3A delivery-master load test failed for 600x900."
+item.deliveryCategory =
+getDeliveryCategoryForCustomDimensions(
+item.width ??
+item.internalWidth,
+item.length ??
+item.internalLength
 );
 
 }
+);
 
-/*
-Self Cleaning is a separate capability.
-Its absence does not invalidate ordinary
-rooflight pricing.
-*/
-op3aValidateSelfCleaningPricing();
-
-}
-
-/* =========================================
-LOADING / FAILURE STATE
-========================================= */
-
-function op3aSetLoadingState() {
+const postcode =
+String(
+state.deliveryPostcode ||
+""
+)
+.trim();
 
 if (
-op3aTestReady ||
-op3aTestFailed
+postcode &&
+(
+state.orderItems.length ||
+state.customOrderItems.length
+)
 ) {
+
+await recalculateResolvedDelivery(
+{
+animate:false
+}
+);
+
+op3bAssertCommercialBasketStatePreserved(
+commercialSnapshot
+);
+
+updateEstimatedDelivery();
+
+requestOrderSummaryDeliveryWidthSync();
+
+console.info(
+"OP-3B PASSED: MasterDeliveryRates is controlling live delivery and lead-time behaviour. Self Cleaning state and final product prices were preserved through the delivery refresh."
+);
 
 return;
 
 }
 
-if (
-addToOrder
-) {
-
-addToOrder.disabled =
-true;
-
-}
-
-if (
-customAddToOrder
-) {
-
-customAddToOrder.disabled =
-true;
-
-}
-
-}
-
-function op3aSetFailureState(
-error
-) {
-
-op3aTestFailed =
-true;
-
-globalThis.OP3A_SELF_CLEANING_PRICING_AVAILABLE =
-false;
-
-console.error(
-"OP-3A MASTER INTEGRATION FAILED. Ordering has been disabled so the page cannot silently use an unverified pricing or make-up route.",
-error
+setDeliveryPending(
+postcode
 );
-
-if (
-addToOrder
-) {
-
-addToOrder.disabled =
-true;
-
-}
-
-if (
-customAddToOrder
-) {
-
-customAddToOrder.disabled =
-true;
-
-}
-
-if (
-productGlassSpec
-) {
-
-productGlassSpec.textContent =
-"Glass Specification Unavailable";
-
-}
-
-}
-
-/* =========================================
-REFRESH PAGE FROM MASTERS
-========================================= */
-
-function op3aRefreshPageFromMasters() {
-
-/*
-Rebuild every basket unit price from the
-master first.
-
-This includes Self Cleaning when selected.
-*/
-op3aRepriceCurrentBasket();
-
-/*
-Do not rerun the complete OP-2
-initialisation.
-
-Refresh only data-dependent UI.
-*/
-updateUI(
-{
-updateUrl:false,
-animateImage:false
-}
-);
-
-updateCustomConfiguratorUI();
 
 state.basketTotal =
 calculateOrderTotal();
+
+saveOrderToStorage();
 
 renderOrderSummary(
 {
@@ -3223,36 +1504,31 @@ updateCheckoutAvailability();
 
 updateEstimatedDelivery();
 
-requestCustomSummaryColumnSync();
-
 requestOrderSummaryDeliveryWidthSync();
 
-saveOrderToStorage();
+op3bAssertCommercialBasketStatePreserved(
+commercialSnapshot
+);
 
-if (
-state.deliveryPostcode
-) {
-
-recalculateResolvedDelivery(
-{
-animate:false
-}
+console.info(
+"OP-3B PASSED: MasterDeliveryRates is controlling live delivery and lead-time behaviour. Self Cleaning state and final product prices were preserved."
 );
 
 }
 
-}
-
 /* =========================================
-BLOCK ORDER ACTIONS UNTIL READY
+FAIL-SAFE
+
+Ordering remains blocked until OP-3A and
+OP-3B have both completed successfully.
 ========================================= */
 
-function op3aBlockOrderActionsUntilReady(
+function op3bBlockOrderActionsUntilReady(
 event
 ) {
 
 if (
-op3aTestReady
+op3bTestReady
 ) {
 
 return;
@@ -3269,7 +1545,7 @@ null;
 
 const orderButton =
 eventTarget?.closest(
-"#addToOrder, #customAddToOrder"
+"#addToOrder, #customAddToOrder, .checkout-now"
 );
 
 if (
@@ -3286,49 +1562,144 @@ event.stopImmediatePropagation();
 
 }
 
-document.addEventListener(
-"click",
-op3aBlockOrderActionsUntilReady,
-true
+function op3bSetFailureState(
+error
+) {
+
+op3bTestFailed =
+true;
+
+globalThis.OP3B_DELIVERY_MASTER_ACTIVE =
+false;
+
+console.error(
+"OP-3B FAILED. Master delivery was not fully validated/activated and ordering has been disabled so the page cannot silently continue with an unverified delivery route.",
+error
 );
 
-queueMicrotask(
-() => {
+if (
+addToOrder
+) {
 
-op3aSetLoadingState();
+addToOrder.disabled =
+true;
+
+}
+
+if (
+customAddToOrder
+) {
+
+customAddToOrder.disabled =
+true;
+
+}
+
+document
+.querySelectorAll(
+".checkout-now"
+)
+.forEach(
+checkout => {
+
+checkout.classList.add(
+"is-disabled"
+);
+
+checkout.setAttribute(
+"aria-disabled",
+"true"
+);
+
+if (
+checkout instanceof
+HTMLButtonElement
+) {
+
+checkout.disabled =
+true;
+
+}
 
 }
 );
 
+}
+
+document.addEventListener(
+"click",
+op3bBlockOrderActionsUntilReady,
+true
+);
+
 /* =========================================
-LOAD / VALIDATE / ACTIVATE
+OP-3B START
+
+OP-3A owns master-file readiness.
+OP-3B waits for OP-3A, validates delivery,
+installs the live OP-2 adapters, refreshes
+once, then releases ordering.
 ========================================= */
 
-const OP3A_TEST_READY =
-op3aLoadMasterFiles()
+const op3bOp3aReadyPromise =
+typeof OP3A_TEST_READY !==
+"undefined"
+?
+OP3A_TEST_READY
+:
+Promise.reject(
+new Error(
+"OP-3B requires OP-3A to remain directly above it."
+)
+);
+
+const OP3B_TEST_READY =
+Promise.resolve(
+op3bOp3aReadyPromise
+)
 .then(
 () => {
 
-op3aValidateMasterSystems();
+if (
+globalThis.OP3A_MASTER_READY !==
+true
+) {
 
-op3aInstallPricingAndMakeupOverrides();
+throw new Error(
+"OP-3A did not report a successful master activation."
+);
 
-op3aTestReady =
-true;
+}
 
-globalThis.OP3A_MASTER_READY =
+op3bInstallDeliveryOverrides();
+
+/*
+Run OP-2's integration validation again after
+the live adapters have been installed.
+*/
+if (
+typeof validateDeliveryConfiguration ===
+"function"
+) {
+
+validateDeliveryConfiguration();
+
+}
+
+return op3bRefreshDeliveryFromMaster();
+
+}
+)
+.then(
+() => {
+
+op3bTestReady =
 true;
 
 document.removeEventListener(
 "click",
-op3aBlockOrderActionsUntilReady,
+op3bBlockOrderActionsUntilReady,
 true
-);
-
-op3aRefreshPageFromMasters();
-
-console.info(
-"OP-3A PASSED: master standard pricing, custom pricing, Self Cleaning bridge, glass make-up and master delivery integration are active. Self Cleaning remains fail-closed unless the shared master returns an authoritative surcharge."
 );
 
 return true;
@@ -3338,14 +1709,11 @@ return true;
 .catch(
 error => {
 
-globalThis.OP3A_MASTER_READY =
-false;
-
-op3aSetFailureState(
+op3bSetFailureState(
 error
 );
 
-throw error;
+return false;
 
 }
 );
