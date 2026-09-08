@@ -14181,8 +14181,12 @@ OP2 obtains the surcharge from the shared
 master and adds that master-owned surcharge
 to the master-owned base product price.
 
-If Self Cleaning cannot be priced by the
-master, the Yes option fails closed.
+The Yes / No control remains selectable and
+persistent. If a selected Self Cleaning
+configuration cannot be authoritatively
+priced by the shared master, product pricing
+and Add To Order fail closed without
+silently changing the customer's selection.
 ========================================= */
 
 function getFactoryRooflightsMasterPricing() {
@@ -15514,6 +15518,21 @@ active
 
 }
 
+/* =========================================
+CHANGE 1
+SELF CLEANING SELECTION PERSISTENCE
+
+No is the initial/default state, but OP2
+must never silently reset an explicit Yes
+selection merely because the surcharge is
+temporarily unavailable.
+
+The Yes control also remains selectable.
+Pricing / Add To Order still fail closed
+later if the shared master cannot return an
+authoritative surcharge for the selection.
+========================================= */
+
 function updateStandardSelfCleaningControl() {
 
 if (
@@ -15544,19 +15563,8 @@ surchargeResult.addOn
 ) >
 0;
 
-if (
-!available &&
-state.selfCleaning ===
-"yes"
-) {
-
-state.selfCleaning =
-"no";
-
-}
-
 standardSelfCleaningYesButton.disabled =
-!available;
+false;
 
 setSelfCleaningSurchargeDisplay(
 standardSelfCleaningSurcharge,
@@ -15585,12 +15593,12 @@ return;
 
 }
 
+customSelfCleaningYesButton.disabled =
+false;
+
 if (
 !dimensionsValid
 ) {
-
-customSelfCleaningYesButton.disabled =
-false;
 
 setSelfCleaningSurchargeDisplay(
 customSelfCleaningSurcharge,
@@ -15626,20 +15634,6 @@ Number(
 surchargeResult.addOn
 ) >
 0;
-
-if (
-!available &&
-customState.selfCleaning ===
-"yes"
-) {
-
-customState.selfCleaning =
-"no";
-
-}
-
-customSelfCleaningYesButton.disabled =
-!available;
 
 setSelfCleaningSurchargeDisplay(
 customSelfCleaningSurcharge,
@@ -24739,6 +24733,19 @@ updateQueryString();
 
 /* =========================================
 LOAD STANDARD CONFIG FROM QUERY
+
+CHANGE 2:
+Standard query parameters remain isolated
+from the custom calculator.
+
+Custom Width / Length are only imported
+when the URL explicitly represents a custom
+builder / custom rooflight workflow.
+
+The raw query values are checked before
+Number() is called so a missing parameter
+cannot become numeric zero through
+Number(null) === 0.
 ========================================= */
 
 function loadStateFromQuery() {
@@ -24746,6 +24753,94 @@ function loadStateFromQuery() {
 const params =
 new URLSearchParams(
 location.search
+);
+
+const source =
+String(
+params.get(
+"source"
+)
+||
+""
+)
+.toLowerCase();
+
+const focus =
+String(
+params.get(
+"focus"
+)
+||
+""
+)
+.toLowerCase();
+
+const explicitCustomQuery =
+source ===
+"homepage-custom" ||
+source ===
+"custom-builder" ||
+source ===
+"custom-rooflight" ||
+focus ===
+"custom-builder" ||
+focus ===
+"custom-rooflight" ||
+focus ===
+"custom-order-summary";
+
+const rawQueryWidth =
+params.get(
+"width"
+);
+
+const rawQueryLength =
+params.get(
+"length"
+);
+
+const hasQueryWidth =
+rawQueryWidth !==
+null &&
+String(
+rawQueryWidth
+).trim() !==
+"";
+
+const hasQueryLength =
+rawQueryLength !==
+null &&
+String(
+rawQueryLength
+).trim() !==
+"";
+
+const queryWidth =
+hasQueryWidth
+?
+Number(
+rawQueryWidth
+)
+:
+null;
+
+const queryLength =
+hasQueryLength
+?
+Number(
+rawQueryLength
+)
+:
+null;
+
+const hasUsableQueryDimensions =
+hasQueryWidth &&
+hasQueryLength &&
+Number.isFinite(
+queryWidth
+) &&
+Number.isFinite(
+queryLength
 );
 
 let size =
@@ -24756,35 +24851,24 @@ params.get(
 );
 
 if (
-!size
+!size &&
+!explicitCustomQuery &&
+hasUsableQueryDimensions
 ) {
 
-const width =
-Number(
-params.get(
-"width"
-)
-);
-
-const length =
-Number(
-params.get(
-"length"
-)
+const dimensionSize =
+normalizeSize(
+`${queryWidth}x${queryLength}`
 );
 
 if (
-Number.isFinite(
-width
-)
-&&
-Number.isFinite(
-length
-)
+PRODUCTS[
+dimensionSize
+]
 ) {
 
 size =
-`${width}x${length}`;
+dimensionSize;
 
 }
 
@@ -24834,16 +24918,6 @@ params.get(
 "selfCleaning"
 )
 );
-
-const source =
-String(
-params.get(
-"source"
-)
-||
-""
-)
-.toLowerCase();
 
 const importedPriceRaw =
 String(
@@ -25006,27 +25080,17 @@ importedImage
 
 }
 
-const queryWidth =
-Number(
-params.get(
-"width"
-)
-);
+/* =========================================
+CUSTOM QUERY IMPORT
 
-const queryLength =
-Number(
-params.get(
-"length"
-)
-);
+Only explicit custom workflows are allowed
+to write into customState dimensions or
+the visible custom dimension inputs.
+========================================= */
 
 if (
-Number.isFinite(
-queryWidth
-) &&
-Number.isFinite(
-queryLength
-)
+explicitCustomQuery &&
+hasUsableQueryDimensions
 ) {
 
 customState.width =
@@ -25123,6 +25187,11 @@ state synchronised with customState.
 This is especially important when the
 custom builder is populated from a query
 string, restored state or another script.
+
+CHANGE 3:
+Self Cleaning now participates in this
+same synchronisation system through
+data-custom-setting="selfCleaning".
 ========================================= */
 
 function getCustomBuildDropdownStateValue(
@@ -25167,6 +25236,17 @@ setting ===
 ) {
 
 return customState.tint;
+
+}
+
+if (
+setting ===
+"selfCleaning"
+) {
+
+return normalizeSelfCleaningSelection(
+customState.selfCleaning
+);
 
 }
 
