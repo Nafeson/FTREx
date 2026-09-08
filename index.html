@@ -14849,6 +14849,88 @@ item,
 
 }
 
+
+/* =========================================
+HOMEPAGE BASKET SELF CLEANING
+
+The homepage basket does NOT calculate the
+Self Cleaning surcharge.
+
+It only reads the configuration already stored
+by the Order Page.
+
+Older basket items with no Self Cleaning field
+are treated as No.
+========================================= */
+
+function getItemSelfCleaning(
+item
+) {
+
+const stored =
+getNestedValue(
+item,
+[
+"selfCleaning",
+"selfCleaningSelected",
+"includeSelfCleaning",
+"selfCleaningOption",
+"self_cleaning"
+]
+);
+
+if (
+typeof stored ===
+"boolean"
+) {
+
+return stored
+? "Yes"
+: "No";
+
+}
+
+if (
+typeof stored ===
+"number"
+) {
+
+return stored ===
+1
+? "Yes"
+: "No";
+
+}
+
+const normalized =
+String(
+stored ||
+""
+)
+.trim()
+.toLowerCase();
+
+if (
+normalized ===
+"yes" ||
+normalized ===
+"true" ||
+normalized ===
+"1" ||
+normalized ===
+"on" ||
+normalized ===
+"selected"
+) {
+
+return "Yes";
+
+}
+
+return "No";
+
+}
+
 function formatFinishName(
 finish
 ) {
@@ -17060,6 +17142,10 @@ total;
 
 /* =========================================
 BASKET ITEM EXPANDED STATE
+
+Self Cleaning is included in the item key so
+otherwise identical Yes / No configurations
+remain distinct.
 ========================================= */
 
 function getHomepageBasketItemKey(
@@ -17067,6 +17153,11 @@ item,
 kind,
 sourceIndex
 ) {
+
+const selfCleaning =
+getItemSelfCleaning(
+item
+);
 
 if (
 kind ===
@@ -17084,7 +17175,13 @@ if (
 customId
 ) {
 
-return `custom:${customId}`;
+return [
+"custom",
+customId,
+selfCleaning
+].join(
+":"
+);
 
 }
 
@@ -17101,6 +17198,7 @@ getItemGlazing(item),
 getItemGlassType(item),
 getItemBorder(item),
 getItemFinish(item),
+selfCleaning,
 getItemUnitPrice(item),
 sourceIndex
 ].join(
@@ -17122,6 +17220,7 @@ getItemGlazing(item),
 getItemGlassType(item),
 getItemBorder(item),
 getItemFinish(item),
+selfCleaning,
 getItemUnitPrice(item),
 sourceIndex
 ].join(
@@ -17133,6 +17232,17 @@ sourceIndex
 
 /* =========================================
 BASKET ITEM RENDER
+
+UPDATED BREAKDOWN ORDER:
+
+Glazing Glass Construction
+Top Glass Glass Finish
+Internal External
+Self Cleaning Unit Price
+
+Border is no longer displayed in the expanded
+basket breakdown, but remains stored and is
+still used wherever required elsewhere.
 ========================================= */
 
 function createBasketItemMarkup(
@@ -17186,8 +17296,8 @@ getItemFinish(
 item
 );
 
-const border =
-getItemBorder(
+const selfCleaning =
+getItemSelfCleaning(
 item
 );
 
@@ -17285,8 +17395,8 @@ ${expanded ? "" : "hidden"}
 </div>
 
 <div class="basket-drawer-item-spec">
-<span>Border</span>
-<strong>${escapeHomepageHtml(`${border}mm`)}</strong>
+<span>Top Glass</span>
+<strong>${escapeHomepageHtml(topGlass)}</strong>
 </div>
 
 <div class="basket-drawer-item-spec">
@@ -17305,8 +17415,8 @@ ${expanded ? "" : "hidden"}
 </div>
 
 <div class="basket-drawer-item-spec">
-<span>Top Glass</span>
-<strong>${escapeHomepageHtml(topGlass)}</strong>
+<span>Self Cleaning</span>
+<strong>${escapeHomepageHtml(selfCleaning)}</strong>
 </div>
 
 <div class="basket-drawer-item-spec unit-price">
