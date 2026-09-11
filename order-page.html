@@ -4856,36 +4856,119 @@ line-height:1.65;
 }
 
 /* =========================================
-DELIVERY TERMS & LEAD TIMES
-FRIENDLY ORDER-PAGE OVERVIEW
+NEW ORDER PAGE CHANGES 1 & 2
+INSET INFORMATION PANELS
+
+USED BY:
+- TECHNICAL INFORMATION
+- DELIVERY TERMS & LEAD TIMES
 ========================================= */
 
-.delivery-terms-content {
+.order-information-featured-content {
+position:relative;
 min-height:0;
+margin:
+5px
+58px
+27px
+7px;
+padding:
+20px
+20px
+21px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.075);
+border-top:2px solid rgba(232,120,23,.68);
+border-bottom-color:rgba(47,202,138,.20);
+border-radius:10px;
+background:
+linear-gradient(
+145deg,
+rgba(14,32,25,.42) 0%,
+rgba(15,18,17,.76) 48%,
+rgba(8,10,10,.91) 100%
+);
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,.018),
+0 8px 24px rgba(0,0,0,.09);
 }
 
-.delivery-terms-intro {
-max-width:860px;
-margin:0 0 7px;
+.order-information-featured-content::before {
+content:"";
+position:absolute;
+left:20px;
+right:20px;
+top:-1px;
+height:1px;
+background:
+linear-gradient(
+90deg,
+transparent 0%,
+rgba(242,138,40,.42) 18%,
+rgba(242,138,40,.18) 76%,
+transparent 100%
+);
+pointer-events:none;
+}
+
+.order-information-featured-content::after {
+content:"";
+position:absolute;
+left:20px;
+right:20px;
+bottom:-1px;
+height:1px;
+background:
+linear-gradient(
+90deg,
+transparent 0%,
+rgba(47,202,138,.32) 18%,
+rgba(47,202,138,.15) 74%,
+transparent 100%
+);
+pointer-events:none;
+}
+
+.information-feature-title {
+margin:0;
+color:var(--cream);
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+font-size:clamp(18px,1.75vw,23px);
+font-weight:800;
+line-height:1.05;
+letter-spacing:-.3px;
+}
+
+.information-feature-intro {
+max-width:900px;
+margin:9px 0 0;
 color:#d0d3d0;
 font-size:1em;
 line-height:1.65;
 }
 
-.delivery-terms-block {
+.information-feature-intro + .information-feature-intro {
+margin-top:9px;
+}
+
+.information-feature-block {
 max-width:900px;
 margin:0;
 padding:15px 0;
 border-top:1px solid rgba(255,255,255,.075);
 }
 
-.delivery-terms-block:first-of-type {
-margin-top:16px;
+.information-feature-block:first-of-type {
+margin-top:17px;
 }
 
-.delivery-terms-block strong {
+.information-feature-block strong {
 display:block;
-margin:0 0 5px;
+margin:0 0 6px;
 color:var(--cream);
 font-family:
 "Bahnschrift",
@@ -4898,13 +4981,27 @@ letter-spacing:.8px;
 text-transform:uppercase;
 }
 
-.delivery-terms-block p {
+.information-feature-block p {
 margin:0;
 color:var(--muted);
 line-height:1.65;
 }
 
-.delivery-terms-full {
+.information-feature-block p + p {
+margin-top:9px;
+}
+
+.information-feature-highlight {
+color:var(--orange-bright);
+font-weight:800;
+}
+
+.information-feature-soft-highlight {
+color:var(--cosmic-green-light);
+font-weight:750;
+}
+
+.information-feature-note {
 max-width:900px;
 margin:4px 0 0;
 padding-top:17px;
@@ -4914,7 +5011,11 @@ font-size:.93em;
 line-height:1.6;
 }
 
-.delivery-terms-full a {
+.information-feature-note strong {
+color:rgba(247,247,243,.82);
+}
+
+.order-information-featured-content a {
 color:var(--orange-bright);
 font-weight:750;
 text-decoration:none;
@@ -4924,7 +5025,7 @@ color .2s ease,
 border-color .2s ease;
 }
 
-.delivery-terms-full a:hover {
+.order-information-featured-content a:hover {
 color:#ff9b42;
 border-color:#ff9b42;
 }
@@ -5867,20 +5968,53 @@ padding:
 font-size:13px;
 }
 
-.delivery-terms-content {
+.order-information-featured-content {
 min-height:0;
+margin:
+4px
+6px
+20px;
+padding:
+15px
+13px
+16px;
+border-radius:9px;
+font-size:13px;
 }
 
-.delivery-terms-block {
-padding:13px 0;
+.order-information-featured-content::before,
+.order-information-featured-content::after {
+left:13px;
+right:13px;
 }
 
-.delivery-terms-block strong {
+.information-feature-title {
+font-size:clamp(16px,4.7vw,20px);
+}
+
+.information-feature-intro {
+margin-top:8px;
+line-height:1.6;
+}
+
+.information-feature-intro + .information-feature-intro {
+margin-top:8px;
+}
+
+.information-feature-block {
+padding:12px 0;
+}
+
+.information-feature-block:first-of-type {
+margin-top:14px;
+}
+
+.information-feature-block strong {
 font-size:.76em;
 letter-spacing:.65px;
 }
 
-.delivery-terms-full {
+.information-feature-note {
 padding-top:14px;
 font-size:.91em;
 }
@@ -8043,7 +8177,7 @@ aria-label="Rooflight order information"
 <div class="order-information-list">
 
 <!-- =========================================
-NEW ORDER PAGE CHANGE 2
+NEW ORDER PAGE CHANGE 1
 1. TECHNICAL INFORMATION
 ========================================= -->
 
@@ -8053,7 +8187,194 @@ NEW ORDER PAGE CHANGE 2
 Technical Information
 </summary>
 
-<div class="order-information-content">
+<div
+class="order-information-content order-information-featured-content technical-information-content"
+>
+
+<h3 class="information-feature-title">
+Choosing The Right Rooflight
+</h3>
+
+<p class="information-feature-intro">
+Our frameless rooflights are factory-sealed insulated glass units designed for flat and low-pitched roof applications. The options on this page allow you to choose the glazing, safety-glass construction, finish and border that best suit your project.
+</p>
+
+<div class="information-feature-block">
+
+<strong>
+Toughened or Laminated Glass?
+</strong>
+
+<p>
+Toughened safety glass is our standard construction and is suitable for the majority of normal flat-roof installations. It is heat-treated for increased strength and, if broken, is designed to fragment into relatively small pieces rather than large sharp shards.
+</p>
+
+<p>
+Choosing Laminated upgrades the inner pane of the rooflight to laminated safety glass. A bonded interlayer helps hold the glass together if it is damaged, providing additional post-breakage protection and helping prevent broken glass from falling freely from the opening.
+</p>
+
+<p>
+The additional glass, specialist interlayer and manufacturing involved are why laminated units cost more. The main benefit is the extra level of overhead-glazing safety, making laminated glass particularly useful for higher installations, steeper roof pitches and projects where additional protection beneath the rooflight is preferred.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Recommended Roof Pitch
+</strong>
+
+<p>
+For rooflights using our standard toughened inner glass, we recommend a maximum installation pitch of approximately <span class="information-feature-highlight">15°</span>.
+</p>
+
+<p>
+Rooflights with a laminated inner pane can be suitable for installation at pitches of up to approximately <span class="information-feature-highlight">45°</span>, provided the supporting upstand, roof construction, perimeter support and sealing arrangement are all correctly designed and installed for the application.
+</p>
+
+<p>
+For steeper installations, please refer to the <span class="information-feature-soft-highlight">Installation Guidelines</span> section below and our full <a href="installation-guide.html">Installation Guide</a> before fitting.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Double or Triple Glazed?
+</strong>
+
+<p>
+Double glazing uses two panes of glass separated by a sealed insulated cavity and provides strong thermal performance for the majority of domestic and commercial projects.
+</p>
+
+<p>
+Triple glazing adds a third pane and an additional insulated cavity, improving thermal performance further and creating a more substantial insulated glass unit.
+</p>
+
+<p>
+Typical centre-pane U-values are approximately <span class="information-feature-highlight">1.1 W/m²K for Double Glazing</span> and <span class="information-feature-highlight">0.9 W/m²K for Triple Glazing</span>.
+</p>
+
+<p>
+Triple glazed units are naturally heavier than equivalent double glazed units, so the additional weight should be considered when planning handling and installation.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Insulated Glass Construction
+</strong>
+
+<p>
+Our rooflights use factory-sealed insulated glass construction with safety glass, warm-edge spacer technology, Low-E glass and Argon-filled cavities to help provide good thermal performance and long-term insulated-glass performance.
+</p>
+
+<p>
+The precise glass thickness and construction used can vary according to the size and specification ordered. This is determined as part of the manufacturing specification, so you do not need to calculate individual glass thicknesses when choosing your rooflight.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Internal &amp; External Sizes
+</strong>
+
+<p>
+All rooflight sizes shown on our website refer to the <span class="information-feature-highlight">internal visible glass size</span>.
+</p>
+
+<p>
+The external top glass is larger because it also includes the ceramic border around the unit. With our standard 100mm border, the overall external dimension is normally 200mm larger than the internal dimension — 100mm on each side.
+</p>
+
+<p>
+For example, a 1000 × 1500mm internal rooflight with a 100mm border has an external glass size of approximately 1200 × 1700mm.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Choosing The Border Size
+</strong>
+
+<p>
+Our standard <span class="information-feature-highlight">100mm ceramic border</span> suits the majority of installations and provides coverage around a correctly constructed supporting upstand.
+</p>
+
+<p>
+We also offer 125mm and 150mm borders where a wider ceramic edge is preferred or where the roof construction and upstand require additional coverage.
+</p>
+
+<p>
+The ceramic border also helps conceal the supporting upstand and perimeter sealing area when the rooflight is viewed from above.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Glass Finishes
+</strong>
+
+<p>
+<span class="information-feature-soft-highlight">Clear</span> provides the most neutral appearance and maximum natural-light effect.
+</p>
+
+<p>
+<span class="information-feature-soft-highlight">Blue</span> and <span class="information-feature-soft-highlight">Grey</span> provide a tinted external appearance while continuing to allow natural daylight into the room.
+</p>
+
+<p>
+<span class="information-feature-soft-highlight">Satin</span> provides a privacy finish to the inner glass, reducing visibility through the rooflight while still allowing diffused natural light into the space below.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Self Cleaning Glass
+</strong>
+
+<p>
+Self Cleaning can be selected as an optional upgrade. The specialist external coating helps water spread more evenly across the glass and assists natural rainfall in breaking down and washing away everyday organic dirt.
+</p>
+
+<p>
+It can reduce routine cleaning requirements, although no rooflight should be considered completely maintenance-free.
+</p>
+
+</div>
+
+<div class="information-feature-block">
+
+<strong>
+Safety &amp; Glass Standards
+</strong>
+
+<p>
+Our rooflights are manufactured using established architectural glazing processes, including <span class="information-feature-soft-highlight">BS EN 12150 toughened safety glass</span> and <span class="information-feature-soft-highlight">BS EN 1279 insulated glass unit</span> construction where applicable.
+</p>
+
+<p>
+The most appropriate specification can still depend on the building, installation height, roof pitch and intended use. If your project is unusual or you are unsure whether Toughened or Laminated is the better option, please contact us before ordering and we can help you choose.
+</p>
+
+</div>
+
+<p class="information-feature-note">
+Correct installation is just as important as choosing the right glass specification. Before fitting your rooflight, please read the <strong>Installation Guidelines</strong> section below and our full <a href="installation-guide.html">Installation Guide</a>.
+</p>
+
 </div>
 
 </details>
@@ -8074,9 +8395,8 @@ Installation Guidelines
 </details>
 
 <!-- =========================================
-NEW ORDER PAGE CHANGE 3
+NEW ORDER PAGE CHANGE 2
 3. DELIVERY TERMS & LEAD TIMES
-FRIENDLY SUMMARY OF SHIPPING.HTML
 ========================================= -->
 
 <details class="order-information-item reveal reveal-delay-2">
@@ -8085,37 +8405,55 @@ FRIENDLY SUMMARY OF SHIPPING.HTML
 Delivery Terms &amp; Lead Times
 </summary>
 
-<div class="order-information-content delivery-terms-content">
+<div
+class="order-information-content order-information-featured-content delivery-terms-content"
+>
 
-<p class="delivery-terms-intro">
-Every Factory Toughened Rooflight is made to order in our UK workshop. We aim to keep the ordering and delivery process straightforward, with your estimated delivery window shown as you configure your rooflight.
+<h3 class="information-feature-title">
+Availability &amp; Delivery
+</h3>
+
+<p class="information-feature-intro">
+Most Factory Toughened Rooflights are manufactured to order in our UK workshop when the exact size and specification required is not already available from stock.
 </p>
 
-<div class="delivery-terms-block">
+<p class="information-feature-intro">
+Where your exact rooflight is already in stock and suitable delivery arrangements are available, we may be able to get it to you much sooner, with delivery possible in <span class="information-feature-highlight">as little as 2 working days</span>.
+</p>
+
+<div class="information-feature-block">
 
 <strong>
-Production &amp; Lead Times
+Stock, Production &amp; Lead Times
 </strong>
 
 <p>
-Clear toughened rooflights can be available from around 4 working days, while tinted, satin and laminated specifications can take a little longer. The estimated delivery dates shown on the page automatically adjust to suit the specification you select.
+If your rooflight is not already available from stock, it will normally be manufactured specifically for your order. Clear toughened rooflights can be available from around 4 working days, while tinted, satin and laminated specifications can take a little longer.
+</p>
+
+<p>
+The estimated delivery dates shown while you configure your rooflight automatically adjust to suit the specification you select and are the best guide to the current expected timescale.
 </p>
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Estimated Delivery Dates
 </strong>
 
 <p>
-The dates shown are our best estimate based on the current production lead time and working days. Weekends and applicable bank holidays are excluded. Because every rooflight is manufactured specifically for the order, occasional changes can happen during production or transport.
+The dates shown are our best estimate based on current production requirements, working days and normal delivery scheduling. Weekends and applicable bank holidays are excluded.
+</p>
+
+<p>
+If your exact rooflight is already in stock, it may be ready considerably sooner than the normal made-to-order lead time. Occasional changes can also happen during production or transport, so the dates shown should be treated as an estimated delivery window rather than a guaranteed appointment.
 </p>
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Delivery Charges
@@ -8127,7 +8465,7 @@ Delivery is calculated using your postcode together with the size and quantity o
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Delivery Area
@@ -8139,7 +8477,7 @@ Most standard orders can be delivered across a wide area of mainland Great Brita
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Receiving Your Rooflight
@@ -8151,7 +8489,7 @@ Rooflights are substantial glass products, so please make sure somebody suitable
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Access To The Property
@@ -8163,19 +8501,23 @@ If your property has restricted access, narrow roads, low bridges, weight restri
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Checking Your Delivery
 </strong>
 
 <p>
-We recommend checking the rooflight and its packaging when it arrives and letting us know promptly if there is any visible transport damage or anything that does not look right. Please contact us before installing a unit if you believe there may be an issue.
+We recommend checking the rooflight and its packaging when it arrives and letting us know promptly if there is any visible transport damage or anything that does not look right.
+</p>
+
+<p>
+If you believe there may be an issue with the rooflight itself, please contact us before installation wherever possible so we can help.
 </p>
 
 </div>
 
-<div class="delivery-terms-block">
+<div class="information-feature-block">
 
 <strong>
 Collection
@@ -8187,8 +8529,8 @@ Collection from our Denham location can also be arranged by prior booking. Pleas
 
 </div>
 
-<p class="delivery-terms-full">
-This section is a simple overview to help with your order. For the full delivery information and conditions, please see our <a href="shipping.html">Shipping &amp; Delivery Terms</a>.
+<p class="information-feature-note">
+This section is a simple overview to help you plan your order. For the full delivery information and conditions, please see our <a href="shipping.html">Shipping &amp; Delivery Terms</a>.
 </p>
 
 </div>
