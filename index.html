@@ -517,15 +517,15 @@ border-radius:7px;
 background:
 linear-gradient(
 145deg,
-#f49a48 0%,
-var(--orange) 52%,
-#9f4b0d 100%
+#b5e3ff 0%,
+#72c8f4 52%,
+#439fd9 100%
 );
-border:1px solid rgba(255,255,255,.28);
+border:1px solid rgba(255,255,255,.32);
 box-shadow:
 0 15px 30px rgba(0,0,0,.55),
-0 0 14px rgba(232,120,23,.18),
-inset 0 1px 0 rgba(255,255,255,.26);
+0 0 14px rgba(114,200,244,.22),
+inset 0 1px 0 rgba(255,255,255,.32);
 opacity:0;
 visibility:hidden;
 pointer-events:none;
@@ -549,16 +549,20 @@ scale(1);
 animation:emailAttention 4s ease-in-out .9s infinite;
 }
 
-.email-action svg {
-width:24px;
-height:24px;
+.email-action-symbol {
 display:block;
-fill:none;
-stroke:#ffffff;
-stroke-width:2;
-stroke-linecap:round;
-stroke-linejoin:round;
-filter:drop-shadow(0 2px 2px rgba(0,0,0,.22));
+color:#ffffff;
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:26px;
+font-weight:800;
+line-height:1;
+text-align:center;
+text-shadow:0 2px 2px rgba(0,0,0,.18);
+transform:translateY(-1px);
 }
 
 .email-action:hover,
@@ -568,8 +572,8 @@ translate(-50%,-2px)
 scale(1.04);
 box-shadow:
 0 18px 35px rgba(0,0,0,.62),
-0 0 22px rgba(232,120,23,.34),
-inset 0 1px 0 rgba(255,255,255,.34);
+0 0 22px rgba(114,200,244,.42),
+inset 0 1px 0 rgba(255,255,255,.40);
 }
 
 @keyframes emailAttention {
@@ -2089,8 +2093,9 @@ position:relative;
 z-index:4;
 display:grid;
 grid-template-columns:minmax(0,1fr) auto;
-align-items:start;
+align-items:stretch;
 gap:10px;
+min-height:120px;
 margin:0;
 padding:
 16px
@@ -2108,31 +2113,26 @@ box-shadow:0 10px 24px rgba(0,0,0,.22);
 
 .menu-brand {
 min-width:0;
+display:flex;
+align-items:center;
+justify-content:flex-start;
 }
 
 .menu-brand .wordmark-wrap {
-gap:8px;
+gap:0;
 }
 
 .menu-brand .wordmark {
-font-size:15px;
+font-size:19.5px;
 line-height:.91;
-letter-spacing:1.8px;
+letter-spacing:2.34px;
 }
 
 .menu-brand .wordmark-domain {
 font-size:.40em;
 margin-left:1px;
 padding-bottom:1px;
-}
-
-.menu-brand .address-line {
-margin-top:0;
-font-size:7.1px;
-font-weight:600;
-line-height:1.42;
-letter-spacing:.35px;
-color:rgba(255,255,255,.58);
+transform:translate(-1px,1px);
 }
 
 .close-menu {
@@ -2142,6 +2142,7 @@ padding:0;
 display:flex;
 align-items:center;
 justify-content:center;
+align-self:start;
 border:1px solid rgba(255,255,255,.17);
 border-radius:9px;
 background:#101212;
@@ -2289,12 +2290,6 @@ color:var(--orange-bright);
 transform:
 translateY(-50%)
 translateX(2px);
-}
-
-.menu-links .menu-contact-button::after {
-content:"✉";
-font-size:12px;
-color:var(--orange-bright);
 }
 
 /* ===============================
@@ -4550,6 +4545,17 @@ box-shadow .2s ease,
 background .2s ease;
 }
 
+/* =========================================
+HOMEPAGE CHANGE 5
+PREVENT IOS AUTO-ZOOM ON CALCULATOR
+WIDTH / LENGTH INPUTS
+========================================= */
+
+#width,
+#length {
+font-size:16px;
+}
+
 input:hover,
 select:hover {
 border-color:rgba(232,120,23,.34);
@@ -5589,11 +5595,7 @@ font-size:9px;
 }
 
 .menu-brand .wordmark {
-font-size:15px;
-}
-
-.menu-brand .address-line {
-font-size:7.1px;
+font-size:19.5px;
 }
 
 .spec-advice-panel,
@@ -5657,9 +5659,8 @@ width:22px;
 height:22px;
 }
 
-.email-action svg {
-width:20px;
-height:20px;
+.email-action-symbol {
+font-size:22px;
 }
 
 .basket-total-text {
@@ -5683,19 +5684,14 @@ max-width:70vw;
 }
 
 .menu-top {
+min-height:111px;
 padding:14px 10px 13px;
 gap:8px;
 }
 
 .menu-brand .wordmark {
-font-size:14px;
-letter-spacing:1.55px;
-}
-
-.menu-brand .address-line {
-font-size:6.7px;
-line-height:1.4;
-letter-spacing:.27px;
+font-size:18.2px;
+letter-spacing:2.015px;
 }
 
 .close-menu {
@@ -6780,18 +6776,14 @@ text-decoration:none;
 @media(max-width:390px) {
 
 .menu-top {
+min-height:106px;
 padding-left:9px;
 padding-right:9px;
 }
 
 .menu-brand .wordmark {
-font-size:13px;
-letter-spacing:1.4px;
-}
-
-.menu-brand .address-line {
-font-size:6.25px;
-letter-spacing:.22px;
+font-size:16.9px;
+letter-spacing:1.82px;
 }
 
 .menu-links {
@@ -7177,23 +7169,12 @@ aria-label="Compose a blank email to Factory Toughened Rooflights"
 title="Email sales@factorytoughenedrooflights.co.uk"
 >
 
-<svg
-viewBox="0 0 32 32"
+<span
+class="email-action-symbol"
 aria-hidden="true"
-focusable="false"
 >
-
-<rect
-x="4.5"
-y="7"
-width="23"
-height="18"
-rx="2.5"
-></rect>
-
-<path d="M6 9l10 8 10-8"></path>
-
-</svg>
+@
+</span>
 
 </a>
 
@@ -7487,13 +7468,6 @@ Rooflights
 <small class="wordmark-domain">.co.uk</small>
 </div>
 
-</div>
-
-<div class="address-line">
-Anamax Group Estate<br>
-Oxford Road, Denham<br>
-Buckinghamshire<br>
-SL9 7BB
 </div>
 
 </div>
