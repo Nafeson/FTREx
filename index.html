@@ -457,12 +457,17 @@ align-items:center;
 justify-content:center;
 }
 
+/* =========================================
+INDEX CHANGE 1
+REMOVE HEADER BUTTON BOXES
+========================================= */
+
 .action-icons button,
 .action-icons a.header-icon-button {
 width:42px;
 height:42px;
-border:1px solid rgba(230,233,230,.16);
-background:#111313;
+border:0;
+background:transparent;
 color:var(--steel-light);
 text-decoration:none;
 display:flex;
@@ -473,53 +478,51 @@ font-weight:800;
 cursor:pointer;
 transition:
 transform .22s ease,
-border-color .22s ease,
-color .22s ease,
-background .22s ease,
-box-shadow .22s ease;
+color .22s ease;
 line-height:1;
 padding:0;
+box-shadow:none;
 }
 
 .action-icons button:hover,
 .action-icons a.header-icon-button:hover {
-border-color:rgba(232,120,23,.70);
+border-color:transparent;
 color:var(--orange-bright);
-background:#171817;
-box-shadow:0 7px 22px rgba(0,0,0,.25);
+background:transparent;
+box-shadow:none;
 transform:translateY(-1px);
 }
 
 .action-icons button.is-selected {
-border-color:rgba(232,120,23,.85);
+border-color:transparent;
 color:var(--orange-bright);
-background:#191714;
-box-shadow:
-0 0 0 1px rgba(232,120,23,.08),
-0 7px 22px rgba(0,0,0,.24);
+background:transparent;
+box-shadow:none;
 }
 
 /* ===============================
 EMAIL EXPANDING ACTION
+INDEX CHANGES 2 + 3
 ================================ */
 
 .email-action {
 position:absolute;
 left:50%;
-bottom:calc(100% + 15px);
+bottom:calc(100% + 12px);
 z-index:85;
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:7px;
+border-radius:6px;
 background:
 linear-gradient(
 145deg,
-#8fcdf0 0%,
-#56adde 52%,
-#347fab 100%
+#020304 0%,
+#07101a 34%,
+#0d2238 68%,
+#123a5a 100%
 );
 border:1px solid rgba(255,255,255,.32);
 box-shadow:
@@ -608,19 +611,20 @@ scale(1);
 
 /* ===============================
 WHATSAPP EXPANDING ACTION
+INDEX CHANGE 4
 ================================ */
 
 .whatsapp-action {
 position:absolute;
 left:50%;
-bottom:calc(100% + 15px);
+bottom:calc(100% + 12px);
 z-index:85;
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:7px;
+border-radius:6px;
 background:
 linear-gradient(
 145deg,
@@ -5663,10 +5667,10 @@ font-size:15px;
 
 .whatsapp-action,
 .email-action {
-width:34px;
-height:34px;
-border-radius:6px;
-bottom:calc(100% + 14px);
+width:28.9px;
+height:28.9px;
+border-radius:5px;
+bottom:calc(100% + 11px);
 }
 
 .whatsapp-action svg {
@@ -8850,7 +8854,7 @@ id="length"
 type="number"
 inputmode="numeric"
 min="290"
-max="2500"
+max="3000"
 step="1"
 placeholder="e.g. 1000"
 autocomplete="off"
@@ -8981,7 +8985,7 @@ Inc. VAT
 </div>
 
 <a
-href="order-page.html?source=homepage-custom-builder&focus=custom-builder&viewportOffset=0.40"
+href="order-page.html?source=homepage-custom-order&focus=custom-order-summary&viewportOffset=0.30"
 class="button"
 id="addCustomRooflightToOrder"
 >
@@ -12482,6 +12486,10 @@ revealHomepageCustomBuildArea();
 CUSTOM CALCULATOR VALIDATION CONFIGURATION
 
 PRODUCT PRICING IS SUPPLIED BY IN-3.
+
+INDEX CHANGE 5:
+CUSTOM HOMEPAGE RANGE NOW ALLOWS
+UP TO 1500mm WIDTH x 3000mm LENGTH.
 ========================================= */
 
 const CUSTOM_CALCULATOR_MIN_WIDTH =
@@ -12494,7 +12502,7 @@ const CUSTOM_CALCULATOR_MIN_LENGTH =
 290;
 
 const CUSTOM_CALCULATOR_MAX_LENGTH =
-2500;
+3000;
 
 const CUSTOM_CALCULATOR_LONG_THRESHOLD =
 2000;
@@ -12589,6 +12597,9 @@ document.getElementById(
 
 const HOMEPAGE_CALCULATOR_STATE_KEY =
 "factoryToughenedRooflightsHomepageCalculatorStateV1";
+
+const HOMEPAGE_CUSTOM_ORDER_HANDOFF_KEY =
+"factoryToughenedRooflightsHomepageCustomOrderHandoffV1";
 
 
 /* =========================================
@@ -14384,6 +14395,23 @@ pence.textContent =
 
 }
 
+
+/* =========================================
+INDEX CHANGE 6
+CUSTOM ORDER PAGE HANDOFF URL
+
+The homepage calculator keeps the complete
+configuration in the URL as a fallback, while
+the actual basket item is stored separately
+before navigation.
+
+The Order Page will use:
+focus=custom-order-summary
+
+and can identify the exact newly-added unit
+from customItemId.
+========================================= */
+
 function buildCustomCalculatorOrderUrl(
 width,
 length,
@@ -14391,7 +14419,8 @@ border,
 glazing,
 finish,
 selfCleaning,
-selfCleaningAddOn
+selfCleaningAddOn,
+customItemId = ""
 ) {
 
 const params =
@@ -14418,17 +14447,17 @@ selfCleaning ||
 
 params.set(
 "source",
-"homepage-custom-calculator"
+"homepage-custom-order"
 );
 
 params.set(
 "focus",
-"custom-builder"
+"custom-order-summary"
 );
 
 params.set(
 "viewportOffset",
-"0.40"
+"0.30"
 );
 
 params.set(
@@ -14510,6 +14539,19 @@ Number(
 selfCleaningAddOn
 ).toFixed(
 2
+)
+);
+
+}
+
+if (
+customItemId
+) {
+
+params.set(
+"customItemId",
+String(
+customItemId
 )
 );
 
@@ -14826,61 +14868,6 @@ calculatePrice();
 );
 
 }
-
-
-/* =========================================
-CUSTOM CALCULATOR ADD TO ORDER
-
-Homepage calculator does NOT directly
-write an order item.
-
-It opens the Order Page custom builder
-with the current configuration.
-========================================= */
-
-if (
-addCustomRooflightToOrder
-) {
-
-addCustomRooflightToOrder.addEventListener(
-"click",
-(event) => {
-
-if (
-addCustomRooflightToOrder.getAttribute(
-"aria-disabled"
-) ===
-"true"
-) {
-
-event.preventDefault();
-return;
-
-}
-
-saveHomepageCalculatorState();
-
-}
-);
-
-}
-
-
-/* =========================================
-CALCULATOR START-UP IS DEFERRED
-
-DO NOT RUN:
-- restoreHomepageCalculatorState()
-- updateExistingOpeningRecommendation()
-- calculatePrice()
-
-HERE.
-
-THEY RUN FROM FINAL INITIALISATION AFTER IN-3
-HAS INSTALLED:
-- getCustomCalculatorPrice()
-- getCustomSelfCleaningPrice()
-========================================= */
 
 
 /* =========================================
@@ -15244,6 +15231,595 @@ payload
 ).items;
 
 }
+
+
+/* =========================================
+INDEX CHANGE 6
+HOMEPAGE CUSTOM CALCULATOR -> REAL ORDER ITEM
+
+The homepage calculator now creates the actual
+custom basket item BEFORE navigating away.
+
+This means:
+- the basket is already populated
+- the exact master-calculated price is stored
+- the complete configuration travels with it
+- Order Page can identify the new item by ID
+- Order Page can open its Custom Order Summary
+against the same stored unit
+========================================= */
+
+function createHomepageCustomOrderItem() {
+
+if (
+!customWidthInput ||
+!customLengthInput ||
+!customBorderSelect ||
+!customGlazingSelect ||
+!customFinishSelect
+) {
+
+return null;
+
+}
+
+const width =
+Number(
+customWidthInput.value
+);
+
+const length =
+Number(
+customLengthInput.value
+);
+
+const border =
+Number(
+customBorderSelect.value
+);
+
+const glazingValue =
+String(
+customGlazingSelect.value ||
+""
+);
+
+const finishValue =
+String(
+customFinishSelect.value ||
+""
+);
+
+if (
+!validateCustomCalculatorDimensions(
+width,
+length
+)
+) {
+
+return null;
+
+}
+
+if (
+typeof getCustomCalculatorPrice !==
+"function"
+) {
+
+return null;
+
+}
+
+const basePrice =
+Number(
+getCustomCalculatorPrice(
+width,
+length,
+border,
+glazingValue,
+finishValue
+)
+);
+
+if (
+!Number.isFinite(
+basePrice
+) ||
+basePrice <=
+0
+) {
+
+return null;
+
+}
+
+const selfCleaning =
+getSelectedCustomSelfCleaningValue();
+
+let selfCleaningAddOn =
+0;
+
+if (
+selfCleaning ===
+"yes"
+) {
+
+const resolvedAddOn =
+getResolvedCustomSelfCleaningPrice(
+width,
+length,
+border,
+glazingValue,
+finishValue
+);
+
+if (
+!Number.isFinite(
+Number(
+resolvedAddOn
+)
+) ||
+Number(
+resolvedAddOn
+) <=
+0
+) {
+
+return null;
+
+}
+
+selfCleaningAddOn =
+Number(
+resolvedAddOn
+);
+
+}
+
+const unitPrice =
+basePrice +
+selfCleaningAddOn;
+
+const glazingDetails =
+getCustomGlazingDetails(
+glazingValue
+);
+
+const glazing =
+glazingDetails.isTriple
+? "triple"
+: "double";
+
+const glassType =
+glazingDetails.isLaminated
+? "laminated"
+: "toughened";
+
+const finish =
+getCustomFinishKey(
+finishValue
+);
+
+const externalWidth =
+width +
+(
+border *
+2
+);
+
+const externalLength =
+length +
+(
+border *
+2
+);
+
+const itemId =
+[
+"homepage-custom",
+Date.now(),
+Math.random()
+.toString(
+36
+)
+.slice(
+2,
+8
+)
+].join(
+"-"
+);
+
+return {
+id:itemId,
+source:"homepage-custom-calculator",
+kind:"custom",
+isCustom:true,
+
+quantity:1,
+
+width,
+length,
+internalWidth:width,
+internalLength:length,
+
+size:
+`${width}x${length}`,
+
+internalSize:
+`${width}mm × ${length}mm`,
+
+border,
+borderSize:border,
+borderMm:border,
+
+externalWidth,
+externalLength,
+
+externalSize:
+`${externalWidth}mm × ${externalLength}mm`,
+
+externalDimensions:
+`${externalWidth}mm × ${externalLength}mm`,
+
+glazing,
+glazingType:glazing,
+glazingValue,
+glazingConfiguration:glazingValue,
+
+type:glassType,
+glassType,
+construction:glassType,
+glazingConstruction:glassType,
+
+finish,
+glassFinish:finish,
+
+selfCleaning,
+selfCleaningSelected:
+selfCleaning ===
+"yes",
+
+includeSelfCleaning:
+selfCleaning ===
+"yes",
+
+selfCleaningAddOn,
+
+basePrice,
+unitPrice,
+price:unitPrice,
+unitPriceIncVat:unitPrice,
+unitPriceIncVAT:unitPrice,
+priceIncVat:unitPrice,
+priceIncVAT:unitPrice,
+configuredPrice:unitPrice,
+
+createdAt:
+new Date().toISOString()
+};
+
+}
+
+function normalizeHomepageOrderPayloadForCustomItem(
+payload
+) {
+
+if (
+Array.isArray(
+payload
+)
+) {
+
+return {
+version:5,
+items:payload,
+customItems:[]
+};
+
+}
+
+if (
+!payload ||
+typeof payload !==
+"object"
+) {
+
+return {
+version:5,
+items:[],
+customItems:[]
+};
+
+}
+
+if (
+!Array.isArray(
+payload.items
+) &&
+!Array.isArray(
+payload.orderItems
+) &&
+!Array.isArray(
+payload.confirmedUnits
+) &&
+!Array.isArray(
+payload.units
+) &&
+!Array.isArray(
+payload.basketItems
+)
+) {
+
+payload.items = [];
+
+}
+
+if (
+!Array.isArray(
+payload.customItems
+)
+) {
+
+payload.customItems = [];
+
+}
+
+if (
+!Number.isFinite(
+Number(
+payload.version
+)
+)
+) {
+
+payload.version =
+5;
+
+}
+
+return payload;
+
+}
+
+function invalidateStoredHomepageDeliveryForNewItem(
+payload
+) {
+
+if (
+!payload ||
+typeof payload !==
+"object" ||
+Array.isArray(
+payload
+)
+) {
+
+return;
+
+}
+
+payload.deliveryFee =
+null;
+
+payload.deliveryResolved =
+false;
+
+payload.deliveryRequiresQuote =
+false;
+
+payload.deliveryQuoteReason =
+"";
+
+payload.deliveryAdjustedMiles =
+null;
+
+payload.deliveryChargeableMiles =
+null;
+
+}
+
+function saveHomepageCustomOrderHandoff(
+item
+) {
+
+if (
+!item ||
+!item.id
+) {
+
+return;
+
+}
+
+const handoff = {
+version:1,
+source:"homepage-custom-calculator",
+itemId:item.id,
+createdAt:
+new Date().toISOString(),
+configuration:{
+width:item.width,
+length:item.length,
+border:item.border,
+glazing:item.glazing,
+glazingValue:item.glazingValue,
+type:item.type,
+finish:item.finish,
+selfCleaning:item.selfCleaning,
+selfCleaningAddOn:item.selfCleaningAddOn,
+unitPrice:item.unitPrice,
+externalWidth:item.externalWidth,
+externalLength:item.externalLength
+}
+};
+
+try {
+
+sessionStorage.setItem(
+HOMEPAGE_CUSTOM_ORDER_HANDOFF_KEY,
+JSON.stringify(
+handoff
+)
+);
+
+}
+catch (error) {
+
+}
+
+}
+
+function addHomepageCustomOrderItem(
+item
+) {
+
+if (
+!item
+) {
+
+return false;
+
+}
+
+let payload =
+readHomepageOrderPayload();
+
+payload =
+normalizeHomepageOrderPayloadForCustomItem(
+payload
+);
+
+const customCollection =
+getCustomOrderItemCollection(
+payload
+);
+
+customCollection.items.push(
+item
+);
+
+invalidateStoredHomepageDeliveryForNewItem(
+payload
+);
+
+writeHomepageOrderPayload(
+payload
+);
+
+saveHomepageCustomOrderHandoff(
+item
+);
+
+return true;
+
+}
+
+
+/* =========================================
+CUSTOM CALCULATOR ADD TO ORDER
+
+INDEX CHANGE 6
+
+The homepage calculator now:
+1. creates a real custom basket item
+2. stores it in the shared order payload
+3. refreshes the homepage basket state
+4. redirects to the Order Page
+5. tells the Order Page to focus on the
+Custom Order Summary
+
+The Order Page side will complete the final
+scroll / summary-opening behaviour.
+========================================= */
+
+if (
+addCustomRooflightToOrder
+) {
+
+addCustomRooflightToOrder.addEventListener(
+"click",
+(event) => {
+
+if (
+addCustomRooflightToOrder.getAttribute(
+"aria-disabled"
+) ===
+"true"
+) {
+
+event.preventDefault();
+return;
+
+}
+
+event.preventDefault();
+
+saveHomepageCalculatorState();
+
+const customItem =
+createHomepageCustomOrderItem();
+
+if (
+!customItem
+) {
+
+calculatePrice();
+return;
+
+}
+
+const itemAdded =
+addHomepageCustomOrderItem(
+customItem
+);
+
+if (
+!itemAdded
+) {
+
+return;
+
+}
+
+invalidateHomepageDeliveryLookup();
+
+const payload =
+readHomepageOrderPayload();
+
+const storedPostcode =
+readStoredDeliveryPostcode(
+payload
+);
+
+setHomepageDeliveryPending(
+storedPostcode
+);
+
+persistHomepageDeliveryState();
+
+refreshHomepageBasket();
+
+const destination =
+buildCustomCalculatorOrderUrl(
+customItem.width,
+customItem.length,
+customItem.border,
+customItem.glazingValue,
+customItem.finish,
+customItem.selfCleaning,
+customItem.selfCleaningAddOn,
+customItem.id
+);
+
+window.location.href =
+destination;
+
+}
+);
+
+}
+
 
 function getItemQuantity(
 item
