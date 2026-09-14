@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 
 <title>Standard Frameless Rooflight Sizes | Factory Toughened Rooflights</title>
 
@@ -51,6 +55,7 @@ box-sizing:border-box;
 html {
 scroll-behavior:smooth;
 background:var(--black);
+touch-action:pan-x pan-y;
 }
 
 body {
@@ -61,6 +66,7 @@ color:var(--white);
 overflow-x:hidden;
 -webkit-font-smoothing:antialiased;
 text-rendering:optimizeLegibility;
+touch-action:pan-x pan-y;
 }
 
 body.basket-drawer-open,
@@ -545,6 +551,8 @@ z-index:1;
 background:rgba(0,0,0,.72);
 opacity:0;
 transition:opacity .34s ease;
+cursor:pointer;
+touch-action:none;
 }
 
 .menu-overlay.active .menu-backdrop {
@@ -579,6 +587,7 @@ box-shadow:
 26px 0 70px rgba(0,0,0,.54);
 transform:translateX(-100%);
 transition:transform .42s cubic-bezier(.18,.72,.28,1);
+outline:0;
 }
 
 .menu-overlay.active .menu-panel {
@@ -648,7 +657,6 @@ padding-left:10px;
 
 /* =========================================
 BASKET DRAWER
-70% SCREEN WIDTH RETAINED
 ========================================= */
 
 .basket-drawer-layer {
@@ -1721,7 +1729,6 @@ COLLAPSIBLE SECTION HEADINGS
 .product-section {
 position:relative;
 overflow:visible;
-clip-path:inset(0);
 padding:23.4px 6%;
 }
 
@@ -1737,16 +1744,42 @@ margin:0 auto;
 }
 
 /* =========================================
-STANDARD SIZES CHANGE 5
-OPEN SECTION TITLES STAY DIRECTLY BENEATH
-THE LIVE MASTER HEADER WHILE SCROLLING
+NEW STANDARD SIZES CHANGE 2
+FULL ORIGINAL TITLE BAND STAYS STICKY
+WITHOUT CROPPING OR SHRINKING
 ========================================= */
 
 .product-section.is-open .section-heading-wrap {
 position:sticky;
-top:var(--standard-sizes-sticky-header-offset);
+top:calc(
+var(--standard-sizes-sticky-header-offset)
++
+37.8px
+);
 z-index:24;
-background:inherit;
+}
+
+.product-section.is-open .section-heading-wrap::before {
+content:"";
+position:absolute;
+top:-37.8px;
+bottom:-25px;
+left:50%;
+width:100vw;
+transform:translateX(-50%);
+z-index:0;
+background:var(
+--section-sticky-background,
+var(--black)
+);
+pointer-events:none;
+box-shadow:
+0 8px 18px rgba(0,0,0,.12);
+}
+
+.product-section.is-open .section-toggle {
+position:relative;
+z-index:1;
 }
 
 .section-toggle {
@@ -1839,13 +1872,12 @@ display:none !important;
 SECTION BACKGROUNDS
 ================================ */
 
-/* =========================================
-STANDARD SIZES CHANGE 2
-POPULAR BACKGROUND RETAINS THE SAME DESIGN
-BUT WITH A SOFTER / LESS DOMINANT EFFECT
-========================================= */
-
 .popular-section {
+--section-sticky-background:
+radial-gradient(circle at 16% 18%,rgba(255,154,47,.18),transparent 26%),
+radial-gradient(circle at 86% 70%,rgba(245,124,0,.14),transparent 28%),
+linear-gradient(135deg,#050505 0%,#100d09 36%,#160d06 68%,#050505 100%);
+
 background:
 radial-gradient(circle at 16% 18%,rgba(255,154,47,.18),transparent 26%),
 radial-gradient(circle at 86% 70%,rgba(245,124,0,.14),transparent 28%),
@@ -1902,6 +1934,19 @@ opacity:.68;
 }
 
 .small-section {
+--section-sticky-background:
+radial-gradient(
+circle at 82% 18%,
+rgba(16,42,68,.28),
+transparent 34%
+),
+linear-gradient(
+135deg,
+#050505 0%,
+#0a1016 55%,
+#050505 100%
+);
+
 background:
 radial-gradient(
 circle at 82% 18%,
@@ -1918,6 +1963,19 @@ border-top:1px solid rgba(255,255,255,.07);
 }
 
 .medium-section {
+--section-sticky-background:
+radial-gradient(
+circle at 16% 22%,
+rgba(96,47,140,.25),
+transparent 32%
+),
+linear-gradient(
+135deg,
+#09050d 0%,
+#1b1028 54%,
+#08050c 100%
+);
+
 background:
 radial-gradient(
 circle at 16% 22%,
@@ -1934,6 +1992,19 @@ border-top:1px solid rgba(173,105,224,.14);
 }
 
 .large-section {
+--section-sticky-background:
+radial-gradient(
+circle at 86% 72%,
+rgba(24,75,120,.34),
+transparent 34%
+),
+linear-gradient(
+135deg,
+#071019 0%,
+#102a44 52%,
+#050505 100%
+);
+
 background:
 radial-gradient(
 circle at 86% 72%,
@@ -1950,6 +2021,24 @@ border-top:1px solid rgba(255,255,255,.08);
 }
 
 .extra-large-section {
+--section-sticky-background:
+radial-gradient(
+circle at 18% 68%,
+rgba(126,57,173,.24),
+transparent 32%
+),
+radial-gradient(
+circle at 88% 18%,
+rgba(245,124,0,.11),
+transparent 27%
+),
+linear-gradient(
+135deg,
+#08050c 0%,
+#170b21 54%,
+#050505 100%
+);
+
 background:
 radial-gradient(
 circle at 18% 68%,
@@ -2043,12 +2132,14 @@ pointer-events:none;
 }
 
 .product-card:hover::before,
-.product-card:active::before {
+.product-card:active::before,
+.product-card.is-selected::before {
 transform:translateX(120%);
 }
 
 .product-card:hover,
-.product-card:active {
+.product-card:active,
+.product-card.is-selected {
 transform:translateY(-8px) scale(1.035);
 border-color:rgba(255,154,47,.75);
 background:linear-gradient(135deg,#111111,#1b130d);
@@ -2068,6 +2159,11 @@ z-index:1;
 display:flex;
 align-items:center;
 justify-content:center;
+}
+
+.product-card.is-selected .image-wrap,
+.product-card.is-selected .size-title {
+cursor:pointer;
 }
 
 .popular-grid .image-wrap {
@@ -2091,7 +2187,8 @@ transform-origin:center center;
 transition:filter .32s ease;
 }
 
-.product-card:hover .image-wrap img {
+.product-card:hover .image-wrap img,
+.product-card.is-selected .image-wrap img {
 filter:brightness(1.035);
 }
 
@@ -2165,7 +2262,8 @@ font-size:20.7px;
 }
 
 .product-card:hover .size-title,
-.product-card:active .size-title {
+.product-card:active .size-title,
+.product-card.is-selected .size-title {
 color:var(--catalogue-orange);
 transform:scale(1.025);
 transform-origin:left center;
@@ -2184,22 +2282,18 @@ margin-bottom:10px;
 color:#fff;
 }
 
-.spec-line .delivery-chargeable {
-color:var(--sunset);
-font-weight:900;
-}
-
 /* =========================================
-STANDARD SIZES CHANGE 4
-EXTRA LARGE DELIVERY COPY REMAINS ORANGE
-BUT IS SMALLER AND KEPT TO ONE LINE
+NEW STANDARD SIZES CHANGE 1
+ORANGE DELIVERY TEXT NOW MATCHES THE
+NORMAL WHITE TEXT EXACTLY EXCEPT COLOUR
 ========================================= */
 
-.extra-large-section .delivery-chargeable {
-font-size:8.5px;
-letter-spacing:-.12px;
-line-height:1.2;
-white-space:nowrap;
+.spec-line .delivery-chargeable {
+color:var(--sunset);
+font-size:inherit;
+font-weight:400;
+letter-spacing:inherit;
+line-height:inherit;
 }
 
 .glazing-wrap {
@@ -2541,6 +2635,19 @@ padding:19.8px 4%;
 padding:30.6px 4% 50px;
 }
 
+.product-section.is-open .section-heading-wrap {
+top:calc(
+var(--standard-sizes-sticky-header-offset)
++
+30.6px
+);
+}
+
+.product-section.is-open .section-heading-wrap::before {
+top:-30.6px;
+bottom:-18px;
+}
+
 .section-toggle {
 padding:0 2%;
 gap:9px;
@@ -2598,12 +2705,6 @@ line-height:1.3;
 gap:3px;
 min-height:48px;
 margin-bottom:9px;
-}
-
-.extra-large-section .delivery-chargeable {
-font-size:6.7px;
-letter-spacing:-.16px;
-white-space:nowrap;
 }
 
 .glazing-wrap,
@@ -2693,11 +2794,6 @@ height:100px;
 .catalogue-grid .size-title,
 .popular-grid .size-title {
 font-size:16.2px;
-}
-
-.extra-large-section .delivery-chargeable {
-font-size:6.2px;
-letter-spacing:-.18px;
 }
 
 }
@@ -3059,9 +3155,11 @@ aria-hidden="true"
 
 <aside
 class="menu-panel"
+id="menuPanel"
 role="dialog"
 aria-modal="true"
 aria-label="Website navigation"
+tabindex="-1"
 >
 
 <div class="menu-top">
@@ -3101,6 +3199,7 @@ SL9 7BB
 
 <button
 class="close-menu"
+id="menuCloseButton"
 type="button"
 onclick="closeMenu()"
 aria-label="Close menu"
@@ -3112,7 +3211,12 @@ aria-label="Close menu"
 
 <div class="menu-links">
 
-<a href="index.html" onclick="closeMenu()">Home</a>
+<a
+href="index.html"
+onclick="closeMenu()"
+>
+Home
+</a>
 
 <a
 href="standard-sizes.html"
@@ -3169,6 +3273,10 @@ Lead Times
 </aside>
 
 </div>
+
+<!-- =========================================
+BASKET DRAWER
+========================================= -->
 
 <div
 class="basket-drawer-layer"
@@ -3615,6 +3723,67 @@ Oversized Rooflights
 </main>
 
 <script>
+
+/* =========================================
+NEW STANDARD SIZES CHANGE 3
+DISABLE PAGE ZOOM
+========================================= */
+
+document.addEventListener(
+"gesturestart",
+event => {
+
+event.preventDefault();
+
+},
+{
+passive:false
+}
+);
+
+document.addEventListener(
+"gesturechange",
+event => {
+
+event.preventDefault();
+
+},
+{
+passive:false
+}
+);
+
+document.addEventListener(
+"gestureend",
+event => {
+
+event.preventDefault();
+
+},
+{
+passive:false
+}
+);
+
+document.addEventListener(
+"touchmove",
+event => {
+
+if (
+event.touches &&
+event.touches.length >
+1
+) {
+
+event.preventDefault();
+
+}
+
+},
+{
+passive:false
+}
+);
 
 /* =========================================
 STANDARD-SIZES PRICING
@@ -4914,6 +5083,33 @@ Delivery Calculated by Postcode
 
 }
 
+function clearSelectedProductCards(
+exceptCard = null
+) {
+
+document
+.querySelectorAll(
+".product-card.is-selected"
+)
+.forEach(
+card => {
+
+if (
+card !==
+exceptCard
+) {
+
+card.classList.remove(
+"is-selected"
+);
+
+}
+
+}
+);
+
+}
+
 function createCard(
 size
 ) {
@@ -5080,6 +5276,75 @@ button.dataset.glazing
 );
 
 }
+);
+
+}
+);
+
+/* =========================================
+NEW STANDARD SIZES CHANGE 4
+FIRST TAP SELECTS / HIGHLIGHTS THE CARD.
+ONCE SELECTED, TAPPING THE IMAGE OR SIZE
+NAME DOES THE SAME AS "VIEW SIZE".
+========================================= */
+
+card.addEventListener(
+"click",
+event => {
+
+if (
+event.target.closest(
+".toggle"
+) ||
+event.target.closest(
+".view-link"
+)
+) {
+
+return;
+
+}
+
+const navigationTarget =
+event.target.closest(
+".image-wrap, .size-title"
+);
+
+const alreadySelected =
+card.classList.contains(
+"is-selected"
+);
+
+if (
+alreadySelected &&
+navigationTarget
+) {
+
+const viewLink =
+card.querySelector(
+".view-link"
+);
+
+if (
+viewLink &&
+viewLink.href
+) {
+
+window.location.href =
+viewLink.href;
+
+}
+
+return;
+
+}
+
+clearSelectedProductCards(
+card
+);
+
+card.classList.add(
+"is-selected"
 );
 
 }
@@ -5314,7 +5579,6 @@ extraLargeSizes
 }
 
 /* =========================================
-STANDARD SIZES CHANGE 1
 ALL SECTIONS START CLOSED
 ========================================= */
 
@@ -5405,7 +5669,6 @@ section,
 );
 
 /* =========================================
-STANDARD SIZES CHANGE 5
 LIVE STICKY OFFSET FROM MASTER HEADER HEIGHT
 ========================================= */
 
@@ -5666,9 +5929,25 @@ document.getElementById(
 "menuOverlay"
 );
 
+const menuPanel =
+document.getElementById(
+"menuPanel"
+);
+
 const menuButton =
 document.getElementById(
 "menuButton"
+);
+
+const menuCloseButton =
+document.getElementById(
+"menuCloseButton"
+);
+
+const menuBackdrop =
+menuOverlay
+?.querySelector(
+"[data-menu-backdrop]"
 );
 
 const menuContactTeamButton =
@@ -5695,6 +5974,9 @@ const whatsappAction =
 document.getElementById(
 "whatsappAction"
 );
+
+let menuLastFocusedElement =
+null;
 
 function closeEmailAction() {
 
@@ -5800,6 +6082,29 @@ true
 
 }
 
+function getMenuFocusableElements() {
+
+if (
+!menuPanel
+) {
+
+return [];
+
+}
+
+return Array.from(
+menuPanel.querySelectorAll(
+"a[href],button:not([disabled]),[tabindex]:not([tabindex='-1'])"
+)
+)
+.filter(
+element =>
+element.offsetParent !==
+null
+);
+
+}
+
 function openMenu() {
 
 closeEmailAction();
@@ -5807,12 +6112,18 @@ closeEmailAction();
 closeWhatsAppAction();
 
 if (
-!menuOverlay
+!menuOverlay ||
+menuOverlay.classList.contains(
+"active"
+)
 ) {
 
 return;
 
 }
+
+menuLastFocusedElement =
+document.activeElement;
 
 menuOverlay.classList.add(
 "active"
@@ -5838,9 +6149,29 @@ menuButton.setAttribute(
 
 }
 
+requestAnimationFrame(
+() => {
+
+(
+menuCloseButton ||
+menuPanel
+)
+?.focus(
+{
+preventScroll:true
+}
+);
+
+}
+);
+
 }
 
-function closeMenu() {
+function closeMenu(
+{
+restoreFocus = true
+} = {}
+) {
 
 if (
 menuOverlay
@@ -5871,6 +6202,44 @@ menuButton.setAttribute(
 );
 
 }
+
+if (
+restoreFocus
+) {
+
+requestAnimationFrame(
+() => {
+
+const target =
+menuLastFocusedElement instanceof
+HTMLElement
+?
+menuLastFocusedElement
+:
+menuButton;
+
+if (
+target &&
+document.contains(
+target
+)
+) {
+
+target.focus(
+{
+preventScroll:true
+}
+);
+
+}
+
+}
+);
+
+}
+
+menuLastFocusedElement =
+null;
 
 }
 
@@ -5959,24 +6328,22 @@ event.stopPropagation();
 }
 
 if (
-menuOverlay
+menuBackdrop
 ) {
 
-menuOverlay.addEventListener(
+menuBackdrop.addEventListener(
 "click",
 event => {
 
-if (
-event.target.closest(
-"[data-menu-backdrop]"
-)
-) {
-
 event.preventDefault();
 
-closeMenu();
+event.stopPropagation();
 
+closeMenu(
+{
+restoreFocus:true
 }
+);
 
 }
 );
@@ -5995,7 +6362,11 @@ event.preventDefault();
 
 event.stopPropagation();
 
-closeMenu();
+closeMenu(
+{
+restoreFocus:false
+}
+);
 
 requestAnimationFrame(
 () => {
@@ -10206,7 +10577,11 @@ return;
 
 }
 
-closeMenu();
+closeMenu(
+{
+restoreFocus:false
+}
+);
 
 closeEmailAction();
 
@@ -10954,6 +11329,11 @@ input.value
 
 }
 
+/* =========================================
+GLOBAL KEYBOARD CONTROL
+MASTER MENU + BASKET
+========================================= */
+
 document.addEventListener(
 "keydown",
 event => {
@@ -11040,6 +11420,89 @@ return;
 }
 
 if (
+menuOverlay?.classList.contains(
+"active"
+)
+) {
+
+if (
+event.key ===
+"Escape"
+) {
+
+event.preventDefault();
+
+closeMenu();
+
+return;
+
+}
+
+if (
+event.key !==
+"Tab"
+) {
+
+return;
+
+}
+
+const focusable =
+getMenuFocusableElements();
+
+if (
+!focusable.length
+) {
+
+event.preventDefault();
+
+menuPanel?.focus(
+{
+preventScroll:true
+}
+);
+
+return;
+
+}
+
+const first =
+focusable[0];
+
+const last =
+focusable[
+focusable.length -
+1
+];
+
+if (
+event.shiftKey &&
+document.activeElement ===
+first
+) {
+
+event.preventDefault();
+
+last.focus();
+
+}
+else if (
+!event.shiftKey &&
+document.activeElement ===
+last
+) {
+
+event.preventDefault();
+
+first.focus();
+
+}
+
+return;
+
+}
+
+if (
 event.key ===
 "Escape"
 ) {
@@ -11047,8 +11510,6 @@ event.key ===
 closeEmailAction();
 
 closeWhatsAppAction();
-
-closeMenu();
 
 }
 
@@ -11060,7 +11521,10 @@ document.addEventListener(
 event => {
 
 if (
-basketDrawerIsOpen
+basketDrawerIsOpen ||
+menuOverlay?.classList.contains(
+"active"
+)
 ) {
 
 return;
@@ -11147,6 +11611,8 @@ return true;
 /* =========================================
 SS-1
 MASTER SYSTEM BRIDGE
+
+UNCHANGED
 ========================================= */
 
 const SS1_GLASS_SPECIFICATION_UNAVAILABLE =
