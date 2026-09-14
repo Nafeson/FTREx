@@ -1,0 +1,3381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Returns &amp; Product Issues | Factory Toughened Rooflights
+</title>
+
+<meta
+name="description"
+content="Returns information for Factory Toughened Rooflights, including damaged goods, incorrect orders, product issues and how to contact us for help."
+>
+
+<style>
+
+/* =========================================
+FACTORY TOUGHENED ROOFLIGHTS
+INFORMATION / FOOTER PAGE MASTER TEMPLATE
+========================================= */
+
+:root {
+
+--orange:#e87817;
+--orange-bright:#f28a28;
+
+--black:#090a0a;
+--dark:#0d0f0f;
+--dark-2:#111313;
+
+--panel:#151818;
+--panel-raised:#191c1c;
+
+--graphite:#242828;
+--graphite-light:#303535;
+
+--steel:#9ca3a1;
+--steel-light:#c9cecb;
+--steel-dark:#686f6d;
+
+--cream:#f1f0e9;
+--white:#f7f7f3;
+
+--muted:#b7bbb8;
+--muted-soft:#8f9692;
+
+--line:rgba(216,221,217,.14);
+--line-strong:rgba(216,221,217,.24);
+
+--whatsapp:#25d366;
+
+}
+
+
+* {
+box-sizing:border-box;
+}
+
+
+html {
+scroll-behavior:smooth;
+}
+
+
+body {
+margin:0;
+
+font-family:
+"Aptos",
+"Inter",
+"Segoe UI",
+Arial,
+sans-serif;
+
+background:var(--black);
+color:var(--white);
+
+overflow-x:hidden;
+
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+
+
+img {
+max-width:100%;
+}
+
+
+/* =========================================
+DESKTOP ACCESS BLOCKER
+MATCHES MAIN SITE
+========================================= */
+
+.desktop-access-blocker {
+display:none;
+
+position:fixed;
+inset:0;
+
+z-index:2147483647;
+
+width:100%;
+height:100%;
+min-height:100dvh;
+
+padding:clamp(24px,5vw,72px);
+
+align-items:center;
+justify-content:center;
+
+background:
+linear-gradient(
+180deg,
+rgba(9,10,10,.995) 0%,
+rgba(13,15,15,.995) 100%
+);
+
+color:var(--cream);
+text-align:center;
+
+overflow:hidden;
+
+overscroll-behavior:none;
+touch-action:none;
+pointer-events:auto;
+}
+
+
+.desktop-access-blocker::before {
+content:"";
+
+position:absolute;
+inset:0;
+
+background-image:
+linear-gradient(
+rgba(255,255,255,.018) 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+rgba(255,255,255,.018) 1px,
+transparent 1px
+);
+
+background-size:48px 48px;
+
+opacity:.42;
+
+pointer-events:none;
+}
+
+
+.desktop-access-blocker::after {
+content:"";
+
+position:absolute;
+
+left:50%;
+top:0;
+
+width:min(620px,72vw);
+height:2px;
+
+background:var(--orange);
+
+transform:translateX(-50%);
+
+box-shadow:
+0 0 24px rgba(232,120,23,.18);
+
+pointer-events:none;
+}
+
+
+.desktop-access-blocker-panel {
+position:relative;
+
+z-index:1;
+
+width:min(680px,100%);
+
+padding:
+clamp(34px,5vw,58px)
+clamp(24px,5vw,54px);
+
+border:1px solid rgba(255,255,255,.12);
+border-top:2px solid var(--orange);
+
+background:
+linear-gradient(
+145deg,
+rgba(21,24,24,.97) 0%,
+rgba(12,14,14,.985) 58%,
+rgba(9,10,10,.995) 100%
+);
+
+box-shadow:
+0 32px 90px rgba(0,0,0,.45),
+inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+
+.desktop-access-blocker-panel::before {
+content:"";
+
+display:block;
+
+width:42px;
+height:1px;
+
+margin:
+0
+auto
+clamp(20px,2.5vw,28px);
+
+background:var(--orange);
+}
+
+
+.desktop-access-blocker h1 {
+margin:0;
+
+font-family:
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+
+font-size:clamp(34px,4.6vw,58px);
+font-weight:800;
+
+line-height:.98;
+letter-spacing:-1.35px;
+
+color:var(--cream);
+}
+
+
+.desktop-access-blocker p {
+max-width:520px;
+
+margin:
+clamp(18px,2.4vw,26px)
+auto
+0;
+
+font-size:clamp(14px,1.4vw,17px);
+font-weight:500;
+
+line-height:1.65;
+
+color:var(--muted);
+}
+
+
+@media (hover:hover) and (pointer:fine) {
+
+html,
+body {
+overflow:hidden !important;
+overscroll-behavior:none;
+}
+
+.desktop-access-blocker {
+display:flex;
+}
+
+}
+
+
+/* =========================================
+TOP MOVING BANNER
+MATCHES HOMEPAGE
+========================================= */
+
+.top-banner {
+background:#161918;
+
+color:rgba(247,247,243,.72);
+
+overflow:hidden;
+white-space:nowrap;
+
+border-bottom:1px solid rgba(255,255,255,.07);
+
+font-family:
+"Bahnschrift",
+"Arial Narrow",
+"Aptos",
+Arial,
+sans-serif;
+
+font-size:8px;
+font-weight:700;
+
+letter-spacing:1.65px;
+
+text-transform:uppercase;
+}
+
+
+.ticker {
+display:inline-block;
+
+padding:8px 0;
+
+animation:
+ticker
+52s
+linear
+infinite;
+}
+
+
+.ticker span {
+margin-right:90px;
+}
+
+
+@keyframes ticker {
+
+from {
+transform:translateX(0);
+}
+
+to {
+transform:translateX(-50%);
+}
+
+}
+
+
+/* =========================================
+HEADER
+MATCHES HOMEPAGE
+========================================= */
+
+header {
+background:rgba(11,12,12,.965);
+
+border-bottom:1px solid rgba(255,255,255,.09);
+
+padding:
+24px
+6%
+20px;
+
+display:grid;
+
+grid-template-columns:
+1fr
+auto;
+
+align-items:start;
+
+gap:32px;
+
+position:sticky;
+top:0;
+
+z-index:30;
+
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.16);
+}
+
+
+.wordmark-wrap {
+display:grid;
+gap:9px;
+}
+
+
+.header-home-link {
+display:block;
+
+width:max-content;
+max-width:100%;
+
+color:inherit;
+text-decoration:none;
+}
+
+
+.header-home-link:visited {
+color:inherit;
+}
+
+
+.header-home-link:focus-visible {
+outline:
+1px solid rgba(232,120,23,.65);
+
+outline-offset:6px;
+}
+
+
+.wordmark {
+font-family:
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+
+line-height:.91;
+
+font-weight:850;
+
+letter-spacing:2.8px;
+
+color:var(--cream);
+
+font-size:24px;
+
+text-transform:uppercase;
+
+width:max-content;
+}
+
+
+.wordmark > span {
+color:var(--orange);
+display:block;
+}
+
+
+.wordmark-bottom {
+display:flex;
+
+align-items:flex-end;
+
+gap:0;
+
+white-space:nowrap;
+
+width:max-content;
+}
+
+
+.wordmark-domain {
+color:var(--steel-light);
+
+font-size:.40em;
+font-weight:700;
+
+letter-spacing:.15px;
+
+line-height:1;
+
+margin-left:1px;
+
+padding-bottom:2px;
+
+text-transform:lowercase;
+
+transform:
+translate(-1px,1px);
+}
+
+
+.action-icons {
+display:flex;
+
+gap:8px;
+
+align-self:end;
+
+padding-bottom:1px;
+}
+
+
+.header-action-wrap {
+position:relative;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+}
+
+
+.action-icons button,
+.action-icons a.header-icon-button {
+width:42px;
+height:42px;
+
+border:
+1px solid rgba(230,233,230,.16);
+
+background:#111313;
+
+color:var(--steel-light);
+
+text-decoration:none;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:18px;
+font-weight:800;
+
+cursor:pointer;
+
+transition:
+transform .22s ease,
+border-color .22s ease,
+color .22s ease,
+background .22s ease,
+box-shadow .22s ease;
+
+line-height:1;
+
+padding:0;
+}
+
+
+.action-icons button:hover,
+.action-icons a.header-icon-button:hover {
+border-color:
+rgba(232,120,23,.70);
+
+color:var(--orange-bright);
+
+background:#171817;
+
+box-shadow:
+0 7px 22px rgba(0,0,0,.25);
+
+transform:
+translateY(-1px);
+}
+
+
+.action-icons button.is-selected {
+border-color:
+rgba(232,120,23,.85);
+
+color:var(--orange-bright);
+
+background:#191714;
+
+box-shadow:
+0 0 0 1px rgba(232,120,23,.08),
+0 7px 22px rgba(0,0,0,.24);
+}
+
+
+/* =========================================
+WHATSAPP ACTION
+========================================= */
+
+.whatsapp-action {
+position:absolute;
+
+left:50%;
+
+bottom:
+calc(100% + 15px);
+
+z-index:85;
+
+width:42px;
+height:42px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border-radius:7px;
+
+background:
+linear-gradient(
+145deg,
+#36e676 0%,
+#25d366 52%,
+#179b46 100%
+);
+
+border:
+1px solid rgba(255,255,255,.30);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.55),
+0 0 14px rgba(37,211,102,.18),
+inset 0 1px 0 rgba(255,255,255,.30);
+
+opacity:0;
+visibility:hidden;
+
+pointer-events:none;
+
+transform:
+translate(-50%,20px)
+scale(.58);
+
+transform-origin:
+center bottom;
+
+transition:
+opacity .2s ease,
+visibility .2s ease,
+transform .38s cubic-bezier(.18,.82,.28,1.35);
+}
+
+
+.whatsapp-action.is-open {
+opacity:1;
+visibility:visible;
+
+pointer-events:auto;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+
+.whatsapp-action svg {
+width:27px;
+height:27px;
+
+display:block;
+
+fill:#ffffff;
+
+filter:
+drop-shadow(
+0
+2px
+2px
+rgba(0,0,0,.22)
+);
+}
+
+
+/* =========================================
+BASKET HEADER TOTAL
+========================================= */
+
+.basket-total-text {
+position:absolute;
+
+top:-16px;
+left:50%;
+
+z-index:5;
+
+font-family:
+"Bahnschrift Condensed",
+"Arial Narrow",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:.3px;
+
+color:var(--cream);
+
+text-align:center;
+
+white-space:nowrap;
+
+text-shadow:
+0 2px 5px rgba(0,0,0,.92);
+
+opacity:0;
+
+transform:
+translate(-50%,7px)
+scale(.78);
+
+transform-origin:
+center bottom;
+
+pointer-events:none;
+}
+
+
+.basket-total-text.is-visible {
+opacity:1;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+
+/* =========================================
+MENU
+========================================= */
+
+.menu-overlay {
+position:fixed;
+
+inset:0;
+
+background:
+rgba(10,11,11,.992);
+
+z-index:100;
+
+display:none;
+
+padding:
+55px
+6%;
+
+overflow-y:auto;
+}
+
+
+.menu-overlay.active {
+display:block;
+}
+
+
+.menu-top {
+display:flex;
+
+justify-content:space-between;
+align-items:flex-start;
+
+margin-bottom:60px;
+}
+
+
+.address-line {
+font-size:12px;
+
+line-height:1.45;
+
+font-weight:600;
+
+color:rgba(255,255,255,.72);
+
+letter-spacing:.6px;
+
+text-transform:uppercase;
+}
+
+
+.close-menu {
+background:#111313;
+
+color:var(--cream);
+
+border:
+1px solid rgba(255,255,255,.16);
+
+width:44px;
+height:44px;
+
+font-size:26px;
+
+cursor:pointer;
+}
+
+
+.menu-links {
+display:grid;
+
+gap:0;
+
+max-width:760px;
+
+border-top:
+1px solid rgba(255,255,255,.10);
+}
+
+
+.menu-links a {
+color:var(--cream);
+
+text-decoration:none;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+
+font-size:
+clamp(27.9px,4.5vw,55.8px);
+
+font-weight:750;
+
+line-height:1;
+
+letter-spacing:-1.2px;
+
+text-transform:uppercase;
+
+border-bottom:
+1px solid rgba(255,255,255,.10);
+
+padding:
+22px
+0;
+
+transition:
+color .2s ease,
+padding-left .2s ease,
+background .2s ease;
+}
+
+
+.menu-links a:hover {
+color:var(--orange-bright);
+
+padding-left:10px;
+}
+
+
+/* =========================================
+INFORMATION PAGE
+========================================= */
+
+.information-page {
+position:relative;
+
+min-height:
+calc(100dvh - 120px);
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#0a0b0b 0%,
+#0d0f0f 45%,
+#090a0a 100%
+);
+}
+
+
+.information-page::before {
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(
+ellipse 68% 48% at 88% 15%,
+rgba(232,120,23,.11) 0%,
+rgba(117,61,15,.055) 32%,
+transparent 72%
+),
+
+linear-gradient(
+rgba(255,255,255,.012) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(255,255,255,.012) 1px,
+transparent 1px
+);
+
+background-size:
+auto,
+52px 52px,
+52px 52px;
+
+pointer-events:none;
+}
+
+
+.information-hero {
+position:relative;
+
+z-index:2;
+
+padding:
+clamp(68px,8vw,110px)
+6%
+clamp(52px,6vw,80px);
+}
+
+
+.information-hero-inner {
+max-width:1120px;
+
+margin:0 auto;
+}
+
+
+.information-kicker {
+margin:0 0 19px;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:10px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
+
+color:rgba(247,247,243,.50);
+}
+
+
+.information-introduction {
+max-width:900px;
+
+margin:
+clamp(32px,4vw,48px)
+0
+0;
+
+font-size:
+clamp(12.92px,1.52vw,16.72px);
+
+font-weight:400;
+
+line-height:1.7;
+
+color:rgba(247,247,243,.72);
+}
+
+
+/* =========================================
+INFORMATION DOCUMENT HOUSING
+========================================= */
+
+.information-document-section {
+position:relative;
+
+z-index:2;
+
+padding:
+0
+6%
+clamp(76px,9vw,130px);
+}
+
+
+.information-document-shell {
+width:min(930px,84%);
+
+margin-left:
+clamp(22px,7vw,105px);
+
+margin-right:auto;
+}
+
+
+.information-document-panel {
+position:relative;
+
+padding:
+clamp(34px,4.5vw,58px)
+clamp(25px,4.5vw,54px);
+
+background:
+linear-gradient(
+145deg,
+rgba(23,26,26,.98) 0%,
+rgba(15,18,18,.99) 58%,
+rgba(11,13,13,.995) 100%
+);
+
+border:
+1px solid rgba(255,255,255,.105);
+
+border-left:
+3px solid var(--orange);
+
+box-shadow:
+0 28px 65px rgba(0,0,0,.26),
+inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+
+.information-document-panel::before {
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+rgba(232,120,23,.24),
+rgba(255,255,255,.05),
+transparent
+);
+}
+
+
+.information-document-label {
+margin:0 0 28px;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:1.7px;
+
+text-transform:uppercase;
+
+color:var(--orange-bright);
+}
+
+
+.information-document-content {
+max-width:760px;
+}
+
+
+.information-document-content section {
+margin:0;
+padding:0;
+}
+
+
+.information-document-content section + section {
+margin-top:
+clamp(34px,4vw,48px);
+
+padding-top:
+clamp(30px,3.5vw,42px);
+
+border-top:
+1px solid rgba(255,255,255,.08);
+}
+
+
+.information-document-content h2 {
+margin:
+0
+0
+16px;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(24px,2.8vw,34px);
+
+font-weight:750;
+
+line-height:1.08;
+
+letter-spacing:-.6px;
+
+color:var(--cream);
+}
+
+
+.information-document-content h3 {
+margin:
+24px
+0
+10px;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(18px,2vw,22px);
+
+font-weight:720;
+
+line-height:1.15;
+
+letter-spacing:-.3px;
+
+color:rgba(247,247,243,.90);
+}
+
+
+.information-document-content p {
+margin:
+0
+0
+17px;
+
+font-size:
+clamp(14px,1.5vw,17px);
+
+font-weight:400;
+
+line-height:1.72;
+
+color:rgba(247,247,243,.64);
+}
+
+
+.information-document-content p:last-child {
+margin-bottom:0;
+}
+
+
+.information-document-content strong {
+color:rgba(247,247,243,.88);
+
+font-weight:700;
+}
+
+
+.information-document-content a {
+color:var(--orange-bright);
+
+text-decoration:
+underline;
+
+text-decoration-thickness:1px;
+
+text-underline-offset:3px;
+
+text-decoration-color:
+rgba(232,120,23,.52);
+
+transition:
+color .18s ease,
+text-decoration-color .18s ease;
+}
+
+
+.information-document-content a:hover,
+.information-document-content a:focus {
+color:var(--cream);
+
+text-decoration-color:var(--cream);
+
+outline:none;
+}
+
+
+.information-document-content ul {
+margin:
+16px 0 0;
+
+padding-left:21px;
+
+color:rgba(247,247,243,.64);
+}
+
+
+.information-document-content li {
+margin-bottom:10px;
+
+padding-left:4px;
+
+font-size:
+clamp(14px,1.5vw,17px);
+
+line-height:1.65;
+}
+
+
+.information-document-content li::marker {
+color:var(--orange);
+}
+
+
+/* =========================================
+IMPORTANT INFORMATION EMPHASIS
+========================================= */
+
+.information-emphasis {
+margin-top:20px;
+
+padding:
+18px 20px;
+
+border:
+1px solid rgba(232,120,23,.22);
+
+border-left:
+2px solid var(--orange);
+
+background:
+rgba(232,120,23,.04);
+}
+
+
+.information-emphasis strong {
+display:block;
+
+margin-bottom:7px;
+
+color:var(--orange-bright);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:10px;
+font-weight:800;
+
+line-height:1.25;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+}
+
+
+.information-emphasis p {
+margin:0;
+}
+
+
+/* =========================================
+LAST UPDATED LINE
+========================================= */
+
+.information-last-updated {
+margin-top:
+clamp(40px,4vw,54px);
+
+padding-top:20px;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+
+font-weight:650;
+
+line-height:1.45;
+
+letter-spacing:.5px;
+
+text-transform:uppercase;
+
+color:rgba(247,247,243,.37);
+}
+
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media(max-width:560px) {
+
+.top-banner {
+font-size:7px;
+}
+
+
+.ticker {
+padding:7px 0;
+}
+
+
+header {
+padding:
+19px
+5.5%;
+
+gap:14px;
+}
+
+
+.wordmark {
+font-size:20px;
+}
+
+
+.wordmark-domain {
+font-size:.40em;
+
+padding-bottom:1px;
+}
+
+
+.action-icons {
+gap:5px;
+}
+
+
+.action-icons button,
+.action-icons a.header-icon-button {
+width:34px;
+height:34px;
+
+font-size:15px;
+}
+
+
+.whatsapp-action {
+width:34px;
+height:34px;
+
+border-radius:6px;
+
+bottom:
+calc(100% + 14px);
+}
+
+
+.whatsapp-action svg {
+width:22px;
+height:22px;
+}
+
+
+.basket-total-text {
+top:-15px;
+
+font-size:7px;
+}
+
+
+.menu-overlay {
+padding:
+45px
+6%;
+}
+
+
+.menu-top {
+margin-bottom:42px;
+}
+
+
+.address-line {
+font-size:9px;
+}
+
+
+.information-hero {
+padding:
+53px
+6%
+41px;
+}
+
+
+.information-kicker {
+margin-bottom:15px;
+
+font-size:8px;
+
+letter-spacing:1.6px;
+}
+
+
+.information-introduction {
+width:94%;
+
+margin-top:31px;
+
+font-size:12.16px;
+
+line-height:1.7;
+}
+
+
+.information-document-section {
+padding:
+0
+4%
+65px;
+}
+
+
+.information-document-shell {
+width:94%;
+
+margin-left:4%;
+margin-right:auto;
+}
+
+
+.information-document-panel {
+padding:
+31px
+22px
+35px;
+
+border-left-width:2px;
+}
+
+
+.information-document-label {
+margin-bottom:24px;
+
+font-size:8px;
+
+letter-spacing:1.35px;
+}
+
+
+.information-document-content h2 {
+font-size:25px;
+
+letter-spacing:-.4px;
+}
+
+
+.information-document-content h3 {
+font-size:18px;
+}
+
+
+.information-document-content p,
+.information-document-content li {
+font-size:14px;
+
+line-height:1.7;
+}
+
+
+.information-document-content section + section {
+margin-top:31px;
+
+padding-top:29px;
+}
+
+
+.information-emphasis {
+padding:
+16px
+17px;
+}
+
+
+.information-last-updated {
+font-size:8px;
+}
+
+}
+
+
+/* =========================================
+SMALL MOBILE
+========================================= */
+
+@media(max-width:390px) {
+
+.information-introduction {
+font-size:11.4px;
+}
+
+
+.information-document-shell {
+width:95%;
+
+margin-left:3%;
+}
+
+
+.information-document-panel {
+padding:
+28px
+19px
+32px;
+}
+
+
+.information-document-content h2 {
+font-size:23px;
+}
+
+
+.information-document-content p,
+.information-document-content li {
+font-size:13.5px;
+}
+
+}
+
+
+/* =========================================
+REDUCED MOTION
+========================================= */
+
+@media(prefers-reduced-motion:reduce) {
+
+html {
+scroll-behavior:auto;
+}
+
+
+.ticker {
+animation:none;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================
+DESKTOP ACCESS BLOCKER
+======================================= -->
+
+<div
+class="desktop-access-blocker"
+id="desktopAccessBlocker"
+role="dialog"
+aria-modal="true"
+aria-labelledby="desktopAccessBlockerTitle"
+aria-hidden="false"
+tabindex="-1"
+>
+
+<div class="desktop-access-blocker-panel">
+
+<h1 id="desktopAccessBlockerTitle">
+Mobile Access Only
+</h1>
+
+<p>
+Please visit Factory Toughened Rooflights using a mobile device.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+TOP BANNER
+======================================= -->
+
+<div class="top-banner">
+
+<div class="ticker">
+
+<span>
+Specialist British workshop for frameless rooflights
+</span>
+
+<span>
+Brand new rooflights made to order
+</span>
+
+<span>
+British glass • British manufacturing
+</span>
+
+<span>
+Estimated production from 4 working days
+</span>
+
+<span>
+Factory insulated and ready for fitting
+</span>
+
+<span>
+Expected 30+ year service life
+</span>
+
+<span>
+UKCA compliant • CE marked • building regs compliant
+</span>
+
+<span>
+Free mainland UK delivery on listed sizes
+</span>
+
+<span>
+Collection available with prior booking
+</span>
+
+<span>
+Specialist British workshop for frameless rooflights
+</span>
+
+<span>
+Brand new rooflights made to order
+</span>
+
+<span>
+British glass • British manufacturing
+</span>
+
+<span>
+Estimated production from 4 working days
+</span>
+
+<span>
+Factory insulated and ready for fitting
+</span>
+
+<span>
+Expected 30+ year service life
+</span>
+
+<span>
+UKCA compliant • CE marked • building regs compliant
+</span>
+
+<span>
+Free mainland UK delivery on listed sizes
+</span>
+
+<span>
+Collection available with prior booking
+</span>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+HEADER
+======================================= -->
+
+<header>
+
+<div class="wordmark-wrap">
+
+<a
+href="index.html"
+class="header-home-link"
+id="headerHomeLink"
+aria-label="Factory Toughened Rooflights homepage"
+>
+
+<div class="wordmark">
+
+Factory
+
+<span>
+Toughened
+</span>
+
+<div class="wordmark-bottom">
+
+Rooflights
+
+<small class="wordmark-domain">
+.co.uk
+</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<div class="action-icons">
+
+
+<a
+href="contact.html"
+class="header-icon-button"
+aria-label="Contact Factory Toughened Rooflights"
+title="Contact our rooflight team"
+>
+✉
+</a>
+
+
+<div class="header-action-wrap">
+
+<button
+type="button"
+id="whatsappButton"
+aria-label="Show WhatsApp Business button"
+title="WhatsApp our rooflight team"
+aria-expanded="false"
+>
+📱
+</button>
+
+<a
+id="whatsappAction"
+class="whatsapp-action"
+href="https://wa.me/447000000000?text=Hi%2C%20I%27m%20interested%20in%20a%20frameless%20rooflight.%0A%0ASize%20(if%20known)%3A%0ADouble%20or%20Triple%20glazed%3A%0ADelivery%20postcode%3A"
+target="_blank"
+rel="noopener"
+aria-label="Open WhatsApp Business chat with our rooflight team"
+>
+
+<svg
+viewBox="0 0 32 32"
+aria-hidden="true"
+focusable="false"
+>
+
+<path
+d="M16 3.2A12.5 12.5 0 0 0 5.2 22l-1.8 6.8 7-1.8A12.5 12.5 0 1 0 16 3.2zm0 22.7c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.1 1.1 1.1-4-.3-.4a10.2 10.2 0 1 1 9.2 5.1zm5.6-7.7c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9 0 1.7 1.2 3.3 1.4 3.5.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"
+/>
+
+</svg>
+
+</a>
+
+</div>
+
+
+<div class="header-action-wrap">
+
+<button
+type="button"
+id="basketButton"
+aria-label="View basket and checkout"
+title="Basket and checkout"
+>
+💳
+</button>
+
+<span
+class="basket-total-text"
+id="basketTotalText"
+aria-label="Basket total £0.00"
+>
+£0.00
+</span>
+
+</div>
+
+
+<button
+type="button"
+id="menuButton"
+aria-label="Open menu"
+title="Menu"
+>
+☰
+</button>
+
+
+</div>
+
+</header>
+
+
+<!-- =======================================
+MENU
+======================================= -->
+
+<div
+id="menuOverlay"
+class="menu-overlay"
+>
+
+<div class="menu-top">
+
+<div class="wordmark-wrap">
+
+<div class="wordmark">
+
+Factory
+
+<span>
+Toughened
+</span>
+
+<div class="wordmark-bottom">
+
+Rooflights
+
+<small class="wordmark-domain">
+.co.uk
+</small>
+
+</div>
+
+</div>
+
+<div class="address-line">
+
+Anamax Group Estate<br>
+Oxford Road, Denham<br>
+Buckinghamshire<br>
+SL9 7BB
+
+</div>
+
+</div>
+
+
+<button
+class="close-menu"
+type="button"
+id="closeMenuButton"
+aria-label="Close menu"
+>
+×
+</button>
+
+</div>
+
+
+<div class="menu-links">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="standard-sizes.html">
+Standard Sizes
+</a>
+
+<a href="order-page.html">
+Order Your Rooflight
+</a>
+
+<a
+href="order-page.html?source=information-page-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+>
+Build A Rooflight
+</a>
+
+<a href="index.html#oversized">
+Oversized Rooflights
+</a>
+
+<a href="fitting.html">
+Fitting &amp; Installation
+</a>
+
+<a href="contact.html">
+Contact Our Team
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+RETURNS PAGE
+======================================= -->
+
+<main class="information-page">
+
+
+<!-- =======================================
+PAGE INTRODUCTION
+======================================= -->
+
+<section class="information-hero">
+
+<div class="information-hero-inner">
+
+<div class="information-kicker">
+Returns &amp; Product Issues
+</div>
+
+<p class="information-introduction">
+
+We want every Factory Toughened Rooflights order to arrive in the
+condition and specification you expect. If something does not look
+right when your order arrives, please let us know as soon as
+possible and we will work with you to understand the issue and
+arrange the appropriate next step.
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =======================================
+RETURNS DOCUMENT
+======================================= -->
+
+<section class="information-document-section">
+
+<div class="information-document-shell">
+
+<div class="information-document-panel">
+
+<div class="information-document-label">
+Returns &amp; Product Issues
+</div>
+
+
+<article class="information-document-content">
+
+
+<!-- =======================================
+OUR APPROACH
+======================================= -->
+
+<section>
+
+<h2>
+Our Approach
+</h2>
+
+<p>
+Rooflights are large, specialist glass products, so we try to make
+our returns process as straightforward as possible while making
+sure any issue is properly understood before a product is moved or
+returned.
+</p>
+
+<p>
+If your rooflight has arrived damaged, appears defective or does
+not match the size or specification you ordered, please contact us
+and we will help you through the next steps.
+</p>
+
+<p>
+Our normal returns process asks customers to contact us within
+<strong>14 days of delivery</strong> where there is an issue with
+the product.
+</p>
+
+<p>
+Nothing on this page removes or reduces any statutory rights that
+may apply to your purchase.
+</p>
+
+</section>
+
+
+<!-- =======================================
+CHECK DELIVERY
+======================================= -->
+
+<section>
+
+<h2>
+Please Check Your Order On Arrival
+</h2>
+
+<p>
+Where reasonably possible, please take a few moments to inspect the
+rooflight and its packaging when it arrives.
+</p>
+
+<p>
+We recommend checking:
+</p>
+
+<ul>
+
+<li>
+That the glass has not been visibly damaged in transit.
+</li>
+
+<li>
+That the number of rooflights delivered matches your order.
+</li>
+
+<li>
+That the rooflight appears to be the size and specification ordered.
+</li>
+
+<li>
+That the packaging has not suffered significant visible damage.
+</li>
+
+</ul>
+
+<p>
+If you notice an obvious problem while the driver is still present,
+please make them aware of it where practical and contact us as soon
+as possible.
+</p>
+
+<div class="information-emphasis">
+
+<strong>
+Visible Damage On Delivery
+</strong>
+
+<p>
+If damage is clearly visible when the rooflight arrives, noting the
+issue at the time of delivery helps us investigate what happened
+and resolve the matter more quickly. Accepting a delivery without
+noting visible damage does not automatically remove your legal
+rights, but we may need additional information or evidence to
+establish when the damage occurred.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =======================================
+WHEN TO CONTACT
+======================================= -->
+
+<section>
+
+<h2>
+When To Contact Us
+</h2>
+
+<p>
+Please contact us as soon as possible, and normally within
+<strong>14 days of delivery</strong>, if:
+</p>
+
+<ul>
+
+<li>
+Your rooflight has arrived damaged.
+</li>
+
+<li>
+The product appears to have a manufacturing defect.
+</li>
+
+<li>
+The rooflight delivered is a different size from the size ordered.
+</li>
+
+<li>
+The glazing, finish or other product specification does not match
+your order.
+</li>
+
+<li>
+An item is missing from the delivery.
+</li>
+
+</ul>
+
+<p>
+If the issue is visible before installation, please leave the
+rooflight <strong>uninstalled and unaltered</strong> while we
+investigate it.
+</p>
+
+</section>
+
+
+<!-- =======================================
+PHOTOS
+======================================= -->
+
+<section>
+
+<h2>
+What We May Ask You To Send Us
+</h2>
+
+<p>
+Most delivery or product issues can be assessed much more quickly
+from a few clear photographs.
+</p>
+
+<p>
+When contacting us, please include where possible:
+</p>
+
+<ul>
+
+<li>
+Your name and order details.
+</li>
+
+<li>
+A short description of the issue.
+</li>
+
+<li>
+Photographs showing the complete rooflight.
+</li>
+
+<li>
+Close-up photographs of any damage or defect.
+</li>
+
+<li>
+Photographs of the packaging if there is evidence of transit damage.
+</li>
+
+<li>
+A photograph showing a tape measure where the issue relates to size.
+</li>
+
+</ul>
+
+<p>
+We may ask for additional photographs or information if this is
+reasonably necessary to understand the issue.
+</p>
+
+</section>
+
+
+<!-- =======================================
+DO NOT INSTALL
+======================================= -->
+
+<section>
+
+<h2>
+Please Do Not Install A Product With A Visible Issue
+</h2>
+
+<p>
+If you can see that the rooflight is damaged, the wrong size, the
+wrong specification or otherwise appears incorrect before fitting,
+please contact us before installation.
+</p>
+
+<p>
+Installing, bonding, altering or incorporating the rooflight into
+the building can make it considerably more difficult to inspect the
+original condition of the product.
+</p>
+
+<div class="information-emphasis">
+
+<strong>
+Before Installation
+</strong>
+
+<p>
+Where an issue is visible beforehand, please keep the rooflight
+uninstalled until we have had an opportunity to review the problem
+with you.
+</p>
+
+</div>
+
+<p>
+This does not remove any rights you may have where a fault could
+not reasonably have been identified before installation.
+</p>
+
+</section>
+
+
+<!-- =======================================
+DAMAGED GOODS
+======================================= -->
+
+<section>
+
+<h2>
+If Your Rooflight Arrives Damaged
+</h2>
+
+<p>
+Please contact us promptly and send photographs showing the damage
+and, where relevant, the surrounding packaging.
+</p>
+
+<p>
+We will review the information and determine the most appropriate
+way to resolve the issue.
+</p>
+
+<p>
+Depending on the circumstances, this may involve replacement,
+collection, repair, refund or another suitable resolution.
+</p>
+
+<p>
+Please do not dispose of the rooflight or packaging until we have
+confirmed whether we need any further information from you.
+</p>
+
+</section>
+
+
+<!-- =======================================
+WRONG PRODUCT
+======================================= -->
+
+<section>
+
+<h2>
+If We Have Supplied The Wrong Product
+</h2>
+
+<p>
+If the rooflight supplied does not match the dimensions or
+specification confirmed in your order, please let us know as soon
+as possible.
+</p>
+
+<p>
+We will compare the delivered product against your order record and
+may ask you for photographs or measurements to help confirm the
+difference.
+</p>
+
+<p>
+Where we have supplied an incorrect product, we will work with you
+to provide an appropriate remedy.
+</p>
+
+</section>
+
+
+<!-- =======================================
+DEFECTIVE PRODUCT
+======================================= -->
+
+<section>
+
+<h2>
+If You Believe The Product Is Defective
+</h2>
+
+<p>
+If you believe there is a manufacturing or product fault, please
+send us photographs together with a description of what you have
+noticed.
+</p>
+
+<p>
+Some characteristics of glass, ceramic borders, reflections and
+manufacturing tolerances can be normal, so we may need to review
+the issue before confirming whether the product is defective.
+</p>
+
+<p>
+Where a genuine defect is confirmed, we will arrange the
+appropriate remedy in accordance with the circumstances and your
+applicable rights.
+</p>
+
+</section>
+
+
+<!-- =======================================
+MEASUREMENT ERRORS
+======================================= -->
+
+<section>
+
+<h2>
+If The Wrong Size Was Ordered
+</h2>
+
+<p>
+All sizes shown on our website refer to the
+<strong>internal visible glass size</strong> unless expressly
+stated otherwise.
+</p>
+
+<p>
+If a rooflight has been manufactured correctly to the dimensions
+selected or supplied with the order, we are normally unable to
+accept it as a return simply because the structural opening was
+measured incorrectly or the wrong size was selected.
+</p>
+
+<p>
+If you are unsure whether the supplied size matches the order,
+please contact us before installation and we can help you check it.
+</p>
+
+<p>
+Our
+<a href="fitting.html">
+Fitting &amp; Installation
+</a>
+page contains further information about internal glass sizes,
+structural openings and external rooflight dimensions.
+</p>
+
+</section>
+
+
+<!-- =======================================
+CUSTOM PRODUCTS
+======================================= -->
+
+<section>
+
+<h2>
+Custom &amp; Made-To-Specification Rooflights
+</h2>
+
+<p>
+Many rooflights are manufactured specifically to the customer's
+chosen dimensions or specification.
+</p>
+
+<p>
+Where a rooflight has been genuinely manufactured to custom
+measurements or a personalised specification, change-of-mind
+cancellation and return rights may not apply in the same way as
+they do to standard products.
+</p>
+
+<p>
+This does not affect your rights where the product is faulty,
+damaged, incorrectly supplied or otherwise does not conform to the
+order.
+</p>
+
+</section>
+
+
+<!-- =======================================
+STANDARD RETURNS
+======================================= -->
+
+<section>
+
+<h2>
+Standard Products
+</h2>
+
+<p>
+Where statutory cancellation rights apply to a standard product
+purchased online, those rights continue to apply in accordance with
+applicable law.
+</p>
+
+<p>
+If you wish to discuss returning a standard product, please contact
+us before arranging transport.
+</p>
+
+<p>
+Because rooflights are large and fragile glass products, they
+should not be sent back using an unapproved courier or transport
+method without first agreeing the return arrangements with us.
+</p>
+
+</section>
+
+
+<!-- =======================================
+RETURN TRANSPORT
+======================================= -->
+
+<section>
+
+<h2>
+Returning A Rooflight
+</h2>
+
+<p>
+Please do not send a rooflight back to our business address without
+first contacting us.
+</p>
+
+<p>
+Once we have reviewed the issue, we will let you know whether the
+product needs to be returned and how the return should be handled.
+</p>
+
+<p>
+Where the return is required because we supplied a damaged,
+defective or incorrect product, the appropriate return or collection
+arrangements will be discussed with you.
+</p>
+
+<p>
+Where a return is not the result of a fault or error on our part,
+the customer may be responsible for appropriate return transport
+where permitted by law.
+</p>
+
+</section>
+
+
+<!-- =======================================
+REFUNDS
+======================================= -->
+
+<section>
+
+<h2>
+Refunds
+</h2>
+
+<p>
+Where a refund is agreed, it will normally be made back to the
+original payment method.
+</p>
+
+<p>
+The timing of the payment appearing in your account may depend on
+the bank or payment provider used for the original transaction.
+</p>
+
+<p>
+Where we reasonably need to inspect or receive the returned product
+before completing a refund, we will let you know.
+</p>
+
+<p>
+Nothing in this section changes any refund timescale required by
+applicable law.
+</p>
+
+</section>
+
+
+<!-- =======================================
+REPLACEMENTS
+======================================= -->
+
+<section>
+
+<h2>
+Replacement Rooflights
+</h2>
+
+<p>
+Where a replacement is the appropriate solution, we will confirm
+the replacement specification with you before it is manufactured
+or dispatched.
+</p>
+
+<p>
+Replacement lead times can depend on the size, glazing specification
+and current manufacturing schedule.
+</p>
+
+<p>
+We will aim to keep you informed of the expected replacement
+timeframe while the order is being resolved.
+</p>
+
+</section>
+
+
+<!-- =======================================
+AFTER DELIVERY DAMAGE
+======================================= -->
+
+<section>
+
+<h2>
+Damage After Delivery
+</h2>
+
+<p>
+Once the rooflight has been delivered, please handle and store it
+carefully until installation.
+</p>
+
+<p>
+We cannot normally accept responsibility for damage caused after
+delivery by impact, incorrect storage, unsafe handling, unsuitable
+support, installation damage, alteration or the use of incompatible
+materials.
+</p>
+
+<p>
+If you are unsure whether damage was present when the product
+arrived, please contact us and provide as much information as
+possible.
+</p>
+
+</section>
+
+
+<!-- =======================================
+HOW WE RESOLVE ISSUES
+======================================= -->
+
+<section>
+
+<h2>
+How We Resolve Product Issues
+</h2>
+
+<p>
+Every situation can be slightly different, particularly with
+large made-to-order glass products.
+</p>
+
+<p>
+Once we have reviewed the order details and the information you
+provide, we will explain the next step.
+</p>
+
+<p>
+Depending on the circumstances, the appropriate outcome may be:
+</p>
+
+<ul>
+
+<li>
+A replacement product.
+</li>
+
+<li>
+A repair or other corrective solution where appropriate.
+</li>
+
+<li>
+Collection or return of the affected rooflight.
+</li>
+
+<li>
+A full or partial refund where appropriate.
+</li>
+
+<li>
+Another solution agreed with you.
+</li>
+
+</ul>
+
+<p>
+Our aim is to resolve genuine problems fairly and as efficiently
+as reasonably possible.
+</p>
+
+</section>
+
+
+<!-- =======================================
+STATUTORY RIGHTS
+======================================= -->
+
+<section>
+
+<h2>
+Your Statutory Rights
+</h2>
+
+<p>
+This page explains our normal returns and product-issue process.
+</p>
+
+<p>
+It does not exclude, restrict or replace any statutory rights or
+remedies available to you under applicable UK law.
+</p>
+
+<p>
+Where goods are faulty, damaged before delivery, incorrectly
+supplied, not as described or otherwise fail to meet applicable
+legal requirements, your statutory rights continue to apply.
+</p>
+
+<p>
+You can also read our
+<a href="terms.html">
+Terms of Use
+</a>
+for more information about ordering, product specifications and
+our terms of sale.
+</p>
+
+</section>
+
+
+<!-- =======================================
+CONTACT
+======================================= -->
+
+<section>
+
+<h2>
+Need Help With An Order?
+</h2>
+
+<p>
+If something is not right with your delivery, please contact us and
+we will help you work through it.
+</p>
+
+<p>
+Factory Toughened Rooflights is a trading name of
+<strong>Right Glaze Ltd</strong>.
+</p>
+
+<p>
+<strong>Company number:</strong> 14336400<br>
+<strong>VAT number:</strong> 487373544
+</p>
+
+<p>
+<strong>Business address:</strong><br>
+128 City Road<br>
+London<br>
+United Kingdom<br>
+EC1V 2NX
+</p>
+
+<p>
+For returns, damaged goods or product issues, please email:
+<a href="mailto:sales@factorytoughenedrooflights.co.uk">
+sales@factorytoughenedrooflights.co.uk
+</a>.
+</p>
+
+<p>
+Please include your order details, a short explanation of the
+issue and photographs where possible.
+</p>
+
+</section>
+
+
+<div class="information-last-updated">
+Last updated: 14 September 2026
+</div>
+
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+/* =========================================
+INFORMATION PAGE TEMPLATE
+HEADER INTERACTIONS
+========================================= */
+
+const prefersReducedMotion =
+window.matchMedia(
+"(prefers-reduced-motion: reduce)"
+).matches;
+
+
+/* =========================================
+DESKTOP ACCESS RESTRICTION
+========================================= */
+
+function applyDesktopAccessRestriction() {
+
+const blocker =
+document.getElementById(
+"desktopAccessBlocker"
+);
+
+if (
+!blocker
+) {
+
+return;
+
+}
+
+const desktopPointer =
+window.matchMedia(
+"(hover: hover) and (pointer: fine)"
+);
+
+if (
+desktopPointer.matches
+) {
+
+blocker.setAttribute(
+"aria-hidden",
+"false"
+);
+
+try {
+
+blocker.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+blocker.focus();
+
+}
+
+}
+else {
+
+blocker.setAttribute(
+"aria-hidden",
+"true"
+);
+
+}
+
+}
+
+applyDesktopAccessRestriction();
+
+
+/* =========================================
+MENU
+========================================= */
+
+const menuOverlay =
+document.getElementById(
+"menuOverlay"
+);
+
+const menuButton =
+document.getElementById(
+"menuButton"
+);
+
+const closeMenuButton =
+document.getElementById(
+"closeMenuButton"
+);
+
+
+function openMenu() {
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuOverlay.classList.add(
+"active"
+);
+
+}
+
+
+function closeMenu() {
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuOverlay.classList.remove(
+"active"
+);
+
+}
+
+
+if (
+menuButton
+) {
+
+menuButton.addEventListener(
+"click",
+openMenu
+);
+
+}
+
+
+if (
+closeMenuButton
+) {
+
+closeMenuButton.addEventListener(
+"click",
+closeMenu
+);
+
+}
+
+
+if (
+menuOverlay
+) {
+
+menuOverlay
+.querySelectorAll(
+"a"
+)
+.forEach(
+(link) => {
+
+link.addEventListener(
+"click",
+closeMenu
+);
+
+}
+);
+
+}
+
+
+/* =========================================
+WHATSAPP
+========================================= */
+
+const whatsappButton =
+document.getElementById(
+"whatsappButton"
+);
+
+const whatsappAction =
+document.getElementById(
+"whatsappAction"
+);
+
+
+function closeWhatsappAction() {
+
+if (
+!whatsappButton ||
+!whatsappAction
+) {
+
+return;
+
+}
+
+whatsappAction.classList.remove(
+"is-open"
+);
+
+whatsappButton.classList.remove(
+"is-selected"
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+
+if (
+whatsappButton &&
+whatsappAction
+) {
+
+whatsappButton.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();
+
+const willOpen =
+!whatsappAction.classList.contains(
+"is-open"
+);
+
+whatsappAction.classList.toggle(
+"is-open",
+willOpen
+);
+
+whatsappButton.classList.toggle(
+"is-selected",
+willOpen
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+willOpen
+? "true"
+: "false"
+);
+
+}
+);
+
+
+document.addEventListener(
+"click",
+(event) => {
+
+if (
+event.target.closest(
+"#whatsappButton"
+) ||
+event.target.closest(
+"#whatsappAction"
+)
+) {
+
+return;
+
+}
+
+closeWhatsappAction();
+
+}
+);
+
+}
+
+
+/* =========================================
+ESCAPE KEY
+========================================= */
+
+document.addEventListener(
+"keydown",
+(event) => {
+
+if (
+event.key !==
+"Escape"
+) {
+
+return;
+
+}
+
+closeMenu();
+
+closeWhatsappAction();
+
+}
+);
+
+
+/* =========================================
+HEADER BASKET
+========================================= */
+
+const basketButton =
+document.getElementById(
+"basketButton"
+);
+
+const basketTotalText =
+document.getElementById(
+"basketTotalText"
+);
+
+const INFORMATION_ORDER_STORAGE_KEY =
+"factoryToughenedRooflightsOrderV1";
+
+
+function informationParseMoney(
+value
+) {
+
+if (
+typeof value ===
+"number"
+) {
+
+return Number.isFinite(
+value
+)
+? value
+: 0;
+
+}
+
+if (
+typeof value !==
+"string"
+) {
+
+return 0;
+
+}
+
+const parsed =
+Number(
+value.replace(
+/[^0-9.\-]/g,
+""
+)
+);
+
+return Number.isFinite(
+parsed
+)
+? parsed
+: 0;
+
+}
+
+
+function informationGetQuantity(
+item
+) {
+
+const candidates = [
+
+item?.quantity,
+item?.qty,
+item?.count,
+item?.totalUnitsQty
+
+];
+
+for (
+const candidate of
+candidates
+) {
+
+const numeric =
+Number(
+candidate
+);
+
+if (
+Number.isFinite(
+numeric
+) &&
+numeric >
+0
+) {
+
+return Math.max(
+1,
+Math.round(
+numeric
+)
+);
+
+}
+
+}
+
+return 1;
+
+}
+
+
+function informationGetUnitPrice(
+item
+) {
+
+const directCandidates = [
+
+item?.unitPrice,
+item?.price,
+item?.unitPriceIncVat,
+item?.unitPriceIncVAT,
+item?.priceIncVat,
+item?.priceIncVAT,
+item?.unitTotal,
+item?.configuredPrice
+
+];
+
+for (
+const candidate of
+directCandidates
+) {
+
+const price =
+informationParseMoney(
+candidate
+);
+
+if (
+price >
+0
+) {
+
+return price;
+
+}
+
+}
+
+const quantity =
+informationGetQuantity(
+item
+);
+
+const totalCandidates = [
+
+item?.total,
+item?.lineTotal,
+item?.totalPrice,
+item?.subtotal
+
+];
+
+for (
+const candidate of
+totalCandidates
+) {
+
+const total =
+informationParseMoney(
+candidate
+);
+
+if (
+total >
+0
+) {
+
+return (
+total /
+quantity
+);
+
+}
+
+}
+
+return 0;
+
+}
+
+
+function informationReadBasketItems() {
+
+try {
+
+const raw =
+localStorage.getItem(
+INFORMATION_ORDER_STORAGE_KEY
+);
+
+if (
+!raw
+) {
+
+return [];
+
+}
+
+const payload =
+JSON.parse(
+raw
+);
+
+if (
+Array.isArray(
+payload
+)
+) {
+
+return payload;
+
+}
+
+if (
+!payload ||
+typeof payload !==
+"object"
+) {
+
+return [];
+
+}
+
+const items = [];
+
+const possibleStandardKeys = [
+
+"items",
+"orderItems",
+"confirmedUnits",
+"units",
+"basketItems"
+
+];
+
+for (
+const key of
+possibleStandardKeys
+) {
+
+if (
+Array.isArray(
+payload[
+key
+]
+)
+) {
+
+items.push(
+...payload[
+key
+]
+);
+
+break;
+
+}
+
+}
+
+if (
+Array.isArray(
+payload.customItems
+)
+) {
+
+items.push(
+...payload.customItems
+);
+
+}
+
+return items;
+
+}
+catch (error) {
+
+return [];
+
+}
+
+}
+
+
+function informationFormatMoney(
+amount
+) {
+
+return (
+"£" +
+Number(
+amount
+).toLocaleString(
+"en-GB",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+)
+);
+
+}
+
+
+function refreshInformationHeaderBasket() {
+
+if (
+!basketTotalText
+) {
+
+return;
+
+}
+
+const items =
+informationReadBasketItems();
+
+const subtotal =
+items.reduce(
+(total,item) => {
+
+return (
+total +
+informationGetUnitPrice(
+item
+) *
+informationGetQuantity(
+item
+)
+);
+
+},
+0
+);
+
+basketTotalText.textContent =
+informationFormatMoney(
+subtotal
+);
+
+basketTotalText.setAttribute(
+"aria-label",
+`Basket product total ${informationFormatMoney(subtotal)}`
+);
+
+basketTotalText.classList.toggle(
+"is-visible",
+items.length >
+0
+);
+
+}
+
+
+if (
+basketButton
+) {
+
+basketButton.addEventListener(
+"click",
+() => {
+
+window.location.href =
+"order-page.html?source=information-page-header";
+
+}
+);
+
+}
+
+
+window.addEventListener(
+"storage",
+(event) => {
+
+if (
+event.key ===
+INFORMATION_ORDER_STORAGE_KEY
+) {
+
+refreshInformationHeaderBasket();
+
+}
+
+}
+);
+
+
+window.addEventListener(
+"pageshow",
+refreshInformationHeaderBasket
+);
+
+
+refreshInformationHeaderBasket();
+
+</script>
+
+
+</body>
+
+</html>
