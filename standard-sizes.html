@@ -1,3 +1,7 @@
+Gmail	Nathan Knight <rightglaze@gmail.com>
+Standard sizes
+Nathan Knight <nathank3290@gmail.com>	Mon, Sep 14, 2026 at 7:13 PM
+To: rightglaze@gmail.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +44,8 @@ content="Shop standard-size frameless flat roof skylights manufactured from 6mm+
 --purple-dark:#100918;
 --cosmic-green-light:#8ce1be;
 --delivery-red:#985047;
+
+--standard-sizes-sticky-header-offset:80px;
 }
 
 * {
@@ -61,7 +67,8 @@ overflow-x:hidden;
 text-rendering:optimizeLegibility;
 }
 
-body.basket-drawer-open {
+body.basket-drawer-open,
+body.menu-drawer-open {
 overflow:hidden !important;
 overscroll-behavior:none;
 }
@@ -98,8 +105,52 @@ font-family:"Bahnschrift","Bahnschrift SemiCondensed","Arial Narrow","Aptos Disp
 }
 
 /* =========================================
-HEADER
-UNCHANGED
+INDEX MASTER HEADER
+TOP MOVING BANNER
+========================================= */
+
+.top-banner {
+background:#161918;
+color:rgba(247,247,243,.72);
+overflow:hidden;
+white-space:nowrap;
+border-bottom:1px solid rgba(255,255,255,.07);
+font-family:
+"Bahnschrift",
+"Arial Narrow",
+"Aptos",
+Arial,
+sans-serif;
+font-size:8px;
+font-weight:700;
+letter-spacing:1.65px;
+text-transform:uppercase;
+}
+
+.ticker {
+display:inline-block;
+padding:8px 0;
+animation:ticker 52s linear infinite;
+}
+
+.ticker span {
+margin-right:90px;
+}
+
+@keyframes ticker {
+
+from {
+transform:translateX(0);
+}
+
+to {
+transform:translateX(-50%);
+}
+
+}
+
+/* =========================================
+INDEX MASTER HEADER
 ========================================= */
 
 header {
@@ -157,13 +208,13 @@ padding-bottom:2px;
 text-transform:lowercase;
 }
 
-.header-wordmark-link .wordmark-domain {
+.header-home-link .wordmark-domain {
 position:relative;
 left:-1px;
 top:1px;
 }
 
-.header-wordmark-link {
+.header-home-link {
 display:block;
 width:max-content;
 max-width:100%;
@@ -198,8 +249,8 @@ justify-content:center;
 .action-icons a.header-icon-button {
 width:42px;
 height:42px;
-border:1px solid rgba(230,233,230,.16);
-background:#111313;
+border:0;
+background:transparent;
 color:var(--steel-light);
 text-decoration:none;
 display:flex;
@@ -210,47 +261,109 @@ font-weight:800;
 cursor:pointer;
 transition:
 transform .22s ease,
-border-color .22s ease,
-color .22s ease,
-background .22s ease,
-box-shadow .22s ease;
+color .22s ease;
 line-height:1;
 padding:0;
+box-shadow:none;
 }
 
 .action-icons button:hover,
 .action-icons a.header-icon-button:hover {
-border-color:rgba(232,120,23,.70);
+border-color:transparent;
 color:var(--orange-bright);
-background:#171817;
-box-shadow:0 7px 22px rgba(0,0,0,.25);
+background:transparent;
+box-shadow:none;
 transform:translateY(-1px);
 }
 
 .action-icons button.is-selected {
-border-color:rgba(232,120,23,.85);
+border-color:transparent;
 color:var(--orange-bright);
-background:#191714;
-box-shadow:
-0 0 0 1px rgba(232,120,23,.08),
-0 7px 22px rgba(0,0,0,.24);
+background:transparent;
+box-shadow:none;
 }
 
 /* =========================================
-WHATSAPP ACTION
+INDEX MASTER EMAIL ACTION
+========================================= */
+
+.email-action {
+position:absolute;
+left:50%;
+bottom:calc(100% + 12px);
+z-index:85;
+width:35.7px;
+height:35.7px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:6px;
+background:
+linear-gradient(
+145deg,
+#020304 0%,
+#07101a 34%,
+#0d2238 68%,
+#123a5a 100%
+);
+border:1px solid rgba(255,255,255,.32);
+box-shadow:
+0 15px 30px rgba(0,0,0,.55),
+0 0 14px rgba(86,173,222,.22),
+inset 0 1px 0 rgba(255,255,255,.32);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transform:
+translate(-50%,20px)
+scale(.58);
+transform-origin:center bottom;
+transition:
+opacity .2s ease,
+visibility .2s ease,
+transform .38s cubic-bezier(.18,.82,.28,1.35);
+}
+
+.email-action.is-open {
+opacity:1;
+visibility:visible;
+pointer-events:auto;
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+.email-action-symbol {
+display:block;
+color:#ffffff;
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:17.85px;
+font-weight:800;
+line-height:1;
+text-align:center;
+text-shadow:0 2px 2px rgba(0,0,0,.18);
+transform:none;
+}
+
+/* =========================================
+INDEX MASTER WHATSAPP ACTION
 ========================================= */
 
 .whatsapp-action {
 position:absolute;
 left:50%;
-bottom:calc(100% + 15px);
+bottom:calc(100% + 12px);
 z-index:85;
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:7px;
+border-radius:6px;
 background:
 linear-gradient(
 145deg,
@@ -411,31 +524,81 @@ scale(1);
 }
 
 /* =========================================
-MENU
+INDEX MASTER MENU
+70% LEFT DRAWER
 ========================================= */
 
 .menu-overlay {
 position:fixed;
 inset:0;
-background:rgba(10,11,11,.992);
-z-index:100;
-display:none;
-padding:55px 6%;
-overflow-y:auto;
+z-index:1500000000;
+visibility:hidden;
+pointer-events:none;
+overflow:hidden;
 }
 
 .menu-overlay.active {
-display:block;
+visibility:visible;
+pointer-events:auto;
+}
+
+.menu-backdrop {
+position:absolute;
+inset:0;
+z-index:1;
+background:rgba(0,0,0,.72);
+opacity:0;
+transition:opacity .34s ease;
+}
+
+.menu-overlay.active .menu-backdrop {
+opacity:1;
+}
+
+.menu-panel {
+position:absolute;
+left:0;
+top:0;
+z-index:2;
+width:70vw;
+max-width:70vw;
+height:100vh;
+height:100dvh;
+padding:
+clamp(30px,7vw,58px)
+6%;
+overflow-x:hidden;
+overflow-y:auto;
+overscroll-behavior:contain;
+-webkit-overflow-scrolling:touch;
+background:
+linear-gradient(
+180deg,
+#111414 0%,
+#0b0d0d 52%,
+#080a0a 100%
+);
+border-right:1px solid rgba(255,255,255,.14);
+box-shadow:
+26px 0 70px rgba(0,0,0,.54);
+transform:translateX(-100%);
+transition:transform .42s cubic-bezier(.18,.72,.28,1);
+}
+
+.menu-overlay.active .menu-panel {
+transform:translateX(0);
 }
 
 .menu-top {
 display:flex;
 justify-content:space-between;
 align-items:flex-start;
-margin-bottom:60px;
+gap:20px;
+margin-bottom:46px;
 }
 
 .close-menu {
+flex:0 0 auto;
 background:#111313;
 color:var(--cream);
 border:1px solid rgba(255,255,255,.16);
@@ -448,11 +611,19 @@ cursor:pointer;
 .menu-links {
 display:grid;
 gap:0;
-max-width:760px;
+width:100%;
 border-top:1px solid rgba(255,255,255,.10);
 }
 
-.menu-links a {
+.menu-links a,
+.menu-links button {
+display:block;
+width:100%;
+margin:0;
+border:0;
+border-bottom:1px solid rgba(255,255,255,.10);
+padding:22px 0;
+background:transparent;
 color:var(--cream);
 text-decoration:none;
 font-family:
@@ -460,20 +631,21 @@ font-family:
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-font-size:clamp(31px,5vw,62px);
+font-size:clamp(25px,5vw,54px);
 font-weight:750;
 line-height:1;
 letter-spacing:-1.2px;
 text-transform:uppercase;
-border-bottom:1px solid rgba(255,255,255,.10);
-padding:22px 0;
+text-align:left;
+cursor:pointer;
 transition:
 color .2s ease,
 padding-left .2s ease,
 background .2s ease;
 }
 
-.menu-links a:hover {
+.menu-links a:hover,
+.menu-links button:hover {
 color:var(--orange-bright);
 padding-left:10px;
 }
@@ -1498,9 +1670,6 @@ box-shadow:none;
 
 /* ===============================
 OPENING SECTION
-
-CHANGE 1:
-TITLE + PARAGRAPH 10% SMALLER
 ================================ */
 
 .intro {
@@ -1551,17 +1720,12 @@ line-height:1.65;
 
 /* ===============================
 COLLAPSIBLE SECTION HEADINGS
-
-CHANGE 2:
-DROPDOWN / SECTION HEADER AREA
-AND HEADER TEXT 10% SMALLER
-
-OPEN CONTENT REMAINS ISOLATED
 ================================ */
 
 .product-section {
 position:relative;
-overflow:hidden;
+overflow:visible;
+clip-path:inset(0);
 padding:23.4px 6%;
 }
 
@@ -1574,6 +1738,19 @@ position:relative;
 z-index:3;
 max-width:1180px;
 margin:0 auto;
+}
+
+/* =========================================
+STANDARD SIZES CHANGE 5
+OPEN SECTION TITLES STAY DIRECTLY BENEATH
+THE LIVE MASTER HEADER WHILE SCROLLING
+========================================= */
+
+.product-section.is-open .section-heading-wrap {
+position:sticky;
+top:var(--standard-sizes-sticky-header-offset);
+z-index:24;
+background:inherit;
 }
 
 .section-toggle {
@@ -1615,8 +1792,6 @@ text-transform:uppercase;
 letter-spacing:1.08px;
 color:var(--catalogue-orange);
 }
-
-/* CHANGE 3: 5% SMALLER */
 
 .section-open-copy {
 display:block;
@@ -1668,11 +1843,17 @@ display:none !important;
 SECTION BACKGROUNDS
 ================================ */
 
+/* =========================================
+STANDARD SIZES CHANGE 2
+POPULAR BACKGROUND RETAINS THE SAME DESIGN
+BUT WITH A SOFTER / LESS DOMINANT EFFECT
+========================================= */
+
 .popular-section {
 background:
-radial-gradient(circle at 16% 18%,rgba(255,154,47,.32),transparent 26%),
-radial-gradient(circle at 86% 70%,rgba(245,124,0,.25),transparent 28%),
-linear-gradient(135deg,#050505 0%,#17100a 36%,#241406 68%,#050505 100%);
+radial-gradient(circle at 16% 18%,rgba(255,154,47,.18),transparent 26%),
+radial-gradient(circle at 86% 70%,rgba(245,124,0,.14),transparent 28%),
+linear-gradient(135deg,#050505 0%,#100d09 36%,#160d06 68%,#050505 100%);
 }
 
 .popular-section::before {
@@ -1683,7 +1864,7 @@ background:
 linear-gradient(
 120deg,
 transparent 0%,
-rgba(255,154,47,.13) 45%,
+rgba(255,154,47,.07) 45%,
 transparent 75%
 );
 animation:popularGlow 13s ease-in-out infinite alternate;
@@ -1705,7 +1886,7 @@ rgba(255,255,255,.035) 1px,
 transparent 1px
 );
 background-size:44px 44px;
-opacity:.25;
+opacity:.16;
 transform:skewY(-6deg) scale(1.2);
 pointer-events:none;
 }
@@ -1714,12 +1895,12 @@ pointer-events:none;
 
 from {
 transform:translateX(-10%) rotate(0deg);
-opacity:.55;
+opacity:.40;
 }
 
 to {
 transform:translateX(10%) rotate(4deg);
-opacity:.95;
+opacity:.68;
 }
 
 }
@@ -1796,13 +1977,6 @@ border-bottom:1px solid rgba(255,255,255,.08);
 
 /* ===============================
 PRODUCT GRIDS
-
-CHANGE 11:
-COUNTERACT THE PAGE'S 10% MAIN SCALE ONLY
-FOR THE PRODUCT-CARD SYSTEM.
-THIS RESTORES THE PRODUCT GRIDS, CARDS,
-CARD CONTENT AND IMAGES TO THEIR ORIGINAL
-PRE-CHANGE-1 DISPLAY SCALE AND WIDTH.
 ================================ */
 
 .product-grid {
@@ -1825,8 +1999,7 @@ grid-template-columns:repeat(3,minmax(0,1fr));
 }
 
 /* ===============================
-FINAL INDEX-MATCHING PRODUCT CARDS
-IMAGES / EXISTING SCALE ARE RETAINED
+PRODUCT CARDS
 ================================ */
 
 .product-card {
@@ -1926,19 +2099,11 @@ transition:filter .32s ease;
 filter:brightness(1.035);
 }
 
-/* EXISTING STANDARD-SIZES IMAGE SCALE/POSITION RULES */
-
-/* CHANGE 2 EXCEPTION:
-600x900 IMAGE INCREASED BY 15% */
-
 .product-card.image-size-600x900 .image-wrap img {
 object-fit:cover;
 object-position:center center;
 --image-transform:scale(.92);
 }
-
-/* CHANGE 2 EXCEPTION:
-400x800 IMAGE INCREASED BY 15% */
 
 .product-card.image-size-400x800 .image-wrap img {
 object-fit:cover;
@@ -1987,9 +2152,6 @@ min-width:0;
 flex:1;
 }
 
-/* CHANGE 5:
-PRODUCT SIZE NAMES 10% SMALLER */
-
 .size-title {
 font-size:21.6px;
 line-height:1;
@@ -2013,9 +2175,6 @@ transform:scale(1.025);
 transform-origin:left center;
 }
 
-/* CHANGE 5:
-THREE SPECIFICATION LINES 10% SMALLER */
-
 .spec-line {
 display:grid;
 gap:4px;
@@ -2032,6 +2191,19 @@ color:#fff;
 .spec-line .delivery-chargeable {
 color:var(--sunset);
 font-weight:900;
+}
+
+/* =========================================
+STANDARD SIZES CHANGE 4
+EXTRA LARGE DELIVERY COPY REMAINS ORANGE
+BUT IS SMALLER AND KEPT TO ONE LINE
+========================================= */
+
+.extra-large-section .delivery-chargeable {
+font-size:8.5px;
+letter-spacing:-.12px;
+line-height:1.2;
+white-space:nowrap;
 }
 
 .glazing-wrap {
@@ -2120,7 +2292,6 @@ left:50%;
 
 /* =========================================
 PRICE PRESENTATION
-RETAINED FOR FUTURE LIVE PRICING
 ========================================= */
 
 .price-row {
@@ -2130,9 +2301,6 @@ justify-content:space-between;
 gap:14px;
 margin-top:auto;
 }
-
-/* CHANGE 4:
-"FROM" 5% SMALLER */
 
 .price-label {
 color:rgba(255,255,255,.60);
@@ -2248,9 +2416,6 @@ transform:translateX(3px);
 
 /* ===============================
 BOTTOM CTA
-
-CHANGES 6 + 7:
-BOTH CTA AREAS 10% SMALLER
 ================================ */
 
 .bottom-cta {
@@ -2364,8 +2529,6 @@ margin-bottom:12px;
 padding:30px 6% 28px;
 }
 
-/* CHANGE 1 MOBILE */
-
 .intro-title {
 font-size:30.6px;
 }
@@ -2373,8 +2536,6 @@ font-size:30.6px;
 .intro-summary {
 font-size:11.7px;
 }
-
-/* CHANGE 2 MOBILE */
 
 .product-section {
 padding:19.8px 4%;
@@ -2392,8 +2553,6 @@ gap:9px;
 .section-title {
 font-size:21.6px;
 }
-
-/* CHANGE 3 MOBILE */
 
 .section-open-copy {
 margin-bottom:16px;
@@ -2429,8 +2588,6 @@ height:110px;
 margin-bottom:10px;
 }
 
-/* CHANGE 5 MOBILE */
-
 .catalogue-grid .size-title,
 .popular-grid .size-title {
 font-size:17.1px;
@@ -2445,6 +2602,12 @@ line-height:1.3;
 gap:3px;
 min-height:48px;
 margin-bottom:9px;
+}
+
+.extra-large-section .delivery-chargeable {
+font-size:6.7px;
+letter-spacing:-.16px;
+white-space:nowrap;
 }
 
 .glazing-wrap,
@@ -2473,8 +2636,6 @@ letter-spacing:.8px;
 .price-row {
 gap:6px;
 }
-
-/* CHANGE 4 MOBILE */
 
 .price-label {
 font-size:7.6px;
@@ -2505,8 +2666,6 @@ font-size:8px;
 letter-spacing:.35px;
 }
 
-/* CHANGES 6 + 7 MOBILE */
-
 .bottom-cta {
 padding:54px 6%;
 }
@@ -2535,18 +2694,20 @@ padding:7px;
 height:100px;
 }
 
-/* CHANGE 5 MOBILE */
-
 .catalogue-grid .size-title,
 .popular-grid .size-title {
 font-size:16.2px;
 }
 
+.extra-large-section .delivery-chargeable {
+font-size:6.2px;
+letter-spacing:-.18px;
+}
+
 }
 
 /* =========================================
-CURRENT ORDER-PAGE MOBILE HEADER
-UNCHANGED
+INDEX MASTER HEADER MOBILE
 ========================================= */
 
 @media(max-width:950px) {
@@ -2562,6 +2723,14 @@ font-size:9px;
 }
 
 @media(max-width:560px) {
+
+.top-banner {
+font-size:7px;
+}
+
+.ticker {
+padding:7px 0;
+}
 
 header {
 padding:19px 5.5%;
@@ -2579,16 +2748,21 @@ height:34px;
 font-size:15px;
 }
 
-.whatsapp-action {
-width:34px;
-height:34px;
-border-radius:6px;
-bottom:calc(100% + 14px);
+.whatsapp-action,
+.email-action {
+width:28.9px;
+height:28.9px;
+border-radius:5px;
+bottom:calc(100% + 11px);
 }
 
 .whatsapp-action svg {
 width:22px;
 height:22px;
+}
+
+.email-action-symbol {
+font-size:15.3px;
 }
 
 .basket-total-text {
@@ -2604,6 +2778,30 @@ scale(.78);
 transform:
 translate(-50%,0)
 scale(1);
+}
+
+.menu-panel {
+width:70vw;
+max-width:70vw;
+padding:
+32px
+5.5%;
+}
+
+.menu-top {
+margin-bottom:35px;
+}
+
+.close-menu {
+width:38px;
+height:38px;
+font-size:23px;
+}
+
+.menu-links a,
+.menu-links button {
+font-size:clamp(20px,6vw,32px);
+padding:17px 0;
 }
 
 .checkout-now {
@@ -2639,6 +2837,7 @@ html {
 scroll-behavior:auto;
 }
 
+.ticker,
 .whatsapp-action,
 .basket-total-text,
 .basket-drawer-item-expand-arrow {
@@ -2646,7 +2845,9 @@ animation:none !important;
 }
 
 .basket-drawer-panel,
-.basket-drawer-backdrop {
+.basket-drawer-backdrop,
+.menu-panel,
+.menu-backdrop {
 transition:none !important;
 }
 
@@ -2660,10 +2861,47 @@ transition:none;
 }
 
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- =========================================
+INDEX MASTER TOP BANNER
+========================================= -->
+
+<div class="top-banner">
+
+<div class="ticker">
+
+<span>Specialist British workshop for frameless rooflights</span>
+<span>Brand new rooflights made to order</span>
+<span>British glass • British manufacturing</span>
+<span>Estimated production from 4 working days</span>
+<span>Factory insulated and ready for fitting</span>
+<span>Expected 30+ year service life</span>
+<span>UKCA compliant • CE marked • building regs compliant</span>
+<span>Free mainland UK delivery on listed sizes</span>
+<span>Collection available with prior booking</span>
+
+<span>Specialist British workshop for frameless rooflights</span>
+<span>Brand new rooflights made to order</span>
+<span>British glass • British manufacturing</span>
+<span>Estimated production from 4 working days</span>
+<span>Factory insulated and ready for fitting</span>
+<span>Expected 30+ year service life</span>
+<span>UKCA compliant • CE marked • building regs compliant</span>
+<span>Free mainland UK delivery on listed sizes</span>
+<span>Collection available with prior booking</span>
+
+</div>
+
+</div>
+
+<!-- =========================================
+INDEX MASTER HEADER
+========================================= -->
 
 <header>
 
@@ -2671,9 +2909,12 @@ transition:none;
 
 <a
 href="index.html"
-class="wordmark header-wordmark-link"
+class="header-home-link"
+id="headerHomeLink"
 aria-label="Factory Toughened Rooflights homepage"
 >
+
+<div class="wordmark">
 
 Factory
 
@@ -2691,20 +2932,46 @@ Rooflights
 
 </div>
 
+</div>
+
 </a>
 
 </div>
 
 <div class="action-icons">
 
-<a
-href="contact.html"
+<div class="header-action-wrap">
+
+<button
+type="button"
 class="header-icon-button"
-aria-label="Contact Factory Toughened Rooflights"
-title="Contact our rooflight team"
+id="emailButton"
+aria-label="Show email button"
+title="Email our rooflight team"
+aria-expanded="false"
+aria-controls="emailAction"
 >
 ✉
+</button>
+
+<a
+id="emailAction"
+class="email-action"
+href="mailto:sales@factorytoughenedrooflights.co.uk"
+aria-label="Compose a blank email to Factory Toughened Rooflights"
+title="Email sales@factorytoughenedrooflights.co.uk"
+>
+
+<span
+class="email-action-symbol"
+aria-hidden="true"
+>
+@
+</span>
+
 </a>
+
+</div>
 
 <div class="header-action-wrap">
 
@@ -2764,9 +3031,12 @@ aria-label="Basket total £0.00"
 
 <button
 type="button"
+id="menuButton"
 onclick="openMenu()"
 aria-label="Open menu"
 title="Menu"
+aria-expanded="false"
+aria-controls="menuOverlay"
 >
 ☰
 </button>
@@ -2775,9 +3045,27 @@ title="Menu"
 
 </header>
 
+<!-- =========================================
+INDEX MASTER MENU
+========================================= -->
+
 <div
 id="menuOverlay"
 class="menu-overlay"
+aria-hidden="true"
+>
+
+<div
+class="menu-backdrop"
+data-menu-backdrop
+aria-hidden="true"
+></div>
+
+<aside
+class="menu-panel"
+role="dialog"
+aria-modal="true"
+aria-label="Website navigation"
 >
 
 <div class="menu-top">
@@ -2829,14 +3117,60 @@ aria-label="Close menu"
 <div class="menu-links">
 
 <a href="index.html" onclick="closeMenu()">Home</a>
-<a href="standard-sizes.html" onclick="closeMenu()">Standard Sizes</a>
-<a href="order-page.html" onclick="closeMenu()">Order Your Rooflight</a>
-<a href="index.html#calculator" onclick="closeMenu()">Build A Rooflight</a>
-<a href="index.html#oversized" onclick="closeMenu()">Oversized Rooflights</a>
-<a href="installation-guide.html" onclick="closeMenu()">Installation Guide</a>
-<a href="contact.html" onclick="closeMenu()">Contact Our Team</a>
+
+<a
+href="standard-sizes.html"
+onclick="closeMenu()"
+>
+Standard Sizes
+</a>
+
+<a
+href="order-page.html"
+onclick="closeMenu()"
+>
+Order Your Rooflight
+</a>
+
+<a
+href="order-page.html?source=homepage-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+id="menuBuildRooflightLink"
+onclick="closeMenu()"
+>
+Build A Rooflight
+</a>
+
+<a
+href="oversized.html"
+onclick="closeMenu()"
+>
+Oversized Rooflights
+</a>
+
+<a
+href="book.html"
+onclick="closeMenu()"
+>
+Book A Fitting
+</a>
+
+<button
+type="button"
+id="menuContactTeamButton"
+>
+Contact Our Team
+</button>
+
+<a
+href="shipping.html"
+onclick="closeMenu()"
+>
+Lead Times
+</a>
 
 </div>
+
+</aside>
 
 </div>
 
@@ -2926,7 +3260,7 @@ Frameless Flat Roof Skylights
 </h1>
 
 <p class="intro-summary">
-The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish. Designed to sit cleanly above the roof opening with no visible internal frame, our frameless rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass. The result is more natural light, a wider sky view and a rooflight that becomes part of the architecture rather than an added frame.
+Discover our range of brand-new frameless rooflights, manufactured here in the UK by our dedicated rooflight teams. Designed to bring more natural light into your space with a clean, contemporary finish, our rooflights are available in a wide choice of sizes, glazing specifications and glass finishes to suit
 </p>
 
 </div>
@@ -2998,7 +3332,7 @@ id="popularGrid"
 
 <section
 id="small"
-class="product-section small-section is-open"
+class="product-section small-section"
 data-catalogue-section="small"
 >
 
@@ -3008,7 +3342,7 @@ data-catalogue-section="small"
 type="button"
 class="section-toggle"
 data-section-toggle
-aria-expanded="true"
+aria-expanded="false"
 aria-controls="smallPanel"
 >
 
@@ -3041,6 +3375,7 @@ aria-hidden="true"
 class="section-collapse"
 id="smallPanel"
 data-section-panel
+hidden
 >
 
 <p class="section-open-copy">
@@ -3252,7 +3587,7 @@ If your required size is not listed, return to the calculator and build a made-t
 <div class="cta-actions">
 
 <a
-href="index.html#calculator"
+href="order-page.html?source=standard-sizes-custom-builder&focus=custom-builder&viewportOffset=0.14"
 class="button"
 >
 Build A Custom Size
@@ -4983,7 +5318,8 @@ extraLargeSizes
 }
 
 /* =========================================
-SECTION ACCORDIONS
+STANDARD SIZES CHANGE 1
+ALL SECTIONS START CLOSED
 ========================================= */
 
 function setCatalogueSectionOpen(
@@ -5047,8 +5383,7 @@ section => {
 
 setCatalogueSectionOpen(
 section,
-section.dataset.catalogueSection ===
-"small"
+false
 );
 
 const toggle =
@@ -5074,8 +5409,63 @@ section,
 );
 
 /* =========================================
+STANDARD SIZES CHANGE 5
+LIVE STICKY OFFSET FROM MASTER HEADER HEIGHT
+========================================= */
+
+const standardSizesMasterHeader =
+document.querySelector(
+"header"
+);
+
+function syncStandardSizesStickyHeaderOffset() {
+
+if (
+!standardSizesMasterHeader
+) {
+
+return;
+
+}
+
+const headerHeight =
+standardSizesMasterHeader
+.getBoundingClientRect()
+.height;
+
+if (
+!Number.isFinite(
+headerHeight
+) ||
+headerHeight <=
+0
+) {
+
+return;
+
+}
+
+document.documentElement.style.setProperty(
+"--standard-sizes-sticky-header-offset",
+`${Math.ceil(headerHeight)}px`
+);
+
+}
+
+syncStandardSizesStickyHeaderOffset();
+
+window.addEventListener(
+"resize",
+syncStandardSizesStickyHeaderOffset
+);
+
+window.addEventListener(
+"orientationchange",
+syncStandardSizesStickyHeaderOffset
+);
+
+/* =========================================
 SHARED POSTCODE / DISTANCE HELPERS
-RETAINED FOR THE BASKET DELIVERY SYSTEM
 ========================================= */
 
 const DELIVERY_ORIGIN_POSTCODE =
@@ -5272,50 +5662,33 @@ return data.result;
 }
 
 /* =========================================
-HEADER / MENU / WHATSAPP
+INDEX MASTER HEADER / MENU / EMAIL / WHATSAPP
 ========================================= */
 
-function openMenu() {
-
-closeWhatsAppAction();
-
-const menu =
+const menuOverlay =
 document.getElementById(
 "menuOverlay"
 );
 
-menu?.classList.add(
-"active"
-);
-
-document.body.style.overflow =
-"hidden";
-
-}
-
-function closeMenu() {
-
-const menu =
+const menuButton =
 document.getElementById(
-"menuOverlay"
+"menuButton"
 );
 
-menu?.classList.remove(
-"active"
+const menuContactTeamButton =
+document.getElementById(
+"menuContactTeamButton"
 );
 
-if (
-!document.body.classList.contains(
-"basket-drawer-open"
-)
-) {
+const emailButton =
+document.getElementById(
+"emailButton"
+);
 
-document.body.style.overflow =
-"";
-
-}
-
-}
+const emailAction =
+document.getElementById(
+"emailAction"
+);
 
 const whatsappButton =
 document.getElementById(
@@ -5327,8 +5700,62 @@ document.getElementById(
 "whatsappAction"
 );
 
+function closeEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+emailAction.classList.remove(
+"is-open"
+);
+
+emailButton.classList.remove(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+function openEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+closeWhatsAppAction();
+
+emailAction.classList.add(
+"is-open"
+);
+
+emailButton.classList.add(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
+
 function setWhatsAppState(
-open
+shouldOpen
 ) {
 
 if (
@@ -5342,18 +5769,18 @@ return;
 
 whatsappButton.classList.toggle(
 "is-selected",
-open
+shouldOpen
 );
 
 whatsappAction.classList.toggle(
 "is-open",
-open
+shouldOpen
 );
 
 whatsappButton.setAttribute(
 "aria-expanded",
 String(
-open
+shouldOpen
 )
 );
 
@@ -5367,6 +5794,132 @@ false
 
 }
 
+function openWhatsAppAction() {
+
+closeEmailAction();
+
+setWhatsAppState(
+true
+);
+
+}
+
+function openMenu() {
+
+closeEmailAction();
+
+closeWhatsAppAction();
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuOverlay.classList.add(
+"active"
+);
+
+menuOverlay.setAttribute(
+"aria-hidden",
+"false"
+);
+
+document.body.classList.add(
+"menu-drawer-open"
+);
+
+if (
+menuButton
+) {
+
+menuButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
+
+}
+
+function closeMenu() {
+
+if (
+menuOverlay
+) {
+
+menuOverlay.classList.remove(
+"active"
+);
+
+menuOverlay.setAttribute(
+"aria-hidden",
+"true"
+);
+
+}
+
+document.body.classList.remove(
+"menu-drawer-open"
+);
+
+if (
+menuButton
+) {
+
+menuButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+}
+
+if (
+emailButton &&
+emailAction
+) {
+
+emailButton.addEventListener(
+"click",
+event => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+if (
+emailAction.classList.contains(
+"is-open"
+)
+) {
+
+closeEmailAction();
+
+}
+else {
+
+openEmailAction();
+
+}
+
+}
+);
+
+emailAction.addEventListener(
+"click",
+event => {
+
+event.stopPropagation();
+
+}
+);
+
+}
+
 if (
 whatsappButton &&
 whatsappAction
@@ -5376,13 +5929,24 @@ whatsappButton.addEventListener(
 "click",
 event => {
 
+event.preventDefault();
+
 event.stopPropagation();
 
-setWhatsAppState(
-!whatsappAction.classList.contains(
+if (
+whatsappAction.classList.contains(
 "is-open"
 )
-);
+) {
+
+closeWhatsAppAction();
+
+}
+else {
+
+openWhatsAppAction();
+
+}
 
 }
 );
@@ -5392,6 +5956,58 @@ whatsappAction.addEventListener(
 event => {
 
 event.stopPropagation();
+
+}
+);
+
+}
+
+if (
+menuOverlay
+) {
+
+menuOverlay.addEventListener(
+"click",
+event => {
+
+if (
+event.target.closest(
+"[data-menu-backdrop]"
+)
+) {
+
+event.preventDefault();
+
+closeMenu();
+
+}
+
+}
+);
+
+}
+
+if (
+menuContactTeamButton
+) {
+
+menuContactTeamButton.addEventListener(
+"click",
+event => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeMenu();
+
+requestAnimationFrame(
+() => {
+
+openEmailAction();
+
+}
+);
 
 }
 );
@@ -9596,6 +10212,8 @@ return;
 
 closeMenu();
 
+closeEmailAction();
+
 closeWhatsAppAction();
 
 renderBasketDrawer();
@@ -10345,12 +10963,8 @@ document.addEventListener(
 event => {
 
 if (
-!basketDrawerIsOpen
+basketDrawerIsOpen
 ) {
-
-return;
-
-}
 
 if (
 event.key ===
@@ -10425,6 +11039,23 @@ first.focus();
 
 }
 
+return;
+
+}
+
+if (
+event.key ===
+"Escape"
+) {
+
+closeEmailAction();
+
+closeWhatsAppAction();
+
+closeMenu();
+
+}
+
 }
 );
 
@@ -10437,6 +11068,19 @@ basketDrawerIsOpen
 ) {
 
 return;
+
+}
+
+if (
+!event.target.closest(
+"#emailButton"
+) &&
+!event.target.closest(
+"#emailAction"
+)
+) {
+
+closeEmailAction();
 
 }
 
@@ -10478,7 +11122,6 @@ event.preventDefault();
 
 /* =========================================
 PRICING VALIDATION
-NO HARDCODED PRODUCT PRICES CURRENTLY ACTIVE
 ========================================= */
 
 function validatePricingCoverage() {
@@ -10492,18 +11135,6 @@ function runPricingChecks() {
 return true;
 
 }
-/* =========================================
-SS-1
-STANDARD SIZES MASTER PRICING + MAKE-UP BRIDGE
-
-PASTE DIRECTLY ABOVE THE EXISTING
-INITIALISE SECTION.
-
-PRODUCT CARD HTML / CSS / IMAGE SIZING /
-PLACEMENT / STYLING ARE NOT ALTERED.
-
-DELIVERY PRICING IS NOT PART OF SS-1.
-========================================= */
 
 </script>
 
@@ -10528,15 +11159,6 @@ const SS1_GLASS_SPECIFICATION_UNAVAILABLE =
 let SS1_ACTIVE_BASKET_ITEM =
 null;
 
-
-/* =========================================
-CAPTURE EXISTING BASKET ITEM RENDERER
-
-The existing renderer is retained exactly.
-SS-1 only gives its Top Glass lookup access
-to the actual basket item's finish / type.
-========================================= */
-
 const SS1_ORIGINAL_BUILD_BASKET_DRAWER_ITEM_HTML =
 typeof globalThis.buildBasketDrawerItemHTML ===
 "function"
@@ -10544,7 +11166,6 @@ typeof globalThis.buildBasketDrawerItemHTML ===
 globalThis.buildBasketDrawerItemHTML
 :
 null;
-
 
 /* =========================================
 MASTER STANDARD PRICING
@@ -10716,19 +11337,6 @@ reasonCode:
 
 }
 
-
-/* =========================================
-REPLACE STANDARD-SIZES LOCAL SELLING PRICE
-
-From this point onwards:
-calculateConfiguredProductPrice(...)
-uses FactoryRooflightsMasterPricing only.
-
-The old local PRICE_CATEGORIES structure may
-remain in the main page, but it is no longer
-the authority for customer product prices.
-========================================= */
-
 globalThis.calculateConfiguredProductPrice =
 function (
 size,
@@ -10749,7 +11357,6 @@ result.price
 null;
 
 };
-
 
 /* =========================================
 MASTER MAKE-UP LOOKUP
@@ -10879,16 +11486,6 @@ SS1_GLASS_SPECIFICATION_UNAVAILABLE
 
 }
 
-
-/* =========================================
-FORMAT MASTER TOP-PANE SPECIFICATION
-
-This only formats the result returned by
-MasterMakeupLogic.
-
-No thickness rules are duplicated here.
-========================================= */
-
 function SS1GetTopPaneSpecificationText(
 makeupResult
 ) {
@@ -10968,17 +11565,6 @@ return SS1_GLASS_SPECIFICATION_UNAVAILABLE;
 
 }
 
-
-/* =========================================
-REPLACE OLD getTopGlass()
-
-createCard() already calls getTopGlass(size).
-
-Keeping that call means the existing card
-markup remains untouched while the returned
-specification now comes from MasterMakeupLogic.
-========================================= */
-
 globalThis.getTopGlass =
 function (
 size
@@ -11006,15 +11592,6 @@ border:
 );
 
 };
-
-
-/* =========================================
-REPLACE OLD getTopGlassLabelFor()
-
-Used by the basket and any other existing
-Standard Sizes functions requesting a
-top-pane specification.
-========================================= */
 
 globalThis.getTopGlassLabelFor =
 function (
@@ -11062,17 +11639,6 @@ resolvedFinish
 );
 
 };
-
-
-/* =========================================
-UPDATE EXISTING CARD SPECIFICATION TEXT
-
-No HTML is rebuilt.
-
-The existing second specification <span>
-inside .spec-line is simply given the result
-from MasterMakeupLogic.
-========================================= */
 
 function SS1UpdateCardGlassSpecification(
 card
@@ -11141,20 +11707,6 @@ configuration.finish
 );
 
 }
-
-
-/* =========================================
-REPLACE EXISTING GLAZING TOGGLE HANDLER
-
-VISUAL STRUCTURE IS UNCHANGED.
-
-Double / Triple still behaves exactly as
-before, but now changing glazing refreshes:
-
-1. Master price
-2. Master glass make-up
-3. Existing Order Page link
-========================================= */
 
 globalThis.setGlazing =
 function (
@@ -11242,15 +11794,6 @@ card
 );
 
 };
-
-
-/* =========================================
-REPLACE PROGRAMMATIC CARD CONFIGURATION
-
-This preserves the existing public helper but
-ensures any future configuration changes also
-refresh from both master systems.
-========================================= */
 
 globalThis.setProductCardConfiguration =
 function (
@@ -11377,19 +11920,6 @@ card
 
 };
 
-
-/* =========================================
-BASKET MAKE-UP BRIDGE
-
-The original basket HTML renderer remains
-untouched.
-
-While it renders one basket item, SS-1 makes
-that item's real glass type / finish available
-to getTopGlassLabelFor() so MasterMakeupLogic
-receives the complete configuration.
-========================================= */
-
 if (
 SS1_ORIGINAL_BUILD_BASKET_DRAWER_ITEM_HTML
 ) {
@@ -11423,15 +11953,6 @@ null;
 };
 
 }
-
-
-/* =========================================
-MASTER SYSTEM AVAILABILITY CHECK
-
-These replace the existing placeholder
-validation functions immediately before the
-main page INITIALISE section calls them.
-========================================= */
 
 globalThis.validatePricingCoverage =
 function () {
@@ -11481,23 +12002,12 @@ makeupReady
 
 };
 
-
 globalThis.runPricingChecks =
 function () {
 
 return validatePricingCoverage();
 
 };
-
-
-/* =========================================
-END SS-1
-
-DO NOT CLOSE THIS SCRIPT HERE.
-
-THE STANDARD-SIZES PAGE'S EXISTING
-INITIALISE SECTION CONTINUES DIRECTLY BELOW.
-========================================= */
 
 /* =========================================
 INITIALISE
@@ -11521,6 +12031,8 @@ animate:false
 );
 
 updateCheckoutAvailability();
+
+syncStandardSizesStickyHeaderOffset();
 
 if (
 basketState.deliveryPostcode &&
@@ -11587,6 +12099,8 @@ animate:false
 );
 
 updateCheckoutAvailability();
+
+syncStandardSizesStickyHeaderOffset();
 
 }
 );
