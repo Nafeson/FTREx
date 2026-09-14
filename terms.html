@@ -1,0 +1,4129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Terms of Use | Factory Toughened Rooflights
+</title>
+
+<meta
+name="description"
+content="Terms of use and terms of sale for Factory Toughened Rooflights, including ordering, specifications, payments, delivery, returns, fitting responsibilities and website use."
+>
+
+<style>
+
+/* =========================================
+FACTORY TOUGHENED ROOFLIGHTS
+INFORMATION / FOOTER PAGE MASTER TEMPLATE
+========================================= */
+
+:root {
+
+--orange:#e87817;
+--orange-bright:#f28a28;
+
+--black:#090a0a;
+--dark:#0d0f0f;
+--dark-2:#111313;
+
+--panel:#151818;
+--panel-raised:#191c1c;
+
+--graphite:#242828;
+--graphite-light:#303535;
+
+--steel:#9ca3a1;
+--steel-light:#c9cecb;
+--steel-dark:#686f6d;
+
+--cream:#f1f0e9;
+--white:#f7f7f3;
+
+--muted:#b7bbb8;
+--muted-soft:#8f9692;
+
+--line:rgba(216,221,217,.14);
+--line-strong:rgba(216,221,217,.24);
+
+--whatsapp:#25d366;
+
+}
+
+
+* {
+box-sizing:border-box;
+}
+
+
+html {
+scroll-behavior:smooth;
+}
+
+
+body {
+margin:0;
+
+font-family:
+"Aptos",
+"Inter",
+"Segoe UI",
+Arial,
+sans-serif;
+
+background:var(--black);
+color:var(--white);
+
+overflow-x:hidden;
+
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+}
+
+
+img {
+max-width:100%;
+}
+
+
+/* =========================================
+DESKTOP ACCESS BLOCKER
+MATCHES MAIN SITE
+========================================= */
+
+.desktop-access-blocker {
+display:none;
+
+position:fixed;
+inset:0;
+
+z-index:2147483647;
+
+width:100%;
+height:100%;
+min-height:100dvh;
+
+padding:clamp(24px,5vw,72px);
+
+align-items:center;
+justify-content:center;
+
+background:
+linear-gradient(
+180deg,
+rgba(9,10,10,.995) 0%,
+rgba(13,15,15,.995) 100%
+);
+
+color:var(--cream);
+text-align:center;
+
+overflow:hidden;
+
+overscroll-behavior:none;
+touch-action:none;
+pointer-events:auto;
+}
+
+
+.desktop-access-blocker::before {
+content:"";
+
+position:absolute;
+inset:0;
+
+background-image:
+linear-gradient(
+rgba(255,255,255,.018) 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+rgba(255,255,255,.018) 1px,
+transparent 1px
+);
+
+background-size:48px 48px;
+
+opacity:.42;
+
+pointer-events:none;
+}
+
+
+.desktop-access-blocker::after {
+content:"";
+
+position:absolute;
+
+left:50%;
+top:0;
+
+width:min(620px,72vw);
+height:2px;
+
+background:var(--orange);
+
+transform:translateX(-50%);
+
+box-shadow:
+0 0 24px rgba(232,120,23,.18);
+
+pointer-events:none;
+}
+
+
+.desktop-access-blocker-panel {
+position:relative;
+
+z-index:1;
+
+width:min(680px,100%);
+
+padding:
+clamp(34px,5vw,58px)
+clamp(24px,5vw,54px);
+
+border:1px solid rgba(255,255,255,.12);
+border-top:2px solid var(--orange);
+
+background:
+linear-gradient(
+145deg,
+rgba(21,24,24,.97) 0%,
+rgba(12,14,14,.985) 58%,
+rgba(9,10,10,.995) 100%
+);
+
+box-shadow:
+0 32px 90px rgba(0,0,0,.45),
+inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+
+.desktop-access-blocker-panel::before {
+content:"";
+
+display:block;
+
+width:42px;
+height:1px;
+
+margin:
+0
+auto
+clamp(20px,2.5vw,28px);
+
+background:var(--orange);
+}
+
+
+.desktop-access-blocker h1 {
+margin:0;
+
+font-family:
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+
+font-size:clamp(34px,4.6vw,58px);
+font-weight:800;
+
+line-height:.98;
+letter-spacing:-1.35px;
+
+color:var(--cream);
+}
+
+
+.desktop-access-blocker p {
+max-width:520px;
+
+margin:
+clamp(18px,2.4vw,26px)
+auto
+0;
+
+font-size:clamp(14px,1.4vw,17px);
+font-weight:500;
+
+line-height:1.65;
+
+color:var(--muted);
+}
+
+
+@media (hover:hover) and (pointer:fine) {
+
+html,
+body {
+overflow:hidden !important;
+overscroll-behavior:none;
+}
+
+.desktop-access-blocker {
+display:flex;
+}
+
+}
+
+
+/* =========================================
+TOP MOVING BANNER
+MATCHES HOMEPAGE
+========================================= */
+
+.top-banner {
+background:#161918;
+
+color:rgba(247,247,243,.72);
+
+overflow:hidden;
+white-space:nowrap;
+
+border-bottom:1px solid rgba(255,255,255,.07);
+
+font-family:
+"Bahnschrift",
+"Arial Narrow",
+"Aptos",
+Arial,
+sans-serif;
+
+font-size:8px;
+font-weight:700;
+
+letter-spacing:1.65px;
+
+text-transform:uppercase;
+}
+
+
+.ticker {
+display:inline-block;
+
+padding:8px 0;
+
+animation:
+ticker
+52s
+linear
+infinite;
+}
+
+
+.ticker span {
+margin-right:90px;
+}
+
+
+@keyframes ticker {
+
+from {
+transform:translateX(0);
+}
+
+to {
+transform:translateX(-50%);
+}
+
+}
+
+
+/* =========================================
+HEADER
+MATCHES HOMEPAGE
+========================================= */
+
+header {
+background:rgba(11,12,12,.965);
+
+border-bottom:1px solid rgba(255,255,255,.09);
+
+padding:
+24px
+6%
+20px;
+
+display:grid;
+
+grid-template-columns:
+1fr
+auto;
+
+align-items:start;
+
+gap:32px;
+
+position:sticky;
+top:0;
+
+z-index:30;
+
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.16);
+}
+
+
+.wordmark-wrap {
+display:grid;
+gap:9px;
+}
+
+
+.header-home-link {
+display:block;
+
+width:max-content;
+max-width:100%;
+
+color:inherit;
+text-decoration:none;
+}
+
+
+.header-home-link:visited {
+color:inherit;
+}
+
+
+.header-home-link:focus-visible {
+outline:
+1px solid rgba(232,120,23,.65);
+
+outline-offset:6px;
+}
+
+
+.wordmark {
+font-family:
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+
+line-height:.91;
+
+font-weight:850;
+
+letter-spacing:2.8px;
+
+color:var(--cream);
+
+font-size:24px;
+
+text-transform:uppercase;
+
+width:max-content;
+}
+
+
+.wordmark > span {
+color:var(--orange);
+display:block;
+}
+
+
+.wordmark-bottom {
+display:flex;
+
+align-items:flex-end;
+
+gap:0;
+
+white-space:nowrap;
+
+width:max-content;
+}
+
+
+.wordmark-domain {
+color:var(--steel-light);
+
+font-size:.40em;
+font-weight:700;
+
+letter-spacing:.15px;
+
+line-height:1;
+
+margin-left:1px;
+
+padding-bottom:2px;
+
+text-transform:lowercase;
+
+transform:
+translate(-1px,1px);
+}
+
+
+.action-icons {
+display:flex;
+
+gap:8px;
+
+align-self:end;
+
+padding-bottom:1px;
+}
+
+
+.header-action-wrap {
+position:relative;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+}
+
+
+.action-icons button,
+.action-icons a.header-icon-button {
+width:42px;
+height:42px;
+
+border:
+1px solid rgba(230,233,230,.16);
+
+background:#111313;
+
+color:var(--steel-light);
+
+text-decoration:none;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:18px;
+font-weight:800;
+
+cursor:pointer;
+
+transition:
+transform .22s ease,
+border-color .22s ease,
+color .22s ease,
+background .22s ease,
+box-shadow .22s ease;
+
+line-height:1;
+
+padding:0;
+}
+
+
+.action-icons button:hover,
+.action-icons a.header-icon-button:hover {
+border-color:
+rgba(232,120,23,.70);
+
+color:var(--orange-bright);
+
+background:#171817;
+
+box-shadow:
+0 7px 22px rgba(0,0,0,.25);
+
+transform:
+translateY(-1px);
+}
+
+
+.action-icons button.is-selected {
+border-color:
+rgba(232,120,23,.85);
+
+color:var(--orange-bright);
+
+background:#191714;
+
+box-shadow:
+0 0 0 1px rgba(232,120,23,.08),
+0 7px 22px rgba(0,0,0,.24);
+}
+
+
+/* =========================================
+WHATSAPP ACTION
+========================================= */
+
+.whatsapp-action {
+position:absolute;
+
+left:50%;
+
+bottom:
+calc(100% + 15px);
+
+z-index:85;
+
+width:42px;
+height:42px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border-radius:7px;
+
+background:
+linear-gradient(
+145deg,
+#36e676 0%,
+#25d366 52%,
+#179b46 100%
+);
+
+border:
+1px solid rgba(255,255,255,.30);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.55),
+0 0 14px rgba(37,211,102,.18),
+inset 0 1px 0 rgba(255,255,255,.30);
+
+opacity:0;
+visibility:hidden;
+
+pointer-events:none;
+
+transform:
+translate(-50%,20px)
+scale(.58);
+
+transform-origin:
+center bottom;
+
+transition:
+opacity .2s ease,
+visibility .2s ease,
+transform .38s cubic-bezier(.18,.82,.28,1.35);
+}
+
+
+.whatsapp-action.is-open {
+opacity:1;
+visibility:visible;
+
+pointer-events:auto;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+
+.whatsapp-action svg {
+width:27px;
+height:27px;
+
+display:block;
+
+fill:#ffffff;
+
+filter:
+drop-shadow(
+0
+2px
+2px
+rgba(0,0,0,.22)
+);
+}
+
+
+/* =========================================
+BASKET HEADER TOTAL
+========================================= */
+
+.basket-total-text {
+position:absolute;
+
+top:-16px;
+left:50%;
+
+z-index:5;
+
+font-family:
+"Bahnschrift Condensed",
+"Arial Narrow",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:.3px;
+
+color:var(--cream);
+
+text-align:center;
+
+white-space:nowrap;
+
+text-shadow:
+0 2px 5px rgba(0,0,0,.92);
+
+opacity:0;
+
+transform:
+translate(-50%,7px)
+scale(.78);
+
+transform-origin:
+center bottom;
+
+pointer-events:none;
+}
+
+
+.basket-total-text.is-visible {
+opacity:1;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+
+/* =========================================
+MENU
+========================================= */
+
+.menu-overlay {
+position:fixed;
+
+inset:0;
+
+background:
+rgba(10,11,11,.992);
+
+z-index:100;
+
+display:none;
+
+padding:
+55px
+6%;
+
+overflow-y:auto;
+}
+
+
+.menu-overlay.active {
+display:block;
+}
+
+
+.menu-top {
+display:flex;
+
+justify-content:space-between;
+align-items:flex-start;
+
+margin-bottom:60px;
+}
+
+
+.address-line {
+font-size:12px;
+
+line-height:1.45;
+
+font-weight:600;
+
+color:rgba(255,255,255,.72);
+
+letter-spacing:.6px;
+
+text-transform:uppercase;
+}
+
+
+.close-menu {
+background:#111313;
+
+color:var(--cream);
+
+border:
+1px solid rgba(255,255,255,.16);
+
+width:44px;
+height:44px;
+
+font-size:26px;
+
+cursor:pointer;
+}
+
+
+.menu-links {
+display:grid;
+
+gap:0;
+
+max-width:760px;
+
+border-top:
+1px solid rgba(255,255,255,.10);
+}
+
+
+.menu-links a {
+color:var(--cream);
+
+text-decoration:none;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+
+font-size:
+clamp(27.9px,4.5vw,55.8px);
+
+font-weight:750;
+
+line-height:1;
+
+letter-spacing:-1.2px;
+
+text-transform:uppercase;
+
+border-bottom:
+1px solid rgba(255,255,255,.10);
+
+padding:
+22px
+0;
+
+transition:
+color .2s ease,
+padding-left .2s ease,
+background .2s ease;
+}
+
+
+.menu-links a:hover {
+color:var(--orange-bright);
+
+padding-left:10px;
+}
+
+
+/* =========================================
+INFORMATION PAGE
+========================================= */
+
+.information-page {
+position:relative;
+
+min-height:
+calc(100dvh - 120px);
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#0a0b0b 0%,
+#0d0f0f 45%,
+#090a0a 100%
+);
+}
+
+
+.information-page::before {
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(
+ellipse 68% 48% at 88% 15%,
+rgba(232,120,23,.11) 0%,
+rgba(117,61,15,.055) 32%,
+transparent 72%
+),
+
+linear-gradient(
+rgba(255,255,255,.012) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(255,255,255,.012) 1px,
+transparent 1px
+);
+
+background-size:
+auto,
+52px 52px,
+52px 52px;
+
+pointer-events:none;
+}
+
+
+.information-hero {
+position:relative;
+
+z-index:2;
+
+padding:
+clamp(68px,8vw,110px)
+6%
+clamp(52px,6vw,80px);
+}
+
+
+.information-hero-inner {
+max-width:1120px;
+
+margin:0 auto;
+}
+
+
+.information-kicker {
+margin:0 0 19px;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:10px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
+
+color:rgba(247,247,243,.50);
+}
+
+
+.information-introduction {
+max-width:900px;
+
+margin:
+clamp(32px,4vw,48px)
+0
+0;
+
+font-size:
+clamp(12.92px,1.52vw,16.72px);
+
+font-weight:400;
+
+line-height:1.7;
+
+color:rgba(247,247,243,.72);
+}
+
+
+/* =========================================
+INFORMATION DOCUMENT HOUSING
+========================================= */
+
+.information-document-section {
+position:relative;
+
+z-index:2;
+
+padding:
+0
+6%
+clamp(76px,9vw,130px);
+}
+
+
+.information-document-shell {
+width:min(930px,84%);
+
+margin-left:
+clamp(22px,7vw,105px);
+
+margin-right:auto;
+}
+
+
+.information-document-panel {
+position:relative;
+
+padding:
+clamp(34px,4.5vw,58px)
+clamp(25px,4.5vw,54px);
+
+background:
+linear-gradient(
+145deg,
+rgba(23,26,26,.98) 0%,
+rgba(15,18,18,.99) 58%,
+rgba(11,13,13,.995) 100%
+);
+
+border:
+1px solid rgba(255,255,255,.105);
+
+border-left:
+3px solid var(--orange);
+
+box-shadow:
+0 28px 65px rgba(0,0,0,.26),
+inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+
+.information-document-panel::before {
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+right:0;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+rgba(232,120,23,.24),
+rgba(255,255,255,.05),
+transparent
+);
+}
+
+
+.information-document-label {
+margin:0 0 28px;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:1.7px;
+
+text-transform:uppercase;
+
+color:var(--orange-bright);
+}
+
+
+.information-document-content {
+max-width:760px;
+}
+
+
+.information-document-content section {
+margin:0;
+padding:0;
+}
+
+
+.information-document-content section + section {
+margin-top:
+clamp(34px,4vw,48px);
+
+padding-top:
+clamp(30px,3.5vw,42px);
+
+border-top:
+1px solid rgba(255,255,255,.08);
+}
+
+
+.information-document-content h2 {
+margin:
+0
+0
+16px;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(24px,2.8vw,34px);
+
+font-weight:750;
+
+line-height:1.08;
+
+letter-spacing:-.6px;
+
+color:var(--cream);
+}
+
+
+.information-document-content h3 {
+margin:
+24px
+0
+10px;
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(18px,2vw,22px);
+
+font-weight:720;
+
+line-height:1.15;
+
+letter-spacing:-.3px;
+
+color:rgba(247,247,243,.90);
+}
+
+
+.information-document-content p {
+margin:
+0
+0
+17px;
+
+font-size:
+clamp(14px,1.5vw,17px);
+
+font-weight:400;
+
+line-height:1.72;
+
+color:rgba(247,247,243,.64);
+}
+
+
+.information-document-content p:last-child {
+margin-bottom:0;
+}
+
+
+.information-document-content strong {
+color:rgba(247,247,243,.88);
+
+font-weight:700;
+}
+
+
+.information-document-content a {
+color:var(--orange-bright);
+
+text-decoration:
+underline;
+
+text-decoration-thickness:1px;
+
+text-underline-offset:3px;
+
+text-decoration-color:
+rgba(232,120,23,.52);
+
+transition:
+color .18s ease,
+text-decoration-color .18s ease;
+}
+
+
+.information-document-content a:hover,
+.information-document-content a:focus {
+color:var(--cream);
+
+text-decoration-color:var(--cream);
+
+outline:none;
+}
+
+
+.information-document-content ul,
+.information-document-content ol {
+margin:
+16px 0 0;
+
+padding-left:21px;
+
+color:rgba(247,247,243,.64);
+}
+
+
+.information-document-content li {
+margin-bottom:10px;
+
+padding-left:4px;
+
+font-size:
+clamp(14px,1.5vw,17px);
+
+line-height:1.65;
+}
+
+
+.information-document-content li::marker {
+color:var(--orange);
+}
+
+
+/* =========================================
+IMPORTANT INFORMATION EMPHASIS
+========================================= */
+
+.information-emphasis {
+margin-top:20px;
+
+padding:
+18px 20px;
+
+border:
+1px solid rgba(232,120,23,.22);
+
+border-left:
+2px solid var(--orange);
+
+background:
+rgba(232,120,23,.04);
+}
+
+
+.information-emphasis strong {
+display:block;
+
+margin-bottom:7px;
+
+color:var(--orange-bright);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:10px;
+font-weight:800;
+
+line-height:1.25;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+}
+
+
+.information-emphasis p {
+margin:0;
+}
+
+
+/* =========================================
+LAST UPDATED LINE
+========================================= */
+
+.information-last-updated {
+margin-top:
+clamp(40px,4vw,54px);
+
+padding-top:20px;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+
+font-weight:650;
+
+line-height:1.45;
+
+letter-spacing:.5px;
+
+text-transform:uppercase;
+
+color:rgba(247,247,243,.37);
+}
+
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media(max-width:560px) {
+
+.top-banner {
+font-size:7px;
+}
+
+
+.ticker {
+padding:7px 0;
+}
+
+
+header {
+padding:
+19px
+5.5%;
+
+gap:14px;
+}
+
+
+.wordmark {
+font-size:20px;
+}
+
+
+.wordmark-domain {
+font-size:.40em;
+
+padding-bottom:1px;
+}
+
+
+.action-icons {
+gap:5px;
+}
+
+
+.action-icons button,
+.action-icons a.header-icon-button {
+width:34px;
+height:34px;
+
+font-size:15px;
+}
+
+
+.whatsapp-action {
+width:34px;
+height:34px;
+
+border-radius:6px;
+
+bottom:
+calc(100% + 14px);
+}
+
+
+.whatsapp-action svg {
+width:22px;
+height:22px;
+}
+
+
+.basket-total-text {
+top:-15px;
+
+font-size:7px;
+}
+
+
+.menu-overlay {
+padding:
+45px
+6%;
+}
+
+
+.menu-top {
+margin-bottom:42px;
+}
+
+
+.address-line {
+font-size:9px;
+}
+
+
+.information-hero {
+padding:
+53px
+6%
+41px;
+}
+
+
+.information-kicker {
+margin-bottom:15px;
+
+font-size:8px;
+
+letter-spacing:1.6px;
+}
+
+
+.information-introduction {
+width:94%;
+
+margin-top:31px;
+
+font-size:12.16px;
+
+line-height:1.7;
+}
+
+
+.information-document-section {
+padding:
+0
+4%
+65px;
+}
+
+
+.information-document-shell {
+width:94%;
+
+margin-left:4%;
+margin-right:auto;
+}
+
+
+.information-document-panel {
+padding:
+31px
+22px
+35px;
+
+border-left-width:2px;
+}
+
+
+.information-document-label {
+margin-bottom:24px;
+
+font-size:8px;
+
+letter-spacing:1.35px;
+}
+
+
+.information-document-content h2 {
+font-size:25px;
+
+letter-spacing:-.4px;
+}
+
+
+.information-document-content h3 {
+font-size:18px;
+}
+
+
+.information-document-content p,
+.information-document-content li {
+font-size:14px;
+
+line-height:1.7;
+}
+
+
+.information-document-content section + section {
+margin-top:31px;
+
+padding-top:29px;
+}
+
+
+.information-emphasis {
+padding:
+16px
+17px;
+}
+
+
+.information-last-updated {
+font-size:8px;
+}
+
+}
+
+
+/* =========================================
+SMALL MOBILE
+========================================= */
+
+@media(max-width:390px) {
+
+.information-introduction {
+font-size:11.4px;
+}
+
+
+.information-document-shell {
+width:95%;
+
+margin-left:3%;
+}
+
+
+.information-document-panel {
+padding:
+28px
+19px
+32px;
+}
+
+
+.information-document-content h2 {
+font-size:23px;
+}
+
+
+.information-document-content p,
+.information-document-content li {
+font-size:13.5px;
+}
+
+}
+
+
+/* =========================================
+REDUCED MOTION
+========================================= */
+
+@media(prefers-reduced-motion:reduce) {
+
+html {
+scroll-behavior:auto;
+}
+
+
+.ticker {
+animation:none;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================
+DESKTOP ACCESS BLOCKER
+======================================= -->
+
+<div
+class="desktop-access-blocker"
+id="desktopAccessBlocker"
+role="dialog"
+aria-modal="true"
+aria-labelledby="desktopAccessBlockerTitle"
+aria-hidden="false"
+tabindex="-1"
+>
+
+<div class="desktop-access-blocker-panel">
+
+<h1 id="desktopAccessBlockerTitle">
+Mobile Access Only
+</h1>
+
+<p>
+Please visit Factory Toughened Rooflights using a mobile device.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+TOP BANNER
+======================================= -->
+
+<div class="top-banner">
+
+<div class="ticker">
+
+<span>
+Specialist British workshop for frameless rooflights
+</span>
+
+<span>
+Brand new rooflights made to order
+</span>
+
+<span>
+British glass • British manufacturing
+</span>
+
+<span>
+Estimated production from 4 working days
+</span>
+
+<span>
+Factory insulated and ready for fitting
+</span>
+
+<span>
+Expected 30+ year service life
+</span>
+
+<span>
+UKCA compliant • CE marked • building regs compliant
+</span>
+
+<span>
+Free mainland UK delivery on listed sizes
+</span>
+
+<span>
+Collection available with prior booking
+</span>
+
+<span>
+Specialist British workshop for frameless rooflights
+</span>
+
+<span>
+Brand new rooflights made to order
+</span>
+
+<span>
+British glass • British manufacturing
+</span>
+
+<span>
+Estimated production from 4 working days
+</span>
+
+<span>
+Factory insulated and ready for fitting
+</span>
+
+<span>
+Expected 30+ year service life
+</span>
+
+<span>
+UKCA compliant • CE marked • building regs compliant
+</span>
+
+<span>
+Free mainland UK delivery on listed sizes
+</span>
+
+<span>
+Collection available with prior booking
+</span>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+HEADER
+======================================= -->
+
+<header>
+
+<div class="wordmark-wrap">
+
+<a
+href="index.html"
+class="header-home-link"
+id="headerHomeLink"
+aria-label="Factory Toughened Rooflights homepage"
+>
+
+<div class="wordmark">
+
+Factory
+
+<span>
+Toughened
+</span>
+
+<div class="wordmark-bottom">
+
+Rooflights
+
+<small class="wordmark-domain">
+.co.uk
+</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<div class="action-icons">
+
+
+<a
+href="contact.html"
+class="header-icon-button"
+aria-label="Contact Factory Toughened Rooflights"
+title="Contact our rooflight team"
+>
+✉
+</a>
+
+
+<div class="header-action-wrap">
+
+<button
+type="button"
+id="whatsappButton"
+aria-label="Show WhatsApp Business button"
+title="WhatsApp our rooflight team"
+aria-expanded="false"
+>
+📱
+</button>
+
+<a
+id="whatsappAction"
+class="whatsapp-action"
+href="https://wa.me/447000000000?text=Hi%2C%20I%27m%20interested%20in%20a%20frameless%20rooflight.%0A%0ASize%20(if%20known)%3A%0ADouble%20or%20Triple%20glazed%3A%0ADelivery%20postcode%3A"
+target="_blank"
+rel="noopener"
+aria-label="Open WhatsApp Business chat with our rooflight team"
+>
+
+<svg
+viewBox="0 0 32 32"
+aria-hidden="true"
+focusable="false"
+>
+
+<path
+d="M16 3.2A12.5 12.5 0 0 0 5.2 22l-1.8 6.8 7-1.8A12.5 12.5 0 1 0 16 3.2zm0 22.7c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.1 1.1 1.1-4-.3-.4a10.2 10.2 0 1 1 9.2 5.1zm5.6-7.7c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9 0 1.7 1.2 3.3 1.4 3.5.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"
+/>
+
+</svg>
+
+</a>
+
+</div>
+
+
+<div class="header-action-wrap">
+
+<button
+type="button"
+id="basketButton"
+aria-label="View basket and checkout"
+title="Basket and checkout"
+>
+💳
+</button>
+
+<span
+class="basket-total-text"
+id="basketTotalText"
+aria-label="Basket total £0.00"
+>
+£0.00
+</span>
+
+</div>
+
+
+<button
+type="button"
+id="menuButton"
+aria-label="Open menu"
+title="Menu"
+>
+☰
+</button>
+
+
+</div>
+
+</header>
+
+
+<!-- =======================================
+MENU
+======================================= -->
+
+<div
+id="menuOverlay"
+class="menu-overlay"
+>
+
+<div class="menu-top">
+
+<div class="wordmark-wrap">
+
+<div class="wordmark">
+
+Factory
+
+<span>
+Toughened
+</span>
+
+<div class="wordmark-bottom">
+
+Rooflights
+
+<small class="wordmark-domain">
+.co.uk
+</small>
+
+</div>
+
+</div>
+
+<div class="address-line">
+
+Anamax Group Estate<br>
+Oxford Road, Denham<br>
+Buckinghamshire<br>
+SL9 7BB
+
+</div>
+
+</div>
+
+
+<button
+class="close-menu"
+type="button"
+id="closeMenuButton"
+aria-label="Close menu"
+>
+×
+</button>
+
+</div>
+
+
+<div class="menu-links">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="standard-sizes.html">
+Standard Sizes
+</a>
+
+<a href="order-page.html">
+Order Your Rooflight
+</a>
+
+<a
+href="order-page.html?source=information-page-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+>
+Build A Rooflight
+</a>
+
+<a href="index.html#oversized">
+Oversized Rooflights
+</a>
+
+<a href="fitting.html">
+Fitting &amp; Installation
+</a>
+
+<a href="contact.html">
+Contact Our Team
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =======================================
+TERMS PAGE
+======================================= -->
+
+<main class="information-page">
+
+
+<!-- =======================================
+PAGE INTRODUCTION
+======================================= -->
+
+<section class="information-hero">
+
+<div class="information-hero-inner">
+
+<div class="information-kicker">
+Terms of Use
+</div>
+
+<p class="information-introduction">
+
+These Terms of Use explain the terms that apply when using the
+Factory Toughened Rooflights website and when ordering rooflights
+or related goods from us. Please read them carefully before placing
+an order.
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =======================================
+TERMS DOCUMENT
+======================================= -->
+
+<section class="information-document-section">
+
+<div class="information-document-shell">
+
+<div class="information-document-panel">
+
+<div class="information-document-label">
+Terms of Use &amp; Sale
+</div>
+
+
+<article class="information-document-content">
+
+
+<!-- =======================================
+1. ABOUT THESE TERMS
+======================================= -->
+
+<section>
+
+<h2>
+1. About These Terms
+</h2>
+
+<p>
+Factory Toughened Rooflights is a trading name of
+<strong>Right Glaze Ltd</strong>.
+</p>
+
+<p>
+These terms apply to use of this website and to goods purchased
+through Factory Toughened Rooflights.
+</p>
+
+<p>
+By placing an order with us, you confirm that the information you
+have provided is accurate and that you have had an opportunity to
+review the product specification, dimensions, quantity, delivery
+details and price before submitting payment.
+</p>
+
+<p>
+Nothing in these terms excludes or restricts any statutory right
+or remedy that cannot lawfully be excluded or restricted.
+</p>
+
+</section>
+
+
+<!-- =======================================
+2. PRODUCT INFORMATION
+======================================= -->
+
+<section>
+
+<h2>
+2. Product Information
+</h2>
+
+<p>
+We take reasonable care to ensure that descriptions,
+specifications, pricing and product information displayed on our
+website are accurate.
+</p>
+
+<p>
+Rooflights are manufactured products and reasonable manufacturing
+tolerances may apply to dimensions, glass appearance, ceramic
+borders, spacer positioning and other manufacturing characteristics.
+</p>
+
+<p>
+Photographs, illustrations, rendered images and product previews
+are provided to help identify the product and its general
+appearance. Screen settings, lighting, reflections and manufacturing
+variation can affect the appearance of glass colours, tints,
+finishes and ceramic borders.
+</p>
+
+<p>
+Minor variations that fall within normal manufacturing tolerances
+and do not materially affect the performance or specification of
+the product should not be treated as a failure to supply the
+ordered product.
+</p>
+
+</section>
+
+
+<!-- =======================================
+3. ROOFLIGHT SIZES
+======================================= -->
+
+<section>
+
+<h2>
+3. Rooflight Sizes &amp; Measurements
+</h2>
+
+<p>
+Unless expressly stated otherwise, rooflight sizes shown on our
+website refer to the <strong>internal visible glass size</strong>.
+This is the nominal size of the internal or bottom pane and is not
+the overall external dimension of the rooflight.
+</p>
+
+<p>
+The external top pane is larger than the internal pane to provide
+the required stepped glass border and overhang.
+</p>
+
+<div class="information-emphasis">
+
+<strong>
+Check Measurements Carefully
+</strong>
+
+<p>
+Customers are responsible for checking the dimensions required for
+their project before ordering. The structural opening, internal
+glass size and external rooflight dimensions are different
+measurements and should not be treated as interchangeable.
+</p>
+
+</div>
+
+<p>
+Our
+<a href="fitting.html">
+Fitting &amp; Installation guide
+</a>
+contains further guidance about structural openings, upstands,
+borders and rooflight overhang.
+</p>
+
+<p>
+Where a rooflight is manufactured correctly to dimensions supplied
+or selected by the customer, we are not responsible for a failure
+to fit that results from incorrect measurements, an incorrectly
+prepared opening or changes made to the building after ordering.
+</p>
+
+</section>
+
+
+<!-- =======================================
+4. PRODUCT SPECIFICATION
+======================================= -->
+
+<section>
+
+<h2>
+4. Product Specification
+</h2>
+
+<p>
+The customer is responsible for selecting the appropriate
+configuration for the intended installation, including glazing,
+glass type, finish, border size, quantity and any available
+additional options.
+</p>
+
+<p>
+Where information about the building, installation height,
+roof pitch or intended use affects the appropriate glass
+specification, the customer should ensure that the correct
+information is considered before ordering.
+</p>
+
+<p>
+Our fitting guidance requires the internal or bottom pane to be
+laminated where the rooflight is installed more than
+<strong>5 metres above the nearest ground level</strong>.
+</p>
+
+<p>
+For our rooflights installed at a pitch above
+<strong>15° and up to 45°</strong>, the internal or bottom pane
+must also be laminated and the sloping installation must include
+suitable additional load-bearing support as described in our
+Fitting &amp; Installation guide.
+</p>
+
+<p>
+If you are uncertain which specification is suitable for your
+installation, please contact us before placing the order.
+</p>
+
+</section>
+
+
+<!-- =======================================
+5. PLACING AN ORDER
+======================================= -->
+
+<section>
+
+<h2>
+5. Placing An Order
+</h2>
+
+<p>
+Before submitting an order, you should review the basket and
+checkout information carefully.
+</p>
+
+<p>
+You are responsible for checking:
+</p>
+
+<ul>
+
+<li>
+Product dimensions.
+</li>
+
+<li>
+Quantity.
+</li>
+
+<li>
+Double or triple glazing.
+</li>
+
+<li>
+Toughened or laminated glass selection.
+</li>
+
+<li>
+Glass finish or tint.
+</li>
+
+<li>
+Border size.
+</li>
+
+<li>
+Any selected additional product options.
+</li>
+
+<li>
+Delivery postcode and delivery information.
+</li>
+
+</ul>
+
+<p>
+Once an order has been submitted, please contact us immediately if
+you believe any information is incorrect.
+</p>
+
+</section>
+
+
+<!-- =======================================
+6. ORDER ACCEPTANCE
+======================================= -->
+
+<section>
+
+<h2>
+6. Order Acceptance
+</h2>
+
+<p>
+Receipt of payment or an automated order confirmation does not
+prevent us from checking the order for an obvious pricing,
+technical, specification or website error.
+</p>
+
+<p>
+An order is accepted when we confirm acceptance or begin processing
+or manufacture of the goods, whichever occurs first.
+</p>
+
+<p>
+Manufacturing and purchasing of materials may begin
+<strong>immediately after an order is placed</strong>.
+</p>
+
+<p>
+If we identify an obvious error before an order is accepted, we
+may contact you to correct the order or cancel it and refund any
+payment already received.
+</p>
+
+<p>
+We may also decline an order where we are unable to manufacture or
+deliver the requested product safely or where the requested
+configuration falls outside the product specifications we can
+supply.
+</p>
+
+</section>
+
+
+<!-- =======================================
+7. CUSTOM AND MADE TO SPECIFICATION GOODS
+======================================= -->
+
+<section>
+
+<h2>
+7. Custom &amp; Made-To-Specification Goods
+</h2>
+
+<p>
+Many rooflights are manufactured specifically for the individual
+order.
+</p>
+
+<p>
+Where a product is manufactured to measurements supplied by the
+customer, manufactured to a non-standard specification or otherwise
+genuinely personalised or made to the customer's requirements,
+statutory change-of-mind cancellation rights may not apply.
+</p>
+
+<p>
+Because manufacture and material ordering may begin immediately
+after payment, requests to change or cancel a custom order should
+be made as soon as possible.
+</p>
+
+<p>
+We cannot guarantee that a change or cancellation can be accepted
+once manufacture or material preparation has begun.
+</p>
+
+<p>
+This section does not affect rights relating to goods that are
+faulty, damaged, incorrectly supplied or otherwise not in
+conformity with the contract.
+</p>
+
+</section>
+
+
+<!-- =======================================
+8. STANDARD PRODUCTS AND CANCELLATION
+======================================= -->
+
+<section>
+
+<h2>
+8. Standard Products &amp; Cancellation Rights
+</h2>
+
+<p>
+The fact that a product is manufactured or assembled after an
+order is placed does not necessarily mean that it is legally
+treated as a personalised or bespoke product.
+</p>
+
+<p>
+Where statutory cancellation rights apply to a standard product
+purchased at a distance, those rights will continue to apply in
+accordance with applicable law.
+</p>
+
+<p>
+If you wish to cancel or return a standard product, please contact
+us before arranging transport or returning the rooflight.
+Glass products require appropriate handling and transport and
+should not be returned without prior arrangement.
+</p>
+
+</section>
+
+
+<!-- =======================================
+9. PRICES
+======================================= -->
+
+<section>
+
+<h2>
+9. Prices
+</h2>
+
+<p>
+Prices displayed on the website are shown in pounds sterling and,
+unless expressly stated otherwise, include VAT at the applicable
+rate.
+</p>
+
+<p>
+The price payable is the price displayed for the selected
+configuration at checkout, together with any applicable delivery
+charge.
+</p>
+
+<p>
+Where an obvious pricing, calculation or technical error has
+occurred, we are not required to knowingly supply goods at an
+incorrect price before the order has been accepted.
+</p>
+
+<p>
+If such an error is identified, we will contact you and provide
+the option to proceed at the correct price or cancel the affected
+order for a refund.
+</p>
+
+</section>
+
+
+<!-- =======================================
+10. WEBSITE CALCULATORS
+======================================= -->
+
+<section>
+
+<h2>
+10. Website Calculators &amp; Configurators
+</h2>
+
+<p>
+Our website may use pricing calculators, configuration tools,
+delivery calculations, estimated delivery information and other
+automated systems.
+</p>
+
+<p>
+These tools rely on information entered or selected by the
+customer and on the pricing, delivery and specification data
+available to the website at the time.
+</p>
+
+<p>
+Customers should review the final basket and checkout information
+before payment rather than relying solely on an earlier calculation
+or product preview.
+</p>
+
+<p>
+Where the website cannot reliably calculate a price or delivery
+service for a particular configuration, we may require the customer
+to contact us for confirmation or quotation.
+</p>
+
+</section>
+
+
+<!-- =======================================
+11. PAYMENT
+======================================= -->
+
+<section>
+
+<h2>
+11. Payment
+</h2>
+
+<p>
+Payment must be made using one of the payment methods available at
+checkout.
+</p>
+
+<p>
+Payments may be processed on our behalf by third-party payment
+providers. Payment information supplied directly to a payment
+provider is also subject to that provider's applicable terms and
+privacy arrangements.
+</p>
+
+<p>
+We do not guarantee that every payment method displayed or
+previously available will remain available permanently.
+</p>
+
+<p>
+An order may not proceed where payment is declined, reversed,
+cancelled or otherwise not successfully completed.
+</p>
+
+</section>
+
+
+<!-- =======================================
+12. DISCOUNT AND PROMOTION CODES
+======================================= -->
+
+<section>
+
+<h2>
+12. Discount &amp; Promotion Codes
+</h2>
+
+<p>
+Discount codes, promotion codes and individually agreed offers may
+be subject to specific restrictions.
+</p>
+
+<p>
+A code may be limited by:
+</p>
+
+<ul>
+
+<li>
+Customer.
+</li>
+
+<li>
+Product.
+</li>
+
+<li>
+Rooflight dimensions.
+</li>
+
+<li>
+Glazing specification.
+</li>
+
+<li>
+Glass finish or type.
+</li>
+
+<li>
+Quantity.
+</li>
+
+<li>
+Order value.
+</li>
+
+<li>
+Expiry date.
+</li>
+
+<li>
+Maximum number of uses.
+</li>
+
+</ul>
+
+<p>
+Where a code has been created for a specifically agreed order, the
+basket must match that agreed order for the discount to apply.
+</p>
+
+<p>
+Changing the quantity, specification or products in the basket may
+make the code invalid or remove the discount.
+</p>
+
+<p>
+Unless expressly stated otherwise, individually issued discount
+codes are intended for the recipient and may be limited to one
+successful order.
+</p>
+
+<p>
+Discounts cannot be exchanged for cash and cannot be applied
+retrospectively after an order has been completed unless we
+expressly agree otherwise.
+</p>
+
+</section>
+
+
+<!-- =======================================
+13. PRODUCTION LEAD TIMES
+======================================= -->
+
+<section>
+
+<h2>
+13. Production Lead Times
+</h2>
+
+<p>
+Production and delivery lead times shown on our website, provided
+with a quotation or communicated by our team are estimates unless
+we expressly agree a fixed date in writing.
+</p>
+
+<p>
+Where we advertise production
+<strong>from 4 working days</strong>, this represents the earliest
+estimated production period for qualifying orders.
+</p>
+
+<p>
+It does not mean that every order will be manufactured, dispatched
+or delivered within four working days.
+</p>
+
+<p>
+Lead times may vary according to demand, product specification,
+glass availability, manufacturing requirements, transport
+availability and other circumstances affecting production or
+delivery.
+</p>
+
+</section>
+
+
+<!-- =======================================
+14. DELIVERY
+======================================= -->
+
+<section>
+
+<h2>
+14. Delivery
+</h2>
+
+<p>
+Delivery charges, delivery availability and maximum delivery
+distance may vary according to the size, weight, specification and
+delivery postcode of the order.
+</p>
+
+<p>
+Estimated delivery dates and delivery windows are not guaranteed
+unless a fixed delivery date has expressly been agreed as binding.
+</p>
+
+<p>
+Longer-distance deliveries may require additional route planning
+or consolidation with other deliveries and may therefore have a
+wider or later estimated delivery window.
+</p>
+
+<p>
+Further information is provided in our
+<a href="shipping.html">
+Shipping &amp; Delivery
+</a>
+page, which should be read alongside these terms.
+</p>
+
+</section>
+
+
+<!-- =======================================
+15. INSTALLERS AND THIRD-PARTY BOOKINGS
+======================================= -->
+
+<section>
+
+<h2>
+15. Third-Party Bookings
+</h2>
+
+<p>
+We strongly recommend waiting until the complete order has arrived
+on site and has been checked before booking builders, roofers,
+glaziers, lifting equipment, cranes, access equipment or other
+third-party services.
+</p>
+
+<div class="information-emphasis">
+
+<strong>
+Important
+</strong>
+
+<p>
+Production and delivery dates are estimates unless expressly agreed
+otherwise. Please do not schedule third-party work solely on the
+basis of an estimated production or delivery date.
+</p>
+
+</div>
+
+<p>
+Except where liability cannot lawfully be excluded or limited, we
+are not responsible for third-party labour costs, cancellation
+charges, equipment-hire costs, loss of earnings or other
+consequential costs arising solely because an estimated production
+or delivery date changes.
+</p>
+
+</section>
+
+
+<!-- =======================================
+16. DELIVERY ACCESS
+======================================= -->
+
+<section>
+
+<h2>
+16. Delivery Access
+</h2>
+
+<p>
+The customer is responsible for providing accurate delivery
+information and for making us aware of any access restrictions
+that could reasonably affect delivery.
+</p>
+
+<p>
+This may include narrow roads, low bridges, weight restrictions,
+parking restrictions, controlled access, gated developments,
+building-site restrictions or other conditions preventing an
+appropriate delivery vehicle from reaching a safe unloading point.
+</p>
+
+<p>
+If delivery cannot be completed because of incorrect information,
+undisclosed access restrictions or nobody being available to
+receive the order where required, reasonable additional transport,
+storage or redelivery costs may apply.
+</p>
+
+<p>
+This does not affect your rights where the failed delivery is the
+result of our breach of contract or the actions of a delivery
+provider acting on our behalf.
+</p>
+
+</section>
+
+
+<!-- =======================================
+17. RECEIVING AND INSPECTING GOODS
+======================================= -->
+
+<section>
+
+<h2>
+17. Receiving &amp; Inspecting Your Order
+</h2>
+
+<p>
+Please inspect the rooflight and its packaging at the time of
+delivery where reasonably possible.
+</p>
+
+<p>
+If visible damage, an incorrect product or an obvious discrepancy
+is noticed on arrival, please tell the delivery driver where
+practical and contact us as soon as possible.
+</p>
+
+<p>
+Photographs of the packaging, rooflight and any visible damage or
+issue should be provided where possible so that we can investigate
+the matter.
+</p>
+
+<div class="information-emphasis">
+
+<strong>
+Checking On Delivery
+</strong>
+
+<p>
+Accepting a delivery without reporting visible damage does not
+automatically remove any statutory rights. However, where damage
+was clearly visible on arrival, accepting the goods without noting
+or reporting it may make it more difficult for us to establish
+when or how the damage occurred and we may need additional evidence
+when assessing the claim.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =======================================
+18. RETURNS
+======================================= -->
+
+<section>
+
+<h2>
+18. Returns
+</h2>
+
+<p>
+Under our normal returns procedure, please contact us within
+<strong>14 days of delivery</strong> if the delivered product:
+</p>
+
+<ul>
+
+<li>
+Has arrived damaged.
+</li>
+
+<li>
+Appears defective.
+</li>
+
+<li>
+Is a different size or specification from the product ordered.
+</li>
+
+</ul>
+
+<p>
+Where possible, the product should remain
+<strong>uninstalled and unaltered</strong> while the issue is
+investigated.
+</p>
+
+<p>
+If an obvious problem is identified before installation, please do
+not install the rooflight before contacting us.
+</p>
+
+<p>
+We will normally ask for photographs showing the product, packaging
+and the reported issue.
+</p>
+
+<p>
+Depending on the circumstances and your applicable legal rights,
+the appropriate remedy may include replacement, repair, refund or
+another reasonable resolution.
+</p>
+
+<p>
+The 14-day notification period described above is our normal claims
+and returns procedure. It does not remove or reduce any statutory
+rights that may continue to apply after that period.
+</p>
+
+</section>
+
+
+<!-- =======================================
+19. INSTALLED PRODUCTS
+======================================= -->
+
+<section>
+
+<h2>
+19. Products That Have Been Installed
+</h2>
+
+<p>
+A rooflight should not be installed where a visible defect,
+incorrect size, obvious damage or specification discrepancy has
+already been identified.
+</p>
+
+<p>
+We will generally not accept a voluntary return of a rooflight
+after it has been installed, bonded, altered or incorporated into
+the building.
+</p>
+
+<p>
+Installation does not remove statutory rights relating to a defect
+or non-conformity that could not reasonably have been identified
+before installation.
+</p>
+
+<p>
+We are not responsible for damage caused after delivery by
+incorrect handling, storage, installation, impact, alteration,
+incompatible materials or failure to follow appropriate
+installation practices.
+</p>
+
+</section>
+
+
+<!-- =======================================
+20. CUSTOMER MEASUREMENT ERRORS
+======================================= -->
+
+<section>
+
+<h2>
+20. Customer Measurement Errors
+</h2>
+
+<p>
+Where a rooflight has been correctly manufactured to the size and
+specification ordered, we are not responsible for the product being
+unsuitable because the wrong dimensions or specification were
+supplied or selected by the customer.
+</p>
+
+<p>
+This includes orders based on an incorrectly measured structural
+opening or where the customer has confused the internal visible
+glass size with the external overall rooflight size.
+</p>
+
+<p>
+A custom product manufactured correctly to customer-supplied
+measurements cannot normally be returned simply because those
+measurements were incorrect.
+</p>
+
+<p>
+If you are uncertain about measuring or selecting the appropriate
+size, please contact us before ordering.
+</p>
+
+</section>
+
+
+<!-- =======================================
+21. FITTING
+======================================= -->
+
+<section>
+
+<h2>
+21. Fitting &amp; Installation Responsibility
+</h2>
+
+<p>
+Our
+<a href="fitting.html">
+Fitting &amp; Installation guide
+</a>
+provides general guidance for the installation of Factory Toughened
+Rooflights.
+</p>
+
+<p>
+Every roof construction and installation site is different.
+The installer is responsible for confirming that the supporting
+structure, upstand, roof pitch, support arrangement, weatherproofing,
+sealants and installation method are suitable for the particular
+building and rooflight.
+</p>
+
+<p>
+Where structural calculations, specialist glazing design or
+project-specific professional advice is required, this should be
+obtained before installation.
+</p>
+
+<p>
+Rooflights must not be treated as walk-on glazing unless the
+individual product has been specifically supplied and confirmed
+for that purpose.
+</p>
+
+</section>
+
+
+<!-- =======================================
+22. HANDLING AND STORAGE
+======================================= -->
+
+<section>
+
+<h2>
+22. Handling &amp; Storage
+</h2>
+
+<p>
+Glass rooflights can be heavy and vulnerable to edge damage if
+handled incorrectly.
+</p>
+
+<p>
+After delivery, the customer is responsible for storing the goods
+safely and protecting them from impact, unsuitable support,
+accidental damage and unsafe handling.
+</p>
+
+<p>
+Suitable people and lifting equipment should be used according to
+the size and weight of the rooflight.
+</p>
+
+<p>
+Toughened or laminated glass must not be drilled, cut, ground or
+otherwise altered after manufacture.
+</p>
+
+</section>
+
+
+<!-- =======================================
+23. RISK AND OWNERSHIP
+======================================= -->
+
+<section>
+
+<h2>
+23. Risk &amp; Ownership
+</h2>
+
+<p>
+Responsibility for the goods normally passes to the customer when
+the goods are delivered into the customer's physical possession or
+into the possession of a person identified by the customer to
+receive them, subject to any rights provided by applicable law.
+</p>
+
+<p>
+Ownership of the goods does not pass until we have received payment
+in full for the relevant order.
+</p>
+
+</section>
+
+
+<!-- =======================================
+24. DELAYS OUTSIDE CONTROL
+======================================= -->
+
+<section>
+
+<h2>
+24. Events Outside Our Reasonable Control
+</h2>
+
+<p>
+Production or delivery may occasionally be affected by circumstances
+outside our reasonable control.
+</p>
+
+<p>
+These may include severe weather, flooding, road closures, transport
+disruption, vehicle breakdown, supplier disruption, manufacturing
+disruption, shortages of materials, power or systems failures,
+industrial action or similar events that could not reasonably have
+been avoided.
+</p>
+
+<p>
+Where such an event occurs, we will take reasonable steps to reduce
+its effect and provide updated information where practical.
+</p>
+
+<p>
+Nothing in this section removes any statutory remedy that applies
+where a delay gives you legal rights.
+</p>
+
+</section>
+
+
+<!-- =======================================
+25. OUR LIABILITY
+======================================= -->
+
+<section>
+
+<h2>
+25. Our Liability
+</h2>
+
+<p>
+Nothing in these terms excludes or limits liability where it would
+be unlawful to do so, including liability for death or personal
+injury caused by negligence, fraud or fraudulent misrepresentation,
+or any other liability that cannot legally be excluded.
+</p>
+
+<p>
+We are responsible for losses that are a foreseeable result of our
+breach of these terms or our failure to use reasonable care and
+skill where applicable.
+</p>
+
+<p>
+Subject to your statutory rights, we are not responsible for losses
+caused by:
+</p>
+
+<ul>
+
+<li>
+Incorrect measurements supplied or selected by the customer.
+</li>
+
+<li>
+An unsuitable building opening, supporting structure or upstand.
+</li>
+
+<li>
+Incorrect installation or handling.
+</li>
+
+<li>
+Failure to select the appropriate product specification.
+</li>
+
+<li>
+Damage occurring after delivery.
+</li>
+
+<li>
+Use of incompatible sealants, tapes or other installation
+materials.
+</li>
+
+<li>
+Unauthorised alteration of the rooflight.
+</li>
+
+<li>
+Third-party work booked solely in reliance on an estimated
+production or delivery date.
+</li>
+
+</ul>
+
+<p>
+Nothing in this section limits rights relating to goods that are
+faulty, incorrectly supplied, damaged before delivery or otherwise
+not in conformity with the contract.
+</p>
+
+</section>
+
+
+<!-- =======================================
+26. STATUTORY RIGHTS
+======================================= -->
+
+<section>
+
+<h2>
+26. Your Statutory Rights
+</h2>
+
+<p>
+These terms are intended to explain our normal ordering,
+manufacturing, delivery and returns procedures.
+</p>
+
+<p>
+They do not exclude, restrict or replace any statutory rights that
+apply to you under UK law.
+</p>
+
+<p>
+Where goods are faulty, not as described or otherwise fail to meet
+legal requirements, the remedies available to you will be
+determined by the applicable law as well as these terms.
+</p>
+
+</section>
+
+
+<!-- =======================================
+27. WEBSITE USE
+======================================= -->
+
+<section>
+
+<h2>
+27. Use Of This Website
+</h2>
+
+<p>
+You may use this website for lawful purposes connected with
+viewing, configuring and purchasing our products or obtaining
+information about Factory Toughened Rooflights.
+</p>
+
+<p>
+You must not knowingly:
+</p>
+
+<ul>
+
+<li>
+Use the website for fraudulent or unlawful purposes.
+</li>
+
+<li>
+Attempt to interfere with the operation or security of the
+website.
+</li>
+
+<li>
+Introduce malicious software or harmful code.
+</li>
+
+<li>
+Attempt to gain unauthorised access to website systems,
+customer information or administrative functions.
+</li>
+
+<li>
+Use automated methods in a way that places an unreasonable
+load on the website or disrupts its operation.
+</li>
+
+</ul>
+
+<p>
+We may temporarily restrict access to parts of the website where
+reasonably necessary for security, maintenance or technical
+reasons.
+</p>
+
+</section>
+
+
+<!-- =======================================
+28. WEBSITE AVAILABILITY
+======================================= -->
+
+<section>
+
+<h2>
+28. Website Availability
+</h2>
+
+<p>
+We aim to keep the website available and functioning correctly but
+cannot guarantee uninterrupted access.
+</p>
+
+<p>
+The website may occasionally be unavailable because of maintenance,
+technical problems, hosting issues, updates or circumstances
+outside our reasonable control.
+</p>
+
+<p>
+We may update, replace or remove website functions where reasonably
+necessary.
+</p>
+
+</section>
+
+
+<!-- =======================================
+29. INTELLECTUAL PROPERTY
+======================================= -->
+
+<section>
+
+<h2>
+29. Intellectual Property
+</h2>
+
+<p>
+Unless otherwise stated, the design, branding, text, graphics,
+product imagery, calculations, website content and other materials
+created for Factory Toughened Rooflights are owned by or licensed
+to Right Glaze Ltd.
+</p>
+
+<p>
+You may view and use the website for your own legitimate purposes.
+You must not reproduce, republish, commercially exploit or
+redistribute substantial parts of the website without our prior
+permission except where permitted by law.
+</p>
+
+</section>
+
+
+<!-- =======================================
+30. THIRD PARTY LINKS
+======================================= -->
+
+<section>
+
+<h2>
+30. Third-Party Services &amp; Links
+</h2>
+
+<p>
+Our website may contain links to third-party websites or use
+third-party services including payment, mapping, postcode,
+communications or other technology providers.
+</p>
+
+<p>
+We are not responsible for the content or availability of
+independent third-party websites that we do not control.
+</p>
+
+<p>
+The use of a third-party service may also be subject to that
+provider's own terms and privacy arrangements.
+</p>
+
+</section>
+
+
+<!-- =======================================
+31. PRIVACY
+======================================= -->
+
+<section>
+
+<h2>
+31. Privacy &amp; Cookies
+</h2>
+
+<p>
+Information about how we collect and use personal information is
+provided in our
+<a href="privacy-policy.html">
+Privacy Policy
+</a>.
+</p>
+
+<p>
+Information about cookies and browser storage technologies is
+provided in our
+<a href="cookies.html">
+Cookies Policy
+</a>.
+</p>
+
+</section>
+
+
+<!-- =======================================
+32. CHANGES TO TERMS
+======================================= -->
+
+<section>
+
+<h2>
+32. Changes To These Terms
+</h2>
+
+<p>
+We may update these terms from time to time to reflect changes to
+our website, products, business processes or applicable legal
+requirements.
+</p>
+
+<p>
+The version applying to an order will normally be the version in
+effect when that order is placed, unless a change is required by
+law or is expressly agreed with the customer.
+</p>
+
+<p>
+The date of the latest update appears at the bottom of this page.
+</p>
+
+</section>
+
+
+<!-- =======================================
+33. TRANSFER
+======================================= -->
+
+<section>
+
+<h2>
+33. Transfer Of Rights
+</h2>
+
+<p>
+We may transfer our rights or obligations under these terms where
+this does not reduce the protections or rights available to the
+customer.
+</p>
+
+<p>
+Customers may not transfer an order or contractual right to another
+person where this would materially affect our obligations without
+our agreement, except where the law provides otherwise.
+</p>
+
+</section>
+
+
+<!-- =======================================
+34. SEVERABILITY
+======================================= -->
+
+<section>
+
+<h2>
+34. If Part Of These Terms Is Invalid
+</h2>
+
+<p>
+If any provision of these terms is found by a court or competent
+authority to be unlawful, invalid or unenforceable, the remaining
+provisions will continue to apply so far as legally possible.
+</p>
+
+</section>
+
+
+<!-- =======================================
+35. DELAY IN ENFORCEMENT
+======================================= -->
+
+<section>
+
+<h2>
+35. Delay In Enforcing These Terms
+</h2>
+
+<p>
+If we do not immediately enforce a provision of these terms, this
+does not mean that we have permanently waived the right to enforce
+it later.
+</p>
+
+<p>
+Similarly, giving a customer additional assistance or flexibility
+on one occasion does not automatically create an obligation to do
+the same in every future situation.
+</p>
+
+</section>
+
+
+<!-- =======================================
+36. GOVERNING LAW
+======================================= -->
+
+<section>
+
+<h2>
+36. Governing Law
+</h2>
+
+<p>
+These terms and any contract for goods supplied by us are governed
+by the laws of England and Wales, subject to any mandatory
+protections available to consumers under the law applying where
+they live.
+</p>
+
+<p>
+Nothing in these terms prevents a consumer from using any court or
+legal remedy available to them under applicable law.
+</p>
+
+</section>
+
+
+<!-- =======================================
+37. CONTACT
+======================================= -->
+
+<section>
+
+<h2>
+37. Contact Us
+</h2>
+
+<p>
+Factory Toughened Rooflights is a trading name of
+<strong>Right Glaze Ltd</strong>.
+</p>
+
+<p>
+<strong>Company number:</strong> 14336400<br>
+<strong>VAT number:</strong> 487373544
+</p>
+
+<p>
+<strong>Business address:</strong><br>
+128 City Road<br>
+London<br>
+United Kingdom<br>
+EC1V 2NX
+</p>
+
+<p>
+For questions about these terms, an existing order, a return or a
+product issue, you can contact us at
+<a href="mailto:sales@factorytoughenedrooflights.co.uk">
+sales@factorytoughenedrooflights.co.uk
+</a>.
+</p>
+
+</section>
+
+
+<div class="information-last-updated">
+Last updated: 14 September 2026
+</div>
+
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<script>
+
+/* =========================================
+INFORMATION PAGE TEMPLATE
+HEADER INTERACTIONS
+========================================= */
+
+const prefersReducedMotion =
+window.matchMedia(
+"(prefers-reduced-motion: reduce)"
+).matches;
+
+
+/* =========================================
+DESKTOP ACCESS RESTRICTION
+========================================= */
+
+function applyDesktopAccessRestriction() {
+
+const blocker =
+document.getElementById(
+"desktopAccessBlocker"
+);
+
+if (
+!blocker
+) {
+
+return;
+
+}
+
+const desktopPointer =
+window.matchMedia(
+"(hover: hover) and (pointer: fine)"
+);
+
+if (
+desktopPointer.matches
+) {
+
+blocker.setAttribute(
+"aria-hidden",
+"false"
+);
+
+try {
+
+blocker.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+blocker.focus();
+
+}
+
+}
+else {
+
+blocker.setAttribute(
+"aria-hidden",
+"true"
+);
+
+}
+
+}
+
+applyDesktopAccessRestriction();
+
+
+/* =========================================
+MENU
+========================================= */
+
+const menuOverlay =
+document.getElementById(
+"menuOverlay"
+);
+
+const menuButton =
+document.getElementById(
+"menuButton"
+);
+
+const closeMenuButton =
+document.getElementById(
+"closeMenuButton"
+);
+
+
+function openMenu() {
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuOverlay.classList.add(
+"active"
+);
+
+}
+
+
+function closeMenu() {
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuOverlay.classList.remove(
+"active"
+);
+
+}
+
+
+if (
+menuButton
+) {
+
+menuButton.addEventListener(
+"click",
+openMenu
+);
+
+}
+
+
+if (
+closeMenuButton
+) {
+
+closeMenuButton.addEventListener(
+"click",
+closeMenu
+);
+
+}
+
+
+if (
+menuOverlay
+) {
+
+menuOverlay
+.querySelectorAll(
+"a"
+)
+.forEach(
+(link) => {
+
+link.addEventListener(
+"click",
+closeMenu
+);
+
+}
+);
+
+}
+
+
+/* =========================================
+WHATSAPP
+========================================= */
+
+const whatsappButton =
+document.getElementById(
+"whatsappButton"
+);
+
+const whatsappAction =
+document.getElementById(
+"whatsappAction"
+);
+
+
+function closeWhatsappAction() {
+
+if (
+!whatsappButton ||
+!whatsappAction
+) {
+
+return;
+
+}
+
+whatsappAction.classList.remove(
+"is-open"
+);
+
+whatsappButton.classList.remove(
+"is-selected"
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+
+if (
+whatsappButton &&
+whatsappAction
+) {
+
+whatsappButton.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();
+
+const willOpen =
+!whatsappAction.classList.contains(
+"is-open"
+);
+
+whatsappAction.classList.toggle(
+"is-open",
+willOpen
+);
+
+whatsappButton.classList.toggle(
+"is-selected",
+willOpen
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+willOpen
+? "true"
+: "false"
+);
+
+}
+);
+
+
+document.addEventListener(
+"click",
+(event) => {
+
+if (
+event.target.closest(
+"#whatsappButton"
+) ||
+event.target.closest(
+"#whatsappAction"
+)
+) {
+
+return;
+
+}
+
+closeWhatsappAction();
+
+}
+);
+
+}
+
+
+/* =========================================
+ESCAPE KEY
+========================================= */
+
+document.addEventListener(
+"keydown",
+(event) => {
+
+if (
+event.key !==
+"Escape"
+) {
+
+return;
+
+}
+
+closeMenu();
+
+closeWhatsappAction();
+
+}
+);
+
+
+/* =========================================
+HEADER BASKET
+========================================= */
+
+const basketButton =
+document.getElementById(
+"basketButton"
+);
+
+const basketTotalText =
+document.getElementById(
+"basketTotalText"
+);
+
+const INFORMATION_ORDER_STORAGE_KEY =
+"factoryToughenedRooflightsOrderV1";
+
+
+function informationParseMoney(
+value
+) {
+
+if (
+typeof value ===
+"number"
+) {
+
+return Number.isFinite(
+value
+)
+? value
+: 0;
+
+}
+
+if (
+typeof value !==
+"string"
+) {
+
+return 0;
+
+}
+
+const parsed =
+Number(
+value.replace(
+/[^0-9.\-]/g,
+""
+)
+);
+
+return Number.isFinite(
+parsed
+)
+? parsed
+: 0;
+
+}
+
+
+function informationGetQuantity(
+item
+) {
+
+const candidates = [
+
+item?.quantity,
+item?.qty,
+item?.count,
+item?.totalUnitsQty
+
+];
+
+for (
+const candidate of
+candidates
+) {
+
+const numeric =
+Number(
+candidate
+);
+
+if (
+Number.isFinite(
+numeric
+) &&
+numeric >
+0
+) {
+
+return Math.max(
+1,
+Math.round(
+numeric
+)
+);
+
+}
+
+}
+
+return 1;
+
+}
+
+
+function informationGetUnitPrice(
+item
+) {
+
+const directCandidates = [
+
+item?.unitPrice,
+item?.price,
+item?.unitPriceIncVat,
+item?.unitPriceIncVAT,
+item?.priceIncVat,
+item?.priceIncVAT,
+item?.unitTotal,
+item?.configuredPrice
+
+];
+
+for (
+const candidate of
+directCandidates
+) {
+
+const price =
+informationParseMoney(
+candidate
+);
+
+if (
+price >
+0
+) {
+
+return price;
+
+}
+
+}
+
+const quantity =
+informationGetQuantity(
+item
+);
+
+const totalCandidates = [
+
+item?.total,
+item?.lineTotal,
+item?.totalPrice,
+item?.subtotal
+
+];
+
+for (
+const candidate of
+totalCandidates
+) {
+
+const total =
+informationParseMoney(
+candidate
+);
+
+if (
+total >
+0
+) {
+
+return (
+total /
+quantity
+);
+
+}
+
+}
+
+return 0;
+
+}
+
+
+function informationReadBasketItems() {
+
+try {
+
+const raw =
+localStorage.getItem(
+INFORMATION_ORDER_STORAGE_KEY
+);
+
+if (
+!raw
+) {
+
+return [];
+
+}
+
+const payload =
+JSON.parse(
+raw
+);
+
+if (
+Array.isArray(
+payload
+)
+) {
+
+return payload;
+
+}
+
+if (
+!payload ||
+typeof payload !==
+"object"
+) {
+
+return [];
+
+}
+
+const items = [];
+
+const possibleStandardKeys = [
+
+"items",
+"orderItems",
+"confirmedUnits",
+"units",
+"basketItems"
+
+];
+
+for (
+const key of
+possibleStandardKeys
+) {
+
+if (
+Array.isArray(
+payload[
+key
+]
+)
+) {
+
+items.push(
+...payload[
+key
+]
+);
+
+break;
+
+}
+
+}
+
+if (
+Array.isArray(
+payload.customItems
+)
+) {
+
+items.push(
+...payload.customItems
+);
+
+}
+
+return items;
+
+}
+catch (error) {
+
+return [];
+
+}
+
+}
+
+
+function informationFormatMoney(
+amount
+) {
+
+return (
+"£" +
+Number(
+amount
+).toLocaleString(
+"en-GB",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+)
+);
+
+}
+
+
+function refreshInformationHeaderBasket() {
+
+if (
+!basketTotalText
+) {
+
+return;
+
+}
+
+const items =
+informationReadBasketItems();
+
+const subtotal =
+items.reduce(
+(total,item) => {
+
+return (
+total +
+informationGetUnitPrice(
+item
+) *
+informationGetQuantity(
+item
+)
+);
+
+},
+0
+);
+
+basketTotalText.textContent =
+informationFormatMoney(
+subtotal
+);
+
+basketTotalText.setAttribute(
+"aria-label",
+`Basket product total ${informationFormatMoney(subtotal)}`
+);
+
+basketTotalText.classList.toggle(
+"is-visible",
+items.length >
+0
+);
+
+}
+
+
+if (
+basketButton
+) {
+
+basketButton.addEventListener(
+"click",
+() => {
+
+window.location.href =
+"order-page.html?source=information-page-header";
+
+}
+);
+
+}
+
+
+window.addEventListener(
+"storage",
+(event) => {
+
+if (
+event.key ===
+INFORMATION_ORDER_STORAGE_KEY
+) {
+
+refreshInformationHeaderBasket();
+
+}
+
+}
+);
+
+
+window.addEventListener(
+"pageshow",
+refreshInformationHeaderBasket
+);
+
+
+refreshInformationHeaderBasket();
+
+</script>
+
+
+</body>
+
+</html>
