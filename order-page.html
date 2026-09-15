@@ -75,6 +75,8 @@ content="Configure and order a Factory Toughened Rooflights frameless flat roof 
 --product-image-left:0%;
 --product-image-left-px:0px;
 --product-image-top:0px;
+
+--order-information-sticky-top:0px;
 }
 
 * {
@@ -103,7 +105,8 @@ text-rendering:optimizeLegibility;
 touch-action:pan-x pan-y;
 }
 
-body.basket-drawer-open {
+body.basket-drawer-open,
+body.menu-drawer-open {
 overflow:hidden !important;
 overscroll-behavior:none;
 }
@@ -148,7 +151,6 @@ sans-serif;
 }
 
 /* =========================================
-ORDER PAGE CHANGE 2
 DESKTOP ACCESS BLOCKER
 ========================================= */
 
@@ -259,7 +261,7 @@ display:flex;
 }
 
 /* =========================================
-TOP MOVING BANNER
+MASTER TOP MOVING BANNER
 ========================================= */
 
 .top-banner {
@@ -303,7 +305,7 @@ transform:translateX(-50%);
 }
 
 /* =========================================
-HEADER
+MASTER HEADER
 ========================================= */
 
 header {
@@ -325,6 +327,23 @@ box-shadow:0 8px 30px rgba(0,0,0,.16);
 .wordmark-wrap {
 display:grid;
 gap:9px;
+}
+
+.header-home-link {
+display:block;
+width:max-content;
+max-width:100%;
+color:inherit;
+text-decoration:none;
+}
+
+.header-home-link:visited {
+color:inherit;
+}
+
+.header-home-link:focus-visible {
+outline:1px solid rgba(232,120,23,.65);
+outline-offset:6px;
 }
 
 .wordmark {
@@ -361,18 +380,8 @@ padding-bottom:2px;
 text-transform:lowercase;
 }
 
-.header-wordmark-link .wordmark-domain {
-position:relative;
-left:-1px;
-top:1px;
-}
-
-.header-wordmark-link {
-display:block;
-width:max-content;
-max-width:100%;
-color:inherit;
-text-decoration:none;
+.header-home-link .wordmark-domain {
+transform:translate(-1px,1px);
 }
 
 .address-line {
@@ -398,12 +407,16 @@ align-items:center;
 justify-content:center;
 }
 
+/* =========================================
+MASTER HEADER BUTTONS
+========================================= */
+
 .action-icons button,
 .action-icons a.header-icon-button {
 width:42px;
 height:42px;
-border:1px solid rgba(230,233,230,.16);
-background:#111313;
+border:0;
+background:transparent;
 color:var(--steel-light);
 text-decoration:none;
 display:flex;
@@ -414,47 +427,151 @@ font-weight:800;
 cursor:pointer;
 transition:
 transform .22s ease,
-border-color .22s ease,
-color .22s ease,
-background .22s ease,
-box-shadow .22s ease;
+color .22s ease;
 line-height:1;
 padding:0;
+box-shadow:none;
 }
 
 .action-icons button:hover,
 .action-icons a.header-icon-button:hover {
-border-color:rgba(232,120,23,.70);
+border-color:transparent;
 color:var(--orange-bright);
-background:#171817;
-box-shadow:0 7px 22px rgba(0,0,0,.25);
+background:transparent;
+box-shadow:none;
 transform:translateY(-1px);
 }
 
 .action-icons button.is-selected {
-border-color:rgba(232,120,23,.85);
+border-color:transparent;
 color:var(--orange-bright);
-background:#191714;
-box-shadow:
-0 0 0 1px rgba(232,120,23,.08),
-0 7px 22px rgba(0,0,0,.24);
+background:transparent;
+box-shadow:none;
 }
 
 /* =========================================
-WHATSAPP ACTION
+MASTER EMAIL EXPANDING ACTION
+========================================= */
+
+.email-action {
+position:absolute;
+left:50%;
+bottom:calc(100% + 12px);
+z-index:85;
+width:35.7px;
+height:35.7px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:6px;
+background:
+linear-gradient(
+145deg,
+#020304 0%,
+#07101a 34%,
+#0d2238 68%,
+#123a5a 100%
+);
+border:1px solid rgba(255,255,255,.32);
+box-shadow:
+0 15px 30px rgba(0,0,0,.55),
+0 0 14px rgba(86,173,222,.22),
+inset 0 1px 0 rgba(255,255,255,.32);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transform:
+translate(-50%,20px)
+scale(.58);
+transform-origin:center bottom;
+transition:
+opacity .2s ease,
+visibility .2s ease,
+transform .38s cubic-bezier(.18,.82,.28,1.35);
+}
+
+.email-action.is-open {
+opacity:1;
+visibility:visible;
+pointer-events:auto;
+transform:
+translate(-50%,0)
+scale(1);
+animation:emailAttention 4s ease-in-out .9s infinite;
+}
+
+.email-action-symbol {
+display:block;
+color:#ffffff;
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:17.85px;
+font-weight:800;
+line-height:1;
+text-align:center;
+text-shadow:0 2px 2px rgba(0,0,0,.18);
+transform:translateY(-1px);
+}
+
+.email-action:hover,
+.email-action:active {
+transform:
+translate(-50%,-2px)
+scale(1.04);
+box-shadow:
+0 18px 35px rgba(0,0,0,.62),
+0 0 22px rgba(86,173,222,.42),
+inset 0 1px 0 rgba(255,255,255,.40);
+}
+
+@keyframes emailAttention {
+
+0%,
+72%,
+100% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+78% {
+transform:
+translate(-50%,-2px)
+scale(1.045);
+}
+
+83% {
+transform:
+translate(-50%,0)
+scale(.99);
+}
+
+88% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+}
+
+/* =========================================
+MASTER WHATSAPP EXPANDING ACTION
 ========================================= */
 
 .whatsapp-action {
 position:absolute;
 left:50%;
-bottom:calc(100% + 15px);
+bottom:calc(100% + 12px);
 z-index:85;
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:7px;
+border-radius:6px;
 background:
 linear-gradient(
 145deg,
@@ -615,71 +732,283 @@ scale(1);
 }
 
 /* =========================================
-MENU
+MASTER HOMEPAGE MENU DRAWER
+70% WIDTH / OPENS FROM LEFT
 ========================================= */
 
 .menu-overlay {
 position:fixed;
 inset:0;
-background:rgba(10,11,11,.992);
-z-index:100;
-display:none;
-padding:55px 6%;
-overflow-y:auto;
+z-index:2000000100;
+visibility:hidden;
+pointer-events:none;
+overflow:hidden;
 }
 
 .menu-overlay.active {
-display:block;
+visibility:visible;
+pointer-events:auto;
+}
+
+.menu-backdrop {
+position:absolute;
+inset:0;
+z-index:1;
+background:rgba(0,0,0,.72);
+opacity:0;
+cursor:pointer;
+transition:opacity .34s ease;
+}
+
+.menu-overlay.active .menu-backdrop {
+opacity:1;
+}
+
+.menu-panel {
+position:absolute;
+top:0;
+left:0;
+z-index:2;
+width:70vw;
+max-width:70vw;
+min-width:0;
+height:100vh;
+height:100dvh;
+display:grid;
+grid-template-rows:auto minmax(0,1fr);
+overflow:hidden;
+background:
+linear-gradient(
+180deg,
+#111414 0%,
+#0b0d0d 52%,
+#080a0a 100%
+);
+border-right:1px solid rgba(255,255,255,.14);
+box-shadow:
+26px 0 70px rgba(0,0,0,.54);
+transform:translateX(-100%);
+transition:transform .42s cubic-bezier(.18,.72,.28,1);
+outline:0;
+}
+
+.menu-overlay.active .menu-panel {
+transform:translateX(0);
 }
 
 .menu-top {
+position:relative;
+z-index:4;
+display:grid;
+grid-template-columns:minmax(0,1fr) auto;
+align-items:stretch;
+gap:10px;
+min-height:120px;
+margin:0;
+padding:
+16px
+12px
+15px;
+background:
+linear-gradient(
+180deg,
+rgba(20,23,23,.995),
+rgba(13,15,15,.995)
+);
+border-bottom:1px solid rgba(255,255,255,.11);
+box-shadow:0 10px 24px rgba(0,0,0,.22);
+}
+
+.menu-brand {
+min-width:0;
 display:flex;
-justify-content:space-between;
 align-items:flex-start;
-margin-bottom:60px;
+justify-content:flex-start;
+}
+
+.menu-brand .wordmark-wrap {
+gap:10px;
+}
+
+.menu-brand .wordmark {
+font-size:19.5px;
+line-height:.91;
+letter-spacing:2.34px;
+}
+
+.menu-brand .wordmark-domain {
+font-size:.40em;
+margin-left:1px;
+padding-bottom:1px;
+transform:translate(-1px,1px);
+}
+
+.menu-brand .address-line {
+margin-top:0;
+font-size:8.52px;
+font-weight:600;
+line-height:1.42;
+letter-spacing:.42px;
+color:rgba(255,255,255,.62);
+text-align:left;
+text-transform:uppercase;
 }
 
 .close-menu {
-background:#111313;
+width:34px;
+height:34px;
+padding:0;
+display:flex;
+align-items:center;
+justify-content:center;
+align-self:start;
+border:1px solid rgba(255,255,255,.17);
+border-radius:9px;
+background:#101212;
 color:var(--cream);
-border:1px solid rgba(255,255,255,.16);
-width:44px;
-height:44px;
-font-size:26px;
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:20px;
+font-weight:300;
+line-height:1;
 cursor:pointer;
+transition:
+border-color .2s ease,
+background .2s ease,
+color .2s ease,
+transform .15s ease;
+}
+
+.close-menu:hover {
+border-color:rgba(232,120,23,.56);
+background:#181513;
+color:var(--orange-bright);
+}
+
+.close-menu:active {
+transform:scale(.95);
 }
 
 .menu-links {
 display:grid;
+align-content:start;
 gap:0;
-max-width:760px;
-border-top:1px solid rgba(255,255,255,.10);
+width:100%;
+max-width:none;
+min-width:0;
+overflow-x:hidden;
+overflow-y:auto;
+overscroll-behavior:contain;
+-webkit-overflow-scrolling:touch;
+padding:
+7px
+12px
+max(22px,env(safe-area-inset-bottom));
+border-top:0;
+scrollbar-width:thin;
+scrollbar-color:
+rgba(232,120,23,.55)
+rgba(255,255,255,.035);
 }
 
-.menu-links a {
+.menu-links::-webkit-scrollbar {
+width:5px;
+}
+
+.menu-links::-webkit-scrollbar-track {
+background:rgba(255,255,255,.025);
+}
+
+.menu-links::-webkit-scrollbar-thumb {
+background:rgba(232,120,23,.52);
+border-radius:999px;
+}
+
+.menu-links a,
+.menu-links button {
+position:relative;
+width:100%;
+min-height:49px;
+margin:0;
+padding:
+15px
+29px
+15px
+2px;
+display:flex;
+align-items:center;
+justify-content:flex-start;
+border:0;
+border-bottom:1px solid rgba(255,255,255,.10);
+background:transparent;
 color:var(--cream);
-text-decoration:none;
 font-family:
 "Bahnschrift SemiCondensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-font-size:clamp(31px,5vw,62px);
+font-size:clamp(14px,4.2vw,18px);
 font-weight:750;
-line-height:1;
-letter-spacing:-1.2px;
+line-height:1.05;
+letter-spacing:-.25px;
+text-align:left;
+text-decoration:none;
 text-transform:uppercase;
-border-bottom:1px solid rgba(255,255,255,.10);
-padding:22px 0;
+cursor:pointer;
 transition:
 color .2s ease,
 padding-left .2s ease,
 background .2s ease;
 }
 
-.menu-links a:hover {
+.menu-links a:first-child,
+.menu-links button:first-child {
+border-top:1px solid rgba(255,255,255,.10);
+}
+
+.menu-links a::after,
+.menu-links button::after {
+content:"→";
+position:absolute;
+right:4px;
+top:50%;
+color:rgba(247,247,243,.34);
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:14px;
+font-weight:500;
+line-height:1;
+transform:translateY(-50%);
+transition:
+color .2s ease,
+transform .2s ease;
+}
+
+.menu-links a:hover,
+.menu-links button:hover,
+.menu-links a:focus-visible,
+.menu-links button:focus-visible {
 color:var(--orange-bright);
-padding-left:10px;
+padding-left:6px;
+background:rgba(255,255,255,.018);
+outline:none;
+}
+
+.menu-links a:hover::after,
+.menu-links button:hover::after,
+.menu-links a:focus-visible::after,
+.menu-links button:focus-visible::after {
+color:var(--orange-bright);
+transform:
+translateY(-50%)
+translateX(2px);
 }
 
 /* =========================================
@@ -2140,18 +2469,6 @@ opacity:1;
 
 /* =========================================
 SELF CLEANING
-
-MAIN CONFIGURATOR:
-Matches the Double / Triple Glazed selector
-style, without a lower sliding track.
-
-The visible surcharge text is deliberately
-hidden from the main selector. Pricing logic
-remains untouched.
-
-CUSTOM CALCULATOR:
-Uses the same dropdown component as Border,
-Glazing, Glass and Glass Finish.
 ========================================= */
 
 .self-cleaning-visual-control {
@@ -2186,13 +2503,6 @@ opacity .2s ease;
 .self-cleaning-surcharge[hidden] {
 display:none !important;
 }
-
-/*
-CHANGE 1
-Keep the surcharge element available to the
-JavaScript/pricing system, but never display it
-inside the main configurator Yes button.
-*/
 
 .self-cleaning-main-selector
 .self-cleaning-surcharge {
@@ -2832,17 +3142,6 @@ opacity:0;
 transform:translateY(3px);
 }
 
-/*
-CHANGE 4
-Live Unit Price / Total update animation.
-
-Applied only to the live configurator and
-custom calculator price lines.
-
-Order Summary and Custom Order Summary totals
-use separate classes and are not affected.
-*/
-
 .price-line.price-update-animation,
 .total-price-line.price-update-animation {
 animation:
@@ -2923,16 +3222,6 @@ font-weight:inherit;
 line-height:inherit;
 letter-spacing:inherit;
 }
-
-/* =========================================
-NEW ORDER PAGE CHANGE 1
-
-The smaller pence figures were previously
-positioned 1px lower.
-
-They are now moved upward by 0.5px, leaving
-them 0.5px below their original baseline.
-========================================= */
 
 .price-pence,
 .total-price-pence {
@@ -3605,7 +3894,6 @@ transform:scale(.97);
 
 /* =========================================
 DELIVERY POSTCODE + DELIVERY RESULT
-ACCEPTED POSTCODE REMAINS VISIBLE
 ========================================= */
 
 .order-summary-delivery {
@@ -4623,13 +4911,6 @@ width:3px;
 background:var(--orange);
 }
 
-/*
-CHANGE 2
-Selected custom calculator options retain their
-orange highlight and left orange marker, but
-the tick/checkmark is removed.
-*/
-
 .custom-build-dropdown-option.is-selected::after {
 content:none;
 display:none;
@@ -4637,7 +4918,6 @@ display:none;
 
 /* =========================================
 CUSTOM UNIT SUMMARY
-CUSTOM PRODUCT PRICE TEMPORARILY BLANK
 ========================================= */
 
 .custom-unit-summary-section {
@@ -4856,12 +5136,58 @@ line-height:1.65;
 }
 
 /* =========================================
-NEW ORDER PAGE CHANGES 1 & 2
-INSET INFORMATION PANELS
+ORDER PAGE CHANGES 6 + 7
+STICKY TECHNICAL / DELIVERY TITLES
+========================================= */
 
-USED BY:
-- TECHNICAL INFORMATION
-- DELIVERY TERMS & LEAD TIMES
+.order-information-sticky-item[open] > summary {
+position:sticky;
+top:var(--order-information-sticky-top);
+z-index:29;
+background:
+linear-gradient(
+180deg,
+rgba(16,18,18,.995) 0%,
+rgba(13,15,15,.995) 100%
+);
+box-shadow:
+0 1px 0 rgba(255,255,255,.10),
+0 8px 20px rgba(0,0,0,.18);
+}
+
+/* =========================================
+ORDER PAGE — SIMPLE INFORMATION LINKS
+CHANGES 4 + 5
+========================================= */
+
+.order-information-simple-content {
+min-height:0;
+padding-bottom:6.5px;
+}
+
+.order-information-simple-copy {
+margin:0;
+color:var(--muted);
+}
+
+.order-information-simple-link {
+color:#68b7f0;
+font-weight:750;
+text-decoration:none;
+border-bottom:1px solid rgba(104,183,240,.48);
+transition:
+color .2s ease,
+border-color .2s ease;
+}
+
+.order-information-simple-link:hover,
+.order-information-simple-link:focus {
+color:#8acbfa;
+border-color:#8acbfa;
+}
+
+/* =========================================
+INSET INFORMATION PANELS
 ========================================= */
 
 .order-information-featured-content {
@@ -5032,7 +5358,6 @@ border-color:#ff9b42;
 
 /* =========================================
 INDEX FOOTER — ISOLATED FOR ORDER PAGE
-WORDMARK + ADDRESS ONLY
 ========================================= */
 
 .order-index-footer {
@@ -5179,10 +5504,16 @@ gap:5px;
 pointer-events:none;
 }
 
+/* =========================================
+ORDER PAGE CHANGE 3
+FOOTER DOTS REDUCED BY 15%
+3PX -> 2.55PX
+========================================= */
+
 .order-index-footer-dots span {
 display:block;
-width:3px;
-height:3px;
+width:2.55px;
+height:2.55px;
 border-radius:50%;
 background:rgba(255,255,255,.88);
 }
@@ -5199,6 +5530,14 @@ font-size:20px;
 
 .address-line {
 font-size:9px;
+}
+
+.menu-brand .wordmark {
+font-size:19.5px;
+}
+
+.menu-brand .address-line {
+font-size:8.52px;
 }
 
 }
@@ -5451,10 +5790,6 @@ font-size:6.35px;
 letter-spacing:.35px;
 }
 
-/* =========================================
-MOBILE UNIT SUMMARY
-========================================= */
-
 .order-purchase-section {
 margin-top:20px;
 padding-top:19px;
@@ -5607,10 +5942,6 @@ height:16px;
 font-size:14px;
 line-height:16px;
 }
-
-/* =========================================
-MOBILE ORDER SUMMARY
-========================================= */
 
 .order-summary-item {
 padding:16px 13px;
@@ -5788,10 +6119,6 @@ right:10px;
 font-size:14px;
 }
 
-/* =========================================
-MOBILE CUSTOM ROOFLIGHT SECTION
-========================================= */
-
 .order-custom-rooflight-section {
 padding:
 2px
@@ -5968,6 +6295,13 @@ padding:
 font-size:13px;
 }
 
+/* CHANGES 4 + 5 — 75% SMALLER BOTTOM GAP */
+
+.order-information-simple-content {
+min-height:0;
+padding-bottom:5px;
+}
+
 .order-information-featured-content {
 min-height:0;
 margin:
@@ -6032,7 +6366,7 @@ width:20px;
 }
 
 /* =========================================
-MOBILE HEADER / INDEX FOOTER
+MASTER MOBILE HEADER / INDEX FOOTER
 ========================================= */
 
 @media(max-width:560px) {
@@ -6061,16 +6395,21 @@ height:34px;
 font-size:15px;
 }
 
-.whatsapp-action {
-width:34px;
-height:34px;
-border-radius:6px;
-bottom:calc(100% + 14px);
+.whatsapp-action,
+.email-action {
+width:28.9px;
+height:28.9px;
+border-radius:5px;
+bottom:calc(100% + 11px);
 }
 
 .whatsapp-action svg {
 width:22px;
 height:22px;
+}
+
+.email-action-symbol {
+font-size:15.3px;
 }
 
 .basket-total-text {
@@ -6086,6 +6425,60 @@ scale(.78);
 transform:
 translate(-50%,0)
 scale(1);
+}
+
+.menu-panel {
+width:70vw;
+max-width:70vw;
+}
+
+.menu-top {
+min-height:111px;
+padding:14px 10px 13px;
+gap:8px;
+}
+
+.menu-brand .wordmark {
+font-size:18.2px;
+letter-spacing:2.015px;
+}
+
+.menu-brand .address-line {
+font-size:8.04px;
+line-height:1.42;
+letter-spacing:.32px;
+}
+
+.close-menu {
+width:32px;
+height:32px;
+border-radius:8px;
+font-size:19px;
+}
+
+.menu-links {
+padding:
+6px
+10px
+max(20px,env(safe-area-inset-bottom));
+}
+
+.menu-links a,
+.menu-links button {
+min-height:47px;
+padding:
+14px
+26px
+14px
+1px;
+font-size:clamp(13px,4vw,16px);
+letter-spacing:-.18px;
+}
+
+.menu-links a::after,
+.menu-links button::after {
+right:3px;
+font-size:13px;
 }
 
 .order-page {
@@ -6145,6 +6538,35 @@ SMALLEST MOBILE
 ========================================= */
 
 @media(max-width:390px) {
+
+.menu-top {
+min-height:106px;
+padding-left:9px;
+padding-right:9px;
+}
+
+.menu-brand .wordmark {
+font-size:16.9px;
+letter-spacing:1.82px;
+}
+
+.menu-brand .address-line {
+font-size:7.5px;
+letter-spacing:.27px;
+}
+
+.menu-links {
+padding-left:9px;
+padding-right:9px;
+}
+
+.menu-links a,
+.menu-links button {
+min-height:45px;
+font-size:12.6px;
+padding-top:13px;
+padding-bottom:13px;
+}
 
 .purchase-zone {
 padding-left:10px;
@@ -6333,6 +6755,7 @@ scroll-behavior:auto;
 
 .ticker,
 .whatsapp-action,
+.email-action,
 .basket-total-text,
 .basket-arrow,
 .basket-drawer-item-expand-arrow,
@@ -6396,7 +6819,9 @@ transition:none;
 }
 
 .basket-drawer-panel,
-.basket-drawer-backdrop {
+.basket-drawer-backdrop,
+.menu-panel,
+.menu-backdrop {
 transition:none !important;
 }
 
@@ -6430,8 +6855,11 @@ Please visit Factory Toughened Rooflights using a mobile device.
 
 </div>
 
-<div class="top-banner">
+<!-- =========================================
+MASTER INDEX HEADER
+========================================= -->
 
+<div class="top-banner">
 <div class="ticker">
 
 <span>Specialist British workshop for frameless rooflights</span>
@@ -6441,6 +6869,7 @@ Please visit Factory Toughened Rooflights using a mobile device.
 <span>Factory insulated and ready for fitting</span>
 <span>Expected 30+ year service life</span>
 <span>UKCA compliant • CE marked • building regs compliant</span>
+<span>Free mainland UK delivery on listed sizes</span>
 <span>Collection available with prior booking</span>
 
 <span>Specialist British workshop for frameless rooflights</span>
@@ -6450,10 +6879,10 @@ Please visit Factory Toughened Rooflights using a mobile device.
 <span>Factory insulated and ready for fitting</span>
 <span>Expected 30+ year service life</span>
 <span>UKCA compliant • CE marked • building regs compliant</span>
+<span>Free mainland UK delivery on listed sizes</span>
 <span>Collection available with prior booking</span>
 
 </div>
-
 </div>
 
 <header>
@@ -6462,23 +6891,19 @@ Please visit Factory Toughened Rooflights using a mobile device.
 
 <a
 href="index.html"
-class="wordmark header-wordmark-link"
+class="header-home-link"
+id="headerHomeLink"
 aria-label="Factory Toughened Rooflights homepage"
 >
 
+<div class="wordmark">
 Factory
-
-<span>
-Toughened
-</span>
+<span>Toughened</span>
 
 <div class="wordmark-bottom">
-
 Rooflights
-
-<small class="wordmark-domain">
-.co.uk
-</small>
+<small class="wordmark-domain">.co.uk</small>
+</div>
 
 </div>
 
@@ -6488,14 +6913,38 @@ Rooflights
 
 <div class="action-icons">
 
-<a
-href="contact.html"
+<div class="header-action-wrap">
+
+<button
+type="button"
 class="header-icon-button"
-aria-label="Contact Factory Toughened Rooflights"
-title="Contact our rooflight team"
+id="emailButton"
+aria-label="Show email button"
+title="Email our rooflight team"
+aria-expanded="false"
+aria-controls="emailAction"
 >
 ✉
+</button>
+
+<a
+id="emailAction"
+class="email-action"
+href="mailto:sales@factorytoughenedrooflights.co.uk"
+aria-label="Compose a blank email to Factory Toughened Rooflights"
+title="Email sales@factorytoughenedrooflights.co.uk"
+>
+
+<span
+class="email-action-symbol"
+aria-hidden="true"
+>
+@
+</span>
+
 </a>
+
+</div>
 
 <div class="header-action-wrap">
 
@@ -6521,8 +6970,11 @@ aria-label="Open WhatsApp Business chat with our rooflight team"
 <svg
 viewBox="0 0 32 32"
 aria-hidden="true"
+focusable="false"
 >
+
 <path d="M16 3.2A12.5 12.5 0 0 0 5.2 22l-1.8 6.8 7-1.8A12.5 12.5 0 1 0 16 3.2zm0 22.7c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.1 1.1 1.1-4-.3-.4a10.2 10.2 0 1 1 9.2 5.1zm5.6-7.7c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.7.1-1.9-.9-3.2-1.7-4.5-3.9-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9 0 1.7 1.2 3.3 1.4 3.5.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/>
+
 </svg>
 
 </a>
@@ -6555,9 +7007,12 @@ aria-label="Basket total £0.00"
 
 <button
 type="button"
+id="menuButton"
 onclick="openMenu()"
 aria-label="Open menu"
 title="Menu"
+aria-expanded="false"
+aria-controls="menuOverlay"
 >
 ☰
 </button>
@@ -6566,41 +7021,54 @@ title="Menu"
 
 </header>
 
+<!-- =========================================
+MASTER 70% LEFT-HAND MENU DRAWER
+========================================= -->
+
 <div
 id="menuOverlay"
 class="menu-overlay"
+aria-hidden="true"
+>
+
+<div
+class="menu-backdrop"
+onclick="closeMenu()"
+aria-hidden="true"
+></div>
+
+<aside
+class="menu-panel"
+id="menuPanel"
+role="dialog"
+aria-modal="true"
+aria-label="Website menu"
+tabindex="-1"
 >
 
 <div class="menu-top">
 
+<div class="menu-brand">
+
 <div class="wordmark-wrap">
 
 <div class="wordmark">
-
 Factory
-
-<span>
-Toughened
-</span>
+<span>Toughened</span>
 
 <div class="wordmark-bottom">
-
 Rooflights
-
-<small class="wordmark-domain">
-.co.uk
-</small>
-
+<small class="wordmark-domain">.co.uk</small>
 </div>
 
 </div>
 
 <div class="address-line">
-
 Anamax Group Estate<br>
 Oxford Road, Denham<br>
 Buckinghamshire<br>
 SL9 7BB
+</div>
 
 </div>
 
@@ -6617,24 +7085,71 @@ aria-label="Close menu"
 
 </div>
 
-<div class="menu-links">
-
-<a href="index.html" onclick="closeMenu()">Home</a>
-<a href="standard-sizes.html" onclick="closeMenu()">Standard Sizes</a>
-<a href="order-page.html" onclick="closeMenu()">Order Your Rooflight</a>
+<nav
+class="menu-links"
+aria-label="Main navigation"
+>
 
 <a
-href="#customRooflightBuilder"
-id="orderPageBuildRooflightMenuLink"
+href="index.html"
+onclick="closeMenu()"
+>
+Home
+</a>
+
+<a
+href="standard-sizes.html"
+onclick="closeMenu()"
+>
+Standard Sizes
+</a>
+
+<a
+href="order-page.html"
+onclick="closeMenu()"
+>
+Order Your Rooflight
+</a>
+
+<a
+href="order-page.html?source=homepage-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+id="menuBuildRooflightLink"
 >
 Build A Rooflight
 </a>
 
-<a href="index.html#oversized" onclick="closeMenu()">Oversized Rooflights</a>
-<a href="installation-guide.html" onclick="closeMenu()">Installation Guide</a>
-<a href="contact.html" onclick="closeMenu()">Contact Our Team</a>
+<a
+href="oversized.html"
+onclick="closeMenu()"
+>
+Oversized Rooflights
+</a>
 
-</div>
+<a
+href="book.html"
+onclick="closeMenu()"
+>
+Book A Fitting
+</a>
+
+<button
+type="button"
+class="menu-contact-button"
+id="menuContactTeamButton"
+>
+Contact Our Team
+</button>
+
+<a
+href="shipping.html"
+onclick="closeMenu()"
+>
+Lead Times
+</a>
+
+</nav>
+
+</aside>
 
 </div>
 
@@ -8177,11 +8692,13 @@ aria-label="Rooflight order information"
 <div class="order-information-list">
 
 <!-- =========================================
-NEW ORDER PAGE CHANGE 1
 1. TECHNICAL INFORMATION
+CHANGE 6 — STICKY TITLE
 ========================================= -->
 
-<details class="order-information-item reveal">
+<details
+class="order-information-item order-information-sticky-item reveal"
+>
 
 <summary>
 Technical Information
@@ -8381,25 +8898,37 @@ Correct installation is just as important as choosing the right glass specificat
 
 <!-- =========================================
 2. INSTALLATION GUIDELINES
+CHANGE 4 — 75% REDUCED GAP
 ========================================= -->
 
-<details class="order-information-item reveal reveal-delay-1">
+<details
+class="order-information-item order-information-simple-item reveal reveal-delay-1"
+>
 
 <summary>
 Installation Guidelines
 </summary>
 
-<div class="order-information-content">
+<div
+class="order-information-content order-information-simple-content"
+>
+
+<p class="order-information-simple-copy">
+Read our <a href="fitting.html" class="order-information-simple-link">Fitting &amp; Installation</a> guidelines
+</p>
+
 </div>
 
 </details>
 
 <!-- =========================================
-NEW ORDER PAGE CHANGE 2
 3. DELIVERY TERMS & LEAD TIMES
+CHANGE 7 — STICKY TITLE
 ========================================= -->
 
-<details class="order-information-item reveal reveal-delay-2">
+<details
+class="order-information-item order-information-sticky-item reveal reveal-delay-2"
+>
 
 <summary>
 Delivery Terms &amp; Lead Times
@@ -8539,15 +9068,25 @@ This section is a simple overview to help you plan your order. For the full deli
 
 <!-- =========================================
 4. TERMS OF USE
+CHANGE 5 — 75% REDUCED GAP
 ========================================= -->
 
-<details class="order-information-item reveal reveal-delay-3">
+<details
+class="order-information-item order-information-simple-item reveal reveal-delay-3"
+>
 
 <summary>
 Terms of Use
 </summary>
 
-<div class="order-information-content">
+<div
+class="order-information-content order-information-simple-content"
+>
+
+<p class="order-information-simple-copy">
+Read our <a href="terms.html" class="order-information-simple-link">Terms and Conditions</a>
+</p>
+
 </div>
 
 </details>
@@ -8885,114 +9424,39 @@ event.preventDefault();
 }
 );
 
-function openMenu() {
+/* =========================================
+MASTER HEADER INTERACTIONS
+========================================= */
 
-closeWhatsAppAction();
-closeSizeDropdown();
-closeCustomBuildDropdowns();
+const menuButton =
+document.getElementById(
+"menuButton"
+);
 
 const menuOverlay =
 document.getElementById(
 "menuOverlay"
 );
 
-if (
-menuOverlay
-) {
-
-menuOverlay.classList.add(
-"active"
-);
-
-}
-
-document.body.style.overflow =
-"hidden";
-
-}
-
-function closeMenu() {
-
-const menuOverlay =
+const menuPanel =
 document.getElementById(
-"menuOverlay"
+"menuPanel"
 );
 
-if (
-menuOverlay
-) {
-
-menuOverlay.classList.remove(
-"active"
-);
-
-}
-
-if (
-!document.body.classList.contains(
-"basket-drawer-open"
-)
-) {
-
-document.body.style.overflow =
-"";
-
-}
-
-}
-
-const orderPageBuildRooflightMenuLink =
+const menuContactTeamButton =
 document.getElementById(
-"orderPageBuildRooflightMenuLink"
+"menuContactTeamButton"
 );
 
-if (
-orderPageBuildRooflightMenuLink
-) {
-
-orderPageBuildRooflightMenuLink.addEventListener(
-"click",
-event => {
-
-event.preventDefault();
-
-closeMenu();
-
-const target =
+const emailButton =
 document.getElementById(
-"customRooflightBuilder"
+"emailButton"
 );
 
-if (
-!target
-) {
-
-return;
-
-}
-
-window.requestAnimationFrame(
-() => {
-
-window.requestAnimationFrame(
-() => {
-
-animateElementToViewportRatio(
-target,
-.30,
-560
+const emailAction =
+document.getElementById(
+"emailAction"
 );
-
-}
-);
-
-}
-);
-
-}
-);
-
-}
 
 const whatsappButton =
 document.getElementById(
@@ -9003,6 +9467,63 @@ const whatsappAction =
 document.getElementById(
 "whatsappAction"
 );
+
+let menuLastFocusedElement =
+null;
+
+function closeEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+emailAction.classList.remove(
+"is-open"
+);
+
+emailButton.classList.remove(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+function openEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+closeWhatsAppAction();
+
+emailAction.classList.add(
+"is-open"
+);
+
+emailButton.classList.add(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
 
 function setWhatsAppState(
 shouldOpen
@@ -9044,6 +9565,174 @@ false
 
 }
 
+function openMenu() {
+
+closeEmailAction();
+closeWhatsAppAction();
+
+if (
+typeof closeSizeDropdown ===
+"function"
+) {
+
+closeSizeDropdown();
+
+}
+
+if (
+typeof closeCustomBuildDropdowns ===
+"function"
+) {
+
+closeCustomBuildDropdowns();
+
+}
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+menuLastFocusedElement =
+document.activeElement;
+
+menuOverlay.classList.add(
+"active"
+);
+
+menuOverlay.setAttribute(
+"aria-hidden",
+"false"
+);
+
+menuButton?.setAttribute(
+"aria-expanded",
+"true"
+);
+
+document.body.classList.add(
+"menu-drawer-open"
+);
+
+window.requestAnimationFrame(
+() => {
+
+menuPanel?.focus(
+{
+preventScroll:true
+}
+);
+
+}
+);
+
+}
+
+function closeMenu() {
+
+if (
+!menuOverlay
+) {
+
+return;
+
+}
+
+const wasOpen =
+menuOverlay.classList.contains(
+"active"
+);
+
+menuOverlay.classList.remove(
+"active"
+);
+
+menuOverlay.setAttribute(
+"aria-hidden",
+"true"
+);
+
+menuButton?.setAttribute(
+"aria-expanded",
+"false"
+);
+
+document.body.classList.remove(
+"menu-drawer-open"
+);
+
+if (
+wasOpen &&
+menuLastFocusedElement instanceof HTMLElement
+) {
+
+window.requestAnimationFrame(
+() => {
+
+menuLastFocusedElement.focus(
+{
+preventScroll:true
+}
+);
+
+}
+);
+
+}
+
+menuLastFocusedElement =
+null;
+
+}
+
+if (
+emailButton &&
+emailAction
+) {
+
+emailButton.addEventListener(
+"click",
+event => {
+
+event.stopPropagation();
+
+closeWhatsAppAction();
+
+const shouldOpen =
+!emailAction.classList.contains(
+"is-open"
+);
+
+if (
+shouldOpen
+) {
+
+openEmailAction();
+
+}
+else {
+
+closeEmailAction();
+
+}
+
+}
+);
+
+emailAction.addEventListener(
+"click",
+event => {
+
+event.stopPropagation();
+
+}
+);
+
+}
+
 if (
 whatsappButton &&
 whatsappAction
@@ -9055,8 +9744,25 @@ event => {
 
 event.stopPropagation();
 
+closeEmailAction();
+
+if (
+typeof closeSizeDropdown ===
+"function"
+) {
+
 closeSizeDropdown();
+
+}
+
+if (
+typeof closeCustomBuildDropdowns ===
+"function"
+) {
+
 closeCustomBuildDropdowns();
+
+}
 
 setWhatsAppState(
 !whatsappAction.classList.contains(
@@ -9074,6 +9780,178 @@ event => {
 event.stopPropagation();
 
 }
+);
+
+}
+
+if (
+menuContactTeamButton
+) {
+
+menuContactTeamButton.addEventListener(
+"click",
+event => {
+
+event.preventDefault();
+
+closeMenu();
+
+window.requestAnimationFrame(
+() => {
+
+openEmailAction();
+
+}
+);
+
+}
+);
+
+}
+
+document.addEventListener(
+"click",
+event => {
+
+if (
+emailAction?.classList.contains(
+"is-open"
+) &&
+!emailAction.contains(
+event.target
+) &&
+!emailButton?.contains(
+event.target
+)
+) {
+
+closeEmailAction();
+
+}
+
+if (
+whatsappAction?.classList.contains(
+"is-open"
+) &&
+!whatsappAction.contains(
+event.target
+) &&
+!whatsappButton?.contains(
+event.target
+)
+) {
+
+closeWhatsAppAction();
+
+}
+
+}
+);
+
+document.addEventListener(
+"keydown",
+event => {
+
+if (
+event.key !==
+"Escape"
+) {
+
+return;
+
+}
+
+if (
+menuOverlay?.classList.contains(
+"active"
+)
+) {
+
+closeMenu();
+return;
+
+}
+
+closeEmailAction();
+closeWhatsAppAction();
+
+}
+);
+
+/* =========================================
+ORDER PAGE CHANGES 6 + 7
+KEEP OPEN INFORMATION TITLES DIRECTLY
+BENEATH THE MASTER HEADER
+========================================= */
+
+const masterPageHeader =
+document.querySelector(
+"body > header"
+);
+
+function syncOrderInformationStickyTop() {
+
+if (
+!masterPageHeader
+) {
+
+return;
+
+}
+
+const headerHeight =
+masterPageHeader
+.getBoundingClientRect()
+.height;
+
+if (
+!Number.isFinite(
+headerHeight
+) ||
+headerHeight <=
+0
+) {
+
+return;
+
+}
+
+document.documentElement.style.setProperty(
+"--order-information-sticky-top",
+`${Math.ceil(headerHeight)}px`
+);
+
+}
+
+syncOrderInformationStickyTop();
+
+window.addEventListener(
+"resize",
+syncOrderInformationStickyTop
+);
+
+window.addEventListener(
+"orientationchange",
+syncOrderInformationStickyTop
+);
+
+if (
+typeof ResizeObserver ===
+"function" &&
+masterPageHeader
+) {
+
+const masterHeaderResizeObserver =
+new ResizeObserver(
+() => {
+
+syncOrderInformationStickyTop();
+
+}
+);
+
+masterHeaderResizeObserver.observe(
+masterPageHeader
 );
 
 }
@@ -9401,18 +10279,6 @@ const TINT_IMAGE_BASE_FALLBACKS = {
 
 /* =========================================
 SITEWIDE MASTER PRODUCT PRICING
-
-FINAL CUSTOMER PRODUCT PRICES ARE PROVIDED
-ONLY BY FactoryRooflightsMasterPricing.
-
-THE ACTIVE CHEAP / NORMAL / EXPENSIVE
-STRATEGY IS CONTROLLED EXCLUSIVELY BY:
-
-js/pricing/site-pricing-config.js
-
-NO LOCAL ORDER-PAGE PRICE TABLE,
-SELLING-PRICE UPLIFT OR FALLBACK STRATEGY
-IS USED HERE.
 ========================================= */
 
 function getMasterStandardPricingResult(
@@ -10891,6 +11757,7 @@ return;
 }
 
 closeWhatsAppAction();
+closeEmailAction();
 
 closeSizeDropdown();
 
@@ -11635,16 +12502,6 @@ state.border
 
 /* =========================================
 MASTER GLASS MAKE-UP / TOP-GLASS DISPLAY
-
-master-makeup-logic.js is the single
-authoritative source for physical glass
-make-up and thickness decisions.
-
-The Order Page only normalises its current
-configuration, delegates to the master and
-formats the returned TOP pane for display.
-No local thickness thresholds or fallback
-make-up rules are retained here.
 ========================================= */
 
 const GLASS_SPECIFICATION_UNAVAILABLE =
@@ -18495,6 +19352,59 @@ QUERY STRING
 
 function updateQueryString() {
 
+const existingParams =
+new URLSearchParams(
+location.search
+);
+
+const existingSource =
+String(
+existingParams.get(
+"source"
+) ||
+""
+)
+.toLowerCase();
+
+const existingFocus =
+String(
+existingParams.get(
+"focus"
+) ||
+""
+)
+.toLowerCase();
+
+const existingCustomItemId =
+String(
+existingParams.get(
+"customItemId"
+) ||
+existingParams.get(
+"customId"
+) ||
+""
+);
+
+const existingViewportOffset =
+String(
+existingParams.get(
+"viewportOffset"
+) ||
+""
+);
+
+const preserveHomepageCustomOrderHandoff =
+existingSource ===
+"homepage-custom-order" &&
+(
+existingFocus ===
+"custom-order-summary" ||
+Boolean(
+existingCustomItemId
+)
+);
+
 const params =
 new URLSearchParams();
 
@@ -18596,6 +19506,44 @@ homepageImageMatchesCurrentSelection()
 params.set(
 "image",
 state.homepageImport.image
+);
+
+}
+
+}
+
+if (
+preserveHomepageCustomOrderHandoff
+) {
+
+params.set(
+"source",
+"homepage-custom-order"
+);
+
+params.set(
+"focus",
+"custom-order-summary"
+);
+
+if (
+existingCustomItemId
+) {
+
+params.set(
+"customItemId",
+existingCustomItemId
+);
+
+}
+
+if (
+existingViewportOffset
+) {
+
+params.set(
+"viewportOffset",
+existingViewportOffset
 );
 
 }
@@ -18842,6 +19790,8 @@ if (
 return;
 
 }
+
+closeEmailAction();
 
 closeWhatsAppAction();
 
@@ -22629,6 +23579,8 @@ cancelPendingOrderPageAutoScrolls();
 
 closeMenu();
 
+closeEmailAction();
+
 closeWhatsAppAction();
 
 closeSizeDropdown();
@@ -25366,6 +26318,8 @@ params.get(
 
 const explicitCustomQuery =
 source ===
+"homepage-custom-order" ||
+source ===
 "homepage-custom" ||
 source ===
 "custom-builder" ||
@@ -26274,6 +27228,7 @@ updateCustomConfiguratorUI();
 
 /* =========================================
 GLOBAL CLICK / ESCAPE
+MASTER HEADER ACTIONS INCLUDED
 ========================================= */
 
 document.addEventListener(
@@ -26287,6 +27242,8 @@ basketDrawerIsOpen
 return;
 
 }
+
+closeEmailAction();
 
 closeWhatsAppAction();
 
@@ -26333,6 +27290,8 @@ basketDrawerIsOpen
 return;
 
 }
+
+closeEmailAction();
 
 closeWhatsAppAction();
 
@@ -27075,18 +28034,68 @@ addCurrentCustomSelectionToOrder
 );
 
 /* =========================================
-HOMEPAGE ARRIVAL FOCUS
+HOMEPAGE ARRIVAL / CUSTOM ORDER HANDOFF
+
+The homepage already creates and stores the
+custom basket item before navigating here.
+
+The Order Page therefore:
+- reads the existing shared basket
+- identifies the existing custom item
+- DOES NOT add the item again
+- renders Custom Order Summary
+- preserves its quantity/configuration/price
+- scrolls directly to that summary
+- consumes the one-use handoff afterwards
 ========================================= */
 
-function readHomepageOrderFocusRequest() {
+const HOMEPAGE_CUSTOM_ORDER_HANDOFF_STORAGE_KEY =
+"factoryToughenedRooflightsHomepageCustomOrderHandoffV1";
 
-const params =
-new URLSearchParams(
-location.search
+function readHomepageCustomOrderHandoff() {
+
+try {
+
+const stored =
+sessionStorage.getItem(
+HOMEPAGE_CUSTOM_ORDER_HANDOFF_STORAGE_KEY
 );
 
-let storedFocus =
+if (
+!stored
+) {
+
+return null;
+
+}
+
+const parsed =
+JSON.parse(
+stored
+);
+
+return (
+parsed &&
+typeof parsed ===
+"object"
+)
+?
+parsed
+:
 null;
+
+}
+catch (
+error
+) {
+
+return null;
+
+}
+
+}
+
+function readLegacyHomepageOrderFocus() {
 
 try {
 
@@ -27096,39 +28105,55 @@ HOMEPAGE_ORDER_FOCUS_KEY
 );
 
 if (
-stored
+!stored
 ) {
+
+return null;
+
+}
 
 const parsed =
 JSON.parse(
 stored
 );
 
-if (
+return (
 parsed &&
 typeof parsed ===
 "object"
-) {
-
-storedFocus =
-parsed;
-
-}
-
-}
+)
+?
+parsed
+:
+null;
 
 }
 catch (
 error
 ) {
 
-storedFocus =
-null;
+return null;
 
 }
 
+}
+
+function readHomepageOrderFocusRequest() {
+
+const params =
+new URLSearchParams(
+location.search
+);
+
+const handoff =
+readHomepageCustomOrderHandoff();
+
+const storedFocus =
+readLegacyHomepageOrderFocus();
+
 const source =
 String(
+handoff?.source ||
 storedFocus?.source ||
 params.get(
 "source"
@@ -27139,6 +28164,7 @@ params.get(
 
 const type =
 String(
+handoff?.type ||
 storedFocus?.type ||
 ""
 )
@@ -27146,6 +28172,8 @@ storedFocus?.type ||
 
 const focus =
 String(
+handoff?.focus ||
+storedFocus?.focus ||
 params.get(
 "focus"
 ) ||
@@ -27155,7 +28183,17 @@ params.get(
 
 const id =
 String(
+handoff?.customItemId ||
+handoff?.itemId ||
+handoff?.id ||
+handoff?.item?.id ||
+handoff?.item?._id ||
+storedFocus?.customItemId ||
+storedFocus?.itemId ||
 storedFocus?.id ||
+params.get(
+"customItemId"
+) ||
 params.get(
 "customId"
 ) ||
@@ -27164,6 +28202,7 @@ params.get(
 
 const viewportOffsetRaw =
 Number(
+handoff?.viewportOffset ??
 storedFocus?.viewportOffset ??
 params.get(
 "viewportOffset"
@@ -27172,6 +28211,7 @@ params.get(
 
 const topRatioRaw =
 Number(
+handoff?.topRatio ??
 storedFocus?.topRatio ??
 (
 Number(
@@ -27205,7 +28245,7 @@ topRatioRaw <
 ?
 topRatioRaw
 :
-.40
+.30
 );
 
 return {
@@ -27222,13 +28262,18 @@ focus,
 id:
 id,
 
+handoff:
+handoff,
+
 center:
-storedFocus?.center !==
+handoff?.center ??
+storedFocus?.center ??
 false,
 
 animate:
-storedFocus?.animate !==
-false,
+handoff?.animate ??
+storedFocus?.animate ??
+true,
 
 topRatio:
 topRatio
@@ -27238,6 +28283,18 @@ topRatio
 }
 
 function consumeHomepageOrderFocusRequest() {
+
+try {
+
+sessionStorage.removeItem(
+HOMEPAGE_CUSTOM_ORDER_HANDOFF_STORAGE_KEY
+);
+
+}
+catch (
+error
+) {
+}
 
 try {
 
@@ -27256,8 +28313,21 @@ new URL(
 window.location.href
 );
 
+const source =
+String(
+currentUrl.searchParams.get(
+"source"
+) ||
+""
+)
+.toLowerCase();
+
 currentUrl.searchParams.delete(
 "focus"
+);
+
+currentUrl.searchParams.delete(
+"customItemId"
 );
 
 currentUrl.searchParams.delete(
@@ -27271,6 +28341,19 @@ currentUrl.searchParams.delete(
 currentUrl.searchParams.delete(
 "viewportOffset"
 );
+
+if (
+source ===
+"homepage-custom-order" ||
+source ===
+"homepage-custom"
+) {
+
+currentUrl.searchParams.delete(
+"source"
+);
+
+}
 
 history.replaceState(
 {},
@@ -27291,18 +28374,21 @@ currentUrl.hash
 }
 
 function findHomepageCustomOrderIndex(
-customItemId
+request
 ) {
+
+const requestedId =
+String(
+request?.id ||
+""
+);
 
 if (
-!customItemId
+requestedId
 ) {
 
-return -1;
-
-}
-
-return state.customOrderItems.findIndex(
+const directMatch =
+state.customOrderItems.findIndex(
 item => {
 
 const itemId =
@@ -27313,12 +28399,186 @@ item?._id ??
 );
 
 return itemId ===
+requestedId;
+
+}
+);
+
+if (
+directMatch >=
+0
+) {
+
+return directMatch;
+
+}
+
+}
+
+const handoff =
+request?.handoff;
+
+const handoffItem =
+handoff?.item &&
+typeof handoff.item ===
+"object"
+?
+handoff.item
+:
+handoff;
+
+if (
+handoffItem &&
+typeof handoffItem ===
+"object"
+) {
+
+const width =
+Number(
+handoffItem.width ??
+handoffItem.internalWidth
+);
+
+const length =
+Number(
+handoffItem.length ??
+handoffItem.internalLength
+);
+
+const glazing =
 String(
-customItemId
+handoffItem.glazing ??
+handoffItem.glazingConfiguration ??
+""
+).toLowerCase();
+
+const type =
+String(
+handoffItem.type ??
+handoffItem.glazingConstruction ??
+""
+).toLowerCase();
+
+const border =
+Number(
+handoffItem.border
+);
+
+const tint =
+normalizeTint(
+handoffItem.tint ??
+handoffItem.finish
+);
+
+const selfCleaning =
+normalizeSelfCleaningSelection(
+handoffItem.selfCleaning
+);
+
+if (
+Number.isFinite(
+width
+) &&
+Number.isFinite(
+length
+)
+) {
+
+const configurationMatch =
+state.customOrderItems.findIndex(
+item => {
+
+return (
+Number(
+item.width ??
+item.internalWidth
+) ===
+width &&
+Number(
+item.length ??
+item.internalLength
+) ===
+length &&
+(
+!glazing ||
+item.glazing ===
+glazing
+) &&
+(
+!type ||
+item.type ===
+type
+) &&
+(
+!Number.isFinite(
+border
+) ||
+Number(
+item.border
+) ===
+border
+) &&
+item.tint ===
+tint &&
+normalizeSelfCleaningSelection(
+item.selfCleaning
+) ===
+selfCleaning
 );
 
 }
 );
+
+if (
+configurationMatch >=
+0
+) {
+
+return configurationMatch;
+
+}
+
+}
+
+}
+
+for (
+let index =
+state.customOrderItems.length -
+1;
+index >=
+0;
+index --
+) {
+
+const item =
+state.customOrderItems[
+index
+];
+
+const itemSource =
+String(
+item?.source ||
+""
+)
+.toLowerCase();
+
+if (
+itemSource ===
+"homepage-custom-order" ||
+itemSource ===
+"homepage-custom" ||
+itemSource ===
+"homepage"
+) {
+
+return index;
+
+}
+
+}
+
+return -1;
 
 }
 
@@ -27403,6 +28663,8 @@ return;
 
 const isHomepageCustomOrder =
 request.source ===
+"homepage-custom-order" ||
+request.source ===
 "homepage-custom" ||
 request.type ===
 "custom" ||
@@ -27417,9 +28679,11 @@ return;
 
 }
 
+normaliseBasketItemsForStableRendering();
+
 const targetIndex =
 findHomepageCustomOrderIndex(
-request.id
+request
 );
 
 if (
@@ -27431,8 +28695,6 @@ return;
 
 }
 
-consumeHomepageOrderFocusRequest();
-
 renderCustomOrderSummary(
 {
 animate:
@@ -27442,9 +28704,39 @@ targetIndex
 }
 );
 
+renderOrderSummary(
+{
+animate:false
+}
+);
+
 renderBasketDrawer();
 
+updateBasketTotal(
+state.basketTotal,
+{
+animate:false
+}
+);
+
+updateCheckoutAvailability();
+
+updateEstimatedDelivery();
+
+requestOrderSummaryDeliveryWidthSync();
+
 playHomepageCustomAddedFeedback();
+
+const targetItem =
+customOrderSummaryItems.querySelector(
+`[data-custom-order-summary-item-index="${targetIndex}"]`
+);
+
+const scrollTarget =
+targetItem ||
+customOrderSummarySection;
+
+consumeHomepageOrderFocusRequest();
 
 requestAnimationFrame(
 () => {
@@ -27453,7 +28745,7 @@ requestAnimationFrame(
 () => {
 
 animateElementToViewportRatio(
-customRooflightBuilder,
+scrollTarget,
 request.topRatio,
 560
 );
@@ -27463,16 +28755,6 @@ request.topRatio,
 
 }
 );
-
-if (
-request.center
-) {
-
-scheduleCustomOrderFocus(
-targetIndex
-);
-
-}
 
 }
 
@@ -27606,6 +28888,8 @@ animateImage:false
 );
 
 updateCustomConfiguratorUI();
+
+handleHomepageArrivalFocus();
 
 if (
 state.deliveryPostcode
