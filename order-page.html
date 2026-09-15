@@ -1381,10 +1381,11 @@ display:none !important;
 }
 
 .basket-drawer-item-collapse:not([hidden]) {
+transform:none;
 animation:
 basketDrawerItemReveal
 .28s
-cubic-bezier(.18,.72,.28,1)
+ease-out
 both;
 }
 
@@ -1392,12 +1393,10 @@ both;
 
 from {
 opacity:0;
-transform:translateY(-4px);
 }
 
 to {
 opacity:1;
-transform:translateY(0);
 }
 
 }
@@ -8691,11 +8690,6 @@ aria-label="Rooflight order information"
 
 <div class="order-information-list">
 
-<!-- =========================================
-1. TECHNICAL INFORMATION
-CHANGE 6 — STICKY TITLE
-========================================= -->
-
 <details
 class="order-information-item order-information-sticky-item reveal"
 >
@@ -8896,11 +8890,6 @@ Correct installation is just as important as choosing the right glass specificat
 
 </details>
 
-<!-- =========================================
-2. INSTALLATION GUIDELINES
-CHANGE 4 — 75% REDUCED GAP
-========================================= -->
-
 <details
 class="order-information-item order-information-simple-item reveal reveal-delay-1"
 >
@@ -8920,11 +8909,6 @@ Read our <a href="fitting.html" class="order-information-simple-link">Fitting &a
 </div>
 
 </details>
-
-<!-- =========================================
-3. DELIVERY TERMS & LEAD TIMES
-CHANGE 7 — STICKY TITLE
-========================================= -->
 
 <details
 class="order-information-item order-information-sticky-item reveal reveal-delay-2"
@@ -9065,11 +9049,6 @@ This section is a simple overview to help you plan your order. For the full deli
 </div>
 
 </details>
-
-<!-- =========================================
-4. TERMS OF USE
-CHANGE 5 — 75% REDUCED GAP
-========================================= -->
 
 <details
 class="order-information-item order-information-simple-item reveal reveal-delay-3"
@@ -10177,11 +10156,6 @@ whatsappButton.setAttribute(
 
 }
 
-/*
-Compatibility alias retained for existing
-Order Page code elsewhere in OP-1 / OP-2.
-*/
-
 function closeWhatsAppAction() {
 
 closeWhatsappAction();
@@ -10777,10 +10751,6 @@ const TINT_IMAGE_BASE_FALLBACKS = {
 "large-rectangle.png"
 
 };
-
-/* =========================================
-SITEWIDE MASTER PRODUCT PRICING
-========================================= */
 
 function getMasterStandardPricingResult(
 selection
