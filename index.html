@@ -14659,8 +14659,15 @@ KEY FEATURES:
 - ITEM NORMALISATION BEFORE RENDER
 - AUTHORITATIVE MASTER PRICE REFRESH WHERE
 THE MASTER PRICING GLOBAL IS AVAILABLE
+- NON-DESTRUCTIVE CROSS-PAGE STORAGE
+- CANONICAL + LEGACY ARRAY COMPATIBILITY
 - IN-3 MAKE-UP RESOLUTION REMAINS THE
 AUTHORITY FOR TOP GLASS
+
+IMPORTANT:
+THE HOMEPAGE MUST NEVER ERASE A VALID
+ORDER-PAGE BASKET MERELY BECAUSE AN ITEM
+CANNOT BE FULLY NORMALISED ON THIS PAGE.
 ========================================= */
 
 const HOMEPAGE_ORDER_STORAGE_KEY =
@@ -16550,6 +16557,23 @@ return item;
 
 /* =========================================
 BASKET STORAGE HELPERS
+
+CROSS-PAGE RULES:
+
+1. "items" / "customItems" ARE THE CURRENT
+CANONICAL ARRAYS USED BY THE ORDER PAGE.
+
+2. LEGACY ARRAY NAMES ARE ONLY USED IF THE
+CANONICAL KEY DOES NOT EXIST.
+
+3. AN EXISTING EMPTY CANONICAL ARRAY IS
+AUTHORITATIVE. WE DO NOT RESURRECT ITEMS
+FROM AN OLD STALE ALIAS.
+
+4. IF HOMEPAGE NORMALISATION CANNOT
+UNDERSTAND AN OTHERWISE VALID OBJECT,
+THE ORIGINAL OBJECT IS PRESERVED IN
+STORAGE RATHER THAN DELETED.
 ========================================= */
 
 function readHomepageOrderPayload() {
@@ -16652,8 +16676,31 @@ key:"items"
 
 }
 
-const possibleKeys = [
-"items",
+/*
+The current canonical Order Page key wins,
+even when it deliberately contains [].
+*/
+
+if (
+Array.isArray(
+payload.items
+)
+) {
+
+return {
+items:
+payload.items,
+key:"items"
+};
+
+}
+
+/*
+Only migrate an older alias if the current
+canonical key is genuinely absent.
+*/
+
+const legacyKeys = [
 "orderItems",
 "confirmedUnits",
 "units",
@@ -16662,7 +16709,7 @@ const possibleKeys = [
 
 for (
 const key
-of possibleKeys
+of legacyKeys
 ) {
 
 if (
@@ -16712,6 +16759,11 @@ key:"customItems"
 
 }
 
+/*
+The current canonical Order Page custom key
+wins even when deliberately empty.
+*/
+
 if (
 Array.isArray(
 payload.customItems
@@ -16726,6 +16778,43 @@ key:"customItems"
 
 }
 
+/*
+Compatibility with older/current variants
+that may have stored custom basket items
+under another array name.
+*/
+
+const legacyKeys = [
+"customOrderItems",
+"customUnits",
+"customBasketItems"
+];
+
+for (
+const key
+of legacyKeys
+) {
+
+if (
+Array.isArray(
+payload[
+key
+]
+)
+) {
+
+return {
+items:
+payload[
+key
+],
+key
+};
+
+}
+
+}
+
 payload.customItems = [];
 
 return {
@@ -16733,6 +16822,84 @@ items:
 payload.customItems,
 key:"customItems"
 };
+
+}
+
+/* =========================================
+NON-DESTRUCTIVE ITEM NORMALISATION
+
+A page-view must never destroy a shared
+basket item.
+
+If the homepage can fully normalise it,
+the normalised version is used.
+
+If it cannot, the original stored object is
+retained and given a stable ID where needed.
+========================================= */
+
+function normaliseHomepageBasketItemSafely(
+item,
+kind
+) {
+
+if (
+!item ||
+typeof item !==
+"object"
+) {
+
+return null;
+
+}
+
+let normalisedItem =
+null;
+
+try {
+
+normalisedItem =
+kind ===
+"custom"
+?
+normaliseCustomBasketItemForRender(
+item
+)
+:
+normaliseStandardBasketItemForRender(
+item
+);
+
+}
+catch (error) {
+
+normalisedItem =
+null;
+
+}
+
+if (
+normalisedItem &&
+typeof normalisedItem ===
+"object"
+) {
+
+return normalisedItem;
+
+}
+
+/*
+Do not delete an Order Page item simply
+because the homepage adapter could not
+fully resolve it.
+*/
+
+ensureBasketOrderItemId(
+item,
+kind
+);
+
+return item;
 
 }
 
@@ -16767,7 +16934,11 @@ payload
 const standardItems =
 standardCollection.items
 .map(
-normaliseStandardBasketItemForRender
+(item) =>
+normaliseHomepageBasketItemSafely(
+item,
+"standard"
+)
 )
 .filter(
 Boolean
@@ -16776,7 +16947,11 @@ Boolean
 const customItems =
 customCollection.items
 .map(
-normaliseCustomBasketItemForRender
+(item) =>
+normaliseHomepageBasketItemSafely(
+item,
+"custom"
+)
 )
 .filter(
 Boolean
@@ -16785,11 +16960,21 @@ Boolean
 payload.version =
 6;
 
+/*
+Always expose the canonical arrays so every
+current page sees the same basket.
+*/
+
 payload.items =
 standardItems;
 
 payload.customItems =
 customItems;
+
+/*
+If an older alias was the source, keep that
+specific alias synchronized during migration.
+*/
 
 if (
 standardCollection.key &&
@@ -16801,6 +16986,19 @@ payload[
 standardCollection.key
 ] =
 standardItems;
+
+}
+
+if (
+customCollection.key &&
+customCollection.key !==
+"customItems"
+) {
+
+payload[
+customCollection.key
+] =
+customItems;
 
 }
 
@@ -17342,6 +17540,19 @@ normalizedItem
 
 payload.customItems =
 customCollection.items;
+
+if (
+customCollection.key &&
+customCollection.key !==
+"customItems"
+) {
+
+payload[
+customCollection.key
+] =
+customCollection.items;
+
+}
 
 invalidateStoredHomepageDeliveryForNewItem(
 payload
@@ -19505,6 +19716,13 @@ normaliseStandardBasketItemForRender(
 item
 );
 
+/*
+If an item could not be fully normalised for
+display, do not mutate or delete the shared
+stored item. It simply cannot be rendered by
+this basket view until its schema is resolved.
+*/
+
 if (
 !normalizedItem
 ) {
@@ -20170,6 +20388,13 @@ normaliseHomepageBasketPayload(
 payload
 );
 
+/*
+Persist stable IDs / migrated canonical keys,
+but because normalisation is non-destructive
+this can no longer erase valid Order Page
+basket objects.
+*/
+
 writeHomepageOrderPayload(
 payload
 );
@@ -20743,6 +20968,22 @@ item,
 nextQuantity
 );
 
+if (
+kind ===
+"custom"
+) {
+
+payload.customItems =
+collection;
+
+}
+else {
+
+payload.items =
+collection;
+
+}
+
 writeHomepageOrderPayload(
 payload
 );
@@ -21142,8 +21383,6 @@ invalidInput.classList.add(
 
 /* =========================================
 BASKET DRAWER DELEGATED EVENTS
-
-This replaces the old render-index listeners.
 
 Every action resolves the live basket item by
 its stable ID first. The original array index is
@@ -22063,12 +22302,19 @@ first.focus();
 /* =========================================
 REFRESH BASKET ACROSS NAVIGATION
 
-EVERY REFRESH NORMALISES THE SHARED ORDER
-PAYLOAD FIRST.
+THE HOMEPAGE ALWAYS READS THE SAME SHARED
+LOCALSTORAGE KEY AS THE ORDER PAGE.
 
-THIS IS THE PART THAT ENSURES DIFFERENT
-BASKET SUMMARIES RETAIN THEIR COMPLETE DATA
-AND THEIR OWN STABLE ID.
+CURRENT CANONICAL ARRAYS:
+- items
+- customItems
+
+LEGACY ALIASES ARE MIGRATED ONLY WHEN THE
+CANONICAL ARRAY IS ABSENT.
+
+NORMALISATION IS NON-DESTRUCTIVE, SO MERELY
+VISITING INDEX.HTML CANNOT EMPTY AN
+ORDER-PAGE BASKET.
 ========================================= */
 
 function refreshHomepageBasket() {
