@@ -8294,7 +8294,7 @@ Satin Tinted
 type="button"
 class="custom-build-dropdown-option"
 data-custom-build-dropdown-option
-data-value="solar-control"
+data-value="solarcontrol"
 data-label="Solar Control"
 role="option"
 aria-selected="false"
@@ -12806,12 +12806,13 @@ return "satin";
 }
 
 if (
+value === "solarcontrol" ||
 value === "solar-control" ||
 value === "solar control" ||
 value === "solar"
 ) {
 
-return "solar-control";
+return "solarcontrol";
 
 }
 
@@ -13116,6 +13117,7 @@ const supportedFinishInputs = [
 "satin tinted",
 "satin-tinted",
 "privacy",
+"solarcontrol",
 "solar-control",
 "solar control",
 "solar"
@@ -13126,6 +13128,16 @@ if (
 rawFinish
 )
 ) {
+
+return null;
+
+}
+
+return normalizeTint(
+rawFinish
+);
+
+}
 
 return null;
 
