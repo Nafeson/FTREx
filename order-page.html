@@ -1,3 +1,4 @@
+yooooooooooooooooooooooooooooooooooooo
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -8939,7 +8940,7 @@ Delivery Terms &amp; Lead Times
 <div
 class="order-information-content order-information-featured-content delivery-terms-content"
 >
-  
+
 <div class="information-feature-block">
 
 <strong>
@@ -19090,6 +19091,40 @@ return String(value || "item")
 }
 
 /* =========================================
+SUMMARY TOP GLASS DISPLAY
+THICKNESS ONLY — NO FINISH DESCRIPTION
+========================================= */
+
+function getSummaryTopGlassLabelFor(
+size,
+border,
+glazing,
+type,
+finish
+) {
+const makeup = op3aResolveMasterMakeup(
+size,
+border,
+glazing,
+type,
+finish
+);
+
+const thickness = Number(
+makeup?.panes?.top?.thickness
+);
+
+if (
+!Number.isFinite(thickness) ||
+thickness <= 0
+) {
+return "Glass Specification Unavailable";
+}
+
+return `${thickness}mm Toughened Safety Glass`;
+}
+
+/* =========================================
 BASKET ITEM MARKUP
 
 USE THE EXISTING ITEM DIRECTLY.
@@ -19174,7 +19209,7 @@ let topGlass = "";
 
 if (validDimensions) {
 try {
-topGlass = getTopGlassLabelFor(
+topGlass = getSummaryTopGlassLabelFor(
 sizeKey,
 configuration.border,
 configuration.glazing,
@@ -20516,7 +20551,7 @@ item.border
 );
 
 const topGlass =
-getTopGlassLabelFor(
+getSummaryTopGlassLabelFor(
 item.size,
 item.border,
 item.glazing,
@@ -20781,7 +20816,7 @@ dimensions.length
 );
 
 const topGlass =
-getTopGlassLabelFor(
+getSummaryTopGlassLabelFor(
 `${item.width}x${item.length}`,
 item.border,
 item.glazing,
