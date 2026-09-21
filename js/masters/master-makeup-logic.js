@@ -8,6 +8,13 @@
 * - These are current business make-up / estimating rules, not structural engineering certification.
 * - Selling-price logic does not belong in this file.
 * - Customer dimensions are INTERNAL visible glass dimensions in millimetres.
+*
+* SOLAR CONTROL:
+* - Supported as a separate finish for make-up identification.
+* - Solar Control applies to the external TOP pane only.
+* - Existing Double / Triple thickness rules are retained.
+* - Supplier availability of the selected Solar Control top-pane thickness
+* must be confirmed separately before accepting an order.
 */
 
 (function (globalScope, factory) {
@@ -56,9 +63,23 @@ note: "Unconfirmed supplier price-list minimum. Only apply when explicitly opted
 })
 });
 
-const SUPPORTED_GLAZING = Object.freeze(["double", "triple"]);
-const SUPPORTED_FINISHES = Object.freeze(["clear", "blue", "grey", "satin"]);
-const SUPPORTED_BOTTOM_TYPES = Object.freeze(["tough", "lam"]);
+const SUPPORTED_GLAZING = Object.freeze([
+"double",
+"triple"
+]);
+
+const SUPPORTED_FINISHES = Object.freeze([
+"clear",
+"blue",
+"grey",
+"satin",
+"solarcontrol"
+]);
+
+const SUPPORTED_BOTTOM_TYPES = Object.freeze([
+"tough",
+"lam"
+]);
 
 function normaliseNumber(value, fieldName, options = {}) {
 const {
@@ -338,6 +359,10 @@ if (finish === "grey") {
 return "grey";
 }
 
+if (finish === "solarcontrol") {
+return "solarcontrol";
+}
+
 return "clear";
 }
 
@@ -359,6 +384,14 @@ return {
 material: "grey-toughened",
 construction: "toughened",
 materialLabel: "Grey Toughened"
+};
+}
+
+if (finish === "solarcontrol") {
+return {
+material: "solar-control-toughened",
+construction: "toughened",
+materialLabel: "Solar Control Toughened"
 };
 }
 
