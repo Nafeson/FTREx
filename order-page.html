@@ -1,3 +1,4 @@
+hi
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -24261,14 +24262,21 @@ result
 END OP2
 ========================================= */
 /* =========================================
+/* =========================================
 OP-3A MASTER INTEGRATION
 MASTER FILE LOADER + PRICING / MAKE-UP /
 SELF CLEANING
 
-PASTE THIS DIRECTLY ABOVE THE EXISTING
-"INITIALISE PAGE" BLOCK AT THE BOTTOM OF OP-2.
+PASTE THE COMPLETE OP-3 DIRECTLY AFTER OP-2.
 
-KEEP THE EXISTING OP-2 INITIALISATION BLOCK.
+OP-3 CONTAINS:
+- OP-3A MASTER INTEGRATION
+- OP-3B DELIVERY INTEGRATION
+- OP-3C FINAL A/B/C VALIDATION
+- ONE INITIALISE PAGE BLOCK AT THE END
+- THE CLOSING SCRIPT AND HTML TAGS
+
+DO NOT ADD A SECOND INITIALISATION BLOCK.
 
 PURPOSE:
 - Confirm all seven shared master files.
@@ -24283,7 +24291,7 @@ master-makeup-logic.js.
 - Confirm master-delivery-rates.js.
 
 IMPORTANT:
-OP-2 now already uses MasterDeliveryRates for
+OP-2 already uses MasterDeliveryRates for
 live delivery pricing. OP-3A does not create a
 second delivery engine.
 
@@ -24295,6 +24303,13 @@ SELF CLEANING:
 - Master pricing remains authoritative.
 - If the master cannot return a Self Cleaning
 surcharge, the option fails closed.
+
+SOLAR CONTROL:
+- Canonical identifier: solarcontrol.
+- Available through the CUSTOM configurator.
+- Master pricing determines its selling price.
+- Master make-up determines its construction.
+- No local Solar Control price is calculated.
 
 ORDERING SAFETY:
 - Add To Order is blocked until OP-3A passes.
@@ -24669,6 +24684,28 @@ value ===
 ) {
 
 return "satin";
+
+}
+
+/*
+Solar Control must not fall through to Clear.
+
+Accept common textual variations, but always
+return the canonical master identifier.
+*/
+
+if (
+value ===
+"solarcontrol" ||
+value ===
+"solar control" ||
+value ===
+"solar-control" ||
+value ===
+"solar_control"
+) {
+
+return "solarcontrol";
 
 }
 
@@ -25415,6 +25452,10 @@ reasonCode:
 BASE CUSTOM MASTER PRICE
 
 Self Cleaning explicitly OFF.
+
+The custom pricing options preserve
+solarcontrol without changing its price
+locally.
 ========================================= */
 
 function op3aGetCustomBasePriceResult(
@@ -26730,6 +26771,9 @@ are all rebuilt.
 
 Self Cleaning choice itself is retained.
 Old items default to No.
+
+The finish is preserved and normalised,
+including solarcontrol.
 ========================================= */
 
 function op3aRepriceBasketItem(
@@ -26750,6 +26794,13 @@ return false;
 const selfCleaning =
 op3aNormalizeSelfCleaning(
 item.selfCleaning
+);
+
+const finish =
+op3aNormalizeTint(
+item.tint ??
+item.finish ??
+item.glassFinish
 );
 
 const result =
@@ -26776,12 +26827,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border,
@@ -26807,12 +26856,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border,
@@ -26825,6 +26872,15 @@ selfCleaning
 
 item.selfCleaning =
 selfCleaning;
+
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
 
 if (
 !result.available
@@ -27042,8 +27098,6 @@ fail.
 
 Instead:
 - Self Cleaning remains unavailable.
-- OP-2 disables Yes once a priced
-configuration is known.
 - No surcharge is invented.
 ========================================= */
 
@@ -27512,8 +27566,7 @@ This includes Self Cleaning when selected.
 op3aRepriceCurrentBasket();
 
 /*
-Do not rerun the complete OP-2
-initialisation.
+Do not rerun complete page initialisation.
 
 Refresh only data-dependent UI.
 */
@@ -27670,7 +27723,7 @@ availability from the verified master state.
 op3aRefreshPageFromMasters();
 
 console.info(
-"OP-3A PASSED: master standard pricing, custom pricing, Self Cleaning bridge, glass make-up and master delivery integration are active. Self Cleaning remains fail-closed unless the shared master returns an authoritative surcharge."
+"OP-3A PASSED: master standard pricing, custom pricing, Self Cleaning bridge, glass make-up and master delivery integration are active. Solar Control is passed as solarcontrol. Self Cleaning remains fail-closed unless the shared master returns an authoritative surcharge."
 );
 
 return true;
@@ -27691,12 +27744,14 @@ throw error;
 
 }
 );
+
 /* =========================================
 OP-3B MASTER DELIVERY INTEGRATION
 LIVE DELIVERY VALIDATION + ACTIVATION
 
-PASTE THIS DIRECTLY BELOW OP-3A AND
-DIRECTLY ABOVE OP-3C.
+THIS SECTION DIRECTLY FOLLOWS OP-3A.
+
+OP-3C FOLLOWS OP-3B.
 
 CURRENT ARCHITECTURE:
 - OP-2 already uses the shared
@@ -27724,6 +27779,13 @@ Cleaning surcharge.
 - OP-3B verifies that a delivery refresh does
 not alter an item's Self Cleaning choice,
 Self Cleaning surcharge or final unit price.
+
+SOLAR CONTROL:
+- OP-3B has no separate finish normaliser.
+- It passes OP-1's normalizeTint function
+to the delivery master.
+- Lead-time rules remain master-controlled.
+- Delivery refresh must preserve the finish.
 ========================================= */
 
 let op3bTestReady =
@@ -28294,6 +28356,8 @@ COMMERCIAL BASKET SNAPSHOT
 
 Delivery is not allowed to rewrite:
 
+- tint
+- finish
 - selfCleaning
 - selfCleaningAddOn
 - unitPrice
@@ -28350,6 +28414,20 @@ return {
 id:
 String(
 id
+),
+
+tint:
+op3aNormalizeTint(
+item?.tint ??
+item?.finish ??
+item?.glassFinish
+),
+
+finish:
+op3aNormalizeTint(
+item?.finish ??
+item?.tint ??
+item?.glassFinish
 ),
 
 selfCleaning:
@@ -28459,6 +28537,20 @@ throw new Error(
 
 }
 
+const currentTint =
+op3aNormalizeTint(
+current.tint ??
+current.finish ??
+current.glassFinish
+);
+
+const currentFinish =
+op3aNormalizeTint(
+current.finish ??
+current.tint ??
+current.glassFinish
+);
+
 const currentSelfCleaning =
 op3bNormalizeSelfCleaningState(
 current.selfCleaning
@@ -28504,6 +28596,10 @@ current.price
 null;
 
 if (
+currentTint !==
+stored.tint ||
+currentFinish !==
+stored.finish ||
 currentSelfCleaning !==
 stored.selfCleaning ||
 currentSelfCleaningAddOn !==
@@ -28515,7 +28611,7 @@ stored.price
 ) {
 
 throw new Error(
-`OP-3B delivery refresh altered product pricing or Self Cleaning state for ${stored.id}.`
+`OP-3B delivery refresh altered glass finish, product pricing or Self Cleaning state for ${stored.id}.`
 );
 
 }
@@ -28980,6 +29076,66 @@ throw new Error(
 }
 
 /* =========================================
+SOLAR CONTROL DELIVERY ISOLATION
+
+Glass finish must not independently alter
+the delivery charge or grouping of an
+otherwise identical custom unit.
+
+Lead time remains separately controlled
+by MasterDeliveryRates.
+========================================= */
+
+const op3bSolarDeliveryBaseline =
+delivery.calculateBasketDelivery(
+[
+{
+source:"order-page-custom",
+isCustom:true,
+custom:true,
+width:725,
+length:1375,
+quantity:1,
+tint:"blue",
+finish:"blue"
+}
+],
+34
+);
+
+const op3bSolarDeliveryVariant =
+delivery.calculateBasketDelivery(
+[
+{
+source:"order-page-custom",
+isCustom:true,
+custom:true,
+width:725,
+length:1375,
+quantity:1,
+tint:"solarcontrol",
+finish:"solarcontrol"
+}
+],
+34
+);
+
+if (
+op3bSolarDeliveryVariant?.requiresQuote !==
+op3bSolarDeliveryBaseline?.requiresQuote ||
+op3bSolarDeliveryVariant?.price !==
+op3bSolarDeliveryBaseline?.price ||
+op3bSolarDeliveryVariant?.groupCount !==
+op3bSolarDeliveryBaseline?.groupCount
+) {
+
+throw new Error(
+"OP-3B Solar Control delivery-isolation test failed."
+);
+
+}
+
+/* =========================================
 LEAD-TIME CHECKS
 ========================================= */
 
@@ -29088,6 +29244,76 @@ laminatedBlueLeadTime?.max
 
 throw new Error(
 "OP-3B Laminated Blue lead-time test failed."
+);
+
+}
+
+/* =========================================
+SOLAR CONTROL LEAD-TIME CHECK
+
+The master controls the actual lead time.
+
+Do not assume Solar Control uses the same
+working-day range as another finish.
+
+Verify that:
+- normalizeTint preserves solarcontrol;
+- the delivery master accepts the selection;
+- a valid lead-time result is returned.
+========================================= */
+
+if (
+normalizeTint(
+"solarcontrol"
+) !==
+"solarcontrol"
+) {
+
+throw new Error(
+"OP-3B Solar Control normalisation failed. Check OP-1 normalizeTint()."
+);
+
+}
+
+const solarControlLeadTime =
+delivery.getLeadTimeForSelection(
+{
+type:"toughened",
+tint:"solarcontrol",
+finish:"solarcontrol",
+selfCleaning:"no"
+},
+{
+normalizeTint:
+normalizeTint
+}
+);
+
+const solarControlMin =
+Number(
+solarControlLeadTime?.min
+);
+
+const solarControlMax =
+Number(
+solarControlLeadTime?.max
+);
+
+if (
+!Number.isFinite(
+solarControlMin
+) ||
+!Number.isFinite(
+solarControlMax
+) ||
+solarControlMin <=
+0 ||
+solarControlMax <
+solarControlMin
+) {
+
+throw new Error(
+"OP-3B Solar Control lead-time validation failed."
 );
 
 }
@@ -29262,6 +29488,7 @@ No second delivery clock.
 No Self Cleaning pricing calculation.
 No direct product repricing owned by OP-3B.
 No Self Cleaning rewrite.
+No glass-finish rewrite.
 ========================================= */
 
 async function op3bRefreshDeliveryFromMaster() {
@@ -29282,6 +29509,7 @@ op3bCaptureCommercialBasketState();
 Only delivery metadata is deliberately
 updated here.
 */
+
 state.orderItems.forEach(
 item => {
 
@@ -29335,6 +29563,7 @@ delivery is recalculated.
 Whatever happens during that UI refresh, the
 commercial result must still be identical.
 */
+
 op3bAssertCommercialBasketStatePreserved(
 commercialSnapshot
 );
@@ -29344,7 +29573,7 @@ updateEstimatedDelivery();
 requestOrderSummaryDeliveryWidthSync();
 
 console.info(
-"OP-3B PASSED: MasterDeliveryRates is controlling live delivery and lead-time behaviour. Self Cleaning state and final product prices were preserved through the delivery refresh."
+"OP-3B PASSED: MasterDeliveryRates controls live delivery and lead times. Glass finishes, Self Cleaning and product prices were preserved."
 );
 
 return;
@@ -29392,7 +29621,7 @@ commercialSnapshot
 );
 
 console.info(
-"OP-3B PASSED: MasterDeliveryRates is controlling live delivery and lead-time behaviour. Self Cleaning state and final product prices were preserved."
+"OP-3B PASSED: MasterDeliveryRates controls live delivery and lead times. Glass finishes, Self Cleaning and product prices were preserved."
 );
 
 }
@@ -29570,6 +29799,7 @@ Run OP-2's existing diagnostics once more
 after OP-3B's master-backed adapters have
 become the active functions.
 */
+
 if (
 typeof validateDeliveryConfiguration ===
 "function"
@@ -29610,18 +29840,17 @@ return false;
 
 }
 );
+
 /* =========================================
 OP-3C FINAL COMPATIBILITY INTEGRATION
 3000MM RANGE + SELF CLEANING VALIDATION +
+SOLAR CONTROL VALIDATION +
 BASKET PRICING SAFETY
 
-PASTE THIS DIRECTLY BELOW OP-3B AND
-DIRECTLY ABOVE THE EXISTING
-"INITIALISE PAGE" BLOCK.
+THIS SECTION DIRECTLY FOLLOWS OP-3B.
 
-KEEP OP-3A IN PLACE.
-KEEP OP-3B IN PLACE.
-KEEP THE EXISTING OP-2 INITIALISATION BLOCK.
+THE FINAL A/B/C VALIDATION AND THE SINGLE
+INITIALISE PAGE BLOCK ARE AT THE END OF OP-3.
 
 CURRENT ARCHITECTURE:
 - OP-3A owns live master product pricing,
@@ -29661,6 +29890,16 @@ surcharge or final product price.
 - missing Self Cleaning pricing is NOT allowed
 to disable ordinary No-Self-Cleaning
 rooflight ordering globally.
+
+SOLAR CONTROL CONTRACT:
+- Canonical identifier is solarcontrol.
+- Solar Control uses custom pricing.
+- Solar Control glass make-up comes from
+MasterMakeupLogic.
+- Solar Control lead time comes from
+MasterDeliveryRates.
+- Basket repricing preserves the finish.
+- No standard-product finish button is added.
 ========================================= */
 
 let op3cTestReady =
@@ -29682,6 +29921,9 @@ globalThis.OP3C_STANDARD_SELF_CLEANING_VALIDATED =
 false;
 
 globalThis.OP3C_CUSTOM_SELF_CLEANING_VALIDATED =
+false;
+
+globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
 false;
 
 globalThis.OP3_ACTIVE_PRICE_STRATEGY =
@@ -30142,11 +30384,8 @@ For Self Cleaning = Yes, a valid master result
 must also prove a positive difference over the
 same configuration with Self Cleaning = No.
 
-This prevents:
-- a failed Self Cleaning lookup silently
-collapsing to the base product price;
-- a temporary pricing failure silently
-deleting an existing basket line.
+The finish is preserved, including
+solarcontrol.
 ========================================= */
 
 function op3cSafeRepriceBasketItem(
@@ -30167,6 +30406,13 @@ return false;
 const selfCleaning =
 op3cGetSelfCleaningStateFromSelection(
 item
+);
+
+const finish =
+op3aNormalizeTint(
+item.tint ??
+item.finish ??
+item.glassFinish
 );
 
 const commonSelection =
@@ -30192,12 +30438,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border
@@ -30218,12 +30462,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border
@@ -30260,6 +30502,15 @@ selectedResult.price
 
 item.selfCleaning =
 selfCleaning;
+
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
 
 item.op3MasterPricingUnavailable =
 true;
@@ -30313,6 +30564,15 @@ basePrice <=
 item.selfCleaning =
 selfCleaning;
 
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
+
 item.op3MasterPricingUnavailable =
 true;
 
@@ -30336,6 +30596,15 @@ authoritativeAddOn <=
 
 item.selfCleaning =
 selfCleaning;
+
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
 
 item.op3MasterPricingUnavailable =
 true;
@@ -30362,6 +30631,15 @@ authoritativePrice <=
 item.selfCleaning =
 selfCleaning;
 
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
+
 item.op3MasterPricingUnavailable =
 true;
 
@@ -30371,6 +30649,15 @@ return false;
 
 item.selfCleaning =
 selfCleaning;
+
+item.tint =
+finish;
+
+item.finish =
+finish;
+
+item.glassFinish =
+finish;
 
 item.selfCleaningAddOn =
 selfCleaning ===
@@ -30656,7 +30943,8 @@ borderNumber
 const tint =
 normalizeTint(
 item.tint ??
-item.finish
+item.finish ??
+item.glassFinish
 );
 
 const selfCleaning =
@@ -30728,6 +31016,9 @@ item.tint =
 tint;
 
 item.finish =
+tint;
+
+item.glassFinish =
 tint;
 
 item.selfCleaning =
@@ -30950,7 +31241,8 @@ borderNumber
 const tint =
 normalizeTint(
 item.tint ??
-item.finish
+item.finish ??
+item.glassFinish
 );
 
 const selfCleaning =
@@ -31043,6 +31335,9 @@ item.tint =
 tint;
 
 item.finish =
+tint;
+
+item.glassFinish =
 tint;
 
 item.selfCleaning =
@@ -31395,8 +31690,8 @@ return false;
 }
 
 /*
-Install this synchronously before the existing
-OP-2 INITIALISE PAGE block runs.
+Install this synchronously before the
+INITIALISE PAGE block at the end of OP-3.
 
 This protects storage restoration as well as
 later basket rendering.
@@ -31836,6 +32131,210 @@ return detectedStrategy;
 }
 
 /* =========================================
+SOLAR CONTROL CUSTOM PRICING VALIDATION
+
+The shared pricing master is authoritative.
+
+No local price, discount, interpolation
+or rounding rule is introduced.
+
+Checks:
+- canonical identifier survives OP-1 and
+OP-3A normalisation;
+- custom pricing options preserve it;
+- the custom master returns a valid price;
+- the live custom price route agrees.
+
+Uses a non-standard test size.
+========================================= */
+
+function op3cAssertSolarControlPricing() {
+
+if (
+normalizeTint(
+"solarcontrol"
+) !==
+"solarcontrol" ||
+op3aNormalizeTint(
+"solarcontrol"
+) !==
+"solarcontrol"
+) {
+
+throw new Error(
+"OP-3C Solar Control normalisation failed."
+);
+
+}
+
+const selection = {
+
+width:725,
+
+length:1375,
+
+glazing:"double",
+
+type:"toughened",
+
+tint:"solarcontrol",
+
+finish:"solarcontrol",
+
+border:100,
+
+selfCleaning:"no"
+
+};
+
+const options =
+op3aBuildCustomPricingOptions(
+selection
+);
+
+if (
+!options ||
+options.tint !==
+"solarcontrol" ||
+options.finish !==
+"solarcontrol"
+) {
+
+throw new Error(
+"OP-3C Solar Control custom pricing options lost the finish identifier."
+);
+
+}
+
+const result =
+op3cGetCustomMasterPriceResult(
+selection,
+"no"
+);
+
+const masterPrice =
+Number(
+result?.price
+);
+
+if (
+result?.available !==
+true ||
+!Number.isFinite(
+masterPrice
+) ||
+masterPrice <=
+0
+) {
+
+throw new Error(
+"OP-3C Solar Control custom pricing validation failed for 725x1375."
+);
+
+}
+
+const livePrice =
+calculateCustomPriceForSelection(
+selection
+);
+
+if (
+!Number.isFinite(
+Number(
+livePrice
+)
+) ||
+Math.abs(
+Number(
+livePrice
+) -
+masterPrice
+) >
+0.001
+) {
+
+throw new Error(
+"OP-3C Solar Control live custom price differs from the master price."
+);
+
+}
+
+return true;
+
+}
+
+/* =========================================
+SOLAR CONTROL GLASS MAKE-UP VALIDATION
+
+Checks the custom Solar Control route using
+the actual shared make-up master.
+
+The master determines the material,
+thickness and construction.
+
+No local glass thickness is assumed.
+========================================= */
+
+function op3cAssertSolarControlMakeup() {
+
+const result =
+op3aResolveMasterMakeup(
+"725x1375",
+100,
+"double",
+"toughened",
+"solarcontrol"
+);
+
+const thickness =
+Number(
+result?.panes?.top?.thickness
+);
+
+if (
+!result ||
+result.supported !==
+true ||
+!result.panes?.top ||
+!Number.isFinite(
+thickness
+) ||
+thickness <=
+0
+) {
+
+throw new Error(
+"OP-3C Solar Control glass make-up validation failed for 725x1375 Double Glazed."
+);
+
+}
+
+const label =
+op3aGetTopGlassLabelFor(
+"725x1375",
+100,
+"double",
+"toughened",
+"solarcontrol"
+);
+
+if (
+!label ||
+label ===
+"Glass Specification Unavailable"
+) {
+
+throw new Error(
+"OP-3C Solar Control top-glass label is unavailable."
+);
+
+}
+
+return true;
+
+}
+
+/* =========================================
 MASTER MAKE-UP VALIDATION AT MAX SIZE
 ========================================= */
 
@@ -32229,13 +32728,17 @@ throw new Error(
 }
 
 /* =========================================
-BASKET SELF CLEANING SNAPSHOT
+BASKET CONFIGURATION SNAPSHOT
 
 Repricing is allowed to update a stale product
 price to the current master price.
 
-It is not allowed to change whether that line
-selected Self Cleaning.
+It is not allowed to change:
+- Self Cleaning selection;
+- glass finish.
+
+This protects solarcontrol in basket items
+and homepage imports.
 ========================================= */
 
 function op3cCaptureBasketSelfCleaningChoices() {
@@ -32290,6 +32793,20 @@ id
 selfCleaning:
 op3cGetSelfCleaningStateFromSelection(
 item
+),
+
+tint:
+op3aNormalizeTint(
+item?.tint ??
+item?.finish ??
+item?.glassFinish
+),
+
+finish:
+op3aNormalizeTint(
+item?.finish ??
+item?.tint ??
+item?.glassFinish
 )
 
 };
@@ -32364,6 +32881,33 @@ throw new Error(
 
 }
 
+const currentTint =
+op3aNormalizeTint(
+current.tint ??
+current.finish ??
+current.glassFinish
+);
+
+const currentFinish =
+op3aNormalizeTint(
+current.finish ??
+current.tint ??
+current.glassFinish
+);
+
+if (
+currentTint !==
+stored.tint ||
+currentFinish !==
+stored.finish
+) {
+
+throw new Error(
+`OP-3C repricing altered the glass finish for basket item ${stored.id}.`
+);
+
+}
+
 }
 );
 
@@ -32410,6 +32954,13 @@ op3cGetSelfCleaningStateFromSelection(
 item
 );
 
+const finish =
+op3aNormalizeTint(
+item.tint ??
+item.finish ??
+item.glassFinish
+);
+
 const commonSelection =
 kind ===
 "custom"
@@ -32433,12 +32984,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border
@@ -32459,12 +33008,10 @@ item.type ??
 item.glazingConstruction,
 
 tint:
-item.tint ??
-item.finish,
+finish,
 
 finish:
-item.tint ??
-item.finish,
+finish,
 
 border:
 item.border
@@ -32819,7 +33366,7 @@ FINAL MASTER REPRICE / PAGE REFRESH
 
 Product repricing is allowed to update stale
 stored prices, but the customer's Self Cleaning
-choice must survive unchanged.
+choice and glass finish must survive unchanged.
 
 A temporary master failure does not delete the
 basket line.
@@ -32827,7 +33374,8 @@ basket line.
 After product repricing is complete, OP-3B's
 commercial snapshot is used around delivery
 recalculation to confirm delivery does not
-change final product pricing or Self Cleaning.
+change final product pricing, Self Cleaning
+or the selected glass finish.
 ========================================= */
 
 async function op3cRefreshFinalIntegratedPage() {
@@ -32954,6 +33502,13 @@ commercialSnapshot
 
 /* =========================================
 FINAL A/B/C VALIDATION
+
+This is the final compatibility validation
+for OP-3A, OP-3B and OP-3C.
+
+It runs before the integration is marked
+ready and before the ordering lock is
+released.
 ========================================= */
 
 function op3cRunFinalCompatibilityChecks() {
@@ -32975,9 +33530,16 @@ op3cAssertLiveMasterOwnership();
 const activeStrategy =
 op3cAssertMasterPricingRange();
 
+op3cAssertSolarControlPricing();
+
 op3cAssertMasterMakeupRange();
 
+op3cAssertSolarControlMakeup();
+
 op3cAssertMasterDeliveryRange();
+
+globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
+true;
 
 return activeStrategy;
 
@@ -33007,6 +33569,9 @@ globalThis.OP3C_STANDARD_SELF_CLEANING_VALIDATED =
 false;
 
 globalThis.OP3C_CUSTOM_SELF_CLEANING_VALIDATED =
+false;
+
+globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
 false;
 
 console.error(
@@ -33039,12 +33604,14 @@ updateCheckoutAvailability();
 /* =========================================
 OP-3C START
 
-The existing OP-2 INITIALISE PAGE block below
-this code still runs normally.
+The single INITIALISE PAGE block follows
+this final integration section.
 
 OP-3C waits for OP-3A and OP-3B, validates:
 - the 3000mm custom range;
 - master standard/custom pricing;
+- Solar Control custom pricing;
+- Solar Control glass make-up;
 - Self Cleaning capability where available;
 - basket final-price consistency;
 - master make-up;
@@ -33156,7 +33723,7 @@ true
 updateCheckoutAvailability();
 
 console.info(
-`OP-3C PASSED: OP-3A product pricing / Self Cleaning / make-up, OP-3B delivery, basket pricing safety and the 3000mm custom calculator range are compatible.${activeStrategy ? ` Active master pricing strategy: ${activeStrategy}.` : ""}`
+`OP-3C PASSED: OP-3A product pricing / Self Cleaning / make-up, OP-3B delivery, Solar Control validation, basket pricing safety and the 3000mm custom calculator range are compatible.${activeStrategy ? ` Active master pricing strategy: ${activeStrategy}.` : ""}`
 );
 
 return true;
@@ -33174,8 +33741,17 @@ return false;
 
 }
 );
+
 /* =========================================
 INITIALISE PAGE
+
+THIS IS THE ONLY INITIALISATION BLOCK.
+
+IT BELONGS AT THE END OF OP-3.
+
+OP-2 ENDS BEFORE OP-3 BEGINS.
+
+DO NOT DUPLICATE THIS SECTION.
 ========================================= */
 
 validateMasterPricingIntegration();
@@ -33249,6 +33825,11 @@ animate:false
 handleHomepageArrivalFocus();
 
 applyDesktopAccessRestriction();
+
+/* =========================================
+END OP-3
+END ORDER PAGE SCRIPT
+========================================= */
 
 </script>
 </body>
