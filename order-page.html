@@ -33973,6 +33973,20 @@ op3cBlockOrderActionsUntilReady,
 true
 );
 
+/*
+OP-3C is now fully ready.
+
+Refresh the custom configurator so its
+Add To Order button is evaluated again
+against the verified master price.
+
+Do not force the button enabled: OP-2 must
+still enforce its normal configuration
+and pricing checks.
+*/
+
+updateCustomConfiguratorUI();
+
 updateCheckoutAvailability();
 
 console.info(
