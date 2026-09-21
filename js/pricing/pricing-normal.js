@@ -22,7 +22,16 @@
 * 150mm border = 125mm price +5% further
 * (100mm x 1.08 x 1.05 = x1.134).
 * - Custom calculator = interpolated configured price +7%.
-* - Retail prices round to nearest £5.
+* - Standard retail prices round to nearest £5.
+* - Custom calculator prices round to nearest £1.
+*
+* SOLAR CONTROL
+* - Available through CUSTOM pricing only.
+* - Uses the equivalent Blue custom price for the same configuration.
+* - Final Solar Control product price = Blue custom product price x 0.95.
+* - Solar Control prices round to the nearest £1.
+* - No Solar Control columns are added to the standard price matrix.
+* - Standard configurator prices and finishes remain unchanged.
 *
 * SELF CLEANING
 * - Separate add-on; never baked into the base product price.
@@ -64,7 +73,7 @@ globalScope.FactoryRooflightsPricingNormal = api;
 
 const STRATEGY_ID = "normal";
 const STRATEGY_LABEL = "Normal";
-const STRATEGY_VERSION = "2026-09-08-4";
+const STRATEGY_VERSION = "2026-09-21-1";
 const PRICE_UNAVAILABLE = "PRICE_UNAVAILABLE";
 
 const NORMAL_OVER_CHEAP_PROFIT_MULTIPLIER = 1.30;
@@ -134,10 +143,18 @@ enabled: true,
 method: "inverse-distance",
 neighbourCount: 4,
 distancePower: 2,
+
+// Existing standard-price rounding remains unchanged.
 retailRoundTo: 5,
+
+// Custom calculator prices use their own rounding increment.
+customRetailRoundTo: 1,
+
 exactStandardSizeUsesExactPrice: true,
 customPriceMultiplier: 1.07
 });
+
+const SOLAR_CONTROL_PRICE_MULTIPLIER = 0.95;
 
 const VARIANT_INDEX = Object.freeze({
 clear: Object.freeze({
@@ -647,6 +664,12 @@ value === "privacy"
 return "satin";
 }
 
+if (
+value === "solarcontrol"
+) {
+return "solarcontrol";
+}
+
 return null;
 }
 
@@ -753,12 +776,31 @@ step
 );
 }
 
+/*
+* Existing £5 rounding.
+* This remains authoritative for all standard
+* retail prices and standard anchor prices.
+*/
 function roundRetailPrice(
 value
 ) {
 return roundToIncrement(
 value,
 CUSTOM_PRICING_CONFIG.retailRoundTo
+);
+}
+
+/*
+* Separate £1 rounding for the custom calculator.
+* Do not change roundRetailPrice() to £1 because
+* standard prices also call that function.
+*/
+function roundCustomRetailPrice(
+value
+) {
+return roundToIncrement(
+value,
+CUSTOM_PRICING_CONFIG.customRetailRoundTo
 );
 }
 
@@ -2187,7 +2229,7 @@ source:
 rawPrice,
 
 price:
-roundRetailPrice(
+roundCustomRetailPrice(
 rawPrice
 ),
 
@@ -2259,9 +2301,28 @@ options.border ??
 100
 );
 
+/*
+* Solar Control is custom-only.
+*
+* Reuse the equivalent Blue variant to obtain
+* the identical size, glazing, type, border,
+* interpolation and custom-uplift calculation.
+*
+* The Solar Control discount is applied to
+* the FINAL rounded Blue custom product price.
+*
+* Do not add Solar Control to VARIANT_INDEX:
+* that would change the standard configurator
+* and historic 16-column price matrix.
+*/
+const pricingFinish =
+finish === "solarcontrol"
+? "blue"
+: finish;
+
 const variantIndex =
 getVariantIndex(
-finish,
+pricingFinish,
 type,
 glazing
 );
@@ -2338,13 +2399,32 @@ null
 * Border and laminated uplifts are already
 * represented in the configured anchor prices
 * using the TARGET custom unit's size band.
+*
+* Custom prices round to the nearest £1.
 */
-const price =
-roundRetailPrice(
+const equivalentBlueOrSelectedPrice =
+roundCustomRetailPrice(
 result.rawPrice *
 CUSTOM_PRICING_CONFIG
 .customPriceMultiplier
 );
+
+/*
+* Solar Control is 5% below the equivalent
+* FINAL Blue custom product price.
+*
+* All other finishes retain their calculated
+* custom prices without an additional discount.
+*/
+const price =
+finish === "solarcontrol"
+
+? roundCustomRetailPrice(
+equivalentBlueOrSelectedPrice *
+SOLAR_CONTROL_PRICE_MULTIPLIER
+)
+
+: equivalentBlueOrSelectedPrice;
 
 if (
 !Number.isFinite(
@@ -2383,6 +2463,20 @@ dimensions.length,
 pricingMode:
 "custom"
 });
+
+const selectedPriceBeforeCustomUplift =
+finish === "solarcontrol"
+
+? roundCustomRetailPrice(
+roundCustomRetailPrice(
+result.rawPrice
+) *
+SOLAR_CONTROL_PRICE_MULTIPLIER
+)
+
+: roundCustomRetailPrice(
+result.rawPrice
+);
 
 return {
 available:
@@ -2435,9 +2529,7 @@ CUSTOM_PRICING_CONFIG
 .customPriceMultiplier,
 
 priceBeforeCustomUplift:
-roundRetailPrice(
-result.rawPrice
-),
+selectedPriceBeforeCustomUplift,
 
 selfCleaningAddOn:
 selfCleaningResult.available
@@ -2578,6 +2670,7 @@ PROVISIONAL_RATE_POLICY,
 
 SUPPORTED_BORDER_RANGE,
 CUSTOM_PRICING_CONFIG,
+SOLAR_CONTROL_PRICE_MULTIPLIER,
 VARIANT_INDEX,
 
 STANDARD_SIZE_KEYS,
@@ -2600,6 +2693,7 @@ normalizeBorder,
 getVariantIndex,
 roundToIncrement,
 roundRetailPrice,
+roundCustomRetailPrice,
 hasStandardSize,
 
 getReferenceExternalDimensions,
