@@ -8290,18 +8290,6 @@ aria-selected="false"
 Satin Tinted
 </button>
 
-<button
-type="button"
-class="custom-build-dropdown-option"
-data-custom-build-dropdown-option
-data-value="solar-control"
-data-label="Solar Control"
-role="option"
-aria-selected="false"
->
-Solar Control
-</button>
-
 </div>
 
 </div>
@@ -12805,16 +12793,6 @@ return "satin";
 
 }
 
-if (
-value === "solar-control" ||
-value === "solar control" ||
-value === "solar"
-) {
-
-return "solar-control";
-
-}
-
 return "clear";
 
 }
@@ -13115,10 +13093,7 @@ const supportedFinishInputs = [
 "satin",
 "satin tinted",
 "satin-tinted",
-"privacy",
-"solar-control",
-"solar control",
-"solar"
+"privacy"
 ];
 
 if (
@@ -14670,7 +14645,7 @@ DELIVERY / BASKET / CUSTOM CALCULATOR
 CONTINUATION
 
 PASTE DIRECTLY UNDER OP1.
-DO NOT ADD ANOTHER <script> TAG.
+DO NOT ADD ANOTHER SCRIPT TAG.
 
 BASKET PRESERVATION FIX:
 - VALID ITEMS ARE NEVER DELETED BECAUSE
@@ -14681,7 +14656,40 @@ MASTER PRICING IS TEMPORARILY UNAVAILABLE.
 - BLANK POSTCODES DO NOT RESET THE BASKET.
 - EXPANDING A BASKET ITEM DOES NOT REBUILD
 OR SAVE THE BASKET.
+
+SOLAR CONTROL:
+- CANONICAL IDENTIFIER: solarcontrol
+- CUSTOM PRICING IS ALWAYS ROUTED THROUGH
+THE MASTER CUSTOM PRICING METHOD.
+- BASKET AND HOMEPAGE HANDOFF FINISHES
+RETAIN THEIR CANONICAL IDENTIFIER.
+- STANDARD FINISH BUTTONS ARE UNCHANGED.
 ========================================= */
+
+/* =========================================
+SOLAR CONTROL FINISH NORMALISATION
+
+KEEP THE OP1 NORMALISER AS THE SHARED
+BASELINE. THIS WRAPPER ALSO PROTECTS OP2
+WHEN RESTORING OLDER IMPORTED OBJECTS.
+========================================= */
+
+function op2NormalizeFinish(finish) {
+const value = String(finish ?? "")
+.trim()
+.toLowerCase();
+
+const compact = value.replace(
+/[\s_-]+/g,
+""
+);
+
+if (compact === "solarcontrol") {
+return "solarcontrol";
+}
+
+return normalizeTint(finish);
+}
 
 /* =========================================
 ESTIMATED DELIVERY MASTER
@@ -14692,8 +14700,10 @@ const type = selection?.type === "laminated"
 ? "laminated"
 : "toughened";
 
-const tint = normalizeTint(
-selection?.tint ?? selection?.finish
+const tint = op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
 );
 
 if (type === "laminated") {
@@ -14993,7 +15003,7 @@ const result = await delivery.calculateDelivery({
 postcode,
 items: getAllBasketItems(),
 currentSelection: state,
-normalizeTint,
+normalizeTint: op2NormalizeFinish,
 getEstimatedDeliveryTextForLeadTime
 });
 
@@ -15593,8 +15603,10 @@ type:
 selection?.type === "laminated"
 ? "laminated"
 : "toughened",
-finish: normalizeTint(
-selection?.tint ?? selection?.finish
+finish: op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
 ),
 border: Number(selection?.border)
 };
@@ -15610,6 +15622,7 @@ selection?.length ?? selection?.internalLength
 );
 
 return {
+pricingMode: "custom",
 size: `${width}x${length}`,
 width,
 length,
@@ -15623,8 +15636,10 @@ type:
 selection?.type === "laminated"
 ? "laminated"
 : "toughened",
-finish: normalizeTint(
-selection?.tint ?? selection?.finish
+finish: op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
 ),
 border: Number(selection?.border)
 };
@@ -16563,7 +16578,11 @@ imported.size === state.size &&
 imported.glazing === state.glazing &&
 imported.type === state.type &&
 imported.border === state.border &&
-imported.tint === state.tint &&
+op2NormalizeFinish(
+imported.tint ??
+imported.finish ??
+imported.glassFinish
+) === op2NormalizeFinish(state.tint) &&
 normalizeSelfCleaningSelection(
 imported.selfCleaning
 ) === normalizeSelfCleaningSelection(
@@ -16579,12 +16598,16 @@ return Boolean(
 imported &&
 imported.image &&
 imported.size === state.size &&
-imported.tint === state.tint
+op2NormalizeFinish(
+imported.tint ??
+imported.finish ??
+imported.glassFinish
+) === op2NormalizeFinish(state.tint)
 );
 }
 
 function getTintedProductFilename(baseFilename, tint) {
-const normalized = normalizeTint(tint);
+const normalized = op2NormalizeFinish(tint);
 
 if (normalized === "clear") {
 return baseFilename;
@@ -17222,12 +17245,19 @@ TITLE BUILDERS
 function buildTitleForSelection(selection) {
 const size = formatSize(selection.size);
 
+const tint = op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
+);
+
 const tintText = {
 clear: "",
 blue: "Blue Tinted ",
 grey: "Grey Tinted ",
-satin: "Satin "
-}[selection.tint] || "";
+satin: "Satin ",
+solarcontrol: "Solar Control "
+}[tint] || "";
 
 const glazingText =
 selection.glazing === "triple"
@@ -17244,12 +17274,19 @@ function buildCustomTitleForSelection(selection) {
 const size =
 `${selection.width} × ${selection.length}mm`;
 
+const tint = op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
+);
+
 const tintText = {
 clear: "",
 blue: "Blue Tinted ",
 grey: "Grey Tinted ",
-satin: "Satin "
-}[selection.tint] || "";
+satin: "Satin ",
+solarcontrol: "Solar Control "
+}[tint] || "";
 
 const glazingText =
 selection.glazing === "triple"
@@ -17265,12 +17302,19 @@ return (
 function buildBasketDrawerDescriptionForSelection(
 selection
 ) {
+const tint = op2NormalizeFinish(
+selection?.tint ??
+selection?.finish ??
+selection?.glassFinish
+);
+
 const tintText = {
 clear: "",
 blue: "Blue Tinted ",
 grey: "Grey Tinted ",
-satin: "Satin "
-}[selection.tint] || "";
+satin: "Satin ",
+solarcontrol: "Solar Control "
+}[tint] || "";
 
 const glazingText =
 selection.glazing === "triple"
@@ -17358,7 +17402,10 @@ params.set("size", state.size);
 params.set("glazing", state.glazing);
 params.set("type", state.type);
 params.set("border", String(state.border));
-params.set("finish", state.tint);
+params.set(
+"finish",
+op2NormalizeFinish(state.tint)
+);
 
 params.set(
 "selfCleaning",
@@ -18240,7 +18287,7 @@ borderInput
 ? borderInput
 : 100;
 
-const tint = normalizeTint(
+const tint = op2NormalizeFinish(
 op2GetStoredValue(item, [
 "tint",
 "finish",
@@ -18309,9 +18356,14 @@ const {
 glazing,
 type,
 border,
-tint,
 selfCleaning
 } = configuration;
+
+const tint = op2NormalizeFinish(
+configuration.tint ??
+configuration.finish ??
+configuration.glassFinish
+);
 
 const size =
 `${dimensions.width}x${dimensions.length}`;
@@ -18340,6 +18392,15 @@ item.borderMm = border;
 item.tint = tint;
 item.finish = tint;
 item.glassFinish = tint;
+
+if (
+item.configuration &&
+typeof item.configuration === "object"
+) {
+item.configuration.tint = tint;
+item.configuration.finish = tint;
+item.configuration.glassFinish = tint;
+}
 
 item.selfCleaning = selfCleaning;
 item.selfCleaningSelected =
@@ -18886,7 +18947,7 @@ return type === "laminated"
 }
 
 function getTintDisplayName(tint) {
-switch (tint) {
+switch (op2NormalizeFinish(tint)) {
 case "blue":
 return "Blue Tinted";
 
@@ -18895,6 +18956,9 @@ return "Grey Tinted";
 
 case "satin":
 return "Satin";
+
+case "solarcontrol":
+return "Solar Control";
 
 default:
 return "Clear";
@@ -18915,7 +18979,11 @@ first.glazing === second.glazing &&
 first.type === second.type &&
 Number(first.border) ===
 Number(second.border) &&
-first.tint === second.tint &&
+op2NormalizeFinish(
+first.tint ?? first.finish ?? first.glassFinish
+) === op2NormalizeFinish(
+second.tint ?? second.finish ?? second.glassFinish
+) &&
 normalizeSelfCleaningSelection(
 first.selfCleaning
 ) === normalizeSelfCleaningSelection(
@@ -18936,7 +19004,11 @@ first.glazing === second.glazing &&
 first.type === second.type &&
 Number(first.border) ===
 Number(second.border) &&
-first.tint === second.tint &&
+op2NormalizeFinish(
+first.tint ?? first.finish ?? first.glassFinish
+) === op2NormalizeFinish(
+second.tint ?? second.finish ?? second.glassFinish
+) &&
 normalizeSelfCleaningSelection(
 first.selfCleaning
 ) === normalizeSelfCleaningSelection(
@@ -21832,9 +21904,10 @@ const border = Number(
 params.get("border")
 );
 
-const tint = normalizeTint(
+const tint = op2NormalizeFinish(
 params.get("finish") ??
-params.get("tint")
+params.get("tint") ??
+params.get("glassFinish")
 );
 
 const selfCleaning =
@@ -21883,7 +21956,19 @@ state.border = border;
 state.border = 100;
 }
 
+/*
+Solar Control belongs to the custom
+calculator, not the standard-size selector.
+
+Retain its value for the custom state
+without assigning it to the standard
+product controls.
+*/
+
+if (tint !== "solarcontrol") {
 state.tint = tint;
+}
+
 state.selfCleaning = selfCleaning;
 
 if (source === "homepage") {
@@ -21893,7 +21978,9 @@ size: state.size,
 glazing: state.glazing,
 type: state.type,
 border: state.border,
-tint: state.tint,
+tint,
+finish: tint,
+glassFinish: tint,
 selfCleaning: state.selfCleaning,
 price: importedPrice,
 image: importedImage
@@ -21956,7 +22043,7 @@ case "glass":
 return customState.type;
 
 case "finish":
-return customState.tint;
+return op2NormalizeFinish(customState.tint);
 
 case "selfCleaning":
 return normalizeSelfCleaningSelection(
@@ -22084,7 +22171,7 @@ button.addEventListener("click", () => {
 closeSizeDropdown();
 closeCustomBuildDropdowns();
 
-const tint = normalizeTint(
+const tint = op2NormalizeFinish(
 button.dataset.tint
 );
 
@@ -22475,13 +22562,17 @@ function addCurrentCustomSelectionToOrder() {
 closeSizeDropdown();
 closeCustomBuildDropdowns();
 
+const selectedFinish =
+op2NormalizeFinish(customState.tint);
+
 const result = getMasterCustomPriceResult({
 width: customState.width,
 length: customState.length,
 glazing: customState.glazing,
 type: customState.type,
 border: customState.border,
-tint: customState.tint,
+tint: selectedFinish,
+finish: selectedFinish,
 selfCleaning: customState.selfCleaning
 });
 
@@ -22513,8 +22604,9 @@ glazingConfiguration: customState.glazing,
 type: customState.type,
 glazingConstruction: customState.type,
 border: Number(customState.border),
-tint: customState.tint,
-finish: customState.tint,
+tint: selectedFinish,
+finish: selectedFinish,
+glassFinish: selectedFinish,
 selfCleaning:
 normalizeSelfCleaningSelection(
 customState.selfCleaning
@@ -22921,14 +23013,19 @@ const border = Number(
 configuration.border
 );
 
-const tint = normalizeTint(
+const tint = op2NormalizeFinish(
 configuration.tint ??
-configuration.finish
+configuration.finish ??
+configuration.glassFinish ??
+handoffItem.tint ??
+handoffItem.finish ??
+handoffItem.glassFinish
 );
 
 const selfCleaning =
 normalizeSelfCleaningSelection(
-configuration.selfCleaning
+configuration.selfCleaning ??
+handoffItem.selfCleaning
 );
 
 if (
@@ -22956,7 +23053,11 @@ item.type === type
 !Number.isFinite(border) ||
 Number(item.border) === border
 ) &&
-item.tint === tint &&
+op2NormalizeFinish(
+item.tint ??
+item.finish ??
+item.glassFinish
+) === tint &&
 normalizeSelfCleaningSelection(
 item.selfCleaning
 ) === selfCleaning
@@ -23527,6 +23628,61 @@ console.warn(
 "Custom Self Cleaning pricing is not currently available from FactoryRooflightsMasterPricing."
 );
 }
+
+/*
+Solar Control is a custom finish.
+
+Check the custom master route directly.
+Do not introduce it into the standard
+price matrix or apply any additional
+price multiplier in OP2.
+*/
+
+const solarOptions =
+buildMasterCustomPricingOptions({
+width: 1000,
+length: 1000,
+glazing: "double",
+type: "toughened",
+finish: "solarcontrol",
+border: 100
+});
+
+if (
+solarOptions.finish !== "solarcontrol" ||
+solarOptions.pricingMode !== "custom"
+) {
+console.warn(
+"Solar Control custom pricing options were not preserved.",
+solarOptions
+);
+}
+
+if (typeof pricing.getCustomPrice === "function") {
+try {
+const solarResult =
+getMasterCustomBasePriceResult({
+width: 1000,
+length: 1000,
+glazing: "double",
+type: "toughened",
+finish: "solarcontrol",
+border: 100
+});
+
+if (!solarResult.available) {
+console.warn(
+"Solar Control custom pricing is not currently available from FactoryRooflightsMasterPricing.",
+solarResult
+);
+}
+} catch (error) {
+console.warn(
+"Solar Control custom pricing validation failed.",
+error
+);
+}
+}
 }
 
 /* =========================================
@@ -23928,8 +24084,11 @@ width: selection.width,
 length: selection.length,
 glazing: selection.glazing,
 type: selection.type,
-finish:
-selection.tint ?? selection.finish,
+finish: op2NormalizeFinish(
+selection.tint ??
+selection.finish ??
+selection.glassFinish
+),
 border: selection.border,
 selfCleaning: selection.selfCleaning
 });
@@ -24255,6 +24414,77 @@ result
 );
 }
 });
+}
+
+/* =========================================
+SOLAR CONTROL INTEGRATION VALIDATION
+========================================= */
+
+function validateOP2SolarControlIntegration() {
+const variants = [
+"solarcontrol",
+"solar-control",
+"solar control",
+"solar_control",
+"Solar Control"
+];
+
+variants.forEach(value => {
+const normalized =
+op2NormalizeFinish(value);
+
+if (normalized !== "solarcontrol") {
+console.warn(
+"Solar Control normalisation failed:",
+value,
+normalized
+);
+}
+});
+
+if (
+getTintDisplayName("solarcontrol") !==
+"Solar Control"
+) {
+console.warn(
+"Solar Control display-name validation failed."
+);
+}
+
+const customOptions =
+buildMasterCustomPricingOptions({
+width: 725,
+length: 1375,
+glazing: "double",
+type: "toughened",
+border: 100,
+tint: "solarcontrol"
+});
+
+if (
+customOptions.finish !== "solarcontrol" ||
+customOptions.pricingMode !== "custom"
+) {
+console.warn(
+"Solar Control custom master-routing validation failed.",
+customOptions
+);
+}
+
+const restored =
+op2GetBasketConfiguration({
+glazing: "double",
+type: "toughened",
+border: 100,
+glassFinish: "solarcontrol"
+});
+
+if (restored.tint !== "solarcontrol") {
+console.warn(
+"Solar Control basket-restoration validation failed.",
+restored
+);
+}
 }
 
 /* =========================================
