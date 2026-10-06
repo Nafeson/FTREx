@@ -8886,6 +8886,7 @@ hidden
 <option>Blue Tinted</option>
 <option>Grey Tinted</option>
 <option>Satin Tinted</option>
+<option>value="solarcontrol">Solar Control</option>
 </select>
 
 </div>
@@ -9710,6 +9711,7 @@ aria-label="Accepted payment methods"
 </div>
 
 </footer>
+
 <script>
 
 /* =========================================
@@ -11162,6 +11164,19 @@ finish ||
 )
 .trim()
 .toLowerCase();
+
+if (
+value.replace(
+/[\s_-]/g,
+""
+).includes(
+"solarcontrol"
+)
+) {
+
+return "solarcontrol";
+
+}
 
 if (
 value.includes(
@@ -15375,6 +15390,9 @@ return "Grey Tinted";
 case "satin":
 return "Satin Tinted";
 
+case "solarcontrol":
+return "Solar Control";
+
 default:
 return "Clear";
 
@@ -15956,6 +15974,9 @@ return "Grey Tinted";
 
 case "satin":
 return "Satin Tinted";
+
+case "solarcontrol":
+return "Solar Control";
 
 default:
 return "Clear";
@@ -22482,9 +22503,6 @@ restoreFocus:false
 IN-3
 HOMEPAGE MASTER PRICING + MASTER MAKE-UP BRIDGE
 
-PASTE THIS ENTIRE BLOCK DIRECTLY ABOVE THE
-EXISTING "FINAL INITIALISATION" SECTION IN IN-2.
-
 THE UPDATED IN-2 DEFERS ALL MASTER-DEPENDENT
 START-UP UNTIL AFTER THIS BLOCK HAS LOADED.
 
@@ -25374,6 +25392,63 @@ FINAL INITIALISATION
 
 SECTION CONTINUES DIRECTLY BELOW.
 ========================================= */
+
+/* =========================================
+FINAL INITIALISATION
+
+THIS IS NOW THE ONLY INITIAL START-UP POINT
+FOR PRODUCT-CARD PRICING, CALCULATOR STATE /
+PRICING AND THE HOMEPAGE BASKET.
+
+IN-3 SITS DIRECTLY ABOVE THIS SECTION.
+========================================= */
+
+requestAnimationFrame(
+() => {
+
+if (
+typeof getHomepageProductCardPrice ===
+"function"
+) {
+
+initializeHomepageProductPrices();
+
+}
+
+restoreHomepageCalculatorState();
+
+updateExistingOpeningRecommendation();
+
+revealHomepageCustomBuildArea();
+
+if (
+typeof getCustomCalculatorPrice ===
+"function"
+) {
+
+calculatePrice();
+
+}
+else {
+
+setCustomSelfCleaningSurchargeDisplay(
+null,
+false
+);
+
+hideCustomCalculatorPrice();
+
+}
+
+refreshHomepageBasket();
+
+}
+);
+
+</script>
+
+</body>
+</html>
 
 /* =========================================
 FINAL INITIALISATION
