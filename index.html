@@ -10642,6 +10642,7 @@ closeWhatsappAction();
 
 /* =========================================
 MENU CONTACT OUR TEAM
+SCROLL TO TOP + OPEN EMAIL
 ========================================= */
 
 if (
@@ -10654,16 +10655,14 @@ menuContactTeamButton.addEventListener(
 
 event.preventDefault();
 
+event.stopPropagation();
+
 closeMenu({
 restoreFocus:false
 });
 
-window.requestAnimationFrame(
-() => {
-
-openEmailAction();
-
-}
+scrollHomepageToTopThen(
+openEmailAction
 );
 
 }
@@ -10802,6 +10801,7 @@ waitForHomepageTop
 
 /* =========================================
 MENU OVERSIZED / FITTING EMAIL ACTIONS
+SCROLL TO TOP + OPEN EMAIL
 ========================================= */
 
 if (
@@ -10857,12 +10857,8 @@ closeMenu({
 restoreFocus:false
 });
 
-window.requestAnimationFrame(
-() => {
-
-openEmailAction();
-
-}
+scrollHomepageToTopThen(
+openEmailAction
 );
 
 }
