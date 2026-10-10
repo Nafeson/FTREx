@@ -10691,6 +10691,19 @@ element?.textContent ||
 
 }
 
+/* =========================================
+IN-2 CHANGE 1
+
+WAIT FOR THE MENU FIXED-BODY SCROLL LOCK TO
+FULLY RESTORE THE HOMEPAGE POSITION BEFORE
+SCROLLING TO THE TOP AND OPENING THE HEADER
+CONTACT ACTION.
+
+THIS PREVENTS IOS / SAFARI FROM RESTORING
+THE PREVIOUS SCROLL POSITION AFTER THE
+CONTACT ACTION HAS ALREADY BEEN OPENED.
+========================================= */
+
 function scrollHomepageToTopThen(
 action
 ) {
@@ -10708,8 +10721,12 @@ closeEmailAction();
 
 closeWhatsappAction();
 
-const runAction =
-() => {
+function runActionAtTop() {
+
+window.scrollTo(
+0,
+0
+);
 
 window.requestAnimationFrame(
 () => {
@@ -10719,7 +10736,9 @@ action();
 }
 );
 
-};
+}
+
+function beginHomepageTopScroll() {
 
 const currentScroll =
 Math.max(
@@ -10735,12 +10754,7 @@ currentScroll <=
 2
 ) {
 
-window.scrollTo(
-0,
-0
-);
-
-runAction();
+runActionAtTop();
 
 return;
 
@@ -10768,7 +10782,7 @@ document.documentElement.scrollTop ||
 const timedOut =
 performance.now() -
 startedAt >
-1800;
+2200;
 
 if (
 scrollPosition <=
@@ -10776,12 +10790,7 @@ scrollPosition <=
 timedOut
 ) {
 
-window.scrollTo(
-0,
-0
-);
-
-runAction();
+runActionAtTop();
 
 return;
 
@@ -10795,6 +10804,22 @@ waitForHomepageTop
 
 window.requestAnimationFrame(
 waitForHomepageTop
+);
+
+}
+
+window.requestAnimationFrame(
+() => {
+
+window.requestAnimationFrame(
+() => {
+
+beginHomepageTopScroll();
+
+}
+);
+
+}
 );
 
 }
