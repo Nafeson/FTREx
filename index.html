@@ -9804,11 +9804,6 @@ document.getElementById(
 "menuPanel"
 );
 
-const menuContactTeamButton =
-document.getElementById(
-"menuContactTeamButton"
-);
-
 let menuDrawerIsOpen =
 false;
 
@@ -10641,36 +10636,6 @@ closeWhatsappAction();
 }
 
 /* =========================================
-MENU CONTACT OUR TEAM
-SCROLL TO TOP + OPEN EMAIL
-========================================= */
-
-if (
-menuContactTeamButton
-) {
-
-menuContactTeamButton.addEventListener(
-"click",
-(event) => {
-
-event.preventDefault();
-
-event.stopPropagation();
-
-closeMenu({
-restoreFocus:false
-});
-
-scrollHomepageToTopThen(
-openEmailAction
-);
-
-}
-);
-
-}
-
-/* =========================================
 FINAL HOMEPAGE CONTACT ACTION HELPERS
 ========================================= */
 
@@ -10690,19 +10655,6 @@ element?.textContent ||
 .toLowerCase();
 
 }
-
-/* =========================================
-IN-2 CHANGE 1
-
-WAIT FOR THE MENU FIXED-BODY SCROLL LOCK TO
-FULLY RESTORE THE HOMEPAGE POSITION BEFORE
-SCROLLING TO THE TOP AND OPENING THE HEADER
-CONTACT ACTION.
-
-THIS PREVENTS IOS / SAFARI FROM RESTORING
-THE PREVIOUS SCROLL POSITION AFTER THE
-CONTACT ACTION HAS ALREADY BEEN OPENED.
-========================================= */
 
 function scrollHomepageToTopThen(
 action
@@ -10825,8 +10777,59 @@ beginHomepageTopScroll();
 }
 
 /* =========================================
-MENU OVERSIZED / FITTING EMAIL ACTIONS
-SCROLL TO TOP + OPEN EMAIL
+IN-2 CHANGE 1
+MENU CONTACT SEQUENCE
+
+1. CLOSE MENU
+2. ALLOW MENU SCROLL LOCK TO RESTORE THE
+ORIGINAL HOMEPAGE POSITION
+3. SCROLL HOMEPAGE TO THE IMMEDIATE TOP
+4. WAIT UNTIL TOP IS REACHED
+5. PRESS THE EXISTING HEADER EMAIL BUTTON
+========================================= */
+
+function closeMenuThenScrollTopAndOpenEmail() {
+
+closeMenu({
+restoreFocus:false
+});
+
+window.requestAnimationFrame(
+() => {
+
+window.requestAnimationFrame(
+() => {
+
+scrollHomepageToTopThen(
+() => {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+closeEmailAction();
+
+emailButton.click();
+
+}
+);
+
+}
+);
+
+}
+);
+
+}
+
+/* =========================================
+IN-2 CHANGE 1
+MENU OVERSIZED / FITTING / CONTACT EMAIL
 ========================================= */
 
 if (
@@ -10864,6 +10867,9 @@ actionText.includes(
 ) ||
 actionText.includes(
 "book a fitting"
+) ||
+actionText.includes(
+"contact our team"
 );
 
 if (
@@ -10878,13 +10884,7 @@ event.preventDefault();
 
 event.stopPropagation();
 
-closeMenu({
-restoreFocus:false
-});
-
-scrollHomepageToTopThen(
-openEmailAction
-);
+closeMenuThenScrollTopAndOpenEmail();
 
 }
 );
