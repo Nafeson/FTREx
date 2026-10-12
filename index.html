@@ -7524,15 +7524,11 @@ Build A Rooflight
 </a>
 
 <a
-href="oversized.html"
-onclick="closeMenu()"
 >
 Oversized Rooflights
 </a>
 
 <a
-href="book.html"
-onclick="closeMenu()"
 >
 Book A Fitting
 </a>
@@ -10888,95 +10884,6 @@ return;
 target.click();
 
 }
-);
-
-}
-);
-
-}
-
-/* =========================================
-IN-2 CHANGE 1
-MENU ACTION MAPPING
-========================================= */
-
-if (
-menuPanel
-) {
-
-menuPanel.addEventListener(
-"click",
-(event) => {
-
-const trigger =
-event.target.closest(
-"a, button, [role='button']"
-);
-
-if (
-!trigger ||
-!menuPanel.contains(
-trigger
-)
-) {
-
-return;
-
-}
-
-const actionText =
-getHomepageActionText(
-trigger
-);
-
-let homepageActionText =
-"";
-
-if (
-actionText.includes(
-"oversized rooflights"
-)
-) {
-
-homepageActionText =
-"request oversized quote";
-
-}
-else if (
-actionText.includes(
-"book a fitting"
-)
-) {
-
-homepageActionText =
-"request a fitting quotation";
-
-}
-else if (
-actionText.includes(
-"contact our team"
-)
-) {
-
-homepageActionText =
-"get in touch";
-
-}
-
-if (
-!homepageActionText
-) {
-
-return;
-
-}
-
-event.preventDefault();
-
-event.stopPropagation();
-
-closeMenuThenPressHomepageAction(
-homepageActionText
 );
 
 }
@@ -22882,7 +22789,6 @@ restoreFocus:false
 );
 
 }
-
 /* =========================================
 IN-3
 HOMEPAGE MASTER PRICING + MASTER MAKE-UP BRIDGE
