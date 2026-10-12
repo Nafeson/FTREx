@@ -10778,17 +10778,87 @@ beginHomepageTopScroll();
 
 /* =========================================
 IN-2 CHANGE 1
-MENU CONTACT SEQUENCE
+MENU -> EXISTING HOMEPAGE BUTTON ROUTING
 
-1. CLOSE MENU
-2. ALLOW MENU SCROLL LOCK TO RESTORE THE
-ORIGINAL HOMEPAGE POSITION
-3. SCROLL HOMEPAGE TO THE IMMEDIATE TOP
-4. WAIT UNTIL TOP IS REACHED
-5. PRESS THE EXISTING HEADER EMAIL BUTTON
+THE MENU DOES NOT DIRECTLY RUN THE CONTACT
+ACTION.
+
+IT CLOSES FIRST, ALLOWS THE FIXED-BODY MENU
+SCROLL LOCK TO RESTORE THE PAGE, THEN PRESSES
+THE EXISTING HOMEPAGE BUTTON.
+
+OVERSIZED ROOFLIGHTS
+-> REQUEST OVERSIZED QUOTE
+
+BOOK A FITTING
+-> REQUEST A FITTING QUOTATION
+
+CONTACT OUR TEAM
+-> GET IN TOUCH
 ========================================= */
 
-function closeMenuThenScrollTopAndOpenEmail() {
+function findHomepageActionTrigger(
+actionText
+) {
+
+const normalizedActionText =
+String(
+actionText ||
+""
+)
+.replace(
+/\s+/g,
+" "
+)
+.trim()
+.toLowerCase();
+
+if (
+!normalizedActionText
+) {
+
+return null;
+
+}
+
+const candidates =
+Array.from(
+document.querySelectorAll(
+"a, button, [role='button']"
+)
+);
+
+return (
+candidates.find(
+(element) => {
+
+if (
+menuPanel &&
+menuPanel.contains(
+element
+)
+) {
+
+return false;
+
+}
+
+return getHomepageActionText(
+element
+).includes(
+normalizedActionText
+);
+
+}
+) ||
+null
+);
+
+}
+
+function closeMenuThenPressHomepageAction(
+actionText
+) {
 
 closeMenu({
 restoreFocus:false
@@ -10800,24 +10870,22 @@ window.requestAnimationFrame(
 window.requestAnimationFrame(
 () => {
 
-scrollHomepageToTopThen(
-() => {
+const target =
+findHomepageActionTrigger(
+actionText
+);
 
 if (
-!emailButton ||
-!emailAction
+!target ||
+typeof target.click !==
+"function"
 ) {
 
 return;
 
 }
 
-closeEmailAction();
-
-emailButton.click();
-
-}
-);
+target.click();
 
 }
 );
@@ -10829,7 +10897,7 @@ emailButton.click();
 
 /* =========================================
 IN-2 CHANGE 1
-MENU OVERSIZED / FITTING / CONTACT EMAIL
+MENU ACTION MAPPING
 ========================================= */
 
 if (
@@ -10861,19 +10929,42 @@ getHomepageActionText(
 trigger
 );
 
-const opensEmail =
-actionText.includes(
-"oversized rooflights"
-) ||
-actionText.includes(
-"book a fitting"
-) ||
-actionText.includes(
-"contact our team"
-);
+let homepageActionText =
+"";
 
 if (
-!opensEmail
+actionText.includes(
+"oversized rooflights"
+)
+) {
+
+homepageActionText =
+"request oversized quote";
+
+}
+else if (
+actionText.includes(
+"book a fitting"
+)
+) {
+
+homepageActionText =
+"request a fitting quotation";
+
+}
+else if (
+actionText.includes(
+"contact our team"
+)
+) {
+
+homepageActionText =
+"get in touch";
+
+}
+
+if (
+!homepageActionText
 ) {
 
 return;
@@ -10884,7 +10975,9 @@ event.preventDefault();
 
 event.stopPropagation();
 
-closeMenuThenScrollTopAndOpenEmail();
+closeMenuThenPressHomepageAction(
+homepageActionText
+);
 
 }
 );
