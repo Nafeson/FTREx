@@ -54,6 +54,13 @@ INFORMATION / FOOTER PAGE MASTER TEMPLATE
 --line:rgba(216,221,217,.14);
 --line-strong:rgba(216,221,217,.24);
 
+--workshop-green:#163c2d;
+--workshop-green-mid:#1c4c39;
+--workshop-green-bright:#286449;
+--workshop-green-dark:#0c1e17;
+
+--cosmic-green-light:#8ce1be;
+
 --whatsapp:#25d366;
 
 }
@@ -85,6 +92,7 @@ overflow-x:hidden;
 text-rendering:optimizeLegibility;
 }
 
+body.basket-drawer-open,
 body.menu-drawer-open {
 overflow:hidden !important;
 overscroll-behavior:none;
@@ -273,8 +281,8 @@ display:flex;
 }
 
 /* =========================================
+MASTER HEADER
 TOP MOVING BANNER
-HOMEPAGE MASTER
 ========================================= */
 
 .top-banner {
@@ -331,7 +339,7 @@ transform:translateX(-50%);
 }
 
 /* =========================================
-HOMEPAGE MASTER HEADER
+MASTER HEADER
 ========================================= */
 
 header {
@@ -454,6 +462,15 @@ transform:
 translate(-1px,1px);
 }
 
+.address-line {
+font-size:12px;
+line-height:1.45;
+font-weight:600;
+color:rgba(255,255,255,.72);
+letter-spacing:.6px;
+text-transform:uppercase;
+}
+
 .action-icons {
 display:flex;
 
@@ -473,15 +490,19 @@ align-items:center;
 justify-content:center;
 }
 
+/* =========================================
+MASTER HEADER
+BOXLESS HEADER BUTTONS
+========================================= */
+
 .action-icons button,
 .action-icons a.header-icon-button {
 width:42px;
 height:42px;
 
-border:
-1px solid rgba(230,233,230,.16);
+border:0;
 
-background:#111313;
+background:transparent;
 
 color:var(--steel-light);
 
@@ -499,47 +520,42 @@ cursor:pointer;
 
 transition:
 transform .22s ease,
-border-color .22s ease,
-color .22s ease,
-background .22s ease,
-box-shadow .22s ease;
+color .22s ease;
 
 line-height:1;
 
 padding:0;
+
+box-shadow:none;
 }
 
 .action-icons button:hover,
 .action-icons a.header-icon-button:hover {
-border-color:
-rgba(232,120,23,.70);
+border-color:transparent;
 
 color:var(--orange-bright);
 
-background:#171817;
+background:transparent;
 
-box-shadow:
-0 7px 22px rgba(0,0,0,.25);
+box-shadow:none;
 
 transform:
 translateY(-1px);
 }
 
 .action-icons button.is-selected {
-border-color:
-rgba(232,120,23,.85);
+border-color:transparent;
 
 color:var(--orange-bright);
 
-background:#191714;
+background:transparent;
 
-box-shadow:
-0 0 0 1px rgba(232,120,23,.08),
-0 7px 22px rgba(0,0,0,.24);
+box-shadow:none;
 }
 
 /* =========================================
-EMAIL ACTION
+MASTER HEADER
+EMAIL EXPANDING ACTION
 ========================================= */
 
 .email-action {
@@ -548,19 +564,19 @@ position:absolute;
 left:50%;
 
 bottom:
-calc(100% + 15px);
+calc(100% + 9px);
 
 z-index:85;
 
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 
 display:flex;
 
 align-items:center;
 justify-content:center;
 
-border-radius:7px;
+border-radius:6px;
 
 background:
 linear-gradient(
@@ -606,6 +622,13 @@ pointer-events:auto;
 transform:
 translate(-50%,0)
 scale(1);
+
+animation:
+emailAttention
+4s
+ease-in-out
+.9s
+infinite;
 }
 
 .email-action-symbol {
@@ -619,7 +642,7 @@ font-family:
 Arial,
 sans-serif;
 
-font-size:18px;
+font-size:17.85px;
 font-weight:800;
 
 line-height:1;
@@ -630,8 +653,51 @@ text-shadow:
 0 2px 2px rgba(0,0,0,.18);
 }
 
+.email-action:hover,
+.email-action:active {
+transform:
+translate(-50%,-2px)
+scale(1.04);
+
+box-shadow:
+0 18px 35px rgba(0,0,0,.62),
+0 0 22px rgba(86,173,222,.42),
+inset 0 1px 0 rgba(255,255,255,.40);
+}
+
+@keyframes emailAttention {
+
+0%,
+72%,
+100% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+78% {
+transform:
+translate(-50%,-2px)
+scale(1.045);
+}
+
+83% {
+transform:
+translate(-50%,0)
+scale(.99);
+}
+
+88% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+}
+
 /* =========================================
-WHATSAPP ACTION
+MASTER HEADER
+WHATSAPP EXPANDING ACTION
 ========================================= */
 
 .whatsapp-action {
@@ -640,19 +706,19 @@ position:absolute;
 left:50%;
 
 bottom:
-calc(100% + 15px);
+calc(100% + 9px);
 
 z-index:85;
 
-width:42px;
-height:42px;
+width:35.7px;
+height:35.7px;
 
 display:flex;
 
 align-items:center;
 justify-content:center;
 
-border-radius:7px;
+border-radius:6px;
 
 background:
 linear-gradient(
@@ -697,6 +763,13 @@ pointer-events:auto;
 transform:
 translate(-50%,0)
 scale(1);
+
+animation:
+whatsappAttention
+4s
+ease-in-out
+.9s
+infinite;
 }
 
 .whatsapp-action svg {
@@ -716,14 +789,57 @@ rgba(0,0,0,.22)
 );
 }
 
+.whatsapp-action:hover,
+.whatsapp-action:active {
+transform:
+translate(-50%,-2px)
+scale(1.04);
+
+box-shadow:
+0 18px 35px rgba(0,0,0,.62),
+0 0 22px rgba(37,211,102,.38),
+inset 0 1px 0 rgba(255,255,255,.38);
+}
+
+@keyframes whatsappAttention {
+
+0%,
+72%,
+100% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+78% {
+transform:
+translate(-50%,-2px)
+scale(1.045);
+}
+
+83% {
+transform:
+translate(-50%,0)
+scale(.99);
+}
+
+88% {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+}
+
 /* =========================================
-BASKET HEADER TOTAL
+MASTER HEADER
+BASKET TOTAL
 ========================================= */
 
 .basket-total-text {
 position:absolute;
 
-top:-16px;
+top:-10px;
 left:50%;
 
 z-index:5;
@@ -768,6 +884,1441 @@ opacity:1;
 transform:
 translate(-50%,0)
 scale(1);
+
+transition:
+opacity .22s ease,
+transform .42s cubic-bezier(.18,.78,.28,1.35);
+}
+
+.basket-total-text.is-updating {
+animation:
+basketTotalUpdate
+.52s
+cubic-bezier(.18,.78,.28,1.28);
+}
+
+@keyframes basketTotalUpdate {
+
+0% {
+opacity:1;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+42% {
+transform:
+translate(-50%,-4px)
+scale(1.12);
+
+color:#f6dbc1;
+}
+
+72% {
+transform:
+translate(-50%,1px)
+scale(.98);
+}
+
+100% {
+opacity:1;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+}
+
+/* =========================================
+MASTER HEADER
+BASKET DRAWER
+========================================= */
+
+.basket-drawer-layer {
+position:fixed;
+inset:0;
+
+z-index:2000000000;
+
+visibility:hidden;
+
+pointer-events:none;
+
+overflow:hidden;
+}
+
+.basket-drawer-layer.is-open {
+visibility:visible;
+
+pointer-events:auto;
+}
+
+.basket-drawer-backdrop {
+position:absolute;
+inset:0;
+
+z-index:1;
+
+background:
+rgba(0,0,0,.72);
+
+opacity:0;
+
+transition:
+opacity .34s ease;
+
+cursor:pointer;
+}
+
+.basket-drawer-layer.is-open
+.basket-drawer-backdrop {
+opacity:1;
+}
+
+.basket-drawer-panel {
+position:absolute;
+
+top:0;
+right:0;
+
+z-index:2;
+
+width:70vw;
+max-width:70vw;
+min-width:0;
+
+height:100vh;
+height:100dvh;
+
+display:grid;
+
+grid-template-rows:
+auto
+minmax(0,1fr)
+auto;
+
+overflow:hidden;
+
+background:
+linear-gradient(
+180deg,
+#111414 0%,
+#0b0d0d 52%,
+#080a0a 100%
+);
+
+border-left:
+1px solid rgba(255,255,255,.14);
+
+box-shadow:
+-26px 0 70px rgba(0,0,0,.54);
+
+transform:
+translateX(100%);
+
+transition:
+transform .42s cubic-bezier(.18,.72,.28,1);
+
+outline:0;
+}
+
+.basket-drawer-layer.is-open
+.basket-drawer-panel {
+transform:
+translateX(0);
+}
+
+.basket-drawer-header {
+position:relative;
+
+z-index:4;
+
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
+align-items:center;
+
+gap:12px;
+
+padding:
+clamp(15px,2vw,22px)
+clamp(13px,2vw,22px);
+
+background:
+linear-gradient(
+180deg,
+rgba(20,23,23,.995),
+rgba(13,15,15,.995)
+);
+
+border-bottom:
+1px solid rgba(255,255,255,.11);
+
+box-shadow:
+0 10px 24px rgba(0,0,0,.22);
+}
+
+.basket-drawer-heading-wrap {
+min-width:0;
+}
+
+.basket-drawer-kicker {
+display:block;
+
+margin-bottom:5px;
+
+color:var(--orange);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:7px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:1.35px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-title {
+margin:0;
+
+color:var(--cream);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(19px,3vw,30px);
+
+font-weight:800;
+
+line-height:.95;
+
+letter-spacing:-.7px;
+}
+
+.basket-drawer-count {
+display:block;
+
+margin-top:6px;
+
+color:rgba(247,247,243,.43);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:7px;
+font-weight:700;
+
+line-height:1.2;
+
+letter-spacing:.65px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-close {
+width:38px;
+height:38px;
+
+padding:0;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border:
+1px solid rgba(255,255,255,.17);
+
+border-radius:10px;
+
+background:#101212;
+
+color:var(--cream);
+
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-size:23px;
+font-weight:300;
+
+line-height:1;
+
+cursor:pointer;
+
+transition:
+border-color .2s ease,
+background .2s ease,
+color .2s ease,
+transform .15s ease;
+}
+
+.basket-drawer-close:hover {
+border-color:
+rgba(232,120,23,.56);
+
+background:#181513;
+
+color:var(--orange-bright);
+}
+
+.basket-drawer-close:active {
+transform:
+scale(.95);
+}
+
+.basket-drawer-body {
+min-width:0;
+
+overflow-x:hidden;
+overflow-y:auto;
+
+overscroll-behavior:contain;
+
+-webkit-overflow-scrolling:touch;
+
+padding:
+clamp(12px,1.7vw,18px)
+clamp(10px,1.7vw,18px)
+clamp(24px,3vw,36px);
+
+scrollbar-width:thin;
+
+scrollbar-color:
+rgba(232,120,23,.55)
+rgba(255,255,255,.035);
+}
+
+.basket-drawer-body::-webkit-scrollbar {
+width:5px;
+}
+
+.basket-drawer-body::-webkit-scrollbar-track {
+background:
+rgba(255,255,255,.025);
+}
+
+.basket-drawer-body::-webkit-scrollbar-thumb {
+background:
+rgba(232,120,23,.52);
+
+border-radius:999px;
+}
+
+.basket-drawer-items {
+display:grid;
+
+gap:10px;
+
+min-width:0;
+}
+
+.basket-drawer-item {
+min-width:0;
+
+overflow:hidden;
+
+border:
+1px solid rgba(255,255,255,.12);
+
+border-left:
+2px solid rgba(232,120,23,.68);
+
+border-radius:9px;
+
+background:
+linear-gradient(
+180deg,
+#141717,
+#0c0e0e
+);
+
+transition:
+border-color .22s ease,
+background .22s ease,
+box-shadow .22s ease;
+}
+
+.basket-drawer-item.is-expanded {
+border-color:
+rgba(255,255,255,.17);
+
+border-left-color:
+var(--orange);
+
+box-shadow:
+0 9px 24px rgba(0,0,0,.18);
+}
+
+.basket-drawer-item-head {
+display:block;
+
+width:100%;
+
+margin:0;
+
+padding:
+12px
+11px
+10px;
+
+border:0;
+
+background:transparent;
+
+color:inherit;
+
+text-align:left;
+
+cursor:pointer;
+
+transition:
+background .2s ease,
+color .2s ease;
+}
+
+.basket-drawer-item-head:hover {
+background:
+rgba(255,255,255,.018);
+}
+
+.basket-drawer-item-title {
+display:block;
+
+margin:0;
+
+color:var(--cream);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(13.2px,2.42vw,19.8px);
+
+font-weight:800;
+
+line-height:1.12;
+
+letter-spacing:-.3px;
+
+overflow-wrap:anywhere;
+}
+
+.basket-drawer-item-title-quantity {
+color:var(--orange-bright);
+
+white-space:nowrap;
+}
+
+.basket-drawer-item-title-size-line,
+.basket-drawer-item-title-description {
+display:block;
+}
+
+.basket-drawer-item-title-description {
+margin-top:3px;
+}
+
+.basket-drawer-item-expand-strip {
+position:relative;
+
+width:100%;
+height:26px;
+
+margin:0;
+padding:0;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border:0;
+
+border-top:
+1px solid rgba(255,255,255,.24);
+
+border-bottom:
+1px solid rgba(255,255,255,.24);
+
+background:#0a0b0b;
+
+color:#ffffff;
+
+cursor:pointer;
+
+transition:
+background .2s ease,
+border-color .2s ease;
+}
+
+.basket-drawer-item-expand-strip:hover {
+background:#101212;
+
+border-color:
+rgba(255,255,255,.34);
+}
+
+.basket-drawer-item-expand-arrow {
+position:relative;
+
+display:block;
+
+width:16px;
+height:14px;
+
+transform-origin:
+center center;
+
+animation:
+basketDrawerExpandPrompt
+3.8s
+ease-in-out
+.7s
+infinite;
+}
+
+.basket-drawer-item-expand-arrow::before {
+content:"";
+
+position:absolute;
+
+left:50%;
+top:3px;
+
+width:6px;
+height:6px;
+
+border-right:
+1.5px solid rgba(255,255,255,.92);
+
+border-bottom:
+1.5px solid rgba(255,255,255,.92);
+
+transform:
+translateX(-50%)
+rotate(45deg);
+}
+
+.basket-drawer-item.is-expanded
+.basket-drawer-item-expand-arrow {
+animation:none;
+
+transform:
+rotate(180deg);
+}
+
+@keyframes basketDrawerExpandPrompt {
+
+0%,
+68%,
+100% {
+transform:
+translateY(0)
+scale(1);
+}
+
+74% {
+transform:
+translateY(2px)
+scale(1.08);
+}
+
+80% {
+transform:
+translateY(-1px)
+scale(.98);
+}
+
+86% {
+transform:
+translateY(2px)
+scale(1.05);
+}
+
+92% {
+transform:
+translateY(0)
+scale(1);
+}
+
+}
+
+.basket-drawer-item-collapse[hidden] {
+display:none !important;
+}
+
+.basket-drawer-item-collapse:not([hidden]) {
+animation:
+basketDrawerItemReveal
+.28s
+cubic-bezier(.18,.72,.28,1)
+both;
+}
+
+@keyframes basketDrawerItemReveal {
+
+from {
+opacity:0;
+
+transform:
+translateY(-4px);
+}
+
+to {
+opacity:1;
+
+transform:
+translateY(0);
+}
+
+}
+
+.basket-drawer-item-specs {
+display:grid;
+
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:
+10px
+16px;
+
+min-width:0;
+
+padding:
+12px
+11px;
+
+text-align:left;
+}
+
+.basket-drawer-item-spec {
+min-width:0;
+
+text-align:left;
+}
+
+.basket-drawer-item-spec span {
+display:block;
+
+color:rgba(247,247,243,.37);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:6.3px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:.7px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-item-spec strong {
+display:block;
+
+margin-top:4px;
+
+color:#d6d8d5;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:8.25px;
+font-weight:700;
+
+line-height:1.28;
+
+overflow-wrap:anywhere;
+
+text-align:left;
+}
+
+.basket-drawer-item-spec.unit-price strong {
+color:var(--cream);
+
+font-weight:800;
+}
+
+.basket-drawer-item-total {
+display:flex;
+
+align-items:flex-end;
+justify-content:space-between;
+
+gap:10px;
+
+padding:
+10px
+11px;
+
+border-top:
+1px solid rgba(232,120,23,.16);
+
+background:
+rgba(232,120,23,.025);
+}
+
+.basket-drawer-item-total-label {
+color:rgba(242,138,40,.70);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:6.6px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:.8px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-item-total-price {
+color:var(--orange-bright);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+
+font-size:
+clamp(17px,3vw,25px);
+
+font-weight:850;
+
+line-height:.9;
+
+letter-spacing:-.5px;
+
+white-space:nowrap;
+}
+
+.basket-drawer-item-total-vat {
+margin-top:4px;
+
+color:rgba(247,247,243,.36);
+
+font-size:6.3px;
+
+line-height:1;
+
+text-transform:lowercase;
+}
+
+.basket-drawer-item-controls {
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
+gap:7px;
+
+padding:
+0
+11px
+11px;
+}
+
+.basket-drawer-quantity {
+display:grid;
+
+grid-template-columns:
+30px
+minmax(32px,1fr)
+30px;
+
+min-width:0;
+min-height:36px;
+
+overflow:hidden;
+
+border:
+1px solid rgba(255,255,255,.15);
+
+border-radius:10px;
+
+background:#0a0c0c;
+}
+
+.basket-drawer-quantity button {
+min-width:0;
+
+padding:0;
+
+border:0;
+
+background:transparent;
+
+color:#bfc2bf;
+
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-size:16px;
+font-weight:400;
+
+line-height:1;
+
+cursor:pointer;
+
+touch-action:manipulation;
+}
+
+.basket-drawer-quantity button:first-child {
+border-right:
+1px solid rgba(255,255,255,.09);
+}
+
+.basket-drawer-quantity button:last-child {
+border-left:
+1px solid rgba(255,255,255,.09);
+
+color:var(--orange-bright);
+}
+
+.basket-drawer-quantity button:disabled {
+opacity:.28;
+
+cursor:default;
+}
+
+.basket-drawer-quantity strong {
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+min-width:0;
+
+color:var(--cream);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+sans-serif;
+
+font-size:13px;
+font-weight:800;
+
+line-height:1;
+}
+
+.basket-drawer-remove {
+min-height:36px;
+
+padding:
+0
+10px;
+
+border:
+1px solid rgba(255,255,255,.15);
+
+border-radius:10px;
+
+background:#111313;
+
+color:#bfc2bf;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:5.7px;
+font-weight:800;
+
+letter-spacing:.65px;
+
+line-height:1;
+
+text-transform:uppercase;
+
+cursor:pointer;
+}
+
+.basket-drawer-remove:hover {
+border-color:
+rgba(232,120,23,.50);
+
+color:var(--orange-bright);
+
+background:#181513;
+}
+
+.basket-drawer-delivery {
+margin-top:12px;
+
+padding:
+12px
+11px;
+
+border:
+1px solid rgba(255,255,255,.12);
+
+border-radius:9px;
+
+background:
+linear-gradient(
+180deg,
+rgba(14,17,16,.98),
+rgba(8,10,10,.98)
+);
+}
+
+.basket-drawer-footer
+.basket-drawer-delivery {
+margin:
+0
+0
+12px;
+}
+
+.basket-drawer-delivery-label {
+display:block;
+
+margin-bottom:7px;
+
+color:rgba(247,247,243,.43);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:6.2px;
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:.8px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-postcode {
+display:block;
+
+width:100%;
+height:39px;
+
+padding:
+0
+10px;
+
+border:
+1px solid rgba(255,255,255,.16);
+
+border-radius:10px;
+
+outline:0;
+
+background:#090b0b;
+
+color:var(--white);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:9px;
+font-weight:750;
+
+letter-spacing:.4px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-postcode::placeholder {
+color:rgba(247,247,243,.36);
+
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-weight:500;
+
+text-transform:none;
+}
+
+.basket-drawer-postcode:hover,
+.basket-drawer-postcode:focus {
+border-color:
+rgba(232,120,23,.50);
+}
+
+.basket-drawer-postcode.is-invalid {
+border-color:
+rgba(152,80,71,.85);
+}
+
+.basket-drawer-delivery-result {
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
+align-items:start;
+
+gap:8px;
+
+margin-top:9px;
+
+padding-top:9px;
+
+border-top:
+1px solid rgba(255,255,255,.08);
+}
+
+.basket-drawer-estimated-delivery-row {
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
+align-items:start;
+
+gap:8px;
+
+margin-top:7px;
+}
+
+.basket-drawer-estimated-delivery-row[hidden] {
+display:none !important;
+}
+
+.basket-drawer-estimated-delivery-label {
+min-width:0;
+
+color:rgba(247,247,243,.53);
+
+font-size:7px;
+font-weight:650;
+
+line-height:1.3;
+
+overflow-wrap:anywhere;
+}
+
+.basket-drawer-estimated-delivery-date {
+color:var(--orange-bright);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:8px;
+font-weight:850;
+
+line-height:1.2;
+
+text-align:right;
+
+white-space:nowrap;
+}
+
+.basket-drawer-delivery-status {
+min-width:0;
+
+color:rgba(247,247,243,.53);
+
+font-size:7px;
+font-weight:650;
+
+line-height:1.3;
+
+overflow-wrap:anywhere;
+}
+
+.basket-drawer-delivery-charge {
+color:var(--orange-bright);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:8px;
+font-weight:850;
+
+line-height:1.2;
+
+text-align:right;
+
+white-space:nowrap;
+}
+
+.basket-drawer-delivery-charge.is-free {
+color:var(--cosmic-green-light);
+}
+
+.basket-drawer-delivery-charge.is-quote {
+max-width:110px;
+
+white-space:normal;
+
+font-size:6.5px;
+
+line-height:1.15;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-empty {
+min-height:42vh;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+padding:
+34px
+18px;
+
+text-align:center;
+}
+
+.basket-drawer-empty h3 {
+margin:0;
+
+color:var(--cream);
+
+font-size:
+clamp(19px,3.4vw,29px);
+
+font-weight:800;
+
+line-height:1;
+
+letter-spacing:-.5px;
+}
+
+.basket-drawer-empty p {
+max-width:310px;
+
+margin:
+13px
+auto
+0;
+
+color:var(--muted-soft);
+
+font-size:10px;
+
+line-height:1.55;
+}
+
+.basket-drawer-footer {
+position:relative;
+
+z-index:4;
+
+min-width:0;
+
+padding:
+12px
+clamp(10px,1.7vw,18px)
+max(13px,env(safe-area-inset-bottom));
+
+background:
+linear-gradient(
+180deg,
+rgba(13,16,15,.995),
+rgba(6,9,8,.995)
+);
+
+border-top:
+1px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 -12px 30px rgba(0,0,0,.26);
+}
+
+.basket-drawer-total-table {
+display:grid;
+
+gap:6px;
+
+margin-bottom:10px;
+}
+
+.basket-drawer-total-row {
+display:grid;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
+align-items:baseline;
+
+gap:9px;
+}
+
+.basket-drawer-total-row span {
+color:rgba(247,247,243,.48);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:6.4px;
+font-weight:750;
+
+line-height:1.2;
+
+letter-spacing:.65px;
+
+text-transform:uppercase;
+}
+
+.basket-drawer-total-row strong {
+color:var(--cream);
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:8px;
+font-weight:800;
+
+line-height:1.2;
+
+text-align:right;
+
+white-space:nowrap;
+}
+
+.basket-drawer-total-row.delivery strong {
+color:var(--orange-bright);
+}
+
+.basket-drawer-total-row.final {
+margin-top:2px;
+
+padding-top:8px;
+
+border-top:
+1px solid rgba(232,120,23,.20);
+}
+
+.basket-drawer-total-row.final span {
+color:rgba(247,247,243,.64);
+}
+
+.basket-drawer-total-row.final strong {
+color:var(--white);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+
+font-size:
+clamp(20px,3.6vw,31px);
+
+font-weight:850;
+
+line-height:.92;
+
+letter-spacing:-.7px;
+}
+
+.basket-drawer-vat {
+margin:
+-3px
+0
+10px;
+
+color:rgba(247,247,243,.38);
+
+font-size:6.9px;
+font-weight:500;
+
+text-align:right;
+
+text-transform:lowercase;
+}
+
+.basket-drawer-empty-footer-copy {
+margin:
+0
+0
+9px;
+
+color:rgba(247,247,243,.44);
+
+font-size:7px;
+
+line-height:1.35;
+
+text-align:center;
+}
+
+/* =========================================
+MASTER HEADER
+BASKET CHECKOUT
+========================================= */
+
+.checkout-now {
+position:relative;
+
+overflow:hidden;
+
+width:100%;
+min-height:64px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+padding:
+0
+45px
+0
+22px;
+
+border:
+1px solid rgba(103,166,140,.58);
+
+border-radius:18px;
+
+background:#176149;
+
+color:#f4faf7;
+
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+
+font-size:
+clamp(10px,1vw,13px);
+
+font-weight:900;
+
+letter-spacing:1.15px;
+
+line-height:1;
+
+text-decoration:none;
+
+text-align:center;
+
+text-transform:uppercase;
+
+text-shadow:none;
+
+box-shadow:
+0 12px 27px rgba(0,0,0,.24);
+
+transition:
+transform .2s ease,
+background .2s ease,
+border-color .2s ease,
+box-shadow .2s ease,
+opacity .2s ease;
+
+cursor:pointer;
+}
+
+.checkout-now::after {
+content:"→";
+
+position:absolute;
+
+right:18px;
+top:50%;
+
+transform:
+translateY(-50%);
+
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-size:20px;
+font-weight:600;
+
+line-height:1;
+}
+
+.checkout-now:hover:not(:disabled):not(.is-disabled) {
+transform:
+translateY(-1px);
+
+background:#1a6d51;
+
+border-color:
+rgba(122,186,158,.72);
+
+box-shadow:
+0 15px 31px rgba(0,0,0,.27);
+}
+
+.checkout-now.is-disabled,
+.checkout-now:disabled {
+opacity:.38;
+
+cursor:not-allowed;
+
+pointer-events:none;
+
+transform:none;
+
+box-shadow:none;
 }
 
 /* =========================================
@@ -778,44 +2329,67 @@ PAGES MASTER MENU
 .menu-overlay {
 position:fixed;
 inset:0;
+
 z-index:2000000100;
+
 visibility:hidden;
+
 pointer-events:none;
+
 overflow:hidden;
 }
 
 .menu-overlay.active {
 visibility:visible;
+
 pointer-events:auto;
 }
 
 .menu-backdrop {
 position:absolute;
 inset:0;
+
 z-index:1;
-background:rgba(0,0,0,.72);
+
+background:
+rgba(0,0,0,.72);
+
 opacity:0;
+
 cursor:pointer;
-transition:opacity .34s ease;
+
+transition:
+opacity .34s ease;
 }
 
-.menu-overlay.active .menu-backdrop {
+.menu-overlay.active
+.menu-backdrop {
 opacity:1;
 }
 
 .menu-panel {
 position:absolute;
+
 top:0;
 left:0;
+
 z-index:2;
+
 width:70vw;
 max-width:70vw;
 min-width:0;
+
 height:100vh;
 height:100dvh;
+
 display:grid;
-grid-template-rows:auto minmax(0,1fr);
+
+grid-template-rows:
+auto
+minmax(0,1fr);
+
 overflow:hidden;
+
 background:
 linear-gradient(
 180deg,
@@ -823,98 +2397,157 @@ linear-gradient(
 #0b0d0d 52%,
 #080a0a 100%
 );
-border-right:1px solid rgba(255,255,255,.14);
+
+border-right:
+1px solid rgba(255,255,255,.14);
+
 box-shadow:
 26px 0 70px rgba(0,0,0,.54);
-transform:translateX(-100%);
-transition:transform .42s cubic-bezier(.18,.72,.28,1);
+
+transform:
+translateX(-100%);
+
+transition:
+transform .42s cubic-bezier(.18,.72,.28,1);
+
 outline:0;
 }
 
-.menu-overlay.active .menu-panel {
-transform:translateX(0);
+.menu-overlay.active
+.menu-panel {
+transform:
+translateX(0);
 }
 
 .menu-top {
 position:relative;
+
 z-index:4;
+
 display:grid;
-grid-template-columns:minmax(0,1fr) auto;
+
+grid-template-columns:
+minmax(0,1fr)
+auto;
+
 align-items:stretch;
+
 gap:10px;
+
 min-height:120px;
+
 margin:0;
+
 padding:
 16px
 12px
 15px;
+
 background:
 linear-gradient(
 180deg,
 rgba(20,23,23,.995),
 rgba(13,15,15,.995)
 );
-border-bottom:1px solid rgba(255,255,255,.11);
-box-shadow:0 10px 24px rgba(0,0,0,.22);
+
+border-bottom:
+1px solid rgba(255,255,255,.11);
+
+box-shadow:
+0 10px 24px rgba(0,0,0,.22);
 }
 
 .menu-brand {
 min-width:0;
+
 display:flex;
+
 align-items:flex-start;
 justify-content:flex-start;
 }
 
-.menu-brand .wordmark-wrap {
+.menu-brand
+.wordmark-wrap {
 display:grid;
+
 gap:10px;
 }
 
-.menu-brand .wordmark {
+.menu-brand
+.wordmark {
 font-size:19.5px;
+
 line-height:.91;
+
 letter-spacing:2.34px;
 }
 
-.menu-brand .wordmark-domain {
+.menu-brand
+.wordmark-domain {
 font-size:.40em;
+
 margin-left:1px;
+
 padding-bottom:1px;
-transform:translate(-1px,1px);
+
+transform:
+translate(-1px,1px);
 }
 
-.menu-brand .address-line {
+.menu-brand
+.address-line {
 margin-top:0;
+
 font-size:8.52px;
 font-weight:600;
+
 line-height:1.42;
+
 letter-spacing:.42px;
-color:rgba(255,255,255,.62);
+
+color:
+rgba(255,255,255,.62);
+
 text-align:left;
+
 text-transform:uppercase;
 }
 
 .close-menu {
 width:34px;
 height:34px;
+
 padding:0;
+
 display:flex;
+
 align-items:center;
 justify-content:center;
+
 align-self:start;
-border:1px solid rgba(255,255,255,.17);
+
+border:
+1px solid rgba(255,255,255,.17);
+
 border-radius:9px;
+
 background:#101212;
+
 color:var(--cream);
+
 font-family:
 "Aptos",
 "Segoe UI",
 Arial,
 sans-serif;
+
 font-size:20px;
 font-weight:300;
+
 line-height:1;
+
 cursor:pointer;
+
 transition:
 border-color .2s ease,
 background .2s ease,
@@ -923,32 +2556,46 @@ transform .15s ease;
 }
 
 .close-menu:hover {
-border-color:rgba(232,120,23,.56);
+border-color:
+rgba(232,120,23,.56);
+
 background:#181513;
+
 color:var(--orange-bright);
 }
 
 .close-menu:active {
-transform:scale(.95);
+transform:
+scale(.95);
 }
 
 .menu-links {
 display:grid;
+
 align-content:start;
+
 gap:0;
+
 width:100%;
 max-width:none;
 min-width:0;
+
 overflow-x:hidden;
 overflow-y:auto;
+
 overscroll-behavior:contain;
+
 -webkit-overflow-scrolling:touch;
+
 padding:
 7px
 12px
 max(22px,env(safe-area-inset-bottom));
+
 border-top:0;
+
 scrollbar-width:thin;
+
 scrollbar-color:
 rgba(232,120,23,.55)
 rgba(255,255,255,.035);
@@ -959,45 +2606,70 @@ width:5px;
 }
 
 .menu-links::-webkit-scrollbar-track {
-background:rgba(255,255,255,.025);
+background:
+rgba(255,255,255,.025);
 }
 
 .menu-links::-webkit-scrollbar-thumb {
-background:rgba(232,120,23,.52);
+background:
+rgba(232,120,23,.52);
+
 border-radius:999px;
 }
 
 .menu-links a,
 .menu-links button {
 position:relative;
+
 width:100%;
+
 min-height:49px;
+
 margin:0;
+
 padding:
 15px
 29px
 15px
 2px;
+
 display:flex;
+
 align-items:center;
 justify-content:flex-start;
+
 border:0;
-border-bottom:1px solid rgba(255,255,255,.10);
+
+border-bottom:
+1px solid rgba(255,255,255,.10);
+
 background:transparent;
+
 color:var(--cream);
+
 font-family:
 "Bahnschrift SemiCondensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-font-size:clamp(14px,4.2vw,18px);
+
+font-size:
+clamp(14px,4.2vw,18px);
+
 font-weight:750;
+
 line-height:1.05;
+
 letter-spacing:-.25px;
+
 text-align:left;
+
 text-decoration:none;
+
 text-transform:uppercase;
+
 cursor:pointer;
+
 transition:
 color .2s ease,
 padding-left .2s ease,
@@ -1006,26 +2678,37 @@ background .2s ease;
 
 .menu-links a:first-child,
 .menu-links button:first-child {
-border-top:1px solid rgba(255,255,255,.10);
+border-top:
+1px solid rgba(255,255,255,.10);
 }
 
 .menu-links a::after,
 .menu-links button::after {
 content:"→";
+
 position:absolute;
+
 right:4px;
 top:50%;
-color:rgba(247,247,243,.34);
+
+color:
+rgba(247,247,243,.34);
+
 font-family:
 "Aptos",
 "Segoe UI Symbol",
 "Segoe UI",
 Arial,
 sans-serif;
+
 font-size:14px;
 font-weight:500;
+
 line-height:1;
-transform:translateY(-50%);
+
+transform:
+translateY(-50%);
+
 transition:
 color .2s ease,
 transform .2s ease;
@@ -1036,8 +2719,12 @@ transform .2s ease;
 .menu-links a:focus-visible,
 .menu-links button:focus-visible {
 color:var(--orange-bright);
+
 padding-left:6px;
-background:rgba(255,255,255,.018);
+
+background:
+rgba(255,255,255,.018);
+
 outline:none;
 }
 
@@ -1046,6 +2733,7 @@ outline:none;
 .menu-links a:focus-visible::after,
 .menu-links button:focus-visible::after {
 color:var(--orange-bright);
+
 transform:
 translateY(-50%)
 translateX(2px);
@@ -1125,7 +2813,10 @@ margin:0 auto;
 }
 
 .information-kicker {
-margin:0 0 19px;
+margin:
+0
+0
+19px;
 
 font-family:
 "Bahnschrift",
@@ -1141,7 +2832,8 @@ letter-spacing:2px;
 
 text-transform:uppercase;
 
-color:rgba(247,247,243,.50);
+color:
+rgba(247,247,243,.50);
 }
 
 .information-title {
@@ -1197,7 +2889,8 @@ font-weight:400;
 
 line-height:1.7;
 
-color:rgba(247,247,243,.72);
+color:
+rgba(247,247,243,.72);
 }
 
 /* =========================================
@@ -1271,7 +2964,10 @@ transparent
 }
 
 .information-document-label {
-margin:0 0 28px;
+margin:
+0
+0
+28px;
 
 font-family:
 "Bahnschrift",
@@ -1296,6 +2992,7 @@ max-width:760px;
 
 .information-document-content section {
 margin:0;
+
 padding:0;
 }
 
@@ -1369,7 +3066,8 @@ font-weight:400;
 
 line-height:1.72;
 
-color:rgba(247,247,243,.64);
+color:
+rgba(247,247,243,.64);
 }
 
 .information-document-content p:last-child {
@@ -1377,7 +3075,8 @@ margin-bottom:0;
 }
 
 .information-document-content strong {
-color:rgba(247,247,243,.88);
+color:
+rgba(247,247,243,.88);
 
 font-weight:700;
 }
@@ -1404,18 +3103,22 @@ text-decoration-color .18s ease;
 .information-document-content a:focus {
 color:var(--cream);
 
-text-decoration-color:var(--cream);
+text-decoration-color:
+var(--cream);
 
 outline:none;
 }
 
 .information-document-content ul {
 margin:
-16px 0 0;
+16px
+0
+0;
 
 padding-left:21px;
 
-color:rgba(247,247,243,.64);
+color:
+rgba(247,247,243,.64);
 }
 
 .information-document-content li {
@@ -1441,7 +3144,8 @@ RIGHT TO OBJECT EMPHASIS
 margin-top:20px;
 
 padding:
-18px 20px;
+18px
+20px;
 
 border:
 1px solid rgba(232,120,23,.22);
@@ -1498,7 +3202,6 @@ font-family:
 sans-serif;
 
 font-size:9px;
-
 font-weight:650;
 
 line-height:1.45;
@@ -1507,7 +3210,8 @@ letter-spacing:.5px;
 
 text-transform:uppercase;
 
-color:rgba(247,247,243,.37);
+color:
+rgba(247,247,243,.37);
 }
 
 /* =========================================
@@ -1521,7 +3225,9 @@ font-size:7px;
 }
 
 .ticker {
-padding:7px 0;
+padding:
+7px
+0;
 }
 
 header {
@@ -1554,19 +3260,15 @@ height:34px;
 font-size:15px;
 }
 
-.email-action,
-.whatsapp-action {
-width:34px;
-height:34px;
+.whatsapp-action,
+.email-action {
+width:28.9px;
+height:28.9px;
 
-border-radius:6px;
+border-radius:5px;
 
 bottom:
-calc(100% + 14px);
-}
-
-.email-action-symbol {
-font-size:15.3px;
+calc(100% + 8px);
 }
 
 .whatsapp-action svg {
@@ -1574,10 +3276,143 @@ width:22px;
 height:22px;
 }
 
+.email-action-symbol {
+font-size:15.3px;
+}
+
 .basket-total-text {
-top:-15px;
+top:-9px;
+left:50%;
 
 font-size:7px;
+
+transform:
+translate(-50%,6px)
+scale(.78);
+}
+
+.basket-total-text.is-visible {
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+.basket-drawer-header {
+gap:8px;
+
+padding:
+13px
+10px;
+}
+
+.basket-drawer-title {
+font-size:18px;
+}
+
+.basket-drawer-close {
+width:34px;
+height:34px;
+
+border-radius:9px;
+
+font-size:20px;
+}
+
+.basket-drawer-body {
+padding:
+10px
+8px
+24px;
+}
+
+.basket-drawer-item-specs {
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:
+8px
+12px;
+
+padding:9px;
+}
+
+.basket-drawer-item-head {
+padding:
+10px
+9px
+8px;
+}
+
+.basket-drawer-item-title {
+font-size:12.1px;
+}
+
+.basket-drawer-item-expand-strip {
+height:23px;
+}
+
+.basket-drawer-item-spec span {
+font-size:5.5px;
+}
+
+.basket-drawer-item-spec strong {
+font-size:7.5px;
+}
+
+.basket-drawer-item-total {
+padding:9px;
+}
+
+.basket-drawer-item-total-price {
+font-size:17px;
+}
+
+.basket-drawer-item-controls {
+grid-template-columns:
+minmax(0,1fr);
+
+padding:
+0
+9px
+9px;
+}
+
+.basket-drawer-remove {
+width:100%;
+}
+
+.basket-drawer-delivery {
+padding:
+10px
+9px;
+}
+
+.basket-drawer-footer {
+padding-left:8px;
+padding-right:8px;
+}
+
+.basket-drawer-total-row.final strong {
+font-size:20px;
+}
+
+.checkout-now {
+min-height:52px;
+
+border-radius:14px;
+
+padding-left:12px;
+padding-right:29px;
+
+font-size:7.5px;
+
+letter-spacing:.7px;
+}
+
+.checkout-now::after {
+right:10px;
+
+font-size:14px;
 }
 
 .menu-panel {
@@ -1587,25 +3422,37 @@ max-width:70vw;
 
 .menu-top {
 min-height:111px;
-padding:14px 10px 13px;
+
+padding:
+14px
+10px
+13px;
+
 gap:8px;
 }
 
-.menu-brand .wordmark {
+.menu-brand
+.wordmark {
 font-size:18.2px;
+
 letter-spacing:2.015px;
 }
 
-.menu-brand .address-line {
+.menu-brand
+.address-line {
 font-size:8.04px;
+
 line-height:1.42;
+
 letter-spacing:.32px;
 }
 
 .close-menu {
 width:32px;
 height:32px;
+
 border-radius:8px;
+
 font-size:19px;
 }
 
@@ -1619,18 +3466,23 @@ max(20px,env(safe-area-inset-bottom));
 .menu-links a,
 .menu-links button {
 min-height:47px;
+
 padding:
 14px
 26px
 14px
 1px;
-font-size:clamp(13px,4vw,16px);
+
+font-size:
+clamp(13px,4vw,16px);
+
 letter-spacing:-.18px;
 }
 
 .menu-links a::after,
 .menu-links button::after {
 right:3px;
+
 font-size:13px;
 }
 
@@ -1746,17 +3598,22 @@ SMALL MOBILE
 
 .menu-top {
 min-height:106px;
+
 padding-left:9px;
 padding-right:9px;
 }
 
-.menu-brand .wordmark {
+.menu-brand
+.wordmark {
 font-size:16.9px;
+
 letter-spacing:1.82px;
 }
 
-.menu-brand .address-line {
+.menu-brand
+.address-line {
 font-size:7.5px;
+
 letter-spacing:.27px;
 }
 
@@ -1768,9 +3625,20 @@ padding-right:9px;
 .menu-links a,
 .menu-links button {
 min-height:45px;
+
 font-size:12.6px;
+
 padding-top:13px;
 padding-bottom:13px;
+}
+
+.checkout-now {
+font-size:7px;
+
+letter-spacing:.5px;
+
+padding-left:8px;
+padding-right:26px;
 }
 
 .information-title {
@@ -1815,10 +3683,17 @@ html {
 scroll-behavior:auto;
 }
 
-.ticker {
+.ticker,
+.whatsapp-action,
+.email-action,
+.basket-total-text,
+.basket-drawer-item-expand-arrow,
+.basket-drawer-item-collapse {
 animation:none;
 }
 
+.basket-drawer-panel,
+.basket-drawer-backdrop,
 .menu-panel,
 .menu-backdrop {
 transition:none !important;
@@ -1861,8 +3736,8 @@ Please visit Factory Toughened Rooflights using a mobile device.
 </div>
 
 <!-- =======================================
+MASTER HEADER
 TOP BANNER
-HOMEPAGE MASTER
 ======================================= -->
 
 <div class="top-banner">
@@ -1946,7 +3821,7 @@ Collection available with prior booking
 </div>
 
 <!-- =======================================
-HOMEPAGE MASTER HEADER
+MASTER HEADER
 ======================================= -->
 
 <header>
@@ -2027,6 +3902,7 @@ id="whatsappButton"
 aria-label="Show WhatsApp Business button"
 title="WhatsApp our rooflight team"
 aria-expanded="false"
+aria-controls="whatsappAction"
 >
 📱
 </button>
@@ -2060,9 +3936,12 @@ d="M16 3.2A12.5 12.5 0 0 0 5.2 22l-1.8 6.8 7-1.8A12.5 12.5 0 1 0 16 3.2zm0 22.7c
 
 <button
 type="button"
+class="header-icon-button"
 id="basketButton"
 aria-label="View basket and checkout"
 title="Basket and checkout"
+aria-expanded="false"
+aria-controls="basketDrawerLayer"
 >
 💳
 </button>
@@ -2092,6 +3971,83 @@ aria-controls="menuOverlay"
 </div>
 
 </header>
+
+<!-- =======================================
+MASTER HEADER
+BASKET DRAWER
+======================================= -->
+
+<div
+class="basket-drawer-layer"
+id="basketDrawerLayer"
+aria-hidden="true"
+>
+
+<div
+class="basket-drawer-backdrop"
+data-basket-drawer-backdrop
+aria-hidden="true"
+></div>
+
+<aside
+class="basket-drawer-panel"
+id="basketDrawerPanel"
+role="dialog"
+aria-modal="true"
+aria-labelledby="basketDrawerTitle"
+tabindex="-1"
+>
+
+<div class="basket-drawer-header">
+
+<div class="basket-drawer-heading-wrap">
+
+<span class="basket-drawer-kicker">
+Order
+</span>
+
+<h2
+class="basket-drawer-title"
+id="basketDrawerTitle"
+>
+Your Basket
+</h2>
+
+<span
+class="basket-drawer-count"
+id="basketDrawerCount"
+>
+0 units
+</span>
+
+</div>
+
+<button
+type="button"
+class="basket-drawer-close"
+id="basketDrawerClose"
+aria-label="Close basket"
+>
+×
+</button>
+
+</div>
+
+<div
+class="basket-drawer-body"
+id="basketDrawerBody"
+>
+</div>
+
+<div
+class="basket-drawer-footer"
+id="basketDrawerFooter"
+>
+</div>
+
+</aside>
+
+</div>
 
 <!-- =======================================
 PAGES MASTER MENU
@@ -3051,17 +5007,56 @@ Last updated: 5 September 2026
 
 </main>
 
+<script src="js/masters/master-makeup-logic.js"></script>
+
 <script>
 
 /* =========================================
-INFORMATION PAGE TEMPLATE
-HEADER INTERACTIONS
+PRIVACY POLICY
+MASTER HEADER + PAGES MASTER MENU
 ========================================= */
 
 const prefersReducedMotion =
 window.matchMedia(
 "(prefers-reduced-motion: reduce)"
 ).matches;
+
+/* =========================================
+TOUCH BEHAVIOUR
+========================================= */
+
+const informationPageTouchActionStyle =
+document.createElement(
+"style"
+);
+
+informationPageTouchActionStyle.textContent = `
+html,
+body,
+header,
+main,
+section,
+.menu-overlay,
+.menu-panel,
+.menu-backdrop,
+.email-action,
+.whatsapp-action,
+.basket-drawer-layer,
+.basket-drawer-panel,
+.basket-drawer-body,
+.basket-drawer-footer,
+button,
+a,
+input,
+select,
+label {
+touch-action:manipulation;
+}
+`;
+
+document.head.appendChild(
+informationPageTouchActionStyle
+);
 
 /* =========================================
 DESKTOP ACCESS RESTRICTION
@@ -3122,6 +5117,6590 @@ blocker.setAttribute(
 }
 
 applyDesktopAccessRestriction();
+
+/* =========================================
+MASTER HEADER
+EMAIL ACTION
+========================================= */
+
+const emailButton =
+document.getElementById(
+"emailButton"
+);
+
+const emailAction =
+document.getElementById(
+"emailAction"
+);
+
+function closeEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+emailAction.classList.remove(
+"is-open"
+);
+
+emailButton.classList.remove(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+function openEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+closeWhatsappAction();
+
+emailAction.classList.add(
+"is-open"
+);
+
+emailButton.classList.add(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
+
+if (
+emailButton &&
+emailAction
+) {
+
+emailButton.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();
+
+const willOpen =
+!emailAction.classList.contains(
+"is-open"
+);
+
+if (
+willOpen
+) {
+
+closeWhatsappAction();
+
+}
+
+emailAction.classList.toggle(
+"is-open",
+willOpen
+);
+
+emailButton.classList.toggle(
+"is-selected",
+willOpen
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+willOpen
+? "true"
+: "false"
+);
+
+}
+);
+
+emailAction.addEventListener(
+"click",
+() => {
+
+closeEmailAction();
+
+}
+);
+
+document.addEventListener(
+"click",
+(event) => {
+
+if (
+event.target.closest(
+"#emailButton"
+) ||
+event.target.closest(
+"#emailAction"
+)
+) {
+
+return;
+
+}
+
+closeEmailAction();
+
+}
+);
+
+}
+
+/* =========================================
+MASTER HEADER
+WHATSAPP ACTION
+========================================= */
+
+const whatsappButton =
+document.getElementById(
+"whatsappButton"
+);
+
+const whatsappAction =
+document.getElementById(
+"whatsappAction"
+);
+
+function closeWhatsappAction() {
+
+if (
+!whatsappButton ||
+!whatsappAction
+) {
+
+return;
+
+}
+
+whatsappAction.classList.remove(
+"is-open"
+);
+
+whatsappButton.classList.remove(
+"is-selected"
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+function openWhatsappAction() {
+
+if (
+!whatsappButton ||
+!whatsappAction
+) {
+
+return;
+
+}
+
+closeEmailAction();
+
+whatsappAction.classList.add(
+"is-open"
+);
+
+whatsappButton.classList.add(
+"is-selected"
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
+
+if (
+whatsappButton &&
+whatsappAction
+) {
+
+whatsappButton.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();
+
+const willOpen =
+!whatsappAction.classList.contains(
+"is-open"
+);
+
+if (
+willOpen
+) {
+
+closeEmailAction();
+
+}
+
+whatsappAction.classList.toggle(
+"is-open",
+willOpen
+);
+
+whatsappButton.classList.toggle(
+"is-selected",
+willOpen
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+willOpen
+? "true"
+: "false"
+);
+
+}
+);
+
+document.addEventListener(
+"click",
+(event) => {
+
+if (
+event.target.closest(
+"#whatsappButton"
+) ||
+event.target.closest(
+"#whatsappAction"
+)
+) {
+
+return;
+
+}
+
+closeWhatsappAction();
+
+}
+);
+
+}
+
+/* =========================================
+SHARED ORDER STORAGE
+========================================= */
+
+const MASTER_HEADER_ORDER_STORAGE_KEY =
+"factoryToughenedRooflightsOrderV1";
+
+const MASTER_HEADER_DELIVERY_POSTCODE_KEY =
+"factoryToughenedRooflightsDeliveryPostcodeV1";
+
+/* =========================================
+MASTER HEADER
+BASKET DOM / STATE
+========================================= */
+
+const basketButton =
+document.getElementById(
+"basketButton"
+);
+
+const basketTotalText =
+document.getElementById(
+"basketTotalText"
+);
+
+const basketDrawerLayer =
+document.getElementById(
+"basketDrawerLayer"
+);
+
+const basketDrawerPanel =
+document.getElementById(
+"basketDrawerPanel"
+);
+
+const basketDrawerClose =
+document.getElementById(
+"basketDrawerClose"
+);
+
+const basketDrawerCount =
+document.getElementById(
+"basketDrawerCount"
+);
+
+const basketDrawerBody =
+document.getElementById(
+"basketDrawerBody"
+);
+
+const basketDrawerFooter =
+document.getElementById(
+"basketDrawerFooter"
+);
+
+const basketDrawerBackdrop =
+document.querySelector(
+"[data-basket-drawer-backdrop]"
+);
+
+let basketDrawerIsOpen =
+false;
+
+let basketDrawerScrollY =
+0;
+
+let basketDrawerPreviousBodyStyles =
+null;
+
+let lastBasketFocusedElement =
+null;
+
+const basketDrawerExpandedItems =
+new Set();
+
+let basketDeliveryRequestId =
+0;
+
+let basketDeliveryLookupTimer =
+null;
+
+/* =========================================
+GENERIC BASKET HELPERS
+========================================= */
+
+function masterHeaderParseMoney(
+value
+) {
+
+if (
+typeof value ===
+"number"
+) {
+
+return Number.isFinite(
+value
+)
+? value
+: 0;
+
+}
+
+if (
+typeof value !==
+"string"
+) {
+
+return 0;
+
+}
+
+const parsed =
+Number(
+value.replace(
+/[^0-9.\-]/g,
+""
+)
+);
+
+return Number.isFinite(
+parsed
+)
+? parsed
+: 0;
+
+}
+
+function masterHeaderGetQuantity(
+item
+) {
+
+const candidates = [
+
+item?.quantity,
+item?.qty,
+item?.count,
+item?.totalUnitsQty
+
+];
+
+for (
+const candidate of
+candidates
+) {
+
+const numeric =
+Number(
+candidate
+);
+
+if (
+Number.isFinite(
+numeric
+) &&
+numeric >
+0
+) {
+
+return Math.max(
+1,
+Math.round(
+numeric
+)
+);
+
+}
+
+}
+
+return 1;
+
+}
+
+function masterHeaderSetQuantity(
+item,
+quantity
+) {
+
+const safeQuantity =
+Math.max(
+1,
+Math.min(
+999,
+Math.round(
+Number(
+quantity
+) ||
+1
+)
+)
+);
+
+item.quantity =
+safeQuantity;
+
+item.qty =
+safeQuantity;
+
+if (
+Object.prototype.hasOwnProperty.call(
+item,
+"count"
+)
+) {
+
+item.count =
+safeQuantity;
+
+}
+
+if (
+Object.prototype.hasOwnProperty.call(
+item,
+"totalUnitsQty"
+)
+) {
+
+item.totalUnitsQty =
+safeQuantity;
+
+}
+
+}
+
+function masterHeaderGetUnitPrice(
+item
+) {
+
+const directCandidates = [
+
+item?.unitPrice,
+item?.price,
+item?.unitPriceIncVat,
+item?.unitPriceIncVAT,
+item?.priceIncVat,
+item?.priceIncVAT,
+item?.unitTotal,
+item?.configuredPrice
+
+];
+
+for (
+const candidate of
+directCandidates
+) {
+
+const price =
+masterHeaderParseMoney(
+candidate
+);
+
+if (
+price >
+0
+) {
+
+return price;
+
+}
+
+}
+
+const quantity =
+masterHeaderGetQuantity(
+item
+);
+
+const totalCandidates = [
+
+item?.total,
+item?.lineTotal,
+item?.totalPrice,
+item?.subtotal
+
+];
+
+for (
+const candidate of
+totalCandidates
+) {
+
+const total =
+masterHeaderParseMoney(
+candidate
+);
+
+if (
+total >
+0
+) {
+
+return (
+total /
+quantity
+);
+
+}
+
+}
+
+return 0;
+
+}
+
+function masterHeaderGetLineTotal(
+item
+) {
+
+return (
+masterHeaderGetUnitPrice(
+item
+) *
+masterHeaderGetQuantity(
+item
+)
+);
+
+}
+
+function masterHeaderGetNestedValue(
+item,
+keys
+) {
+
+for (
+const key of
+keys
+) {
+
+if (
+item &&
+item[
+key
+] !==
+undefined &&
+item[
+key
+] !==
+null &&
+String(
+item[
+key
+]
+).trim() !==
+""
+) {
+
+return item[
+key
+];
+
+}
+
+}
+
+if (
+item &&
+item.configuration &&
+typeof item.configuration ===
+"object"
+) {
+
+for (
+const key of
+keys
+) {
+
+if (
+item.configuration[
+key
+] !==
+undefined &&
+item.configuration[
+key
+] !==
+null &&
+String(
+item.configuration[
+key
+]
+).trim() !==
+""
+) {
+
+return item.configuration[
+key
+];
+
+}
+
+}
+
+}
+
+return "";
+
+}
+
+function masterHeaderNormalizeDimensions(
+item
+) {
+
+let width =
+Number(
+masterHeaderGetNestedValue(
+item,
+[
+"width",
+"internalWidth",
+"internal_width"
+]
+)
+);
+
+let length =
+Number(
+masterHeaderGetNestedValue(
+item,
+[
+"length",
+"height",
+"internalLength",
+"internalHeight",
+"internal_length"
+]
+)
+);
+
+const sizeString =
+String(
+masterHeaderGetNestedValue(
+item,
+[
+"size",
+"productSize",
+"internalSize",
+"dimensions",
+"internalDimensions"
+]
+) ||
+""
+);
+
+if (
+(
+!Number.isFinite(
+width
+) ||
+!Number.isFinite(
+length
+)
+) &&
+sizeString
+) {
+
+const matches =
+sizeString.match(
+/(\d{3,4})\s*(?:mm)?\s*[x×]\s*(\d{3,4})/i
+);
+
+if (
+matches
+) {
+
+width =
+Number(
+matches[1]
+);
+
+length =
+Number(
+matches[2]
+);
+
+}
+
+}
+
+return {
+width:
+Number.isFinite(
+width
+)
+? width
+: 0,
+
+length:
+Number.isFinite(
+length
+)
+? length
+: 0
+};
+
+}
+
+function masterHeaderGetBorder(
+item
+) {
+
+const border =
+Number(
+masterHeaderGetNestedValue(
+item,
+[
+"border",
+"borderSize",
+"borderMm"
+]
+)
+);
+
+return [
+100,
+125,
+150
+].includes(
+border
+)
+? border
+: 100;
+
+}
+
+function masterHeaderGetGlazing(
+item
+) {
+
+const raw =
+String(
+masterHeaderGetNestedValue(
+item,
+[
+"glazing",
+"glazingType",
+"glazingConfiguration",
+"glazingValue"
+]
+) ||
+""
+)
+.toLowerCase();
+
+if (
+raw.includes(
+"triple"
+)
+) {
+
+return "triple";
+
+}
+
+return "double";
+
+}
+
+function masterHeaderGetGlassType(
+item
+) {
+
+const raw =
+String(
+masterHeaderGetNestedValue(
+item,
+[
+"type",
+"glassType",
+"construction",
+"glazingConstruction",
+"glazingValue",
+"glazingType"
+]
+) ||
+""
+)
+.toLowerCase();
+
+return raw.includes(
+"laminated"
+)
+? "laminated"
+: "toughened";
+
+}
+
+function masterHeaderNormalizeFinish(
+value
+) {
+
+const finish =
+String(
+value ||
+"clear"
+)
+.trim()
+.toLowerCase();
+
+const compact =
+finish.replace(
+/[\s_-]/g,
+""
+);
+
+if (
+compact.includes(
+"solarcontrol"
+)
+) {
+
+return "solarcontrol";
+
+}
+
+if (
+finish.includes(
+"blue"
+)
+) {
+
+return "blue";
+
+}
+
+if (
+finish.includes(
+"grey"
+) ||
+finish.includes(
+"gray"
+)
+) {
+
+return "grey";
+
+}
+
+if (
+finish.includes(
+"satin"
+)
+) {
+
+return "satin";
+
+}
+
+return "clear";
+
+}
+
+function masterHeaderGetFinish(
+item
+) {
+
+return masterHeaderNormalizeFinish(
+masterHeaderGetNestedValue(
+item,
+[
+"finish",
+"glassFinish",
+"tint"
+]
+)
+);
+
+}
+
+function masterHeaderGetSelfCleaning(
+item
+) {
+
+const raw =
+masterHeaderGetNestedValue(
+item,
+[
+"selfCleaning",
+"selfCleaningSelected",
+"includeSelfCleaning",
+"selfCleaningOption",
+"self_cleaning"
+]
+);
+
+if (
+raw ===
+true ||
+raw ===
+1
+) {
+
+return "Yes";
+
+}
+
+const normalized =
+String(
+raw ||
+""
+)
+.trim()
+.toLowerCase();
+
+return (
+normalized ===
+"yes" ||
+normalized ===
+"true" ||
+normalized ===
+"1" ||
+normalized ===
+"on" ||
+normalized ===
+"selected"
+)
+? "Yes"
+: "No";
+
+}
+
+function masterHeaderFormatFinish(
+finish
+) {
+
+switch (
+finish
+) {
+
+case "blue":
+return "Blue Tinted";
+
+case "grey":
+return "Grey Tinted";
+
+case "satin":
+return "Satin Tinted";
+
+case "solarcontrol":
+return "Solar Control";
+
+default:
+return "Clear";
+
+}
+
+}
+
+function masterHeaderFormatGlazing(
+glazing
+) {
+
+return glazing ===
+"triple"
+? "Triple Glazed"
+: "Double Glazed";
+
+}
+
+function masterHeaderFormatGlassType(
+type
+) {
+
+return type ===
+"laminated"
+? "Laminated"
+: "Toughened";
+
+}
+
+function masterHeaderFormatMoney(
+amount
+) {
+
+return (
+"£" +
+Number(
+amount
+).toLocaleString(
+"en-GB",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+)
+);
+
+}
+
+function masterHeaderEscapeHtml(
+value
+) {
+
+return String(
+value ===
+undefined ||
+value ===
+null
+? ""
+: value
+)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+/* =========================================
+STABLE BASKET IDS
+========================================= */
+
+function masterHeaderCreateItemId(
+prefix = "item"
+) {
+
+const safePrefix =
+String(
+prefix ||
+"item"
+)
+.replace(
+/[^a-z0-9_-]/gi,
+""
+)
+||
+"item";
+
+if (
+window.crypto &&
+typeof window.crypto.randomUUID ===
+"function"
+) {
+
+return (
+safePrefix +
+"-" +
+window.crypto.randomUUID()
+);
+
+}
+
+return (
+safePrefix +
+"-" +
+Date.now() +
+"-" +
+Math.random()
+.toString(
+36
+)
+.slice(
+2,
+10
+)
+);
+
+}
+
+function masterHeaderEnsureItemId(
+item,
+kind = "standard"
+) {
+
+if (
+!item ||
+typeof item !==
+"object"
+) {
+
+return "";
+
+}
+
+let itemId =
+String(
+item.id ??
+item._id ??
+""
+).trim();
+
+if (
+!itemId
+) {
+
+itemId =
+masterHeaderCreateItemId(
+kind ===
+"custom"
+? "custom"
+: "standard"
+);
+
+}
+
+item.id =
+itemId;
+
+item._id =
+itemId;
+
+return itemId;
+
+}
+
+function masterHeaderMakeDomId(
+value
+) {
+
+return String(
+value ||
+"item"
+)
+.replace(
+/[^a-zA-Z0-9_-]/g,
+"-"
+);
+
+}
+
+/* =========================================
+SHARED ORDER PAYLOAD
+========================================= */
+
+function masterHeaderReadOrderPayload() {
+
+try {
+
+const raw =
+localStorage.getItem(
+MASTER_HEADER_ORDER_STORAGE_KEY
+);
+
+if (
+!raw
+) {
+
+return {
+version:6,
+items:[],
+customItems:[]
+};
+
+}
+
+const parsed =
+JSON.parse(
+raw
+);
+
+if (
+Array.isArray(
+parsed
+)
+) {
+
+return {
+version:6,
+items:parsed,
+customItems:[]
+};
+
+}
+
+if (
+parsed &&
+typeof parsed ===
+"object"
+) {
+
+return parsed;
+
+}
+
+}
+catch (error) {
+
+}
+
+return {
+version:6,
+items:[],
+customItems:[]
+};
+
+}
+
+function masterHeaderWriteOrderPayload(
+payload
+) {
+
+try {
+
+localStorage.setItem(
+MASTER_HEADER_ORDER_STORAGE_KEY,
+JSON.stringify(
+payload
+)
+);
+
+}
+catch (error) {
+
+}
+
+}
+
+function masterHeaderGetStandardCollection(
+payload
+) {
+
+if (
+Array.isArray(
+payload?.items
+)
+) {
+
+return {
+items:
+payload.items,
+key:"items"
+};
+
+}
+
+const legacyKeys = [
+"orderItems",
+"confirmedUnits",
+"units",
+"basketItems"
+];
+
+for (
+const key of
+legacyKeys
+) {
+
+if (
+Array.isArray(
+payload?.[
+key
+]
+)
+) {
+
+return {
+items:
+payload[
+key
+],
+key
+};
+
+}
+
+}
+
+payload.items = [];
+
+return {
+items:
+payload.items,
+key:"items"
+};
+
+}
+
+function masterHeaderGetCustomCollection(
+payload
+) {
+
+if (
+Array.isArray(
+payload?.customItems
+)
+) {
+
+return {
+items:
+payload.customItems,
+key:"customItems"
+};
+
+}
+
+const legacyKeys = [
+"customOrderItems",
+"customUnits",
+"customBasketItems"
+];
+
+for (
+const key of
+legacyKeys
+) {
+
+if (
+Array.isArray(
+payload?.[
+key
+]
+)
+) {
+
+return {
+items:
+payload[
+key
+],
+key
+};
+
+}
+
+}
+
+payload.customItems = [];
+
+return {
+items:
+payload.customItems,
+key:"customItems"
+};
+
+}
+
+function masterHeaderNormalizePayload(
+payload
+) {
+
+if (
+!payload ||
+typeof payload !==
+"object"
+) {
+
+payload = {
+version:6,
+items:[],
+customItems:[]
+};
+
+}
+
+const standardCollection =
+masterHeaderGetStandardCollection(
+payload
+);
+
+const customCollection =
+masterHeaderGetCustomCollection(
+payload
+);
+
+standardCollection.items
+.forEach(
+(item) => {
+
+masterHeaderEnsureItemId(
+item,
+"standard"
+);
+
+}
+);
+
+customCollection.items
+.forEach(
+(item) => {
+
+masterHeaderEnsureItemId(
+item,
+"custom"
+);
+
+}
+);
+
+payload.version =
+6;
+
+payload.items =
+standardCollection.items;
+
+payload.customItems =
+customCollection.items;
+
+if (
+standardCollection.key !==
+"items"
+) {
+
+payload[
+standardCollection.key
+] =
+standardCollection.items;
+
+}
+
+if (
+customCollection.key !==
+"customItems"
+) {
+
+payload[
+customCollection.key
+] =
+customCollection.items;
+
+}
+
+return payload;
+
+}
+
+function masterHeaderGetEntries(
+payload
+) {
+
+const entries = [];
+
+masterHeaderGetStandardCollection(
+payload
+).items
+.forEach(
+(item,index) => {
+
+entries.push({
+item,
+kind:"standard",
+sourceIndex:index
+});
+
+}
+);
+
+masterHeaderGetCustomCollection(
+payload
+).items
+.forEach(
+(item,index) => {
+
+entries.push({
+item,
+kind:"custom",
+sourceIndex:index
+});
+
+}
+);
+
+return entries;
+
+}
+
+function masterHeaderGetItems(
+payload
+) {
+
+return masterHeaderGetEntries(
+payload
+)
+.map(
+(entry) =>
+entry.item
+);
+
+}
+
+function masterHeaderGetMutableCollection(
+payload,
+kind
+) {
+
+return kind ===
+"custom"
+?
+masterHeaderGetCustomCollection(
+payload
+).items
+:
+masterHeaderGetStandardCollection(
+payload
+).items;
+
+}
+
+function masterHeaderFindItemIndex(
+payload,
+kind,
+itemId,
+fallbackIndex
+) {
+
+const collection =
+masterHeaderGetMutableCollection(
+payload,
+kind
+);
+
+const safeItemId =
+String(
+itemId ||
+""
+);
+
+if (
+safeItemId
+) {
+
+const matchedIndex =
+collection.findIndex(
+(item) =>
+String(
+item?.id ??
+item?._id ??
+""
+) ===
+safeItemId
+);
+
+if (
+matchedIndex >=
+0
+) {
+
+return matchedIndex;
+
+}
+
+}
+
+if (
+Number.isInteger(
+fallbackIndex
+) &&
+fallbackIndex >=
+0 &&
+fallbackIndex <
+collection.length
+) {
+
+return fallbackIndex;
+
+}
+
+return -1;
+
+}
+
+/* =========================================
+BASKET SPECIFICATION HELPERS
+========================================= */
+
+function masterHeaderGetInternalSizeText(
+item
+) {
+
+const dimensions =
+masterHeaderNormalizeDimensions(
+item
+);
+
+if (
+dimensions.width >
+0 &&
+dimensions.length >
+0
+) {
+
+return (
+`${dimensions.width}mm × ${dimensions.length}mm`
+);
+
+}
+
+return "Custom Size";
+
+}
+
+function masterHeaderGetTitleSizeText(
+item
+) {
+
+const dimensions =
+masterHeaderNormalizeDimensions(
+item
+);
+
+if (
+dimensions.width >
+0 &&
+dimensions.length >
+0
+) {
+
+return (
+`${dimensions.width} x ${dimensions.length}mm`
+);
+
+}
+
+return "Custom Size";
+
+}
+
+function masterHeaderGetExternalDimensions(
+item
+) {
+
+const dimensions =
+masterHeaderNormalizeDimensions(
+item
+);
+
+const border =
+masterHeaderGetBorder(
+item
+);
+
+if (
+dimensions.width >
+0 &&
+dimensions.length >
+0
+) {
+
+return {
+width:
+dimensions.width +
+border *
+2,
+
+length:
+dimensions.length +
+border *
+2
+};
+
+}
+
+return {
+width:0,
+length:0
+};
+
+}
+
+function masterHeaderGetExternalSizeText(
+item
+) {
+
+const dimensions =
+masterHeaderGetExternalDimensions(
+item
+);
+
+if (
+dimensions.width >
+0 &&
+dimensions.length >
+0
+) {
+
+return (
+`${dimensions.width}mm × ${dimensions.length}mm`
+);
+
+}
+
+return "—";
+
+}
+
+function masterHeaderGetDescription(
+item
+) {
+
+const finish =
+masterHeaderGetFinish(
+item
+);
+
+const glazing =
+masterHeaderGetGlazing(
+item
+);
+
+const finishPrefix =
+finish ===
+"clear"
+? ""
+: `${masterHeaderFormatFinish(finish)} `;
+
+return (
+`${finishPrefix}${masterHeaderFormatGlazing(glazing)} Frameless Skylight`
+);
+
+}
+
+/* =========================================
+MASTER MAKE-UP
+TOP GLASS
+========================================= */
+
+function masterHeaderGetTopGlassLabel(
+item
+) {
+
+const dimensions =
+masterHeaderNormalizeDimensions(
+item
+);
+
+if (
+dimensions.width <=
+0 ||
+dimensions.length <=
+0
+) {
+
+return "Glass Specification Unavailable";
+
+}
+
+const master =
+globalThis
+.MasterMakeupLogic;
+
+if (
+!master ||
+typeof master.getUnitMakeup !==
+"function"
+) {
+
+const storedCandidates = [
+
+item?.topGlass,
+item?.topGlassLabel,
+item?.topGlassSpecification,
+item?.topPaneSpecification
+
+];
+
+for (
+const candidate of
+storedCandidates
+) {
+
+if (
+candidate
+) {
+
+return String(
+candidate
+);
+
+}
+
+}
+
+return "Glass Specification Unavailable";
+
+}
+
+try {
+
+const makeup =
+master.getUnitMakeup(
+{
+internalWidth:
+dimensions.width,
+
+internalLength:
+dimensions.length,
+
+border:
+masterHeaderGetBorder(
+item
+),
+
+glazing:
+masterHeaderGetGlazing(
+item
+),
+
+finish:
+masterHeaderGetFinish(
+item
+),
+
+bottomType:
+masterHeaderGetGlassType(
+item
+) ===
+"laminated"
+?
+"lam"
+:
+"tough"
+}
+);
+
+const topPane =
+makeup?.panes?.top ??
+makeup?.topPane ??
+makeup?.top ??
+null;
+
+const candidates = [
+
+typeof topPane ===
+"number"
+? topPane
+: null,
+
+topPane?.thickness,
+topPane?.thicknessMm,
+topPane?.thicknessMM,
+makeup?.topThickness,
+makeup?.topThicknessMm,
+makeup?.topPaneThickness,
+makeup?.topPaneThicknessMm,
+makeup?.topGlassThickness,
+makeup?.topGlassThicknessMm
+
+];
+
+for (
+const candidate of
+candidates
+) {
+
+const thickness =
+Number(
+candidate
+);
+
+if (
+Number.isFinite(
+thickness
+) &&
+thickness >
+0
+) {
+
+return (
+`${thickness}mm Toughened Safety Glass`
+);
+
+}
+
+}
+
+}
+catch (error) {
+
+}
+
+return "Glass Specification Unavailable";
+
+}
+
+/* =========================================
+DELIVERY ENGINE
+========================================= */
+
+const DELIVERY_ORIGIN_POSTCODE =
+"SL9 7BB";
+
+const ROAD_DISTANCE_ALLOWANCE =
+1.20;
+
+const STANDARD_DELIVERY_CATEGORIES = {
+
+small:
+new Set([
+"300x800",
+"300x1000",
+"300x1200",
+"400x800",
+"400x1000",
+"400x1200",
+"600x600",
+"600x900"
+]),
+
+medium:
+new Set([
+"300x1500",
+"400x1500",
+"400x1800",
+"600x1200",
+"600x1500",
+"800x800",
+"800x1000",
+"800x1200",
+"800x1500",
+"1000x1000"
+]),
+
+large:
+new Set([
+"600x1800",
+"600x2000",
+"800x1800",
+"800x2000",
+"1000x1200",
+"1000x1500",
+"1000x1800",
+"1000x2000"
+]),
+
+extraLarge:
+new Set([
+"600x2500",
+"800x2500",
+"1000x2500",
+"1500x1500",
+"1500x1800",
+"1500x2000",
+"1500x2500"
+])
+
+};
+
+const DELIVERY_CATEGORY_CONFIG = {
+
+small:{
+maxMiles:400,
+additionalUnit:15,
+bands:[
+{max:34,base:25},
+{max:79,base:35},
+{max:150,base:45},
+{max:400,base:70}
+]
+},
+
+medium:{
+maxMiles:400,
+additionalUnit:15,
+bands:[
+{max:34,base:30},
+{max:79,base:40},
+{max:150,base:50},
+{max:400,base:75}
+]
+},
+
+large:{
+maxMiles:400,
+additionalUnit:25,
+bands:[
+{max:34,base:35},
+{max:79,base:45},
+{max:150,base:55},
+{max:400,base:85}
+]
+},
+
+extraLarge:{
+maxMiles:200,
+additionalUnit:65,
+bands:[
+{max:34,base:55},
+{max:79,base:75},
+{max:150,base:85},
+{max:200,base:115}
+]
+}
+
+};
+
+const DELIVERY_CATEGORY_RANK = {
+small:1,
+medium:2,
+large:3,
+extraLarge:4
+};
+
+const DELIVERY_REFERENCE_SIZES = [
+
+{width:300,length:800,category:"small"},
+{width:300,length:1000,category:"small"},
+{width:300,length:1200,category:"small"},
+{width:400,length:800,category:"small"},
+{width:400,length:1000,category:"small"},
+{width:400,length:1200,category:"small"},
+{width:600,length:600,category:"small"},
+{width:600,length:900,category:"small"},
+
+{width:300,length:1500,category:"medium"},
+{width:400,length:1500,category:"medium"},
+{width:400,length:1800,category:"medium"},
+{width:600,length:1200,category:"medium"},
+{width:600,length:1500,category:"medium"},
+{width:800,length:800,category:"medium"},
+{width:800,length:1000,category:"medium"},
+{width:800,length:1200,category:"medium"},
+{width:800,length:1500,category:"medium"},
+{width:1000,length:1000,category:"medium"},
+
+{width:600,length:1800,category:"large"},
+{width:600,length:2000,category:"large"},
+{width:800,length:1800,category:"large"},
+{width:800,length:2000,category:"large"},
+{width:1000,length:1200,category:"large"},
+{width:1000,length:1500,category:"large"},
+{width:1000,length:1800,category:"large"},
+{width:1000,length:2000,category:"large"},
+
+{width:600,length:2500,category:"extraLarge"},
+{width:800,length:2500,category:"extraLarge"},
+{width:1000,length:2500,category:"extraLarge"},
+{width:1500,length:1500,category:"extraLarge"},
+{width:1500,length:1800,category:"extraLarge"},
+{width:1500,length:2000,category:"extraLarge"},
+{width:1500,length:2500,category:"extraLarge"}
+
+];
+
+function masterHeaderNormalizeDeliveryDimensions(
+width,
+length
+) {
+
+const first =
+Number(
+width
+);
+
+const second =
+Number(
+length
+);
+
+return {
+short:
+Math.min(
+first,
+second
+),
+
+long:
+Math.max(
+first,
+second
+)
+};
+
+}
+
+function masterHeaderGetStandardDeliveryCategory(
+width,
+length
+) {
+
+const originalKey =
+`${Number(width)}x${Number(length)}`;
+
+const reverseKey =
+`${Number(length)}x${Number(width)}`;
+
+for (
+const [
+category,
+sizeSet
+]
+of Object.entries(
+STANDARD_DELIVERY_CATEGORIES
+)
+) {
+
+if (
+sizeSet.has(
+originalKey
+) ||
+sizeSet.has(
+reverseKey
+)
+) {
+
+return category;
+
+}
+
+}
+
+return null;
+
+}
+
+function masterHeaderCanReferenceContainCustomSize(
+reference,
+width,
+length
+) {
+
+const custom =
+masterHeaderNormalizeDeliveryDimensions(
+width,
+length
+);
+
+const referenceSize =
+masterHeaderNormalizeDeliveryDimensions(
+reference.width,
+reference.length
+);
+
+return (
+referenceSize.short >=
+custom.short &&
+referenceSize.long >=
+custom.long
+);
+
+}
+
+function masterHeaderGetCustomDeliveryCategory(
+width,
+length
+) {
+
+const candidates =
+DELIVERY_REFERENCE_SIZES
+.filter(
+(reference) =>
+masterHeaderCanReferenceContainCustomSize(
+reference,
+width,
+length
+)
+)
+.sort(
+(a,b) => {
+
+const rankDifference =
+DELIVERY_CATEGORY_RANK[
+a.category
+] -
+DELIVERY_CATEGORY_RANK[
+b.category
+];
+
+if (
+rankDifference !==
+0
+) {
+
+return rankDifference;
+
+}
+
+return (
+a.width *
+a.length
+) -
+(
+b.width *
+b.length
+);
+
+}
+);
+
+if (
+candidates.length
+) {
+
+return candidates[0].category;
+
+}
+
+return "extraLarge";
+
+}
+
+function masterHeaderGetDeliveryCategory(
+item
+) {
+
+const storedCategory =
+String(
+masterHeaderGetNestedValue(
+item,
+[
+"deliveryCategory"
+]
+) ||
+""
+);
+
+if (
+Object.prototype.hasOwnProperty.call(
+DELIVERY_CATEGORY_CONFIG,
+storedCategory
+)
+) {
+
+return storedCategory;
+
+}
+
+const dimensions =
+masterHeaderNormalizeDimensions(
+item
+);
+
+if (
+dimensions.width <=
+0 ||
+dimensions.length <=
+0
+) {
+
+return "extraLarge";
+
+}
+
+const standardCategory =
+masterHeaderGetStandardDeliveryCategory(
+dimensions.width,
+dimensions.length
+);
+
+if (
+standardCategory
+) {
+
+return standardCategory;
+
+}
+
+return masterHeaderGetCustomDeliveryCategory(
+dimensions.width,
+dimensions.length
+);
+
+}
+
+function masterHeaderGetDeliveryBase(
+category,
+miles
+) {
+
+const config =
+DELIVERY_CATEGORY_CONFIG[
+category
+];
+
+if (
+!config ||
+miles >
+config.maxMiles
+) {
+
+return null;
+
+}
+
+const band =
+config.bands.find(
+(candidate) =>
+miles <=
+candidate.max
+);
+
+return band
+? band.base
+: null;
+
+}
+
+function masterHeaderGetAdditionalDeliveryPrice(
+category
+) {
+
+const value =
+Number(
+DELIVERY_CATEGORY_CONFIG[
+category
+]?.additionalUnit
+);
+
+return Number.isFinite(
+value
+)
+? value
+: 0;
+
+}
+
+function masterHeaderNormalizePostcode(
+postcode
+) {
+
+return String(
+postcode ||
+""
+)
+.trim()
+.toUpperCase()
+.replace(
+/\s+/g,
+""
+);
+
+}
+
+function masterHeaderFormatPostcode(
+postcode
+) {
+
+const normalized =
+masterHeaderNormalizePostcode(
+postcode
+);
+
+if (
+normalized.length <=
+3
+) {
+
+return normalized;
+
+}
+
+return (
+normalized.slice(
+0,
+-3
+) +
+" " +
+normalized.slice(
+-3
+)
+);
+
+}
+
+function masterHeaderIsCompletePostcode(
+postcode
+) {
+
+const cleaned =
+masterHeaderNormalizePostcode(
+postcode
+);
+
+if (
+!cleaned
+) {
+
+return false;
+
+}
+
+return /^(?:GIR0AA|[A-Z]{1,2}[0-9][A-Z0-9]?[0-9][A-Z]{2})$/.test(
+cleaned
+);
+
+}
+
+async function masterHeaderFetchPostcodeCoordinates(
+postcode
+) {
+
+const normalized =
+masterHeaderNormalizePostcode(
+postcode
+);
+
+if (
+!masterHeaderIsCompletePostcode(
+normalized
+)
+) {
+
+throw new Error(
+"Postcode required."
+);
+
+}
+
+const response =
+await fetch(
+`https://api.postcodes.io/postcodes/${encodeURIComponent(normalized)}`
+);
+
+if (
+!response.ok
+) {
+
+throw new Error(
+"Postcode not found."
+);
+
+}
+
+const payload =
+await response.json();
+
+if (
+!payload ||
+!payload.result
+) {
+
+throw new Error(
+"Postcode not found."
+);
+
+}
+
+const latitude =
+Number(
+payload.result.latitude
+);
+
+const longitude =
+Number(
+payload.result.longitude
+);
+
+if (
+!Number.isFinite(
+latitude
+) ||
+!Number.isFinite(
+longitude
+)
+) {
+
+throw new Error(
+"Invalid postcode coordinates."
+);
+
+}
+
+return {
+latitude,
+longitude
+};
+
+}
+
+function masterHeaderDegreesToRadians(
+degrees
+) {
+
+return (
+Number(
+degrees
+) *
+Math.PI /
+180
+);
+
+}
+
+function masterHeaderCalculateStraightLineMiles(
+first,
+second
+) {
+
+const earthRadiusMiles =
+3958.7613;
+
+const latitudeDifference =
+masterHeaderDegreesToRadians(
+second.latitude -
+first.latitude
+);
+
+const longitudeDifference =
+masterHeaderDegreesToRadians(
+second.longitude -
+first.longitude
+);
+
+const firstLatitude =
+masterHeaderDegreesToRadians(
+first.latitude
+);
+
+const secondLatitude =
+masterHeaderDegreesToRadians(
+second.latitude
+);
+
+const a =
+Math.sin(
+latitudeDifference /
+2
+) **
+2 +
+Math.cos(
+firstLatitude
+) *
+Math.cos(
+secondLatitude
+) *
+Math.sin(
+longitudeDifference /
+2
+) **
+2;
+
+const c =
+2 *
+Math.atan2(
+Math.sqrt(
+a
+),
+Math.sqrt(
+1 -
+a
+)
+);
+
+return (
+earthRadiusMiles *
+c
+);
+
+}
+
+let masterHeaderOriginCoordinatesPromise =
+null;
+
+function masterHeaderGetOriginCoordinates() {
+
+if (
+!masterHeaderOriginCoordinatesPromise
+) {
+
+masterHeaderOriginCoordinatesPromise =
+masterHeaderFetchPostcodeCoordinates(
+DELIVERY_ORIGIN_POSTCODE
+);
+
+}
+
+return masterHeaderOriginCoordinatesPromise;
+
+}
+
+function masterHeaderExpandDeliveryUnits(
+items
+) {
+
+const units = [];
+
+(
+Array.isArray(
+items
+)
+? items
+: []
+)
+.forEach(
+(item) => {
+
+const category =
+masterHeaderGetDeliveryCategory(
+item
+);
+
+const quantity =
+masterHeaderGetQuantity(
+item
+);
+
+for (
+let index = 0;
+index <
+quantity;
+index +=
+1
+) {
+
+units.push({
+item,
+category
+});
+
+}
+
+}
+);
+
+return units;
+
+}
+
+function masterHeaderCalculateDeliveryCombination(
+units,
+baseIndex,
+miles
+) {
+
+if (
+!Array.isArray(
+units
+) ||
+!units.length ||
+!Number.isInteger(
+baseIndex
+)
+) {
+
+return null;
+
+}
+
+const baseUnit =
+units[
+baseIndex
+];
+
+if (
+!baseUnit
+) {
+
+return null;
+
+}
+
+const basePrice =
+masterHeaderGetDeliveryBase(
+baseUnit.category,
+miles
+);
+
+if (
+!Number.isFinite(
+basePrice
+)
+) {
+
+return null;
+
+}
+
+const additionalUnitsTotal =
+units.reduce(
+(total,unit,index) => {
+
+if (
+index ===
+baseIndex
+) {
+
+return total;
+
+}
+
+return (
+total +
+masterHeaderGetAdditionalDeliveryPrice(
+unit.category
+)
+);
+
+},
+0
+);
+
+return {
+baseIndex,
+baseCategory:
+baseUnit.category,
+basePrice,
+additionalUnitsTotal,
+price:
+basePrice +
+additionalUnitsTotal
+};
+
+}
+
+function masterHeaderGetMostExpensiveDeliveryCombination(
+units,
+miles
+) {
+
+let mostExpensive =
+null;
+
+units.forEach(
+(unit,index) => {
+
+const combination =
+masterHeaderCalculateDeliveryCombination(
+units,
+index,
+miles
+);
+
+if (
+!combination
+) {
+
+return;
+
+}
+
+if (
+!mostExpensive ||
+combination.price >
+mostExpensive.price ||
+(
+combination.price ===
+mostExpensive.price &&
+combination.basePrice >
+mostExpensive.basePrice
+)
+) {
+
+mostExpensive =
+combination;
+
+}
+
+}
+);
+
+return mostExpensive;
+
+}
+
+function masterHeaderGetDeliveryGroups(
+units
+) {
+
+const extraLargeUnits =
+units.filter(
+(unit) =>
+unit.category ===
+"extraLarge"
+);
+
+const nonExtraLargeUnits =
+units.filter(
+(unit) =>
+unit.category !==
+"extraLarge"
+);
+
+if (
+extraLargeUnits.length &&
+nonExtraLargeUnits.length
+) {
+
+return [
+{
+name:"extraLarge",
+units:
+extraLargeUnits
+},
+{
+name:"nonExtraLarge",
+units:
+nonExtraLargeUnits
+}
+];
+
+}
+
+return [
+{
+name:"combined",
+units
+}
+];
+
+}
+
+function masterHeaderGetDeliveryLimitFailure(
+units,
+miles
+) {
+
+const failingUnit =
+units.find(
+(unit) => {
+
+const config =
+DELIVERY_CATEGORY_CONFIG[
+unit.category
+];
+
+return (
+config &&
+miles >
+config.maxMiles
+);
+
+}
+);
+
+if (
+!failingUnit
+) {
+
+return null;
+
+}
+
+return {
+reason:
+failingUnit.category ===
+"extraLarge"
+?
+"Delivery quotation required for Extra Large rooflights over 200 adjusted miles."
+:
+"Delivery quotation required for destinations over 400 adjusted miles."
+};
+
+}
+
+function masterHeaderCalculateDelivery(
+items,
+miles
+) {
+
+const chargeableMiles =
+Math.max(
+0,
+Math.ceil(
+Number(
+miles
+) ||
+0
+)
+);
+
+const units =
+masterHeaderExpandDeliveryUnits(
+items
+);
+
+if (
+!units.length
+) {
+
+return {
+quote:false,
+amount:0,
+miles:chargeableMiles,
+reason:""
+};
+
+}
+
+const limitFailure =
+masterHeaderGetDeliveryLimitFailure(
+units,
+chargeableMiles
+);
+
+if (
+limitFailure
+) {
+
+return {
+quote:true,
+amount:null,
+miles:chargeableMiles,
+reason:
+limitFailure.reason
+};
+
+}
+
+const groups =
+masterHeaderGetDeliveryGroups(
+units
+);
+
+const groupResults =
+groups.map(
+(group) => {
+
+const combination =
+masterHeaderGetMostExpensiveDeliveryCombination(
+group.units,
+chargeableMiles
+);
+
+if (
+!combination
+) {
+
+return null;
+
+}
+
+return {
+name:
+group.name,
+combination
+};
+
+}
+);
+
+if (
+groupResults.some(
+(result) =>
+!result
+)
+) {
+
+return {
+quote:true,
+amount:null,
+miles:chargeableMiles,
+reason:
+"Delivery quotation required."
+};
+
+}
+
+return {
+quote:false,
+
+amount:
+groupResults.reduce(
+(total,result) =>
+total +
+result.combination.price,
+0
+),
+
+miles:
+chargeableMiles,
+
+reason:""
+};
+
+}
+
+/* =========================================
+LEAD TIME / ESTIMATED DELIVERY
+========================================= */
+
+const UK_TIME_ZONE =
+"Europe/London";
+
+const UK_PRODUCTION_CUTOFF_HOUR =
+12;
+
+function masterHeaderMakeCalendarDate(
+year,
+month,
+day
+) {
+
+return new Date(
+Date.UTC(
+year,
+month -
+1,
+day,
+12,
+0,
+0
+)
+);
+
+}
+
+function masterHeaderGetCalendarKey(
+date
+) {
+
+return [
+date.getUTCFullYear(),
+String(
+date.getUTCMonth() +
+1
+).padStart(
+2,
+"0"
+),
+String(
+date.getUTCDate()
+).padStart(
+2,
+"0"
+)
+].join(
+"-"
+);
+
+}
+
+function masterHeaderAddCalendarDays(
+date,
+days
+) {
+
+const copy =
+new Date(
+date.getTime()
+);
+
+copy.setUTCDate(
+copy.getUTCDate() +
+Number(
+days
+)
+);
+
+return copy;
+
+}
+
+function masterHeaderGetNthWeekday(
+year,
+month,
+weekday,
+occurrence
+) {
+
+const first =
+masterHeaderMakeCalendarDate(
+year,
+month,
+1
+);
+
+const offset =
+(
+weekday -
+first.getUTCDay() +
+7
+) %
+7;
+
+return masterHeaderMakeCalendarDate(
+year,
+month,
+1 +
+offset +
+(
+occurrence -
+1
+) *
+7
+);
+
+}
+
+function masterHeaderGetLastWeekday(
+year,
+month,
+weekday
+) {
+
+const last =
+masterHeaderMakeCalendarDate(
+year,
+month +
+1,
+0
+);
+
+const difference =
+(
+last.getUTCDay() -
+weekday +
+7
+) %
+7;
+
+return masterHeaderAddCalendarDays(
+last,
+-difference
+);
+
+}
+
+function masterHeaderGetEasterSunday(
+year
+) {
+
+const a =
+year %
+19;
+
+const b =
+Math.floor(
+year /
+100
+);
+
+const c =
+year %
+100;
+
+const d =
+Math.floor(
+b /
+4
+);
+
+const e =
+b %
+4;
+
+const f =
+Math.floor(
+(
+b +
+8
+) /
+25
+);
+
+const g =
+Math.floor(
+(
+b -
+f +
+1
+) /
+3
+);
+
+const h =
+(
+19 *
+a +
+b -
+d -
+g +
+15
+) %
+30;
+
+const i =
+Math.floor(
+c /
+4
+);
+
+const k =
+c %
+4;
+
+const l =
+(
+32 +
+2 *
+e +
+2 *
+i -
+h -
+k
+) %
+7;
+
+const m =
+Math.floor(
+(
+a +
+11 *
+h +
+22 *
+l
+) /
+451
+);
+
+const month =
+Math.floor(
+(
+h +
+l -
+7 *
+m +
+114
+) /
+31
+);
+
+const day =
+(
+(
+h +
+l -
+7 *
+m +
+114
+) %
+31
+) +
+1;
+
+return masterHeaderMakeCalendarDate(
+year,
+month,
+day
+);
+
+}
+
+function masterHeaderAddObservedHoliday(
+holidaySet,
+date
+) {
+
+const weekday =
+date.getUTCDay();
+
+if (
+weekday >=
+1 &&
+weekday <=
+5
+) {
+
+holidaySet.add(
+masterHeaderGetCalendarKey(
+date
+)
+);
+
+return;
+
+}
+
+let substitute =
+masterHeaderAddCalendarDays(
+date,
+1
+);
+
+while (
+substitute.getUTCDay() ===
+0 ||
+substitute.getUTCDay() ===
+6 ||
+holidaySet.has(
+masterHeaderGetCalendarKey(
+substitute
+)
+)
+) {
+
+substitute =
+masterHeaderAddCalendarDays(
+substitute,
+1
+);
+
+}
+
+holidaySet.add(
+masterHeaderGetCalendarKey(
+substitute
+)
+);
+
+}
+
+function masterHeaderGetBankHolidayKeys(
+year
+) {
+
+const holidays =
+new Set();
+
+masterHeaderAddObservedHoliday(
+holidays,
+masterHeaderMakeCalendarDate(
+year,
+1,
+1
+)
+);
+
+const easterSunday =
+masterHeaderGetEasterSunday(
+year
+);
+
+holidays.add(
+masterHeaderGetCalendarKey(
+masterHeaderAddCalendarDays(
+easterSunday,
+-2
+)
+)
+);
+
+holidays.add(
+masterHeaderGetCalendarKey(
+masterHeaderAddCalendarDays(
+easterSunday,
+1
+)
+)
+);
+
+holidays.add(
+masterHeaderGetCalendarKey(
+masterHeaderGetNthWeekday(
+year,
+5,
+1,
+1
+)
+)
+);
+
+holidays.add(
+masterHeaderGetCalendarKey(
+masterHeaderGetLastWeekday(
+year,
+5,
+1
+)
+)
+);
+
+holidays.add(
+masterHeaderGetCalendarKey(
+masterHeaderGetLastWeekday(
+year,
+8,
+1
+)
+)
+);
+
+const christmas =
+masterHeaderMakeCalendarDate(
+year,
+12,
+25
+);
+
+const boxingDay =
+masterHeaderMakeCalendarDate(
+year,
+12,
+26
+);
+
+[
+christmas,
+boxingDay
+].forEach(
+(date) => {
+
+const weekday =
+date.getUTCDay();
+
+if (
+weekday >=
+1 &&
+weekday <=
+5
+) {
+
+holidays.add(
+masterHeaderGetCalendarKey(
+date
+)
+);
+
+}
+
+}
+);
+
+[
+christmas,
+boxingDay
+].forEach(
+(date) => {
+
+const weekday =
+date.getUTCDay();
+
+if (
+weekday !==
+0 &&
+weekday !==
+6
+) {
+
+return;
+
+}
+
+let substitute =
+masterHeaderAddCalendarDays(
+date,
+1
+);
+
+while (
+substitute.getUTCDay() ===
+0 ||
+substitute.getUTCDay() ===
+6 ||
+holidays.has(
+masterHeaderGetCalendarKey(
+substitute
+)
+)
+) {
+
+substitute =
+masterHeaderAddCalendarDays(
+substitute,
+1
+);
+
+}
+
+holidays.add(
+masterHeaderGetCalendarKey(
+substitute
+)
+);
+
+}
+);
+
+if (
+year ===
+2022
+) {
+
+holidays.delete(
+"2022-05-30"
+);
+
+holidays.add(
+"2022-06-02"
+);
+
+holidays.add(
+"2022-06-03"
+);
+
+holidays.add(
+"2022-09-19"
+);
+
+}
+
+if (
+year ===
+2023
+) {
+
+holidays.add(
+"2023-05-08"
+);
+
+}
+
+return holidays;
+
+}
+
+const masterHeaderBankHolidayCache =
+new Map();
+
+function masterHeaderIsBankHoliday(
+date
+) {
+
+const year =
+date.getUTCFullYear();
+
+if (
+!masterHeaderBankHolidayCache.has(
+year
+)
+) {
+
+masterHeaderBankHolidayCache.set(
+year,
+masterHeaderGetBankHolidayKeys(
+year
+)
+);
+
+}
+
+return masterHeaderBankHolidayCache
+.get(
+year
+)
+.has(
+masterHeaderGetCalendarKey(
+date
+)
+);
+
+}
+
+function masterHeaderIsWorkingDay(
+date
+) {
+
+const weekday =
+date.getUTCDay();
+
+if (
+weekday ===
+0 ||
+weekday ===
+6
+) {
+
+return false;
+
+}
+
+return !masterHeaderIsBankHoliday(
+date
+);
+
+}
+
+function masterHeaderGetUKNowParts() {
+
+const formatter =
+new Intl.DateTimeFormat(
+"en-GB",
+{
+timeZone:
+UK_TIME_ZONE,
+year:"numeric",
+month:"2-digit",
+day:"2-digit",
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit",
+hourCycle:"h23"
+}
+);
+
+const parts =
+formatter.formatToParts(
+new Date()
+);
+
+const output = {};
+
+parts.forEach(
+(part) => {
+
+if (
+part.type !==
+"literal"
+) {
+
+output[
+part.type
+] =
+part.value;
+
+}
+
+}
+);
+
+return {
+year:
+Number(
+output.year
+),
+
+month:
+Number(
+output.month
+),
+
+day:
+Number(
+output.day
+),
+
+hour:
+Number(
+output.hour
+),
+
+minute:
+Number(
+output.minute
+),
+
+second:
+Number(
+output.second
+)
+};
+
+}
+
+function masterHeaderGetNextWorkingDay(
+date
+) {
+
+let candidate =
+masterHeaderAddCalendarDays(
+date,
+1
+);
+
+while (
+!masterHeaderIsWorkingDay(
+candidate
+)
+) {
+
+candidate =
+masterHeaderAddCalendarDays(
+candidate,
+1
+);
+
+}
+
+return candidate;
+
+}
+
+function masterHeaderGetProductionWorkingDay(
+workingDayNumber
+) {
+
+const requestedDay =
+Math.max(
+1,
+Math.round(
+Number(
+workingDayNumber
+)
+)
+);
+
+const nowParts =
+masterHeaderGetUKNowParts();
+
+let cursor =
+masterHeaderMakeCalendarDate(
+nowParts.year,
+nowParts.month,
+nowParts.day
+);
+
+const todayCanCount =
+masterHeaderIsWorkingDay(
+cursor
+) &&
+nowParts.hour <
+UK_PRODUCTION_CUTOFF_HOUR;
+
+if (
+!todayCanCount
+) {
+
+while (
+!masterHeaderIsWorkingDay(
+cursor
+)
+) {
+
+cursor =
+masterHeaderGetNextWorkingDay(
+cursor
+);
+
+}
+
+if (
+masterHeaderGetCalendarKey(
+cursor
+) ===
+masterHeaderGetCalendarKey(
+masterHeaderMakeCalendarDate(
+nowParts.year,
+nowParts.month,
+nowParts.day
+)
+)
+) {
+
+cursor =
+masterHeaderGetNextWorkingDay(
+cursor
+);
+
+}
+
+}
+
+let countedDays =
+1;
+
+while (
+countedDays <
+requestedDay
+) {
+
+cursor =
+masterHeaderGetNextWorkingDay(
+cursor
+);
+
+countedDays +=
+1;
+
+}
+
+return cursor;
+
+}
+
+function masterHeaderGetOrdinalSuffix(
+day
+) {
+
+const numericDay =
+Number(
+day
+);
+
+if (
+numericDay >=
+11 &&
+numericDay <=
+13
+) {
+
+return "th";
+
+}
+
+switch (
+numericDay %
+10
+) {
+
+case 1:
+return "st";
+
+case 2:
+return "nd";
+
+case 3:
+return "rd";
+
+default:
+return "th";
+
+}
+
+}
+
+function masterHeaderGetShortMonth(
+date
+) {
+
+return new Intl.DateTimeFormat(
+"en-GB",
+{
+month:"short",
+timeZone:"UTC"
+}
+).format(
+date
+);
+
+}
+
+function masterHeaderFormatEstimatedDeliveryRange(
+minimumWorkingDays,
+maximumWorkingDays
+) {
+
+const minimumDate =
+masterHeaderGetProductionWorkingDay(
+minimumWorkingDays
+);
+
+const maximumDate =
+masterHeaderGetProductionWorkingDay(
+maximumWorkingDays
+);
+
+const minimumDay =
+minimumDate.getUTCDate();
+
+const maximumDay =
+maximumDate.getUTCDate();
+
+const minimumMonth =
+masterHeaderGetShortMonth(
+minimumDate
+);
+
+const maximumMonth =
+masterHeaderGetShortMonth(
+maximumDate
+);
+
+const minimumText =
+`${minimumDay}${masterHeaderGetOrdinalSuffix(minimumDay)}`;
+
+const maximumText =
+`${maximumDay}${masterHeaderGetOrdinalSuffix(maximumDay)}`;
+
+if (
+minimumDate.getUTCFullYear() ===
+maximumDate.getUTCFullYear() &&
+minimumDate.getUTCMonth() ===
+maximumDate.getUTCMonth()
+) {
+
+return (
+`${minimumText} to ${maximumText} ${maximumMonth}`
+);
+
+}
+
+return (
+`${minimumText} ${minimumMonth} to ${maximumText} ${maximumMonth}`
+);
+
+}
+
+function masterHeaderGetLeadTime(
+item
+) {
+
+const type =
+masterHeaderGetGlassType(
+item
+);
+
+const finish =
+masterHeaderGetFinish(
+item
+);
+
+if (
+type ===
+"laminated"
+) {
+
+if (
+finish ===
+"clear"
+) {
+
+return {
+minimum:6,
+maximum:8
+};
+
+}
+
+return {
+minimum:8,
+maximum:10
+};
+
+}
+
+if (
+finish ===
+"blue"
+) {
+
+return {
+minimum:8,
+maximum:10
+};
+
+}
+
+if (
+finish ===
+"grey" ||
+finish ===
+"satin"
+) {
+
+return {
+minimum:6,
+maximum:8
+};
+
+}
+
+return {
+minimum:4,
+maximum:6
+};
+
+}
+
+function masterHeaderGetBasketLeadTime(
+items
+) {
+
+if (
+!items.length
+) {
+
+return null;
+
+}
+
+let minimum =
+0;
+
+let maximum =
+0;
+
+items.forEach(
+(item) => {
+
+const leadTime =
+masterHeaderGetLeadTime(
+item
+);
+
+minimum =
+Math.max(
+minimum,
+leadTime.minimum
+);
+
+maximum =
+Math.max(
+maximum,
+leadTime.maximum
+);
+
+}
+);
+
+return {
+minimum,
+maximum
+};
+
+}
+
+function masterHeaderGetEstimatedDeliveryText(
+items
+) {
+
+const leadTime =
+masterHeaderGetBasketLeadTime(
+items
+);
+
+if (
+!leadTime
+) {
+
+return "";
+
+}
+
+return (
+masterHeaderFormatEstimatedDeliveryRange(
+leadTime.minimum,
+leadTime.maximum
+) +
+"."
+);
+
+}
+
+/* =========================================
+DELIVERY STATE
+========================================= */
+
+let currentMasterHeaderDelivery = {
+postcode:"",
+loading:false,
+valid:false,
+quote:false,
+amount:null,
+adjustedMiles:null,
+miles:null,
+reason:"",
+error:""
+};
+
+function masterHeaderCreatePendingDeliveryState(
+postcode = ""
+) {
+
+return {
+postcode:
+masterHeaderFormatPostcode(
+postcode
+),
+loading:false,
+valid:false,
+quote:false,
+amount:null,
+adjustedMiles:null,
+miles:null,
+reason:"",
+error:""
+};
+
+}
+
+function masterHeaderReadStoredPostcode(
+payload
+) {
+
+if (
+payload &&
+typeof payload ===
+"object"
+) {
+
+if (
+Object.prototype.hasOwnProperty.call(
+payload,
+"deliveryPostcode"
+)
+) {
+
+return payload.deliveryPostcode
+? masterHeaderFormatPostcode(
+payload.deliveryPostcode
+)
+: "";
+
+}
+
+const candidates = [
+
+payload.postcode,
+payload.shippingPostcode
+
+];
+
+for (
+const candidate of
+candidates
+) {
+
+if (
+candidate
+) {
+
+return masterHeaderFormatPostcode(
+candidate
+);
+
+}
+
+}
+
+}
+
+try {
+
+const stored =
+localStorage.getItem(
+MASTER_HEADER_DELIVERY_POSTCODE_KEY
+);
+
+return stored
+? masterHeaderFormatPostcode(
+stored
+)
+: "";
+
+}
+catch (error) {
+
+return "";
+
+}
+
+}
+
+function masterHeaderSaveStoredPostcode(
+postcode
+) {
+
+const formatted =
+masterHeaderFormatPostcode(
+postcode
+);
+
+try {
+
+if (
+formatted
+) {
+
+localStorage.setItem(
+MASTER_HEADER_DELIVERY_POSTCODE_KEY,
+formatted
+);
+
+}
+else {
+
+localStorage.removeItem(
+MASTER_HEADER_DELIVERY_POSTCODE_KEY
+);
+
+}
+
+}
+catch (error) {
+
+}
+
+}
+
+function masterHeaderLoadDeliveryState(
+payload
+) {
+
+const postcode =
+masterHeaderReadStoredPostcode(
+payload
+);
+
+const requiresQuote =
+payload?.deliveryRequiresQuote ===
+true;
+
+const deliveryFee =
+Number(
+payload?.deliveryFee
+);
+
+const resolved =
+payload?.deliveryResolved ===
+true &&
+Number.isFinite(
+deliveryFee
+);
+
+const adjustedMiles =
+Number(
+payload?.deliveryAdjustedMiles
+);
+
+const chargeableMiles =
+Number(
+payload?.deliveryChargeableMiles
+);
+
+if (
+requiresQuote
+) {
+
+currentMasterHeaderDelivery = {
+postcode,
+loading:false,
+valid:true,
+quote:true,
+amount:null,
+
+adjustedMiles:
+Number.isFinite(
+adjustedMiles
+)
+? adjustedMiles
+: null,
+
+miles:
+Number.isFinite(
+chargeableMiles
+)
+? chargeableMiles
+: null,
+
+reason:
+String(
+payload?.deliveryQuoteReason ||
+"Delivery quotation required."
+),
+
+error:""
+};
+
+return;
+
+}
+
+if (
+resolved
+) {
+
+currentMasterHeaderDelivery = {
+postcode,
+loading:false,
+valid:true,
+quote:false,
+
+amount:
+Math.max(
+0,
+deliveryFee
+),
+
+adjustedMiles:
+Number.isFinite(
+adjustedMiles
+)
+? adjustedMiles
+: null,
+
+miles:
+Number.isFinite(
+chargeableMiles
+)
+? chargeableMiles
+: null,
+
+reason:"",
+error:""
+};
+
+return;
+
+}
+
+currentMasterHeaderDelivery =
+masterHeaderCreatePendingDeliveryState(
+postcode
+);
+
+}
+
+function masterHeaderPersistDeliveryState() {
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+const formattedPostcode =
+masterHeaderFormatPostcode(
+currentMasterHeaderDelivery.postcode
+);
+
+const deliveryResolved =
+currentMasterHeaderDelivery.valid &&
+!currentMasterHeaderDelivery.quote &&
+Number.isFinite(
+Number(
+currentMasterHeaderDelivery.amount
+)
+);
+
+const deliveryRequiresQuote =
+currentMasterHeaderDelivery.valid &&
+currentMasterHeaderDelivery.quote;
+
+const deliveryFee =
+deliveryResolved
+?
+Math.max(
+0,
+Number(
+currentMasterHeaderDelivery.amount
+)
+)
+:
+null;
+
+masterHeaderSaveStoredPostcode(
+formattedPostcode
+);
+
+payload.deliveryPostcode =
+formattedPostcode;
+
+payload.deliveryFee =
+deliveryFee;
+
+payload.deliveryResolved =
+deliveryResolved;
+
+payload.deliveryRequiresQuote =
+deliveryRequiresQuote;
+
+payload.deliveryQuoteReason =
+deliveryRequiresQuote
+?
+String(
+currentMasterHeaderDelivery.reason ||
+"Delivery quotation required."
+)
+:
+"";
+
+payload.deliveryAdjustedMiles =
+Number.isFinite(
+Number(
+currentMasterHeaderDelivery.adjustedMiles
+)
+)
+?
+Number(
+currentMasterHeaderDelivery.adjustedMiles
+)
+:
+null;
+
+payload.deliveryChargeableMiles =
+Number.isFinite(
+Number(
+currentMasterHeaderDelivery.miles
+)
+)
+?
+Number(
+currentMasterHeaderDelivery.miles
+)
+:
+null;
+
+masterHeaderGetEntries(
+payload
+)
+.forEach(
+(entry) => {
+
+entry.item.deliveryPostcode =
+formattedPostcode;
+
+entry.item.deliveryFee =
+deliveryFee;
+
+entry.item.deliveryResolved =
+deliveryResolved;
+
+entry.item.deliveryRequiresQuote =
+deliveryRequiresQuote;
+
+}
+);
+
+masterHeaderWriteOrderPayload(
+payload
+);
+
+}
+
+/* =========================================
+BASKET TOTALS
+========================================= */
+
+function masterHeaderGetProductSubtotal(
+items
+) {
+
+return items.reduce(
+(total,item) => {
+
+return (
+total +
+masterHeaderGetLineTotal(
+item
+)
+);
+
+},
+0
+);
+
+}
+
+function masterHeaderGetUnitCount(
+items
+) {
+
+return items.reduce(
+(total,item) => {
+
+return (
+total +
+masterHeaderGetQuantity(
+item
+)
+);
+
+},
+0
+);
+
+}
+
+function masterHeaderGetResolvedDeliveryAmount() {
+
+if (
+!currentMasterHeaderDelivery.valid ||
+currentMasterHeaderDelivery.quote ||
+!Number.isFinite(
+Number(
+currentMasterHeaderDelivery.amount
+)
+)
+) {
+
+return 0;
+
+}
+
+return Math.max(
+0,
+Number(
+currentMasterHeaderDelivery.amount
+)
+);
+
+}
+
+function masterHeaderGetFinalTotal(
+items
+) {
+
+return (
+masterHeaderGetProductSubtotal(
+items
+) +
+masterHeaderGetResolvedDeliveryAmount()
+);
+
+}
+
+/* =========================================
+HEADER BASKET TOTAL
+========================================= */
+
+let previousMasterHeaderTotal =
+null;
+
+let masterHeaderTotalAnimationTimer =
+null;
+
+function masterHeaderUpdateTotal(
+items
+) {
+
+if (
+!basketTotalText
+) {
+
+return;
+
+}
+
+const total =
+Array.isArray(
+items
+) &&
+items.length
+?
+masterHeaderGetFinalTotal(
+items
+)
+:
+0;
+
+const formattedTotal =
+masterHeaderFormatMoney(
+total
+);
+
+basketTotalText.textContent =
+formattedTotal;
+
+basketTotalText.setAttribute(
+"aria-label",
+`Basket total ${formattedTotal}`
+);
+
+basketTotalText.classList.add(
+"is-visible"
+);
+
+const shouldAnimate =
+previousMasterHeaderTotal ===
+null ||
+Math.abs(
+previousMasterHeaderTotal -
+total
+) >
+0.001;
+
+if (
+shouldAnimate
+) {
+
+if (
+masterHeaderTotalAnimationTimer !==
+null
+) {
+
+window.clearTimeout(
+masterHeaderTotalAnimationTimer
+);
+
+}
+
+basketTotalText.classList.remove(
+"is-updating"
+);
+
+void basketTotalText.offsetWidth;
+
+basketTotalText.classList.add(
+"is-updating"
+);
+
+masterHeaderTotalAnimationTimer =
+window.setTimeout(
+() => {
+
+basketTotalText.classList.remove(
+"is-updating"
+);
+
+masterHeaderTotalAnimationTimer =
+null;
+
+},
+550
+);
+
+}
+
+previousMasterHeaderTotal =
+total;
+
+}
+
+/* =========================================
+BASKET ITEM MARKUP
+========================================= */
+
+function masterHeaderGetItemKey(
+item,
+kind
+) {
+
+return (
+kind +
+":" +
+masterHeaderEnsureItemId(
+item,
+kind
+)
+);
+
+}
+
+function masterHeaderCreateItemMarkup(
+item,
+kind,
+sourceIndex
+) {
+
+if (
+!item ||
+typeof item !==
+"object"
+) {
+
+return "";
+
+}
+
+const itemId =
+masterHeaderEnsureItemId(
+item,
+kind
+);
+
+const quantity =
+masterHeaderGetQuantity(
+item
+);
+
+const unitPrice =
+masterHeaderGetUnitPrice(
+item
+);
+
+const lineTotal =
+unitPrice *
+quantity;
+
+const glazing =
+masterHeaderGetGlazing(
+item
+);
+
+const glassType =
+masterHeaderGetGlassType(
+item
+);
+
+const finish =
+masterHeaderGetFinish(
+item
+);
+
+const itemKey =
+masterHeaderGetItemKey(
+item,
+kind
+);
+
+const expanded =
+basketDrawerExpandedItems.has(
+itemKey
+);
+
+const collapseId =
+`masterHeaderBasketCollapse-${masterHeaderMakeDomId(kind)}-${masterHeaderMakeDomId(itemId)}`;
+
+return `
+<article
+class="basket-drawer-item${expanded ? " is-expanded" : ""}"
+data-basket-item-kind="${masterHeaderEscapeHtml(kind)}"
+data-basket-item-id="${masterHeaderEscapeHtml(itemId)}"
+data-basket-item-index="${masterHeaderEscapeHtml(sourceIndex)}"
+data-basket-item-key="${masterHeaderEscapeHtml(itemKey)}"
+>
+
+<button
+type="button"
+class="basket-drawer-item-head"
+data-basket-item-toggle
+aria-expanded="${expanded ? "true" : "false"}"
+aria-controls="${masterHeaderEscapeHtml(collapseId)}"
+>
+
+<span class="basket-drawer-item-title">
+
+<span class="basket-drawer-item-title-size-line">
+<span class="basket-drawer-item-title-quantity">${masterHeaderEscapeHtml(quantity)}x</span>
+${masterHeaderEscapeHtml(masterHeaderGetTitleSizeText(item))}
+</span>
+
+<span class="basket-drawer-item-title-description">
+${masterHeaderEscapeHtml(masterHeaderGetDescription(item))}
+</span>
+
+</span>
+
+</button>
+
+<button
+type="button"
+class="basket-drawer-item-expand-strip"
+data-basket-item-toggle
+aria-label="${expanded ? "Collapse" : "Expand"} full unit summary"
+aria-expanded="${expanded ? "true" : "false"}"
+aria-controls="${masterHeaderEscapeHtml(collapseId)}"
+>
+
+<span
+class="basket-drawer-item-expand-arrow"
+aria-hidden="true"
+></span>
+
+</button>
+
+<div
+class="basket-drawer-item-collapse"
+id="${masterHeaderEscapeHtml(collapseId)}"
+data-basket-item-collapse
+aria-hidden="${expanded ? "false" : "true"}"
+${expanded ? "" : "hidden"}
+>
+
+<div class="basket-drawer-item-specs">
+
+<div class="basket-drawer-item-spec">
+<span>Glazing</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderFormatGlazing(glazing))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>Glass Construction</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderFormatGlassType(glassType))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>Top Glass</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderGetTopGlassLabel(item))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>Glass Finish</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderFormatFinish(finish))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>Internal</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderGetInternalSizeText(item))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>External</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderGetExternalSizeText(item))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec">
+<span>Self Cleaning</span>
+<strong>${masterHeaderEscapeHtml(masterHeaderGetSelfCleaning(item))}</strong>
+</div>
+
+<div class="basket-drawer-item-spec unit-price">
+<span>Unit Price</span>
+<strong>${unitPrice > 0 ? masterHeaderEscapeHtml(masterHeaderFormatMoney(unitPrice)) : ""}</strong>
+</div>
+
+</div>
+
+<div class="basket-drawer-item-total">
+
+<div>
+
+<div class="basket-drawer-item-total-label">
+Product Total
+</div>
+
+<div class="basket-drawer-item-total-vat">
+inc. vat
+</div>
+
+</div>
+
+<div class="basket-drawer-item-total-price">
+${unitPrice > 0 ? masterHeaderEscapeHtml(masterHeaderFormatMoney(lineTotal)) : ""}
+</div>
+
+</div>
+
+<div class="basket-drawer-item-controls">
+
+<div
+class="basket-drawer-quantity"
+aria-label="Adjust basket item quantity"
+>
+
+<button
+type="button"
+data-basket-quantity-action="decrease"
+data-basket-kind="${masterHeaderEscapeHtml(kind)}"
+data-basket-item-id="${masterHeaderEscapeHtml(itemId)}"
+data-basket-index="${masterHeaderEscapeHtml(sourceIndex)}"
+aria-label="Decrease quantity"
+${quantity <= 1 ? "disabled" : ""}
+>
+−
+</button>
+
+<strong>
+${masterHeaderEscapeHtml(quantity)}
+</strong>
+
+<button
+type="button"
+data-basket-quantity-action="increase"
+data-basket-kind="${masterHeaderEscapeHtml(kind)}"
+data-basket-item-id="${masterHeaderEscapeHtml(itemId)}"
+data-basket-index="${masterHeaderEscapeHtml(sourceIndex)}"
+aria-label="Increase quantity"
+>
++
+</button>
+
+</div>
+
+<button
+type="button"
+class="basket-drawer-remove"
+data-basket-remove
+data-basket-kind="${masterHeaderEscapeHtml(kind)}"
+data-basket-item-id="${masterHeaderEscapeHtml(itemId)}"
+data-basket-index="${masterHeaderEscapeHtml(sourceIndex)}"
+aria-label="Remove this rooflight from the basket"
+>
+Remove
+</button>
+
+</div>
+
+</div>
+
+</article>
+`;
+
+}
+
+/* =========================================
+DELIVERY PRESENTATION
+========================================= */
+
+function masterHeaderGetDeliveryPresentation(
+items
+) {
+
+const postcode =
+String(
+currentMasterHeaderDelivery.postcode ||
+""
+).trim();
+
+const estimatedDelivery =
+masterHeaderGetEstimatedDeliveryText(
+items
+);
+
+if (
+currentMasterHeaderDelivery.valid &&
+currentMasterHeaderDelivery.quote
+) {
+
+return {
+status:
+currentMasterHeaderDelivery.reason ||
+"Delivery quotation required.",
+
+charge:
+"Quotation Required",
+
+chargeClass:
+"is-quote",
+
+showDeliveryResult:true,
+
+showEstimatedDelivery:false,
+
+estimatedDelivery:""
+};
+
+}
+
+if (
+currentMasterHeaderDelivery.valid &&
+Number.isFinite(
+Number(
+currentMasterHeaderDelivery.amount
+)
+)
+) {
+
+const amount =
+Math.max(
+0,
+Number(
+currentMasterHeaderDelivery.amount
+)
+);
+
+return {
+status:
+postcode
+? `Delivery calculated for ${postcode}.`
+: "Delivery calculated.",
+
+charge:
+amount ===
+0
+? "FREE"
+: masterHeaderFormatMoney(
+amount
+),
+
+chargeClass:
+amount ===
+0
+? "is-free"
+: "",
+
+showDeliveryResult:true,
+
+showEstimatedDelivery:
+Boolean(
+estimatedDelivery
+),
+
+estimatedDelivery
+};
+
+}
+
+if (
+currentMasterHeaderDelivery.error
+) {
+
+return {
+status:
+currentMasterHeaderDelivery.error,
+
+charge:"",
+
+chargeClass:"",
+
+showDeliveryResult:true,
+
+showEstimatedDelivery:false,
+
+estimatedDelivery:""
+};
+
+}
+
+if (
+currentMasterHeaderDelivery.loading ||
+postcode
+) {
+
+return {
+status:
+"Checking delivery for this postcode.",
+
+charge:
+"Calculated by postcode",
+
+chargeClass:"",
+
+showDeliveryResult:true,
+
+showEstimatedDelivery:false,
+
+estimatedDelivery:""
+};
+
+}
+
+return {
+status:"",
+charge:"",
+chargeClass:"",
+showDeliveryResult:false,
+showEstimatedDelivery:false,
+estimatedDelivery:""
+};
+
+}
+
+function masterHeaderCreateDeliveryMarkup(
+items
+) {
+
+const delivery =
+masterHeaderGetDeliveryPresentation(
+items
+);
+
+const postcode =
+String(
+currentMasterHeaderDelivery.postcode ||
+""
+);
+
+return `
+<div class="basket-drawer-delivery">
+
+<label
+class="basket-drawer-delivery-label"
+for="basketDrawerPostcode"
+>
+Delivery Postcode
+</label>
+
+<input
+class="basket-drawer-postcode${currentMasterHeaderDelivery.error ? " is-invalid" : ""}"
+id="basketDrawerPostcode"
+data-basket-delivery-postcode-input
+type="text"
+inputmode="text"
+autocomplete="postal-code"
+placeholder="Enter delivery postcode"
+value="${masterHeaderEscapeHtml(postcode)}"
+>
+
+<div
+class="basket-drawer-delivery-result"
+data-basket-delivery-result
+${delivery.showDeliveryResult ? "" : "hidden"}
+>
+
+<div
+class="basket-drawer-delivery-status"
+data-basket-delivery-status
+>
+${masterHeaderEscapeHtml(delivery.status)}
+</div>
+
+<div
+class="basket-drawer-delivery-charge ${masterHeaderEscapeHtml(delivery.chargeClass)}"
+data-basket-delivery-charge
+>
+${masterHeaderEscapeHtml(delivery.charge)}
+</div>
+
+</div>
+
+<div
+class="basket-drawer-estimated-delivery-row"
+data-basket-estimated-delivery-row
+${delivery.showEstimatedDelivery ? "" : "hidden"}
+>
+
+<div class="basket-drawer-estimated-delivery-label">
+Estimated Delivery
+</div>
+
+<div
+class="basket-drawer-estimated-delivery-date"
+data-basket-estimated-delivery-range
+>
+${masterHeaderEscapeHtml(delivery.estimatedDelivery)}
+</div>
+
+</div>
+
+</div>
+`;
+
+}
+
+function masterHeaderContainsUnpricedItem(
+items
+) {
+
+return items.some(
+(item) => {
+
+const price =
+Number(
+masterHeaderGetUnitPrice(
+item
+)
+);
+
+return (
+!Number.isFinite(
+price
+) ||
+price <=
+0
+);
+
+}
+);
+
+}
+
+function masterHeaderCheckoutAvailable(
+items
+) {
+
+return (
+items.length >
+0 &&
+currentMasterHeaderDelivery.valid &&
+!currentMasterHeaderDelivery.quote &&
+Number.isFinite(
+Number(
+currentMasterHeaderDelivery.amount
+)
+) &&
+!masterHeaderContainsUnpricedItem(
+items
+)
+);
+
+}
+
+function masterHeaderCreateTotalsMarkup(
+items
+) {
+
+const subtotal =
+masterHeaderGetProductSubtotal(
+items
+);
+
+const delivery =
+masterHeaderGetDeliveryPresentation(
+items
+);
+
+const finalTotal =
+masterHeaderGetFinalTotal(
+items
+);
+
+return `
+<div class="basket-drawer-total-table">
+
+<div class="basket-drawer-total-row">
+
+<span>
+Product Subtotal
+</span>
+
+<strong data-basket-subtotal>
+${masterHeaderEscapeHtml(masterHeaderFormatMoney(subtotal))}
+</strong>
+
+</div>
+
+<div class="basket-drawer-total-row delivery">
+
+<span>
+Delivery
+</span>
+
+<strong data-basket-footer-delivery>
+${masterHeaderEscapeHtml(delivery.charge)}
+</strong>
+
+</div>
+
+<div class="basket-drawer-total-row final">
+
+<span>
+Order Total
+</span>
+
+<strong data-basket-final-total>
+${masterHeaderEscapeHtml(masterHeaderFormatMoney(finalTotal))}
+</strong>
+
+</div>
+
+</div>
+
+<div class="basket-drawer-vat">
+inc. vat
+</div>
+`;
+
+}
+
+/* =========================================
+RENDER MASTER HEADER BASKET
+========================================= */
+
+function renderMasterHeaderBasket() {
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+masterHeaderWriteOrderPayload(
+payload
+);
+
+const entries =
+masterHeaderGetEntries(
+payload
+);
+
+const items =
+entries.map(
+(entry) =>
+entry.item
+);
+
+const unitCount =
+masterHeaderGetUnitCount(
+items
+);
+
+masterHeaderUpdateTotal(
+items
+);
+
+if (
+basketDrawerCount
+) {
+
+basketDrawerCount.textContent =
+`${unitCount} ${unitCount === 1 ? "unit" : "units"}`;
+
+}
+
+if (
+!basketDrawerBody ||
+!basketDrawerFooter
+) {
+
+return;
+
+}
+
+if (
+!items.length
+) {
+
+basketDrawerExpandedItems.clear();
+
+basketDrawerBody.innerHTML = `
+<div class="basket-drawer-empty">
+
+<h3>
+Your basket is empty
+</h3>
+
+<p>
+Configured rooflights will appear here when you add them to your order.
+</p>
+
+</div>
+`;
+
+basketDrawerFooter.innerHTML = `
+<p class="basket-drawer-empty-footer-copy">
+Add a configured rooflight to continue.
+</p>
+
+<button
+type="button"
+class="checkout-now is-disabled"
+disabled
+aria-disabled="true"
+tabindex="-1"
+>
+Checkout Now
+</button>
+`;
+
+return;
+
+}
+
+basketDrawerBody.innerHTML = `
+<div class="basket-drawer-items">
+
+${entries.map(
+(entry) =>
+masterHeaderCreateItemMarkup(
+entry.item,
+entry.kind,
+entry.sourceIndex
+)
+).join(
+""
+)}
+
+</div>
+`;
+
+const checkoutAvailable =
+masterHeaderCheckoutAvailable(
+items
+);
+
+basketDrawerFooter.innerHTML =
+masterHeaderCreateDeliveryMarkup(
+items
+) +
+masterHeaderCreateTotalsMarkup(
+items
+) +
+`
+<button
+type="button"
+class="checkout-now${checkoutAvailable ? "" : " is-disabled"}"
+id="basketDrawerCheckout"
+${checkoutAvailable ? "" : "disabled"}
+aria-disabled="${checkoutAvailable ? "false" : "true"}"
+${checkoutAvailable ? "" : 'tabindex="-1"'}
+>
+Checkout Now
+</button>
+`;
+
+}
+
+/* =========================================
+BASKET ITEM EXPAND / COLLAPSE
+========================================= */
+
+function masterHeaderToggleBasketItem(
+toggleButton
+) {
+
+const item =
+toggleButton?.closest(
+".basket-drawer-item"
+);
+
+if (
+!item
+) {
+
+return;
+
+}
+
+const collapse =
+item.querySelector(
+"[data-basket-item-collapse]"
+);
+
+if (
+!collapse
+) {
+
+return;
+
+}
+
+const itemKey =
+String(
+item.dataset.basketItemKey ||
+""
+);
+
+const shouldExpand =
+!item.classList.contains(
+"is-expanded"
+);
+
+item.classList.toggle(
+"is-expanded",
+shouldExpand
+);
+
+item
+.querySelectorAll(
+"[data-basket-item-toggle]"
+)
+.forEach(
+(button) => {
+
+button.setAttribute(
+"aria-expanded",
+String(
+shouldExpand
+)
+);
+
+if (
+button.classList.contains(
+"basket-drawer-item-expand-strip"
+)
+) {
+
+button.setAttribute(
+"aria-label",
+shouldExpand
+?
+"Collapse full unit summary"
+:
+"Expand full unit summary"
+);
+
+}
+
+}
+);
+
+collapse.hidden =
+!shouldExpand;
+
+collapse.setAttribute(
+"aria-hidden",
+String(
+!shouldExpand
+)
+);
+
+if (
+itemKey
+) {
+
+if (
+shouldExpand
+) {
+
+basketDrawerExpandedItems.add(
+itemKey
+);
+
+}
+else {
+
+basketDrawerExpandedItems.delete(
+itemKey
+);
+
+}
+
+}
+
+}
+
+/* =========================================
+BASKET QUANTITY / REMOVE
+========================================= */
+
+function masterHeaderInvalidateDeliveryLookup() {
+
+basketDeliveryRequestId +=
+1;
+
+if (
+basketDeliveryLookupTimer !==
+null
+) {
+
+window.clearTimeout(
+basketDeliveryLookupTimer
+);
+
+basketDeliveryLookupTimer =
+null;
+
+}
+
+}
+
+function masterHeaderSetDeliveryPending(
+postcode
+) {
+
+currentMasterHeaderDelivery =
+masterHeaderCreatePendingDeliveryState(
+postcode
+);
+
+}
+
+function masterHeaderChangeQuantity(
+kind,
+itemId,
+fallbackIndex,
+difference
+) {
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+const collection =
+masterHeaderGetMutableCollection(
+payload,
+kind
+);
+
+const index =
+masterHeaderFindItemIndex(
+payload,
+kind,
+itemId,
+fallbackIndex
+);
+
+if (
+index <
+0 ||
+index >=
+collection.length
+) {
+
+return;
+
+}
+
+const item =
+collection[
+index
+];
+
+const currentQuantity =
+masterHeaderGetQuantity(
+item
+);
+
+const nextQuantity =
+Math.max(
+1,
+Math.min(
+999,
+currentQuantity +
+difference
+)
+);
+
+if (
+nextQuantity ===
+currentQuantity
+) {
+
+return;
+
+}
+
+masterHeaderSetQuantity(
+item,
+nextQuantity
+);
+
+if (
+kind ===
+"custom"
+) {
+
+payload.customItems =
+collection;
+
+}
+else {
+
+payload.items =
+collection;
+
+}
+
+masterHeaderWriteOrderPayload(
+payload
+);
+
+masterHeaderInvalidateDeliveryLookup();
+
+const storedPostcode =
+masterHeaderReadStoredPostcode(
+payload
+);
+
+masterHeaderSetDeliveryPending(
+storedPostcode
+);
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+if (
+storedPostcode &&
+masterHeaderIsCompletePostcode(
+storedPostcode
+)
+) {
+
+masterHeaderCalculateDeliveryForPostcode(
+storedPostcode,
+{
+animateLoading:false
+}
+);
+
+}
+
+}
+
+function masterHeaderRemoveItem(
+kind,
+itemId,
+fallbackIndex
+) {
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+const collection =
+masterHeaderGetMutableCollection(
+payload,
+kind
+);
+
+const index =
+masterHeaderFindItemIndex(
+payload,
+kind,
+itemId,
+fallbackIndex
+);
+
+if (
+index <
+0 ||
+index >=
+collection.length
+) {
+
+return;
+
+}
+
+const removedItem =
+collection[
+index
+];
+
+basketDrawerExpandedItems.delete(
+masterHeaderGetItemKey(
+removedItem,
+kind
+)
+);
+
+collection.splice(
+index,
+1
+);
+
+if (
+kind ===
+"custom"
+) {
+
+payload.customItems =
+collection;
+
+}
+else {
+
+payload.items =
+collection;
+
+}
+
+masterHeaderWriteOrderPayload(
+payload
+);
+
+masterHeaderInvalidateDeliveryLookup();
+
+const storedPostcode =
+masterHeaderReadStoredPostcode(
+payload
+);
+
+masterHeaderSetDeliveryPending(
+storedPostcode
+);
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+const remainingItems =
+masterHeaderGetItems(
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+)
+);
+
+if (
+remainingItems.length &&
+storedPostcode &&
+masterHeaderIsCompletePostcode(
+storedPostcode
+)
+) {
+
+masterHeaderCalculateDeliveryForPostcode(
+storedPostcode,
+{
+animateLoading:false
+}
+);
+
+}
+
+}
+
+/* =========================================
+POSTCODE DELIVERY
+========================================= */
+
+function masterHeaderSchedulePostcodeLookup(
+postcode
+) {
+
+if (
+basketDeliveryLookupTimer !==
+null
+) {
+
+window.clearTimeout(
+basketDeliveryLookupTimer
+);
+
+basketDeliveryLookupTimer =
+null;
+
+}
+
+const cleaned =
+masterHeaderNormalizePostcode(
+postcode
+);
+
+if (
+!masterHeaderIsCompletePostcode(
+cleaned
+)
+) {
+
+return;
+
+}
+
+basketDeliveryLookupTimer =
+window.setTimeout(
+() => {
+
+basketDeliveryLookupTimer =
+null;
+
+masterHeaderCalculateDeliveryForPostcode(
+cleaned
+);
+
+},
+550
+);
+
+}
+
+async function masterHeaderCalculateDeliveryForPostcode(
+postcode,
+{
+animateLoading = true
+} = {}
+) {
+
+const cleaned =
+masterHeaderNormalizePostcode(
+postcode
+);
+
+if (
+!masterHeaderIsCompletePostcode(
+cleaned
+)
+) {
+
+return;
+
+}
+
+masterHeaderInvalidateDeliveryLookup();
+
+const requestId =
+++basketDeliveryRequestId;
+
+const formattedPostcode =
+masterHeaderFormatPostcode(
+cleaned
+);
+
+currentMasterHeaderDelivery = {
+postcode:formattedPostcode,
+loading:true,
+valid:false,
+quote:false,
+amount:null,
+adjustedMiles:null,
+miles:null,
+reason:"",
+error:""
+};
+
+masterHeaderPersistDeliveryState();
+
+if (
+animateLoading
+) {
+
+renderMasterHeaderBasket();
+
+}
+
+try {
+
+const payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+const items =
+masterHeaderGetItems(
+payload
+);
+
+const [
+originCoordinates,
+destinationCoordinates
+] =
+await Promise.all([
+masterHeaderGetOriginCoordinates(),
+masterHeaderFetchPostcodeCoordinates(
+formattedPostcode
+)
+]);
+
+if (
+requestId !==
+basketDeliveryRequestId
+) {
+
+return;
+
+}
+
+const straightLineMiles =
+masterHeaderCalculateStraightLineMiles(
+originCoordinates,
+destinationCoordinates
+);
+
+const adjustedMiles =
+straightLineMiles *
+ROAD_DISTANCE_ALLOWANCE;
+
+const chargeableMiles =
+Math.ceil(
+adjustedMiles
+);
+
+const delivery =
+masterHeaderCalculateDelivery(
+items,
+chargeableMiles
+);
+
+currentMasterHeaderDelivery = {
+postcode:formattedPostcode,
+loading:false,
+valid:true,
+quote:
+delivery.quote,
+amount:
+delivery.amount,
+adjustedMiles,
+miles:
+delivery.miles,
+reason:
+delivery.reason ||
+"",
+error:""
+};
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+}
+catch (error) {
+
+if (
+requestId !==
+basketDeliveryRequestId
+) {
+
+return;
+
+}
+
+currentMasterHeaderDelivery = {
+postcode:formattedPostcode,
+loading:false,
+valid:false,
+quote:false,
+amount:null,
+adjustedMiles:null,
+miles:null,
+reason:"",
+error:
+"Please check the postcode and try again."
+};
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+const input =
+document.getElementById(
+"basketDrawerPostcode"
+);
+
+if (
+input
+) {
+
+input.classList.add(
+"is-invalid"
+);
+
+}
+
+}
+
+}
+
+/* =========================================
+BASKET DRAWER EVENTS
+========================================= */
+
+if (
+basketDrawerLayer
+) {
+
+basketDrawerLayer.addEventListener(
+"click",
+(event) => {
+
+const itemToggle =
+event.target.closest(
+"[data-basket-item-toggle]"
+);
+
+if (
+itemToggle
+) {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+masterHeaderToggleBasketItem(
+itemToggle
+);
+
+return;
+
+}
+
+const removeButton =
+event.target.closest(
+"[data-basket-remove]"
+);
+
+if (
+removeButton
+) {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+masterHeaderRemoveItem(
+String(
+removeButton.dataset.basketKind ||
+"standard"
+),
+String(
+removeButton.dataset.basketItemId ||
+""
+),
+Number(
+removeButton.dataset.basketIndex
+)
+);
+
+return;
+
+}
+
+const quantityButton =
+event.target.closest(
+"[data-basket-quantity-action]"
+);
+
+if (
+quantityButton
+) {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+masterHeaderChangeQuantity(
+String(
+quantityButton.dataset.basketKind ||
+"standard"
+),
+String(
+quantityButton.dataset.basketItemId ||
+""
+),
+Number(
+quantityButton.dataset.basketIndex
+),
+quantityButton.dataset.basketQuantityAction ===
+"increase"
+?
+1
+:
+-1
+);
+
+return;
+
+}
+
+const checkoutButton =
+event.target.closest(
+"#basketDrawerCheckout"
+);
+
+if (
+checkoutButton
+) {
+
+const payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+const items =
+masterHeaderGetItems(
+payload
+);
+
+if (
+!masterHeaderCheckoutAvailable(
+items
+)
+) {
+
+event.preventDefault();
+
+return;
+
+}
+
+event.preventDefault();
+
+window.location.href =
+"order-page.html?source=information-page-basket&focus=checkout";
+
+}
+
+}
+);
+
+basketDrawerLayer.addEventListener(
+"input",
+(event) => {
+
+const postcodeInput =
+event.target.closest(
+"[data-basket-delivery-postcode-input]"
+);
+
+if (
+!postcodeInput
+) {
+
+return;
+
+}
+
+postcodeInput.value =
+String(
+postcodeInput.value ||
+""
+)
+.toUpperCase();
+
+postcodeInput.classList.remove(
+"is-invalid"
+);
+
+masterHeaderInvalidateDeliveryLookup();
+
+masterHeaderSetDeliveryPending(
+postcodeInput.value
+);
+
+masterHeaderPersistDeliveryState();
+
+masterHeaderSchedulePostcodeLookup(
+postcodeInput.value
+);
+
+}
+);
+
+basketDrawerLayer.addEventListener(
+"change",
+(event) => {
+
+const postcodeInput =
+event.target.closest(
+"[data-basket-delivery-postcode-input]"
+);
+
+if (
+!postcodeInput
+) {
+
+return;
+
+}
+
+const formatted =
+masterHeaderFormatPostcode(
+postcodeInput.value
+);
+
+postcodeInput.value =
+formatted;
+
+postcodeInput.classList.remove(
+"is-invalid"
+);
+
+masterHeaderInvalidateDeliveryLookup();
+
+if (
+!formatted
+) {
+
+masterHeaderSetDeliveryPending(
+""
+);
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+return;
+
+}
+
+if (
+!masterHeaderIsCompletePostcode(
+formatted
+)
+) {
+
+masterHeaderSetDeliveryPending(
+formatted
+);
+
+masterHeaderPersistDeliveryState();
+
+postcodeInput.classList.add(
+"is-invalid"
+);
+
+return;
+
+}
+
+masterHeaderCalculateDeliveryForPostcode(
+formatted
+);
+
+}
+);
+
+basketDrawerLayer.addEventListener(
+"keydown",
+(event) => {
+
+const postcodeInput =
+event.target.closest(
+"[data-basket-delivery-postcode-input]"
+);
+
+if (
+!postcodeInput ||
+event.key !==
+"Enter"
+) {
+
+return;
+
+}
+
+event.preventDefault();
+
+const formatted =
+masterHeaderFormatPostcode(
+postcodeInput.value
+);
+
+postcodeInput.value =
+formatted;
+
+postcodeInput.classList.remove(
+"is-invalid"
+);
+
+masterHeaderInvalidateDeliveryLookup();
+
+if (
+!formatted
+) {
+
+masterHeaderSetDeliveryPending(
+""
+);
+
+masterHeaderPersistDeliveryState();
+
+renderMasterHeaderBasket();
+
+return;
+
+}
+
+if (
+!masterHeaderIsCompletePostcode(
+formatted
+)
+) {
+
+masterHeaderSetDeliveryPending(
+formatted
+);
+
+masterHeaderPersistDeliveryState();
+
+postcodeInput.classList.add(
+"is-invalid"
+);
+
+return;
+
+}
+
+masterHeaderCalculateDeliveryForPostcode(
+formatted
+);
+
+}
+);
+
+}
+
+/* =========================================
+BASKET DRAWER PAGE LOCK
+========================================= */
+
+function masterHeaderGetBasketBackgroundElements() {
+
+if (
+!basketDrawerLayer
+) {
+
+return [];
+
+}
+
+const desktopBlocker =
+document.getElementById(
+"desktopAccessBlocker"
+);
+
+return Array.from(
+document.body.children
+).filter(
+(element) =>
+element !==
+basketDrawerLayer &&
+element !==
+desktopBlocker &&
+element.tagName !==
+"SCRIPT"
+);
+
+}
+
+function masterHeaderSetBasketBackgroundInert(
+shouldBeInert
+) {
+
+masterHeaderGetBasketBackgroundElements()
+.forEach(
+(element) => {
+
+element.inert =
+shouldBeInert;
+
+}
+);
+
+}
+
+function masterHeaderLockBasketScroll() {
+
+basketDrawerScrollY =
+window.scrollY ||
+document.documentElement.scrollTop ||
+0;
+
+basketDrawerPreviousBodyStyles = {
+position:
+document.body.style.position,
+top:
+document.body.style.top,
+left:
+document.body.style.left,
+right:
+document.body.style.right,
+width:
+document.body.style.width,
+overflow:
+document.body.style.overflow
+};
+
+document.body.classList.add(
+"basket-drawer-open"
+);
+
+document.body.style.position =
+"fixed";
+
+document.body.style.top =
+`-${basketDrawerScrollY}px`;
+
+document.body.style.left =
+"0";
+
+document.body.style.right =
+"0";
+
+document.body.style.width =
+"100%";
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+function masterHeaderUnlockBasketScroll() {
+
+const previousHtmlScrollBehavior =
+document.documentElement.style.scrollBehavior;
+
+const previousBodyScrollBehavior =
+document.body.style.scrollBehavior;
+
+document.documentElement.style.scrollBehavior =
+"auto";
+
+document.body.style.scrollBehavior =
+"auto";
+
+document.body.classList.remove(
+"basket-drawer-open"
+);
+
+if (
+basketDrawerPreviousBodyStyles
+) {
+
+document.body.style.position =
+basketDrawerPreviousBodyStyles.position;
+
+document.body.style.top =
+basketDrawerPreviousBodyStyles.top;
+
+document.body.style.left =
+basketDrawerPreviousBodyStyles.left;
+
+document.body.style.right =
+basketDrawerPreviousBodyStyles.right;
+
+document.body.style.width =
+basketDrawerPreviousBodyStyles.width;
+
+document.body.style.overflow =
+basketDrawerPreviousBodyStyles.overflow;
+
+}
+else {
+
+document.body.style.position =
+"";
+
+document.body.style.top =
+"";
+
+document.body.style.left =
+"";
+
+document.body.style.right =
+"";
+
+document.body.style.width =
+"";
+
+document.body.style.overflow =
+"";
+
+}
+
+window.scrollTo({
+top:
+basketDrawerScrollY,
+left:0,
+behavior:"auto"
+});
+
+basketDrawerPreviousBodyStyles =
+null;
+
+window.requestAnimationFrame(
+() => {
+
+document.documentElement.style.scrollBehavior =
+previousHtmlScrollBehavior;
+
+document.body.style.scrollBehavior =
+previousBodyScrollBehavior;
+
+}
+);
+
+}
+
+function masterHeaderGetBasketFocusableElements() {
+
+if (
+!basketDrawerPanel
+) {
+
+return [];
+
+}
+
+return Array.from(
+basketDrawerPanel.querySelectorAll(
+[
+"button:not([disabled])",
+"input:not([disabled])",
+"select:not([disabled])",
+"textarea:not([disabled])",
+"a[href]",
+"[tabindex]:not([tabindex='-1'])"
+].join(
+","
+)
+)
+).filter(
+(element) => {
+
+return (
+!element.hasAttribute(
+"hidden"
+) &&
+element.offsetParent !==
+null
+);
+
+}
+);
+
+}
 
 /* =========================================
 PAGES MASTER MENU
@@ -3338,11 +11917,6 @@ previousBodyScrollBehavior;
 
 }
 
-/* =========================================
-PAGES MASTER MENU
-FOCUSABLE ELEMENTS
-========================================= */
-
 function getPagesMenuFocusableElements() {
 
 if (
@@ -3408,40 +11982,18 @@ return;
 }
 
 if (
-typeof closeBasketDrawer ===
-"function"
+basketDrawerIsOpen
 ) {
-
-try {
 
 closeBasketDrawer({
 restoreFocus:false
 });
 
 }
-catch (error) {
-
-}
-
-}
-
-if (
-typeof closeEmailAction ===
-"function"
-) {
 
 closeEmailAction();
 
-}
-
-if (
-typeof closeWhatsappAction ===
-"function"
-) {
-
 closeWhatsappAction();
-
-}
 
 pagesMenuLastFocusedElement =
 document.activeElement;
@@ -3555,6 +12107,8 @@ false
 );
 
 unlockPagesMenuPageScroll();
+
+applyDesktopAccessRestriction();
 
 if (
 restoreFocus &&
@@ -3696,10 +12250,6 @@ first.focus();
 /* =========================================
 PAGES MASTER MENU
 SPECIAL HEADER ACTION
-
-1. CLOSE MENU
-2. IMMEDIATELY GO TO TOP
-3. PRESS REQUIRED HEADER BUTTON
 ========================================= */
 
 function pagesMenuOpenHeaderAction(
@@ -3731,12 +12281,6 @@ headerButton.click();
 
 }
 
-/* =========================================
-PAGES MASTER MENU
-OVERSIZED ROOFLIGHTS
--> EMAIL
-========================================= */
-
 const pagesMenuOversizedRooflights =
 document.getElementById(
 "pagesMenuOversizedRooflights"
@@ -3763,12 +12307,6 @@ pagesMenuOpenHeaderAction(
 
 }
 
-/* =========================================
-PAGES MASTER MENU
-BOOK A FITTING
--> EMAIL
-========================================= */
-
 const pagesMenuBookFitting =
 document.getElementById(
 "pagesMenuBookFitting"
@@ -3794,12 +12332,6 @@ pagesMenuOpenHeaderAction(
 );
 
 }
-
-/* =========================================
-PAGES MASTER MENU
-CONTACT OUR TEAM
--> WHATSAPP / PHONE
-========================================= */
 
 const pagesMenuContactTeam =
 document.getElementById(
@@ -3828,272 +12360,209 @@ pagesMenuOpenHeaderAction(
 }
 
 /* =========================================
-EMAIL HEADER ACTION
+OPEN / CLOSE BASKET DRAWER
 ========================================= */
 
-const emailButton =
-document.getElementById(
-"emailButton"
-);
-
-const emailAction =
-document.getElementById(
-"emailAction"
-);
-
-function closeEmailAction() {
+function openBasketDrawer(
+event
+) {
 
 if (
-!emailButton ||
-!emailAction
+event
+) {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+}
+
+if (
+!basketDrawerLayer ||
+!basketDrawerPanel ||
+!basketButton
 ) {
 
 return;
 
 }
 
-emailAction.classList.remove(
-"is-open"
-);
-
-emailButton.classList.remove(
-"is-selected"
-);
-
-emailButton.setAttribute(
-"aria-expanded",
-"false"
-);
-
-}
-
-function openEmailAction() {
-
 if (
-!emailButton ||
-!emailAction
+basketDrawerIsOpen
 ) {
 
 return;
+
+}
+
+if (
+pagesMenuDrawerIsOpen
+) {
+
+closeMenu({
+restoreFocus:false
+});
 
 }
 
 closeWhatsappAction();
 
-emailAction.classList.add(
+closeEmailAction();
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
+);
+
+masterHeaderWriteOrderPayload(
+payload
+);
+
+masterHeaderLoadDeliveryState(
+payload
+);
+
+lastBasketFocusedElement =
+document.activeElement;
+
+renderMasterHeaderBasket();
+
+basketDrawerIsOpen =
+true;
+
+masterHeaderLockBasketScroll();
+
+masterHeaderSetBasketBackgroundInert(
+true
+);
+
+basketDrawerLayer.classList.add(
 "is-open"
 );
 
-emailButton.classList.add(
-"is-selected"
+basketDrawerLayer.setAttribute(
+"aria-hidden",
+"false"
 );
 
-emailButton.setAttribute(
+basketButton.setAttribute(
 "aria-expanded",
 "true"
 );
 
-}
-
-if (
-emailButton &&
-emailAction
-) {
-
-emailButton.addEventListener(
-"click",
-(event) => {
-
-event.stopPropagation();
-
-const willOpen =
-!emailAction.classList.contains(
-"is-open"
-);
-
-if (
-willOpen
-) {
-
-closeWhatsappAction();
-
-}
-
-emailAction.classList.toggle(
-"is-open",
-willOpen
-);
-
-emailButton.classList.toggle(
-"is-selected",
-willOpen
-);
-
-emailButton.setAttribute(
-"aria-expanded",
-willOpen
-? "true"
-: "false"
-);
-
-}
-);
-
-emailAction.addEventListener(
-"click",
+window.requestAnimationFrame(
 () => {
 
-closeEmailAction();
+if (
+basketDrawerClose
+) {
+
+try {
+
+basketDrawerClose.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+basketDrawerClose.focus();
+
+}
+
+}
+else {
+
+basketDrawerPanel.focus({
+preventScroll:true
+});
+
+}
 
 }
 );
 
-document.addEventListener(
-"click",
-(event) => {
+const storedPostcode =
+masterHeaderReadStoredPostcode(
+payload
+);
 
 if (
-event.target.closest(
-"#emailButton"
-) ||
-event.target.closest(
-"#emailAction"
+storedPostcode &&
+masterHeaderIsCompletePostcode(
+storedPostcode
+) &&
+!(
+currentMasterHeaderDelivery.valid &&
+!currentMasterHeaderDelivery.loading
 )
 ) {
 
-return;
-
-}
-
-closeEmailAction();
-
+masterHeaderCalculateDeliveryForPostcode(
+storedPostcode,
+{
+animateLoading:false
 }
 );
 
 }
 
-/* =========================================
-WHATSAPP HEADER ACTION
-========================================= */
+}
 
-const whatsappButton =
-document.getElementById(
-"whatsappButton"
-);
-
-const whatsappAction =
-document.getElementById(
-"whatsappAction"
-);
-
-function closeWhatsappAction() {
+function closeBasketDrawer(
+{
+restoreFocus = true
+} = {}
+) {
 
 if (
-!whatsappButton ||
-!whatsappAction
+!basketDrawerLayer ||
+!basketButton ||
+!basketDrawerIsOpen
 ) {
 
 return;
 
 }
 
-whatsappAction.classList.remove(
+basketDrawerIsOpen =
+false;
+
+basketDrawerLayer.classList.remove(
 "is-open"
 );
 
-whatsappButton.classList.remove(
-"is-selected"
+basketDrawerLayer.setAttribute(
+"aria-hidden",
+"true"
 );
 
-whatsappButton.setAttribute(
+basketButton.setAttribute(
 "aria-expanded",
 "false"
 );
 
-}
+masterHeaderSetBasketBackgroundInert(
+false
+);
 
-function openWhatsappAction() {
+masterHeaderUnlockBasketScroll();
+
+applyDesktopAccessRestriction();
 
 if (
-!whatsappButton ||
-!whatsappAction
+restoreFocus &&
+lastBasketFocusedElement &&
+typeof lastBasketFocusedElement.focus ===
+"function"
 ) {
 
-return;
-
-}
-
-closeEmailAction();
-
-whatsappAction.classList.add(
-"is-open"
-);
-
-whatsappButton.classList.add(
-"is-selected"
-);
-
-whatsappButton.setAttribute(
-"aria-expanded",
-"true"
-);
-
-}
+window.requestAnimationFrame(
+() => {
 
 if (
-whatsappButton &&
-whatsappAction
-) {
-
-whatsappButton.addEventListener(
-"click",
-(event) => {
-
-event.stopPropagation();
-
-const willOpen =
-!whatsappAction.classList.contains(
-"is-open"
-);
-
-if (
-willOpen
-) {
-
-closeEmailAction();
-
-}
-
-whatsappAction.classList.toggle(
-"is-open",
-willOpen
-);
-
-whatsappButton.classList.toggle(
-"is-selected",
-willOpen
-);
-
-whatsappButton.setAttribute(
-"aria-expanded",
-willOpen
-? "true"
-: "false"
-);
-
-}
-);
-
-document.addEventListener(
-"click",
-(event) => {
-
-if (
-event.target.closest(
-"#whatsappButton"
-) ||
-event.target.closest(
-"#whatsappAction"
+!document.contains(
+lastBasketFocusedElement
 )
 ) {
 
@@ -4101,7 +12570,70 @@ return;
 
 }
 
-closeWhatsappAction();
+try {
+
+lastBasketFocusedElement.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+lastBasketFocusedElement.focus();
+
+}
+
+}
+);
+
+}
+
+lastBasketFocusedElement =
+null;
+
+}
+
+if (
+basketButton
+) {
+
+basketButton.addEventListener(
+"click",
+openBasketDrawer
+);
+
+}
+
+if (
+basketDrawerClose
+) {
+
+basketDrawerClose.addEventListener(
+"click",
+(event) => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeBasketDrawer();
+
+}
+);
+
+}
+
+if (
+basketDrawerBackdrop
+) {
+
+basketDrawerBackdrop.addEventListener(
+"click",
+(event) => {
+
+event.preventDefault();
+
+closeBasketDrawer();
 
 }
 );
@@ -4109,7 +12641,100 @@ closeWhatsappAction();
 }
 
 /* =========================================
-ESCAPE ALSO CLOSES SMALL CONTACT ACTIONS
+BASKET KEYBOARD / FOCUS TRAP
+========================================= */
+
+document.addEventListener(
+"keydown",
+(event) => {
+
+if (
+!basketDrawerIsOpen
+) {
+
+return;
+
+}
+
+if (
+event.key ===
+"Escape"
+) {
+
+event.preventDefault();
+
+closeBasketDrawer();
+
+return;
+
+}
+
+if (
+event.key !==
+"Tab"
+) {
+
+return;
+
+}
+
+const focusableElements =
+masterHeaderGetBasketFocusableElements();
+
+if (
+!focusableElements.length
+) {
+
+event.preventDefault();
+
+basketDrawerPanel?.focus({
+preventScroll:true
+});
+
+return;
+
+}
+
+const first =
+focusableElements[0];
+
+const last =
+focusableElements[
+focusableElements.length -
+1
+];
+
+if (
+event.shiftKey &&
+document.activeElement ===
+first
+) {
+
+event.preventDefault();
+
+last.focus();
+
+return;
+
+}
+
+if (
+!event.shiftKey &&
+document.activeElement ===
+last
+) {
+
+event.preventDefault();
+
+first.focus();
+
+}
+
+}
+);
+
+/* =========================================
+ESCAPE ALSO CLOSES CONTACT ACTIONS
 ========================================= */
 
 document.addEventListener(
@@ -4133,373 +12758,40 @@ closeWhatsappAction();
 );
 
 /* =========================================
-HEADER BASKET
+REFRESH MASTER HEADER BASKET
 ========================================= */
 
-const basketButton =
-document.getElementById(
-"basketButton"
+function refreshMasterHeaderBasket() {
+
+let payload =
+masterHeaderNormalizePayload(
+masterHeaderReadOrderPayload()
 );
 
-const basketTotalText =
-document.getElementById(
-"basketTotalText"
-);
-
-const INFORMATION_ORDER_STORAGE_KEY =
-"factoryToughenedRooflightsOrderV1";
-
-function informationParseMoney(
-value
-) {
-
-if (
-typeof value ===
-"number"
-) {
-
-return Number.isFinite(
-value
-)
-? value
-: 0;
-
-}
-
-if (
-typeof value !==
-"string"
-) {
-
-return 0;
-
-}
-
-const parsed =
-Number(
-value.replace(
-/[^0-9.\-]/g,
-""
-)
-);
-
-return Number.isFinite(
-parsed
-)
-? parsed
-: 0;
-
-}
-
-function informationGetQuantity(
-item
-) {
-
-const candidates = [
-
-item?.quantity,
-item?.qty,
-item?.count,
-item?.totalUnitsQty
-
-];
-
-for (
-const candidate of
-candidates
-) {
-
-const numeric =
-Number(
-candidate
-);
-
-if (
-Number.isFinite(
-numeric
-) &&
-numeric >
-0
-) {
-
-return Math.max(
-1,
-Math.round(
-numeric
-)
-);
-
-}
-
-}
-
-return 1;
-
-}
-
-function informationGetUnitPrice(
-item
-) {
-
-const directCandidates = [
-
-item?.unitPrice,
-item?.price,
-item?.unitPriceIncVat,
-item?.unitPriceIncVAT,
-item?.priceIncVat,
-item?.priceIncVAT,
-item?.unitTotal,
-item?.configuredPrice
-
-];
-
-for (
-const candidate of
-directCandidates
-) {
-
-const price =
-informationParseMoney(
-candidate
-);
-
-if (
-price >
-0
-) {
-
-return price;
-
-}
-
-}
-
-const quantity =
-informationGetQuantity(
-item
-);
-
-const totalCandidates = [
-
-item?.total,
-item?.lineTotal,
-item?.totalPrice,
-item?.subtotal
-
-];
-
-for (
-const candidate of
-totalCandidates
-) {
-
-const total =
-informationParseMoney(
-candidate
-);
-
-if (
-total >
-0
-) {
-
-return (
-total /
-quantity
-);
-
-}
-
-}
-
-return 0;
-
-}
-
-function informationReadBasketItems() {
-
-try {
-
-const raw =
-localStorage.getItem(
-INFORMATION_ORDER_STORAGE_KEY
-);
-
-if (
-!raw
-) {
-
-return [];
-
-}
-
-const payload =
-JSON.parse(
-raw
-);
-
-if (
-Array.isArray(
+masterHeaderWriteOrderPayload(
 payload
-)
-) {
-
-return payload;
-
-}
-
-if (
-!payload ||
-typeof payload !==
-"object"
-) {
-
-return [];
-
-}
-
-const items = [];
-
-const possibleStandardKeys = [
-
-"items",
-"orderItems",
-"confirmedUnits",
-"units",
-"basketItems"
-
-];
-
-for (
-const key of
-possibleStandardKeys
-) {
-
-if (
-Array.isArray(
-payload[
-key
-]
-)
-) {
-
-items.push(
-...payload[
-key
-]
 );
 
-break;
-
-}
-
-}
-
-if (
-Array.isArray(
-payload.customItems
-)
-) {
-
-items.push(
-...payload.customItems
+masterHeaderLoadDeliveryState(
+payload
 );
-
-}
-
-return items;
-
-}
-catch (error) {
-
-return [];
-
-}
-
-}
-
-function informationFormatMoney(
-amount
-) {
-
-return (
-"£" +
-Number(
-amount
-).toLocaleString(
-"en-GB",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-)
-);
-
-}
-
-function refreshInformationHeaderBasket() {
-
-if (
-!basketTotalText
-) {
-
-return;
-
-}
 
 const items =
-informationReadBasketItems();
-
-const subtotal =
-items.reduce(
-(total,item) => {
-
-return (
-total +
-informationGetUnitPrice(
-item
-) *
-informationGetQuantity(
-item
-)
+masterHeaderGetItems(
+payload
 );
 
-},
-0
+masterHeaderUpdateTotal(
+items
 );
-
-basketTotalText.textContent =
-informationFormatMoney(
-subtotal
-);
-
-basketTotalText.setAttribute(
-"aria-label",
-`Basket product total ${informationFormatMoney(subtotal)}`
-);
-
-basketTotalText.classList.toggle(
-"is-visible",
-items.length >
-0
-);
-
-}
 
 if (
-basketButton
+basketDrawerIsOpen
 ) {
 
-basketButton.addEventListener(
-"click",
-() => {
-
-window.location.href =
-"order-page.html?source=information-page-header";
+renderMasterHeaderBasket();
 
 }
-);
 
 }
 
@@ -4509,10 +12801,12 @@ window.addEventListener(
 
 if (
 event.key ===
-INFORMATION_ORDER_STORAGE_KEY
+MASTER_HEADER_ORDER_STORAGE_KEY ||
+event.key ===
+MASTER_HEADER_DELIVERY_POSTCODE_KEY
 ) {
 
-refreshInformationHeaderBasket();
+refreshMasterHeaderBasket();
 
 }
 
@@ -4521,10 +12815,82 @@ refreshInformationHeaderBasket();
 
 window.addEventListener(
 "pageshow",
-refreshInformationHeaderBasket
+refreshMasterHeaderBasket
 );
 
-refreshInformationHeaderBasket();
+document.addEventListener(
+"visibilitychange",
+() => {
+
+if (
+document.visibilityState ===
+"visible"
+) {
+
+refreshMasterHeaderBasket();
+
+}
+
+}
+);
+
+/* =========================================
+HEADER HOME LINK
+========================================= */
+
+const headerHomeLink =
+document.getElementById(
+"headerHomeLink"
+);
+
+if (
+headerHomeLink
+) {
+
+headerHomeLink.addEventListener(
+"click",
+() => {
+
+closeWhatsappAction();
+
+closeEmailAction();
+
+if (
+pagesMenuDrawerIsOpen
+) {
+
+closeMenu({
+restoreFocus:false
+});
+
+}
+
+if (
+basketDrawerIsOpen
+) {
+
+closeBasketDrawer({
+restoreFocus:false
+});
+
+}
+
+}
+);
+
+}
+
+/* =========================================
+INITIAL MASTER HEADER BASKET
+========================================= */
+
+requestAnimationFrame(
+() => {
+
+refreshMasterHeaderBasket();
+
+}
+);
 
 </script>
 
