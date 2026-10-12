@@ -2812,28 +2812,109 @@ max-width:1120px;
 margin:0 auto;
 }
 
-.information-kicker {
+/* =========================================
+PRIVACY PAGE
+BACK BUTTON + TITLE
+========================================= */
+
+.information-back-button {
+display:inline-flex;
+
+align-items:center;
+
+gap:7px;
+
 margin:
 0
 0
-19px;
+24px;
+
+padding:0;
+
+border:0;
+
+background:transparent;
+
+color:
+rgba(247,247,243,.58);
 
 font-family:
 "Bahnschrift",
-"Aptos",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
 sans-serif;
 
 font-size:10px;
-font-weight:800;
+font-weight:750;
 
 line-height:1;
 
-letter-spacing:2px;
+letter-spacing:1.15px;
 
 text-transform:uppercase;
 
-color:
-rgba(247,247,243,.50);
+cursor:pointer;
+
+transition:
+color .18s ease,
+transform .18s ease;
+}
+
+.information-back-button:hover,
+.information-back-button:focus-visible {
+color:var(--orange-bright);
+
+outline:none;
+
+transform:
+translateX(-2px);
+}
+
+.information-back-arrow {
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-size:15px;
+font-weight:500;
+
+line-height:1;
+
+transform:
+translateY(-.5px);
+}
+
+.privacy-page-title {
+margin:0;
+
+font-family:
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+
+font-size:24px;
+font-weight:850;
+
+line-height:.91;
+
+letter-spacing:2.8px;
+
+color:var(--orange);
+
+text-transform:uppercase;
+
+width:max-content;
+max-width:100%;
 }
 
 .information-title {
@@ -3493,12 +3574,22 @@ padding:
 41px;
 }
 
-.information-kicker {
-margin-bottom:15px;
+.information-back-button {
+margin-bottom:21px;
 
-font-size:8px;
+font-size:9px;
 
-letter-spacing:1.6px;
+letter-spacing:1px;
+}
+
+.information-back-arrow {
+font-size:14px;
+}
+
+.privacy-page-title {
+font-size:20px;
+
+letter-spacing:2.8px;
 }
 
 .information-title {
@@ -4195,8 +4286,23 @@ PAGE INTRODUCTION
 
 <div class="information-hero-inner">
 
-<div class="information-kicker">
-Privacy &amp; Data Protection
+<button
+type="button"
+class="information-back-button"
+id="informationBackButton"
+aria-label="Go back to the previous page"
+>
+<span
+class="information-back-arrow"
+aria-hidden="true"
+>
+←
+</span>
+Back
+</button>
+
+<div class="privacy-page-title">
+Privacy Policy
 </div>
 
 <p class="information-introduction">
@@ -4221,10 +4327,6 @@ PRIVACY POLICY DOCUMENT
 <div class="information-document-shell">
 
 <div class="information-document-panel">
-
-<div class="information-document-label">
-Privacy Policy
-</div>
 
 <article class="information-document-content">
 
@@ -5117,6 +5219,31 @@ blocker.setAttribute(
 }
 
 applyDesktopAccessRestriction();
+
+/* =========================================
+PRIVACY PAGE
+BACK BUTTON
+========================================= */
+
+const informationBackButton =
+document.getElementById(
+"informationBackButton"
+);
+
+if (
+informationBackButton
+) {
+
+informationBackButton.addEventListener(
+"click",
+() => {
+
+window.history.back();
+
+}
+);
+
+}
 
 /* =========================================
 MASTER HEADER
