@@ -58,16 +58,13 @@ INFORMATION / FOOTER PAGE MASTER TEMPLATE
 
 }
 
-
 * {
 box-sizing:border-box;
 }
 
-
 html {
 scroll-behavior:smooth;
 }
-
 
 body {
 margin:0;
@@ -88,11 +85,14 @@ overflow-x:hidden;
 text-rendering:optimizeLegibility;
 }
 
+body.menu-drawer-open {
+overflow:hidden !important;
+overscroll-behavior:none;
+}
 
 img {
 max-width:100%;
 }
-
 
 /* =========================================
 DESKTOP ACCESS BLOCKER
@@ -133,7 +133,6 @@ touch-action:none;
 pointer-events:auto;
 }
 
-
 .desktop-access-blocker::before {
 content:"";
 
@@ -158,7 +157,6 @@ opacity:.42;
 pointer-events:none;
 }
 
-
 .desktop-access-blocker::after {
 content:"";
 
@@ -179,7 +177,6 @@ box-shadow:
 
 pointer-events:none;
 }
-
 
 .desktop-access-blocker-panel {
 position:relative;
@@ -208,7 +205,6 @@ box-shadow:
 inset 0 1px 0 rgba(255,255,255,.025);
 }
 
-
 .desktop-access-blocker-panel::before {
 content:"";
 
@@ -224,7 +220,6 @@ clamp(20px,2.5vw,28px);
 
 background:var(--orange);
 }
-
 
 .desktop-access-blocker h1 {
 margin:0;
@@ -247,7 +242,6 @@ letter-spacing:-1.35px;
 color:var(--cream);
 }
 
-
 .desktop-access-blocker p {
 max-width:520px;
 
@@ -264,7 +258,6 @@ line-height:1.65;
 color:var(--muted);
 }
 
-
 @media (hover:hover) and (pointer:fine) {
 
 html,
@@ -278,7 +271,6 @@ display:flex;
 }
 
 }
-
 
 /* =========================================
 TOP MOVING BANNER
@@ -310,7 +302,6 @@ letter-spacing:1.65px;
 text-transform:uppercase;
 }
 
-
 .ticker {
 display:inline-block;
 
@@ -323,11 +314,9 @@ linear
 infinite;
 }
 
-
 .ticker span {
 margin-right:90px;
 }
-
 
 @keyframes ticker {
 
@@ -340,7 +329,6 @@ transform:translateX(-50%);
 }
 
 }
-
 
 /* =========================================
 HEADER
@@ -379,12 +367,10 @@ box-shadow:
 0 8px 30px rgba(0,0,0,.16);
 }
 
-
 .wordmark-wrap {
 display:grid;
 gap:9px;
 }
-
 
 .header-home-link {
 display:block;
@@ -396,11 +382,9 @@ color:inherit;
 text-decoration:none;
 }
 
-
 .header-home-link:visited {
 color:inherit;
 }
-
 
 .header-home-link:focus-visible {
 outline:
@@ -408,7 +392,6 @@ outline:
 
 outline-offset:6px;
 }
-
 
 .wordmark {
 font-family:
@@ -435,12 +418,10 @@ text-transform:uppercase;
 width:max-content;
 }
 
-
 .wordmark > span {
 color:var(--orange);
 display:block;
 }
-
 
 .wordmark-bottom {
 display:flex;
@@ -453,7 +434,6 @@ white-space:nowrap;
 
 width:max-content;
 }
-
 
 .wordmark-domain {
 color:var(--steel-light);
@@ -475,7 +455,6 @@ transform:
 translate(-1px,1px);
 }
 
-
 .action-icons {
 display:flex;
 
@@ -486,7 +465,6 @@ align-self:end;
 padding-bottom:1px;
 }
 
-
 .header-action-wrap {
 position:relative;
 
@@ -495,7 +473,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 }
-
 
 .action-icons button,
 .action-icons a.header-icon-button {
@@ -533,7 +510,6 @@ line-height:1;
 padding:0;
 }
 
-
 .action-icons button:hover,
 .action-icons a.header-icon-button:hover {
 border-color:
@@ -550,7 +526,6 @@ transform:
 translateY(-1px);
 }
 
-
 .action-icons button.is-selected {
 border-color:
 rgba(232,120,23,.85);
@@ -564,6 +539,97 @@ box-shadow:
 0 7px 22px rgba(0,0,0,.24);
 }
 
+/* =========================================
+EMAIL ACTION
+========================================= */
+
+.email-action {
+position:absolute;
+
+left:50%;
+
+bottom:
+calc(100% + 15px);
+
+z-index:85;
+
+width:42px;
+height:42px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border-radius:7px;
+
+background:
+linear-gradient(
+145deg,
+#020304 0%,
+#07101a 34%,
+#0d2238 68%,
+#123a5a 100%
+);
+
+border:
+1px solid rgba(255,255,255,.32);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.55),
+0 0 14px rgba(86,173,222,.22),
+inset 0 1px 0 rgba(255,255,255,.32);
+
+opacity:0;
+visibility:hidden;
+
+pointer-events:none;
+
+transform:
+translate(-50%,20px)
+scale(.58);
+
+transform-origin:
+center bottom;
+
+transition:
+opacity .2s ease,
+visibility .2s ease,
+transform .38s cubic-bezier(.18,.82,.28,1.35);
+}
+
+.email-action.is-open {
+opacity:1;
+visibility:visible;
+
+pointer-events:auto;
+
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+.email-action-symbol {
+display:block;
+
+color:#ffffff;
+
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+
+font-size:18px;
+font-weight:800;
+
+line-height:1;
+
+text-align:center;
+
+text-shadow:
+0 2px 2px rgba(0,0,0,.18);
+}
 
 /* =========================================
 WHATSAPP ACTION
@@ -623,7 +689,6 @@ visibility .2s ease,
 transform .38s cubic-bezier(.18,.82,.28,1.35);
 }
 
-
 .whatsapp-action.is-open {
 opacity:1;
 visibility:visible;
@@ -634,7 +699,6 @@ transform:
 translate(-50%,0)
 scale(1);
 }
-
 
 .whatsapp-action svg {
 width:27px;
@@ -652,7 +716,6 @@ drop-shadow(
 rgba(0,0,0,.22)
 );
 }
-
 
 /* =========================================
 BASKET HEADER TOTAL
@@ -700,7 +763,6 @@ center bottom;
 pointer-events:none;
 }
 
-
 .basket-total-text.is-visible {
 opacity:1;
 
@@ -709,132 +771,286 @@ translate(-50%,0)
 scale(1);
 }
 
-
 /* =========================================
-MENU
+PAGES MASTER MENU
+70% WIDTH / OPENS FROM LEFT
 ========================================= */
 
 .menu-overlay {
 position:fixed;
-
 inset:0;
-
-background:
-rgba(10,11,11,.992);
-
-z-index:100;
-
-display:none;
-
-padding:
-55px
-6%;
-
-overflow-y:auto;
+z-index:2000000100;
+visibility:hidden;
+pointer-events:none;
+overflow:hidden;
 }
-
 
 .menu-overlay.active {
-display:block;
+visibility:visible;
+pointer-events:auto;
 }
 
+.menu-backdrop {
+position:absolute;
+inset:0;
+z-index:1;
+background:rgba(0,0,0,.72);
+opacity:0;
+cursor:pointer;
+transition:opacity .34s ease;
+}
+
+.menu-overlay.active .menu-backdrop {
+opacity:1;
+}
+
+.menu-panel {
+position:absolute;
+top:0;
+left:0;
+z-index:2;
+width:70vw;
+max-width:70vw;
+min-width:0;
+height:100vh;
+height:100dvh;
+display:grid;
+grid-template-rows:auto minmax(0,1fr);
+overflow:hidden;
+background:
+linear-gradient(
+180deg,
+#111414 0%,
+#0b0d0d 52%,
+#080a0a 100%
+);
+border-right:1px solid rgba(255,255,255,.14);
+box-shadow:
+26px 0 70px rgba(0,0,0,.54);
+transform:translateX(-100%);
+transition:transform .42s cubic-bezier(.18,.72,.28,1);
+outline:0;
+}
+
+.menu-overlay.active .menu-panel {
+transform:translateX(0);
+}
 
 .menu-top {
-display:flex;
-
-justify-content:space-between;
-align-items:flex-start;
-
-margin-bottom:60px;
+position:relative;
+z-index:4;
+display:grid;
+grid-template-columns:minmax(0,1fr) auto;
+align-items:stretch;
+gap:10px;
+min-height:120px;
+margin:0;
+padding:
+16px
+12px
+15px;
+background:
+linear-gradient(
+180deg,
+rgba(20,23,23,.995),
+rgba(13,15,15,.995)
+);
+border-bottom:1px solid rgba(255,255,255,.11);
+box-shadow:0 10px 24px rgba(0,0,0,.22);
 }
 
+.menu-brand {
+min-width:0;
+display:flex;
+align-items:flex-start;
+justify-content:flex-start;
+}
 
-.address-line {
-font-size:12px;
+.menu-brand .wordmark-wrap {
+display:grid;
+gap:10px;
+}
 
-line-height:1.45;
+.menu-brand .wordmark {
+font-size:19.5px;
+line-height:.91;
+letter-spacing:2.34px;
+}
 
+.menu-brand .wordmark-domain {
+font-size:.40em;
+margin-left:1px;
+padding-bottom:1px;
+transform:translate(-1px,1px);
+}
+
+.menu-brand .address-line {
+margin-top:0;
+font-size:8.52px;
 font-weight:600;
-
-color:rgba(255,255,255,.72);
-
-letter-spacing:.6px;
-
+line-height:1.42;
+letter-spacing:.42px;
+color:rgba(255,255,255,.62);
+text-align:left;
 text-transform:uppercase;
 }
 
-
 .close-menu {
-background:#111313;
-
+width:34px;
+height:34px;
+padding:0;
+display:flex;
+align-items:center;
+justify-content:center;
+align-self:start;
+border:1px solid rgba(255,255,255,.17);
+border-radius:9px;
+background:#101212;
 color:var(--cream);
-
-border:
-1px solid rgba(255,255,255,.16);
-
-width:44px;
-height:44px;
-
-font-size:26px;
-
+font-family:
+"Aptos",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:20px;
+font-weight:300;
+line-height:1;
 cursor:pointer;
+transition:
+border-color .2s ease,
+background .2s ease,
+color .2s ease,
+transform .15s ease;
 }
 
+.close-menu:hover {
+border-color:rgba(232,120,23,.56);
+background:#181513;
+color:var(--orange-bright);
+}
+
+.close-menu:active {
+transform:scale(.95);
+}
 
 .menu-links {
 display:grid;
-
+align-content:start;
 gap:0;
-
-max-width:760px;
-
-border-top:
-1px solid rgba(255,255,255,.10);
+width:100%;
+max-width:none;
+min-width:0;
+overflow-x:hidden;
+overflow-y:auto;
+overscroll-behavior:contain;
+-webkit-overflow-scrolling:touch;
+padding:
+7px
+12px
+max(22px,env(safe-area-inset-bottom));
+border-top:0;
+scrollbar-width:thin;
+scrollbar-color:
+rgba(232,120,23,.55)
+rgba(255,255,255,.035);
 }
 
+.menu-links::-webkit-scrollbar {
+width:5px;
+}
 
-.menu-links a {
+.menu-links::-webkit-scrollbar-track {
+background:rgba(255,255,255,.025);
+}
+
+.menu-links::-webkit-scrollbar-thumb {
+background:rgba(232,120,23,.52);
+border-radius:999px;
+}
+
+.menu-links a,
+.menu-links button {
+position:relative;
+width:100%;
+min-height:49px;
+margin:0;
+padding:
+15px
+29px
+15px
+2px;
+display:flex;
+align-items:center;
+justify-content:flex-start;
+border:0;
+border-bottom:1px solid rgba(255,255,255,.10);
+background:transparent;
 color:var(--cream);
-
-text-decoration:none;
-
 font-family:
 "Bahnschrift SemiCondensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-
-font-size:
-clamp(27.9px,4.5vw,55.8px);
-
+font-size:clamp(14px,4.2vw,18px);
 font-weight:750;
-
-line-height:1;
-
-letter-spacing:-1.2px;
-
+line-height:1.05;
+letter-spacing:-.25px;
+text-align:left;
+text-decoration:none;
 text-transform:uppercase;
-
-border-bottom:
-1px solid rgba(255,255,255,.10);
-
-padding:
-22px
-0;
-
+cursor:pointer;
 transition:
 color .2s ease,
 padding-left .2s ease,
 background .2s ease;
 }
 
-
-.menu-links a:hover {
-color:var(--orange-bright);
-
-padding-left:10px;
+.menu-links a:first-child,
+.menu-links button:first-child {
+border-top:1px solid rgba(255,255,255,.10);
 }
 
+.menu-links a::after,
+.menu-links button::after {
+content:"→";
+position:absolute;
+right:4px;
+top:50%;
+color:rgba(247,247,243,.34);
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:14px;
+font-weight:500;
+line-height:1;
+transform:translateY(-50%);
+transition:
+color .2s ease,
+transform .2s ease;
+}
+
+.menu-links a:hover,
+.menu-links button:hover,
+.menu-links a:focus-visible,
+.menu-links button:focus-visible {
+color:var(--orange-bright);
+padding-left:6px;
+background:rgba(255,255,255,.018);
+outline:none;
+}
+
+.menu-links a:hover::after,
+.menu-links button:hover::after,
+.menu-links a:focus-visible::after,
+.menu-links button:focus-visible::after {
+color:var(--orange-bright);
+transform:
+translateY(-50%)
+translateX(2px);
+}
 
 /* =========================================
 INFORMATION PAGE HERO
@@ -856,7 +1072,6 @@ linear-gradient(
 #090a0a 100%
 );
 }
-
 
 .information-page::before {
 content:"";
@@ -893,7 +1108,6 @@ auto,
 pointer-events:none;
 }
 
-
 .information-hero {
 position:relative;
 
@@ -905,13 +1119,11 @@ clamp(68px,8vw,110px)
 clamp(52px,6vw,80px);
 }
 
-
 .information-hero-inner {
 max-width:1120px;
 
 margin:0 auto;
 }
-
 
 .information-kicker {
 margin:0 0 19px;
@@ -932,7 +1144,6 @@ text-transform:uppercase;
 
 color:rgba(247,247,243,.50);
 }
-
 
 .information-title {
 max-width:900px;
@@ -960,11 +1171,9 @@ letter-spacing:-2.5px;
 color:var(--cream);
 }
 
-
 .information-title-main {
 display:block;
 }
-
 
 .information-title-accent {
 display:block;
@@ -973,7 +1182,6 @@ margin-top:5px;
 
 color:var(--orange);
 }
-
 
 .information-introduction {
 max-width:900px;
@@ -993,7 +1201,6 @@ line-height:1.7;
 color:rgba(247,247,243,.72);
 }
 
-
 /* =========================================
 INFORMATION DOCUMENT HOUSING
 ========================================= */
@@ -1009,7 +1216,6 @@ padding:
 clamp(76px,9vw,130px);
 }
 
-
 .information-document-shell {
 width:min(930px,84%);
 
@@ -1018,7 +1224,6 @@ clamp(22px,7vw,105px);
 
 margin-right:auto;
 }
-
 
 .information-document-panel {
 position:relative;
@@ -1046,7 +1251,6 @@ box-shadow:
 inset 0 1px 0 rgba(255,255,255,.018);
 }
 
-
 .information-document-panel::before {
 content:"";
 
@@ -1066,7 +1270,6 @@ rgba(255,255,255,.05),
 transparent
 );
 }
-
 
 .information-document-label {
 margin:0 0 28px;
@@ -1088,17 +1291,14 @@ text-transform:uppercase;
 color:var(--orange-bright);
 }
 
-
 .information-document-content {
 max-width:760px;
 }
-
 
 .information-document-content section {
 margin:0;
 padding:0;
 }
-
 
 .information-document-content section + section {
 margin-top:
@@ -1110,7 +1310,6 @@ clamp(30px,3.5vw,42px);
 border-top:
 1px solid rgba(255,255,255,.08);
 }
-
 
 .information-document-content h2 {
 margin:
@@ -1136,7 +1335,6 @@ letter-spacing:-.6px;
 color:var(--cream);
 }
 
-
 .information-section-number {
 display:block;
 
@@ -1159,7 +1357,6 @@ text-transform:uppercase;
 color:var(--orange);
 }
 
-
 .information-document-content p {
 margin:
 0
@@ -1176,18 +1373,15 @@ line-height:1.72;
 color:rgba(247,247,243,.64);
 }
 
-
 .information-document-content p:last-child {
 margin-bottom:0;
 }
-
 
 .information-document-content strong {
 color:rgba(247,247,243,.88);
 
 font-weight:700;
 }
-
 
 .information-document-content a {
 color:var(--orange-bright);
@@ -1207,7 +1401,6 @@ color .18s ease,
 text-decoration-color .18s ease;
 }
 
-
 .information-document-content a:hover,
 .information-document-content a:focus {
 color:var(--cream);
@@ -1217,7 +1410,6 @@ text-decoration-color:var(--cream);
 outline:none;
 }
 
-
 .information-document-content ul {
 margin:
 16px 0 0;
@@ -1226,7 +1418,6 @@ padding-left:21px;
 
 color:rgba(247,247,243,.64);
 }
-
 
 .information-document-content li {
 margin-bottom:10px;
@@ -1239,11 +1430,9 @@ clamp(14px,1.5vw,17px);
 line-height:1.65;
 }
 
-
 .information-document-content li::marker {
 color:var(--orange);
 }
-
 
 /* =========================================
 RIGHT TO OBJECT EMPHASIS
@@ -1264,7 +1453,6 @@ border-left:
 background:
 rgba(232,120,23,.04);
 }
-
 
 .privacy-right-to-object strong {
 display:block;
@@ -1288,11 +1476,9 @@ letter-spacing:1px;
 text-transform:uppercase;
 }
 
-
 .privacy-right-to-object p {
 margin:0;
 }
-
 
 /* =========================================
 OPTIONAL LAST UPDATED LINE
@@ -1325,7 +1511,6 @@ text-transform:uppercase;
 color:rgba(247,247,243,.37);
 }
 
-
 /* =========================================
 MOBILE
 ========================================= */
@@ -1336,11 +1521,9 @@ MOBILE
 font-size:7px;
 }
 
-
 .ticker {
 padding:7px 0;
 }
-
 
 header {
 padding:
@@ -1350,11 +1533,9 @@ padding:
 gap:14px;
 }
 
-
 .wordmark {
 font-size:20px;
 }
-
 
 .wordmark-domain {
 font-size:.40em;
@@ -1362,11 +1543,9 @@ font-size:.40em;
 padding-bottom:1px;
 }
 
-
 .action-icons {
 gap:5px;
 }
-
 
 .action-icons button,
 .action-icons a.header-icon-button {
@@ -1376,7 +1555,7 @@ height:34px;
 font-size:15px;
 }
 
-
+.email-action,
 .whatsapp-action {
 width:34px;
 height:34px;
@@ -1387,12 +1566,14 @@ bottom:
 calc(100% + 14px);
 }
 
+.email-action-symbol {
+font-size:15.3px;
+}
 
 .whatsapp-action svg {
 width:22px;
 height:22px;
 }
-
 
 .basket-total-text {
 top:-15px;
@@ -1400,23 +1581,59 @@ top:-15px;
 font-size:7px;
 }
 
-
-.menu-overlay {
-padding:
-45px
-6%;
+.menu-panel {
+width:70vw;
+max-width:70vw;
 }
-
 
 .menu-top {
-margin-bottom:42px;
+min-height:111px;
+padding:14px 10px 13px;
+gap:8px;
 }
 
-
-.address-line {
-font-size:9px;
+.menu-brand .wordmark {
+font-size:18.2px;
+letter-spacing:2.015px;
 }
 
+.menu-brand .address-line {
+font-size:8.04px;
+line-height:1.42;
+letter-spacing:.32px;
+}
+
+.close-menu {
+width:32px;
+height:32px;
+border-radius:8px;
+font-size:19px;
+}
+
+.menu-links {
+padding:
+6px
+10px
+max(20px,env(safe-area-inset-bottom));
+}
+
+.menu-links a,
+.menu-links button {
+min-height:47px;
+padding:
+14px
+26px
+14px
+1px;
+font-size:clamp(13px,4vw,16px);
+letter-spacing:-.18px;
+}
+
+.menu-links a::after,
+.menu-links button::after {
+right:3px;
+font-size:13px;
+}
 
 .information-hero {
 padding:
@@ -1425,7 +1642,6 @@ padding:
 41px;
 }
 
-
 .information-kicker {
 margin-bottom:15px;
 
@@ -1433,7 +1649,6 @@ font-size:8px;
 
 letter-spacing:1.6px;
 }
-
 
 .information-title {
 font-size:
@@ -1444,11 +1659,9 @@ line-height:.97;
 letter-spacing:-1.8px;
 }
 
-
 .information-title-accent {
 margin-top:4px;
 }
-
 
 .information-introduction {
 width:94%;
@@ -1460,7 +1673,6 @@ font-size:12.16px;
 line-height:1.7;
 }
 
-
 .information-document-section {
 padding:
 0
@@ -1468,14 +1680,12 @@ padding:
 65px;
 }
 
-
 .information-document-shell {
 width:94%;
 
 margin-left:4%;
 margin-right:auto;
 }
-
 
 .information-document-panel {
 padding:
@@ -1486,7 +1696,6 @@ padding:
 border-left-width:2px;
 }
 
-
 .information-document-label {
 margin-bottom:24px;
 
@@ -1495,18 +1704,15 @@ font-size:8px;
 letter-spacing:1.35px;
 }
 
-
 .information-document-content h2 {
 font-size:25px;
 
 letter-spacing:-.4px;
 }
 
-
 .information-section-number {
 font-size:7px;
 }
-
 
 .information-document-content p,
 .information-document-content li {
@@ -1515,13 +1721,11 @@ font-size:14px;
 line-height:1.7;
 }
 
-
 .information-document-content section + section {
 margin-top:31px;
 
 padding-top:29px;
 }
-
 
 .privacy-right-to-object {
 padding:
@@ -1529,13 +1733,11 @@ padding:
 17px;
 }
 
-
 .information-last-updated {
 font-size:8px;
 }
 
 }
-
 
 /* =========================================
 SMALL MOBILE
@@ -1543,22 +1745,48 @@ SMALL MOBILE
 
 @media(max-width:390px) {
 
+.menu-top {
+min-height:106px;
+padding-left:9px;
+padding-right:9px;
+}
+
+.menu-brand .wordmark {
+font-size:16.9px;
+letter-spacing:1.82px;
+}
+
+.menu-brand .address-line {
+font-size:7.5px;
+letter-spacing:.27px;
+}
+
+.menu-links {
+padding-left:9px;
+padding-right:9px;
+}
+
+.menu-links a,
+.menu-links button {
+min-height:45px;
+font-size:12.6px;
+padding-top:13px;
+padding-bottom:13px;
+}
+
 .information-title {
 font-size:34.85px;
 }
 
-
 .information-introduction {
 font-size:11.4px;
 }
-
 
 .information-document-shell {
 width:95%;
 
 margin-left:3%;
 }
-
 
 .information-document-panel {
 padding:
@@ -1567,11 +1795,9 @@ padding:
 32px;
 }
 
-
 .information-document-content h2 {
 font-size:23px;
 }
-
 
 .information-document-content p,
 .information-document-content li {
@@ -1579,7 +1805,6 @@ font-size:13.5px;
 }
 
 }
-
 
 /* =========================================
 REDUCED MOTION
@@ -1591,9 +1816,13 @@ html {
 scroll-behavior:auto;
 }
 
-
 .ticker {
 animation:none;
+}
+
+.menu-panel,
+.menu-backdrop {
+transition:none !important;
 }
 
 }
@@ -1602,9 +1831,7 @@ animation:none;
 
 </head>
 
-
 <body>
-
 
 <!-- =======================================
 DESKTOP ACCESS BLOCKER
@@ -1633,7 +1860,6 @@ Please visit Factory Toughened Rooflights using a mobile device.
 </div>
 
 </div>
-
 
 <!-- =======================================
 TOP BANNER
@@ -1719,7 +1945,6 @@ Collection available with prior booking
 
 </div>
 
-
 <!-- =======================================
 HEADER
 ======================================= -->
@@ -1759,19 +1984,40 @@ Rooflights
 
 </div>
 
-
 <div class="action-icons">
 
+<div class="header-action-wrap">
 
-<a
-href="contact.html"
+<button
+type="button"
 class="header-icon-button"
-aria-label="Contact Factory Toughened Rooflights"
-title="Contact our rooflight team"
+id="emailButton"
+aria-label="Show email button"
+title="Email our rooflight team"
+aria-expanded="false"
+aria-controls="emailAction"
 >
 ✉
+</button>
+
+<a
+id="emailAction"
+class="email-action"
+href="mailto:sales@factorytoughenedrooflights.co.uk"
+aria-label="Compose a blank email to Factory Toughened Rooflights"
+title="Email sales@factorytoughenedrooflights.co.uk"
+>
+
+<span
+class="email-action-symbol"
+aria-hidden="true"
+>
+@
+</span>
+
 </a>
 
+</div>
 
 <div class="header-action-wrap">
 
@@ -1810,7 +2056,6 @@ d="M16 3.2A12.5 12.5 0 0 0 5.2 22l-1.8 6.8 7-1.8A12.5 12.5 0 1 0 16 3.2zm0 22.7c
 
 </div>
 
-
 <div class="header-action-wrap">
 
 <button
@@ -1832,71 +2077,79 @@ aria-label="Basket total £0.00"
 
 </div>
 
-
 <button
 type="button"
 id="menuButton"
+onclick="openMenu()"
 aria-label="Open menu"
 title="Menu"
+aria-expanded="false"
+aria-controls="menuOverlay"
 >
 ☰
 </button>
-
 
 </div>
 
 </header>
 
-
 <!-- =======================================
-MENU
+PAGES MASTER MENU
 ======================================= -->
 
 <div
 id="menuOverlay"
 class="menu-overlay"
+aria-hidden="true"
+>
+
+<div
+class="menu-backdrop"
+onclick="closeMenu()"
+aria-hidden="true"
+></div>
+
+<aside
+class="menu-panel"
+id="menuPanel"
+role="dialog"
+aria-modal="true"
+aria-label="Website menu"
+tabindex="-1"
 >
 
 <div class="menu-top">
 
+<div class="menu-brand">
+
 <div class="wordmark-wrap">
 
 <div class="wordmark">
-
 Factory
-
-<span>
-Toughened
-</span>
+<span>Toughened</span>
 
 <div class="wordmark-bottom">
-
 Rooflights
-
-<small class="wordmark-domain">
-.co.uk
-</small>
-
+<small class="wordmark-domain">.co.uk</small>
 </div>
 
 </div>
 
 <div class="address-line">
-
 Anamax Group Estate<br>
 Oxford Road, Denham<br>
 Buckinghamshire<br>
 SL9 7BB
-
 </div>
 
 </div>
 
+</div>
 
 <button
 class="close-menu"
 type="button"
-id="closeMenuButton"
+onclick="closeMenu()"
 aria-label="Close menu"
 >
 ×
@@ -1904,50 +2157,79 @@ aria-label="Close menu"
 
 </div>
 
+<nav
+class="menu-links"
+aria-label="Main navigation"
+>
 
-<div class="menu-links">
-
-<a href="index.html">
+<a
+href="index.html"
+onclick="closeMenu()"
+>
 Home
 </a>
 
-<a href="standard-sizes.html">
+<a
+href="standard-sizes.html"
+onclick="closeMenu()"
+>
 Standard Sizes
 </a>
 
-<a href="order-page.html">
+<a
+href="order-page.html"
+onclick="closeMenu()"
+>
 Order Your Rooflight
 </a>
 
 <a
 href="order-page.html?source=information-page-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+onclick="closeMenu({restoreFocus:false})"
 >
 Build A Rooflight
 </a>
 
-<a href="index.html#oversized">
+<button
+type="button"
+id="pagesMenuOversizedRooflights"
+>
 Oversized Rooflights
-</a>
+</button>
 
-<a href="installation-guide.html">
-Installation Guide
-</a>
+<button
+type="button"
+id="pagesMenuBookFitting"
+>
+Book A Fitting
+</button>
 
-<a href="contact.html">
+<button
+type="button"
+class="menu-contact-button"
+id="pagesMenuContactTeam"
+>
 Contact Our Team
+</button>
+
+<a
+href="shipping.html"
+onclick="closeMenu()"
+>
+Lead Times
 </a>
 
-</div>
+</nav>
+
+</aside>
 
 </div>
-
 
 <!-- =======================================
 PRIVACY POLICY PAGE
 ======================================= -->
 
 <main class="information-page">
-
 
 <!-- =======================================
 PAGE INTRODUCTION
@@ -1974,7 +2256,6 @@ place an order with us.
 
 </section>
 
-
 <!-- =======================================
 PRIVACY POLICY DOCUMENT
 ======================================= -->
@@ -1989,9 +2270,7 @@ PRIVACY POLICY DOCUMENT
 Privacy Policy
 </div>
 
-
 <article class="information-document-content">
-
 
 <!-- =======================================
 SECTION 01
@@ -2059,7 +2338,6 @@ we are permitted to process that information by law.
 
 </section>
 
-
 <!-- =======================================
 SECTION 02
 ======================================= -->
@@ -2093,7 +2371,6 @@ you access our website or interact with its systems.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 03
@@ -2163,7 +2440,6 @@ Meet our legal, regulatory, tax and accounting obligations.
 
 </section>
 
-
 <!-- =======================================
 SECTION 04
 ======================================= -->
@@ -2216,7 +2492,6 @@ consent is the lawful basis being used.
 
 </section>
 
-
 <!-- =======================================
 SECTION 05
 ======================================= -->
@@ -2258,7 +2533,6 @@ our handling of customer information.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 06
@@ -2325,7 +2599,6 @@ purpose for which the information is being shared.
 
 </section>
 
-
 <!-- =======================================
 SECTION 07
 ======================================= -->
@@ -2360,7 +2633,6 @@ contractual safeguards.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 08
@@ -2401,7 +2673,6 @@ anonymise or securely dispose of it as appropriate.
 
 </section>
 
-
 <!-- =======================================
 SECTION 09
 ======================================= -->
@@ -2435,7 +2706,6 @@ to the nature of the information being handled.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 10
@@ -2471,7 +2741,6 @@ enquiry, quotation, order, delivery, payment or other service.
 
 </section>
 
-
 <!-- =======================================
 SECTION 11
 ======================================= -->
@@ -2499,7 +2768,6 @@ in our Cookies Policy.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 12
@@ -2590,7 +2858,6 @@ about.
 
 </section>
 
-
 <!-- =======================================
 SECTION 13
 ======================================= -->
@@ -2620,7 +2887,6 @@ individual.
 
 </section>
 
-
 <!-- =======================================
 SECTION 14
 ======================================= -->
@@ -2648,7 +2914,6 @@ organisation.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 15
@@ -2697,7 +2962,6 @@ SK9 5AF
 
 </section>
 
-
 <!-- =======================================
 SECTION 16
 ======================================= -->
@@ -2725,7 +2989,6 @@ appropriate.
 </p>
 
 </section>
-
 
 <!-- =======================================
 SECTION 17
@@ -2774,11 +3037,9 @@ sales@factorytoughenedrooflights.co.uk
 
 </section>
 
-
 <div class="information-last-updated">
 Last updated: 5 September 2026
 </div>
-
 
 </article>
 
@@ -2788,9 +3049,7 @@ Last updated: 5 September 2026
 
 </section>
 
-
 </main>
-
 
 <script>
 
@@ -2803,7 +3062,6 @@ const prefersReducedMotion =
 window.matchMedia(
 "(prefers-reduced-motion: reduce)"
 ).matches;
-
 
 /* =========================================
 DESKTOP ACCESS RESTRICTION
@@ -2865,109 +3123,857 @@ blocker.setAttribute(
 
 applyDesktopAccessRestriction();
 
-
 /* =========================================
-MENU
+PAGES MASTER MENU
+DOM / STATE
 ========================================= */
 
-const menuOverlay =
-document.getElementById(
-"menuOverlay"
-);
-
-const menuButton =
+const pagesMenuButton =
 document.getElementById(
 "menuButton"
 );
 
-const closeMenuButton =
+const pagesMenuOverlay =
 document.getElementById(
-"closeMenuButton"
+"menuOverlay"
 );
 
+const pagesMenuPanel =
+document.getElementById(
+"menuPanel"
+);
+
+let pagesMenuDrawerIsOpen =
+false;
+
+let pagesMenuDrawerScrollY =
+0;
+
+let pagesMenuDrawerPreviousBodyStyles =
+null;
+
+let pagesMenuLastFocusedElement =
+null;
+
+/* =========================================
+PAGES MASTER MENU
+BACKGROUND / PAGE LOCK
+========================================= */
+
+function getPagesMenuBackgroundElements() {
+
+if (
+!pagesMenuOverlay
+) {
+
+return [];
+
+}
+
+const desktopBlocker =
+document.getElementById(
+"desktopAccessBlocker"
+);
+
+return Array.from(
+document.body.children
+).filter(
+(element) =>
+element !==
+pagesMenuOverlay &&
+element !==
+desktopBlocker &&
+element.tagName !==
+"SCRIPT"
+);
+
+}
+
+function setPagesMenuBackgroundInert(
+shouldBeInert
+) {
+
+getPagesMenuBackgroundElements()
+.forEach(
+(element) => {
+
+element.inert =
+shouldBeInert;
+
+}
+);
+
+}
+
+function lockPagesMenuPageScroll() {
+
+pagesMenuDrawerScrollY =
+window.scrollY ||
+document.documentElement.scrollTop ||
+0;
+
+pagesMenuDrawerPreviousBodyStyles = {
+position:
+document.body.style.position,
+top:
+document.body.style.top,
+left:
+document.body.style.left,
+right:
+document.body.style.right,
+width:
+document.body.style.width,
+overflow:
+document.body.style.overflow
+};
+
+document.body.classList.add(
+"menu-drawer-open"
+);
+
+document.body.style.position =
+"fixed";
+
+document.body.style.top =
+`-${pagesMenuDrawerScrollY}px`;
+
+document.body.style.left =
+"0";
+
+document.body.style.right =
+"0";
+
+document.body.style.width =
+"100%";
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+function unlockPagesMenuPageScroll() {
+
+const previousHtmlScrollBehavior =
+document.documentElement.style.scrollBehavior;
+
+const previousBodyScrollBehavior =
+document.body.style.scrollBehavior;
+
+document.documentElement.style.scrollBehavior =
+"auto";
+
+document.body.style.scrollBehavior =
+"auto";
+
+document.body.classList.remove(
+"menu-drawer-open"
+);
+
+if (
+pagesMenuDrawerPreviousBodyStyles
+) {
+
+document.body.style.position =
+pagesMenuDrawerPreviousBodyStyles.position;
+
+document.body.style.top =
+pagesMenuDrawerPreviousBodyStyles.top;
+
+document.body.style.left =
+pagesMenuDrawerPreviousBodyStyles.left;
+
+document.body.style.right =
+pagesMenuDrawerPreviousBodyStyles.right;
+
+document.body.style.width =
+pagesMenuDrawerPreviousBodyStyles.width;
+
+document.body.style.overflow =
+pagesMenuDrawerPreviousBodyStyles.overflow;
+
+}
+else {
+
+document.body.style.position =
+"";
+
+document.body.style.top =
+"";
+
+document.body.style.left =
+"";
+
+document.body.style.right =
+"";
+
+document.body.style.width =
+"";
+
+document.body.style.overflow =
+"";
+
+}
+
+window.scrollTo({
+top:
+pagesMenuDrawerScrollY,
+left:0,
+behavior:"auto"
+});
+
+pagesMenuDrawerPreviousBodyStyles =
+null;
+
+window.requestAnimationFrame(
+() => {
+
+document.documentElement.style.scrollBehavior =
+previousHtmlScrollBehavior;
+
+document.body.style.scrollBehavior =
+previousBodyScrollBehavior;
+
+}
+);
+
+}
+
+/* =========================================
+PAGES MASTER MENU
+FOCUSABLE ELEMENTS
+========================================= */
+
+function getPagesMenuFocusableElements() {
+
+if (
+!pagesMenuPanel
+) {
+
+return [];
+
+}
+
+return Array.from(
+pagesMenuPanel.querySelectorAll(
+[
+"button:not([disabled])",
+"input:not([disabled])",
+"select:not([disabled])",
+"textarea:not([disabled])",
+"a[href]",
+"[tabindex]:not([tabindex='-1'])"
+].join(
+","
+)
+)
+).filter(
+(element) => {
+
+return (
+!element.hasAttribute(
+"hidden"
+) &&
+element.offsetParent !==
+null
+);
+
+}
+);
+
+}
+
+/* =========================================
+PAGES MASTER MENU
+OPEN / CLOSE
+========================================= */
 
 function openMenu() {
 
 if (
-!menuOverlay
+!pagesMenuOverlay ||
+!pagesMenuPanel ||
+!pagesMenuButton
 ) {
 
 return;
 
 }
 
-menuOverlay.classList.add(
-"active"
-);
-
-}
-
-
-function closeMenu() {
-
 if (
-!menuOverlay
+pagesMenuDrawerIsOpen
 ) {
 
 return;
 
 }
 
-menuOverlay.classList.remove(
+if (
+typeof closeBasketDrawer ===
+"function"
+) {
+
+try {
+
+closeBasketDrawer({
+restoreFocus:false
+});
+
+}
+catch (error) {
+
+}
+
+}
+
+if (
+typeof closeEmailAction ===
+"function"
+) {
+
+closeEmailAction();
+
+}
+
+if (
+typeof closeWhatsappAction ===
+"function"
+) {
+
+closeWhatsappAction();
+
+}
+
+pagesMenuLastFocusedElement =
+document.activeElement;
+
+pagesMenuDrawerIsOpen =
+true;
+
+lockPagesMenuPageScroll();
+
+setPagesMenuBackgroundInert(
+true
+);
+
+pagesMenuOverlay.classList.add(
 "active"
 );
 
-}
+pagesMenuOverlay.setAttribute(
+"aria-hidden",
+"false"
+);
 
+pagesMenuButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+window.requestAnimationFrame(
+() => {
+
+const closeButton =
+pagesMenuPanel.querySelector(
+".close-menu"
+);
 
 if (
-menuButton
+closeButton
 ) {
 
-menuButton.addEventListener(
-"click",
-openMenu
+try {
+
+closeButton.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+closeButton.focus();
+
+}
+
+}
+else {
+
+try {
+
+pagesMenuPanel.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+pagesMenuPanel.focus();
+
+}
+
+}
+
+}
 );
 
 }
 
-
-if (
-closeMenuButton
+function closeMenu(
+{
+restoreFocus = true
+} = {}
 ) {
 
-closeMenuButton.addEventListener(
-"click",
-closeMenu
-);
+if (
+!pagesMenuOverlay ||
+!pagesMenuButton ||
+!pagesMenuDrawerIsOpen
+) {
+
+return;
 
 }
 
+pagesMenuDrawerIsOpen =
+false;
+
+pagesMenuOverlay.classList.remove(
+"active"
+);
+
+pagesMenuOverlay.setAttribute(
+"aria-hidden",
+"true"
+);
+
+pagesMenuButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+setPagesMenuBackgroundInert(
+false
+);
+
+unlockPagesMenuPageScroll();
 
 if (
-menuOverlay
+restoreFocus &&
+pagesMenuLastFocusedElement &&
+typeof pagesMenuLastFocusedElement.focus ===
+"function"
 ) {
 
-menuOverlay
-.querySelectorAll(
-"a"
+window.requestAnimationFrame(
+() => {
+
+if (
+!document.contains(
+pagesMenuLastFocusedElement
 )
-.forEach(
-(link) => {
+) {
 
-link.addEventListener(
-"click",
-closeMenu
-);
+return;
+
+}
+
+try {
+
+pagesMenuLastFocusedElement.focus({
+preventScroll:true
+});
+
+}
+catch (error) {
+
+pagesMenuLastFocusedElement.focus();
+
+}
 
 }
 );
 
 }
 
+pagesMenuLastFocusedElement =
+null;
+
+}
 
 /* =========================================
-WHATSAPP
+PAGES MASTER MENU
+KEYBOARD / FOCUS TRAP
+========================================= */
+
+document.addEventListener(
+"keydown",
+(event) => {
+
+if (
+!pagesMenuDrawerIsOpen
+) {
+
+return;
+
+}
+
+if (
+event.key ===
+"Escape"
+) {
+
+event.preventDefault();
+
+closeMenu();
+
+return;
+
+}
+
+if (
+event.key !==
+"Tab"
+) {
+
+return;
+
+}
+
+const focusableElements =
+getPagesMenuFocusableElements();
+
+if (
+!focusableElements.length
+) {
+
+event.preventDefault();
+
+pagesMenuPanel?.focus({
+preventScroll:true
+});
+
+return;
+
+}
+
+const first =
+focusableElements[0];
+
+const last =
+focusableElements[
+focusableElements.length -
+1
+];
+
+if (
+event.shiftKey &&
+document.activeElement ===
+first
+) {
+
+event.preventDefault();
+
+last.focus();
+
+return;
+
+}
+
+if (
+!event.shiftKey &&
+document.activeElement ===
+last
+) {
+
+event.preventDefault();
+
+first.focus();
+
+}
+
+}
+);
+
+/* =========================================
+PAGES MASTER MENU
+SPECIAL HEADER ACTION
+
+1. CLOSE MENU
+2. IMMEDIATELY GO TO TOP
+3. PRESS REQUIRED HEADER BUTTON
+========================================= */
+
+function pagesMenuOpenHeaderAction(
+headerButtonId
+) {
+
+closeMenu({
+restoreFocus:false
+});
+
+window.scrollTo({
+top:0,
+left:0,
+behavior:"auto"
+});
+
+const headerButton =
+document.getElementById(
+headerButtonId
+);
+
+if (
+headerButton
+) {
+
+headerButton.click();
+
+}
+
+}
+
+/* =========================================
+PAGES MASTER MENU
+OVERSIZED ROOFLIGHTS
+-> EMAIL
+========================================= */
+
+const pagesMenuOversizedRooflights =
+document.getElementById(
+"pagesMenuOversizedRooflights"
+);
+
+if (
+pagesMenuOversizedRooflights
+) {
+
+pagesMenuOversizedRooflights.addEventListener(
+"click",
+(event) => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+pagesMenuOpenHeaderAction(
+"emailButton"
+);
+
+}
+);
+
+}
+
+/* =========================================
+PAGES MASTER MENU
+BOOK A FITTING
+-> EMAIL
+========================================= */
+
+const pagesMenuBookFitting =
+document.getElementById(
+"pagesMenuBookFitting"
+);
+
+if (
+pagesMenuBookFitting
+) {
+
+pagesMenuBookFitting.addEventListener(
+"click",
+(event) => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+pagesMenuOpenHeaderAction(
+"emailButton"
+);
+
+}
+);
+
+}
+
+/* =========================================
+PAGES MASTER MENU
+CONTACT OUR TEAM
+-> WHATSAPP / PHONE
+========================================= */
+
+const pagesMenuContactTeam =
+document.getElementById(
+"pagesMenuContactTeam"
+);
+
+if (
+pagesMenuContactTeam
+) {
+
+pagesMenuContactTeam.addEventListener(
+"click",
+(event) => {
+
+event.preventDefault();
+
+event.stopPropagation();
+
+pagesMenuOpenHeaderAction(
+"whatsappButton"
+);
+
+}
+);
+
+}
+
+/* =========================================
+EMAIL HEADER ACTION
+========================================= */
+
+const emailButton =
+document.getElementById(
+"emailButton"
+);
+
+const emailAction =
+document.getElementById(
+"emailAction"
+);
+
+function closeEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+emailAction.classList.remove(
+"is-open"
+);
+
+emailButton.classList.remove(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"false"
+);
+
+}
+
+function openEmailAction() {
+
+if (
+!emailButton ||
+!emailAction
+) {
+
+return;
+
+}
+
+closeWhatsappAction();
+
+emailAction.classList.add(
+"is-open"
+);
+
+emailButton.classList.add(
+"is-selected"
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
+
+if (
+emailButton &&
+emailAction
+) {
+
+emailButton.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();
+
+const willOpen =
+!emailAction.classList.contains(
+"is-open"
+);
+
+if (
+willOpen
+) {
+
+closeWhatsappAction();
+
+}
+
+emailAction.classList.toggle(
+"is-open",
+willOpen
+);
+
+emailButton.classList.toggle(
+"is-selected",
+willOpen
+);
+
+emailButton.setAttribute(
+"aria-expanded",
+willOpen
+? "true"
+: "false"
+);
+
+}
+);
+
+emailAction.addEventListener(
+"click",
+() => {
+
+closeEmailAction();
+
+}
+);
+
+document.addEventListener(
+"click",
+(event) => {
+
+if (
+event.target.closest(
+"#emailButton"
+) ||
+event.target.closest(
+"#emailAction"
+)
+) {
+
+return;
+
+}
+
+closeEmailAction();
+
+}
+);
+
+}
+
+/* =========================================
+WHATSAPP HEADER ACTION
 ========================================= */
 
 const whatsappButton =
@@ -2979,7 +3985,6 @@ const whatsappAction =
 document.getElementById(
 "whatsappAction"
 );
-
 
 function closeWhatsappAction() {
 
@@ -3007,6 +4012,33 @@ whatsappButton.setAttribute(
 
 }
 
+function openWhatsappAction() {
+
+if (
+!whatsappButton ||
+!whatsappAction
+) {
+
+return;
+
+}
+
+closeEmailAction();
+
+whatsappAction.classList.add(
+"is-open"
+);
+
+whatsappButton.classList.add(
+"is-selected"
+);
+
+whatsappButton.setAttribute(
+"aria-expanded",
+"true"
+);
+
+}
 
 if (
 whatsappButton &&
@@ -3023,6 +4055,14 @@ const willOpen =
 !whatsappAction.classList.contains(
 "is-open"
 );
+
+if (
+willOpen
+) {
+
+closeEmailAction();
+
+}
 
 whatsappAction.classList.toggle(
 "is-open",
@@ -3043,7 +4083,6 @@ willOpen
 
 }
 );
-
 
 document.addEventListener(
 "click",
@@ -3069,9 +4108,8 @@ closeWhatsappAction();
 
 }
 
-
 /* =========================================
-ESCAPE KEY
+ESCAPE ALSO CLOSES SMALL CONTACT ACTIONS
 ========================================= */
 
 document.addEventListener(
@@ -3087,13 +4125,12 @@ return;
 
 }
 
-closeMenu();
+closeEmailAction();
 
 closeWhatsappAction();
 
 }
 );
-
 
 /* =========================================
 HEADER BASKET
@@ -3111,7 +4148,6 @@ document.getElementById(
 
 const INFORMATION_ORDER_STORAGE_KEY =
 "factoryToughenedRooflightsOrderV1";
-
 
 function informationParseMoney(
 value
@@ -3154,7 +4190,6 @@ parsed
 : 0;
 
 }
-
 
 function informationGetQuantity(
 item
@@ -3201,7 +4236,6 @@ numeric
 return 1;
 
 }
-
 
 function informationGetUnitPrice(
 item
@@ -3282,7 +4316,6 @@ quantity
 return 0;
 
 }
-
 
 function informationReadBasketItems() {
 
@@ -3386,7 +4419,6 @@ return [];
 
 }
 
-
 function informationFormatMoney(
 amount
 ) {
@@ -3405,7 +4437,6 @@ maximumFractionDigits:2
 );
 
 }
-
 
 function refreshInformationHeaderBasket() {
 
@@ -3456,7 +4487,6 @@ items.length >
 
 }
 
-
 if (
 basketButton
 ) {
@@ -3472,7 +4502,6 @@ window.location.href =
 );
 
 }
-
 
 window.addEventListener(
 "storage",
@@ -3490,17 +4519,14 @@ refreshInformationHeaderBasket();
 }
 );
 
-
 window.addEventListener(
 "pageshow",
 refreshInformationHeaderBasket
 );
 
-
 refreshInformationHeaderBasket();
 
 </script>
-
 
 </body>
 
