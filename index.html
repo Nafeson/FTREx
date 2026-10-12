@@ -9861,53 +9861,26 @@ shouldBeInert;
 
 }
 
-function lockHomepageMenuPageScroll() {
-
-menuDrawerScrollY =
-window.scrollY ||
-document.documentElement.scrollTop ||
-0;
-
-menuDrawerPreviousBodyStyles = {
-position:
-document.body.style.position,
-top:
-document.body.style.top,
-left:
-document.body.style.left,
-right:
-document.body.style.right,
-width:
-document.body.style.width,
-overflow:
-document.body.style.overflow
-};
-
-document.body.classList.add(
-"menu-drawer-open"
-);
-
-document.body.style.position =
-"fixed";
-
-document.body.style.top =
-`-${menuDrawerScrollY}px`;
-
-document.body.style.left =
-"0";
-
-document.body.style.right =
-"0";
-
-document.body.style.width =
-"100%";
-
-document.body.style.overflow =
-"hidden";
-
-}
-
 function unlockHomepageMenuPageScroll() {
+
+const previousHtmlScrollBehavior =
+document.documentElement.style.scrollBehavior;
+
+const previousBodyScrollBehavior =
+document.body.style.scrollBehavior;
+
+/*
+Force the scroll-position restoration to be
+instant. This prevents the homepage's normal
+smooth-scroll behaviour from visibly scrolling
+the page when the menu is closed.
+*/
+
+document.documentElement.style.scrollBehavior =
+"auto";
+
+document.body.style.scrollBehavior =
+"auto";
 
 document.body.classList.remove(
 "menu-drawer-open"
@@ -9958,13 +9931,32 @@ document.body.style.overflow =
 
 }
 
-window.scrollTo(
-0,
-menuDrawerScrollY
-);
+/*
+Restore the exact position from before the
+menu opened, with no animated scrolling.
+*/
+
+window.scrollTo({
+top:
+menuDrawerScrollY,
+left:0,
+behavior:"auto"
+});
 
 menuDrawerPreviousBodyStyles =
 null;
+
+window.requestAnimationFrame(
+() => {
+
+document.documentElement.style.scrollBehavior =
+previousHtmlScrollBehavior;
+
+document.body.style.scrollBehavior =
+previousBodyScrollBehavior;
+
+}
+);
 
 }
 
@@ -10773,63 +10765,75 @@ beginHomepageTopScroll();
 }
 
 /* =========================================
-IN-2 CHANGE 1
-MENU -> EXISTING HOMEPAGE BUTTON ROUTING
+MENU OVERSIZED ROOFLIGHTS
 
-THE MENU DOES NOT DIRECTLY RUN THE CONTACT
-ACTION.
+1. CLOSE MENU
+2. PRESS EXISTING REQUEST OVERSIZED QUOTE
+BUTTON
 
-IT CLOSES FIRST, ALLOWS THE FIXED-BODY MENU
-SCROLL LOCK TO RESTORE THE PAGE, THEN PRESSES
-THE EXISTING HOMEPAGE BUTTON.
-
-OVERSIZED ROOFLIGHTS
--> REQUEST OVERSIZED QUOTE
-
-BOOK A FITTING
--> REQUEST A FITTING QUOTATION
-
-CONTACT OUR TEAM
--> GET IN TOUCH
+THE REQUEST OVERSIZED QUOTE BUTTON KEEPS
+ITS OWN EXISTING SCROLL + EMAIL BEHAVIOUR.
 ========================================= */
 
-function findHomepageActionTrigger(
-actionText
+if (
+menuPanel
 ) {
 
-const normalizedActionText =
-String(
-actionText ||
-""
-)
-.replace(
-/\s+/g,
-" "
-)
-.trim()
-.toLowerCase();
+menuPanel.addEventListener(
+"click",
+(event) => {
+
+const trigger =
+event.target.closest(
+"a, button, [role='button']"
+);
 
 if (
-!normalizedActionText
+!trigger ||
+!menuPanel.contains(
+trigger
+)
 ) {
 
-return null;
+return;
 
 }
 
-const candidates =
+const actionText =
+getHomepageActionText(
+trigger
+);
+
+if (
+!actionText.includes(
+"oversized rooflights"
+)
+) {
+
+return;
+
+}
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeMenu({
+restoreFocus:false
+});
+
+window.requestAnimationFrame(
+() => {
+
+const requestOversizedQuoteButton =
 Array.from(
 document.querySelectorAll(
 "a, button, [role='button']"
 )
-);
-
-return (
-candidates.find(
+).find(
 (element) => {
 
 if (
-menuPanel &&
 menuPanel.contains(
 element
 )
@@ -10842,46 +10846,19 @@ return false;
 return getHomepageActionText(
 element
 ).includes(
-normalizedActionText
+"request oversized quote"
 );
 
 }
-) ||
-null
-);
-
-}
-
-function closeMenuThenPressHomepageAction(
-actionText
-) {
-
-closeMenu({
-restoreFocus:false
-});
-
-window.requestAnimationFrame(
-() => {
-
-window.requestAnimationFrame(
-() => {
-
-const target =
-findHomepageActionTrigger(
-actionText
 );
 
 if (
-!target ||
-typeof target.click !==
-"function"
+requestOversizedQuoteButton
 ) {
 
-return;
+requestOversizedQuoteButton.click();
 
 }
-
-target.click();
 
 }
 );
@@ -22789,6 +22766,7 @@ restoreFocus:false
 );
 
 }
+
 /* =========================================
 IN-3
 HOMEPAGE MASTER PRICING + MASTER MAKE-UP BRIDGE
