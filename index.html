@@ -10915,6 +10915,191 @@ requestOversizedQuoteButton.click();
 }
 
 /* =========================================
+MENU BOOK A FITTING
+
+1. CLOSE MENU
+2. PRESS EXISTING REQUEST A FITTING QUOTATION
+BUTTON
+
+THE REQUEST A FITTING QUOTATION BUTTON KEEPS
+ITS OWN EXISTING SCROLL + EMAIL BEHAVIOUR.
+========================================= */
+
+if (
+menuPanel
+) {
+
+menuPanel.addEventListener(
+"click",
+(event) => {
+
+const trigger =
+event.target.closest(
+"a, button, [role='button']"
+);
+
+if (
+!trigger ||
+!menuPanel.contains(
+trigger
+)
+) {
+
+return;
+
+}
+
+const actionText =
+getHomepageActionText(
+trigger
+);
+
+if (
+!actionText.includes(
+"book a fitting"
+)
+) {
+
+return;
+
+}
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeMenu({
+restoreFocus:false
+});
+
+window.requestAnimationFrame(
+() => {
+
+const requestFittingQuotationButton =
+Array.from(
+document.querySelectorAll(
+"a, button, [role='button']"
+)
+).find(
+(element) => {
+
+if (
+menuPanel.contains(
+element
+)
+) {
+
+return false;
+
+}
+
+return getHomepageActionText(
+element
+).includes(
+"request a fitting quotation"
+);
+
+}
+);
+
+if (
+requestFittingQuotationButton
+) {
+
+requestFittingQuotationButton.click();
+
+}
+
+}
+);
+
+}
+);
+
+}
+
+/* =========================================
+MENU CONTACT OUR TEAM
+
+1. CLOSE MENU
+2. PRESS EXISTING GET IN TOUCH BUTTON
+
+THE GET IN TOUCH BUTTON KEEPS ITS OWN
+EXISTING SCROLL + WHATSAPP BEHAVIOUR.
+========================================= */
+
+if (
+menuPanel
+) {
+
+menuPanel.addEventListener(
+"click",
+(event) => {
+
+const trigger =
+event.target.closest(
+"a, button, [role='button']"
+);
+
+if (
+!trigger ||
+!menuPanel.contains(
+trigger
+)
+) {
+
+return;
+
+}
+
+const actionText =
+getHomepageActionText(
+trigger
+);
+
+if (
+!actionText.includes(
+"contact our team"
+)
+) {
+
+return;
+
+}
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeMenu({
+restoreFocus:false
+});
+
+window.requestAnimationFrame(
+() => {
+
+const getInTouchButton =
+document.getElementById(
+"homepageGetInTouch"
+);
+
+if (
+getInTouchButton
+) {
+
+getInTouchButton.click();
+
+}
+
+}
+);
+
+}
+);
+
+}
+
+/* =========================================
 ESCAPE ALSO CLOSES SMALL CONTACT ACTIONS
 ========================================= */
 
