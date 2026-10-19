@@ -8062,7 +8062,827 @@ animation:none !important;
 }
 
 </style>
+<!-- =========================================
+HOMEPAGE OPENING
+CUSTOM SIZE / FAST MANUFACTURE USP
+========================================= -->
 
+<style>
+
+.home-usp-opening {
+position:relative;
+overflow:hidden;
+background:
+radial-gradient(
+ellipse 78% 52% at 72% 18%,
+rgba(232,120,23,.075) 0%,
+rgba(232,120,23,.025) 36%,
+transparent 72%
+),
+linear-gradient(
+180deg,
+#111313 0%,
+#0b0d0d 100%
+);
+border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.home-usp-opening::before {
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background-image:
+linear-gradient(
+rgba(255,255,255,.015) 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+rgba(255,255,255,.015) 1px,
+transparent 1px
+);
+background-size:48px 48px;
+opacity:.42;
+}
+
+.home-usp-hero {
+position:relative;
+z-index:2;
+width:88%;
+max-width:1180px;
+margin:0 auto;
+padding:
+clamp(52px,7vw,92px)
+0
+clamp(34px,4.5vw,58px);
+}
+
+.home-usp-kicker {
+position:relative;
+margin:0;
+padding-left:42px;
+color:var(--orange,#e87817);
+font-family:
+"Bahnschrift",
+"Arial Narrow",
+"Aptos",
+Arial,
+sans-serif;
+font-size:clamp(9px,.9vw,12px);
+font-weight:800;
+line-height:1;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.home-usp-kicker::before {
+content:"";
+position:absolute;
+left:0;
+top:50%;
+width:27px;
+height:1px;
+background:var(--orange,#e87817);
+transform:translateY(-50%);
+}
+
+.home-usp-question {
+max-width:930px;
+margin:
+clamp(18px,2.2vw,27px)
+0
+0;
+color:#f1f0e9;
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+font-size:clamp(39px,6vw,76px);
+font-weight:800;
+line-height:.91;
+letter-spacing:-2.5px;
+text-transform:uppercase;
+}
+
+.home-usp-statement {
+margin:
+clamp(22px,2.8vw,34px)
+0
+0;
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+font-size:clamp(25px,3.8vw,48px);
+font-weight:800;
+line-height:.96;
+letter-spacing:-1.25px;
+text-transform:uppercase;
+color:#f1f0e9;
+}
+
+.home-usp-statement span {
+color:var(--orange,#e87817);
+}
+
+.home-usp-copy {
+max-width:760px;
+margin:
+clamp(18px,2vw,25px)
+0
+0;
+color:#b7bbb8;
+font-family:
+"Aptos",
+"Inter",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:clamp(14px,1.35vw,17px);
+font-weight:500;
+line-height:1.65;
+}
+
+.home-usp-actions {
+display:flex;
+align-items:center;
+flex-wrap:wrap;
+gap:18px 24px;
+margin-top:
+clamp(26px,3vw,38px);
+}
+
+.home-usp-primary {
+position:relative;
+min-height:57px;
+padding:0 50px 0 22px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+border:1px solid var(--orange,#e87817);
+border-radius:15px;
+background:var(--orange,#e87817);
+color:#10100f;
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+font-size:11px;
+font-weight:850;
+line-height:1;
+letter-spacing:1.05px;
+text-transform:uppercase;
+text-decoration:none;
+transition:
+background .2s ease,
+transform .2s ease,
+box-shadow .2s ease;
+}
+
+.home-usp-primary::after {
+content:"→";
+position:absolute;
+right:18px;
+top:50%;
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+Arial,
+sans-serif;
+font-size:19px;
+font-weight:500;
+transform:translateY(-50%);
+}
+
+.home-usp-primary:hover {
+background:var(--orange-bright,#f28a28);
+transform:translateY(-1px);
+box-shadow:
+0 14px 32px rgba(232,120,23,.15);
+}
+
+.home-usp-secondary {
+display:inline-flex;
+align-items:center;
+gap:8px;
+color:rgba(247,247,243,.65);
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+font-size:10px;
+font-weight:800;
+line-height:1;
+letter-spacing:.85px;
+text-transform:uppercase;
+text-decoration:none;
+border-bottom:1px solid rgba(247,247,243,.22);
+padding-bottom:4px;
+transition:
+color .2s ease,
+border-color .2s ease;
+}
+
+.home-usp-secondary:hover {
+color:var(--orange-bright,#f28a28);
+border-color:rgba(242,138,40,.58);
+}
+
+/* =========================================
+OPENING PRODUCT IMAGE
+========================================= */
+
+.home-usp-visual {
+position:relative;
+z-index:2;
+width:100%;
+margin:
+clamp(8px,1.5vw,18px)
+auto
+0;
+overflow:hidden;
+}
+
+.home-usp-visual-inner {
+position:relative;
+width:100%;
+height:clamp(310px,48vw,640px);
+}
+
+.home-usp-visual img {
+display:block;
+width:100%;
+height:100%;
+object-fit:contain;
+object-position:center center;
+}
+
+/* =========================================
+SECOND USP SECTION
+========================================= */
+
+.home-usp-explainer {
+position:relative;
+z-index:2;
+width:88%;
+max-width:1180px;
+margin:0 auto;
+padding:
+clamp(56px,7vw,92px)
+0
+clamp(62px,8vw,108px);
+}
+
+.home-usp-explainer::before {
+content:"";
+display:block;
+width:100%;
+height:1px;
+margin-bottom:
+clamp(44px,5vw,66px);
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.17) 20%,
+rgba(255,255,255,.17) 80%,
+rgba(255,255,255,.03)
+);
+}
+
+.home-usp-explainer-kicker {
+margin:0;
+color:var(--orange,#e87817);
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+font-size:10px;
+font-weight:800;
+line-height:1;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.home-usp-explainer-title {
+max-width:880px;
+margin:12px 0 0;
+color:#f1f0e9;
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+font-size:clamp(34px,5vw,62px);
+font-weight:800;
+line-height:.94;
+letter-spacing:-2px;
+text-transform:uppercase;
+}
+
+.home-usp-explainer-title span {
+color:var(--orange,#e87817);
+}
+
+.home-usp-explainer-copy {
+max-width:800px;
+margin:
+clamp(20px,2.3vw,29px)
+0
+0;
+color:#b7bbb8;
+font-size:clamp(14px,1.35vw,17px);
+font-weight:500;
+line-height:1.65;
+}
+
+.home-usp-benefits {
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+margin-top:
+clamp(34px,4vw,50px);
+border-top:1px solid rgba(255,255,255,.12);
+border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.home-usp-benefit {
+position:relative;
+min-width:0;
+padding:
+clamp(22px,2.5vw,31px)
+clamp(16px,2vw,24px);
+}
+
+.home-usp-benefit:first-child {
+padding-left:0;
+}
+
+.home-usp-benefit + .home-usp-benefit {
+border-left:1px solid rgba(255,255,255,.10);
+}
+
+.home-usp-benefit-number {
+display:block;
+margin-bottom:9px;
+color:var(--orange,#e87817);
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+font-size:8px;
+font-weight:800;
+line-height:1;
+letter-spacing:1.3px;
+}
+
+.home-usp-benefit strong {
+display:block;
+color:#f1f0e9;
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Arial Narrow",
+sans-serif;
+font-size:clamp(15px,1.7vw,21px);
+font-weight:800;
+line-height:1.08;
+letter-spacing:-.3px;
+}
+
+.home-usp-benefit p {
+margin:8px 0 0;
+color:#8f9692;
+font-size:11px;
+font-weight:500;
+line-height:1.5;
+}
+
+/* =========================================
+POPULAR SIZES BRIDGE
+========================================= */
+
+.home-usp-popular-bridge {
+margin-top:
+clamp(48px,6vw,76px);
+text-align:center;
+}
+
+.home-usp-popular-bridge p {
+margin:0;
+color:rgba(247,247,243,.50);
+font-family:
+"Aptos",
+"Inter",
+"Segoe UI",
+Arial,
+sans-serif;
+font-size:clamp(12px,1.2vw,15px);
+font-weight:500;
+line-height:1.55;
+}
+
+.home-usp-popular-arrow {
+display:block;
+margin:15px auto 0;
+color:var(--orange,#e87817);
+font-family:
+"Aptos",
+"Segoe UI Symbol",
+Arial,
+sans-serif;
+font-size:19px;
+font-weight:400;
+line-height:1;
+animation:
+homeUspArrowPrompt
+3.6s
+ease-in-out
+1s
+infinite;
+}
+
+@keyframes homeUspArrowPrompt {
+
+0%,
+70%,
+100% {
+transform:translateY(0);
+}
+
+77% {
+transform:translateY(5px);
+}
+
+84% {
+transform:translateY(-1px);
+}
+
+91% {
+transform:translateY(3px);
+}
+
+}
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media(max-width:720px) {
+
+.home-usp-hero {
+width:89%;
+padding:
+46px
+0
+24px;
+}
+
+.home-usp-kicker {
+padding-left:34px;
+font-size:8px;
+letter-spacing:1.55px;
+}
+
+.home-usp-kicker::before {
+width:22px;
+}
+
+.home-usp-question {
+margin-top:17px;
+font-size:clamp(37px,11vw,52px);
+line-height:.91;
+letter-spacing:-1.65px;
+}
+
+.home-usp-statement {
+margin-top:20px;
+font-size:clamp(25px,7.6vw,34px);
+letter-spacing:-.85px;
+}
+
+.home-usp-copy {
+margin-top:17px;
+font-size:13px;
+line-height:1.6;
+}
+
+.home-usp-actions {
+display:grid;
+gap:15px;
+margin-top:26px;
+}
+
+.home-usp-primary {
+width:100%;
+min-height:53px;
+border-radius:14px;
+font-size:9px;
+letter-spacing:.85px;
+}
+
+.home-usp-secondary {
+width:max-content;
+margin:0 auto;
+font-size:8px;
+letter-spacing:.7px;
+}
+
+.home-usp-visual {
+margin-top:3px;
+}
+
+.home-usp-visual-inner {
+height:clamp(260px,72vw,390px);
+}
+
+.home-usp-explainer {
+width:89%;
+padding:
+40px
+0
+58px;
+}
+
+.home-usp-explainer::before {
+margin-bottom:38px;
+}
+
+.home-usp-explainer-kicker {
+font-size:8px;
+letter-spacing:1.55px;
+}
+
+.home-usp-explainer-title {
+margin-top:10px;
+font-size:clamp(32px,9.4vw,43px);
+line-height:.94;
+letter-spacing:-1.25px;
+}
+
+.home-usp-explainer-copy {
+margin-top:18px;
+font-size:13px;
+line-height:1.6;
+}
+
+.home-usp-benefits {
+grid-template-columns:repeat(2,minmax(0,1fr));
+margin-top:31px;
+}
+
+.home-usp-benefit {
+padding:18px 12px;
+}
+
+.home-usp-benefit:first-child {
+padding-left:0;
+}
+
+.home-usp-benefit:nth-child(3) {
+padding-left:0;
+border-left:0;
+border-top:1px solid rgba(255,255,255,.10);
+}
+
+.home-usp-benefit:nth-child(4) {
+border-top:1px solid rgba(255,255,255,.10);
+}
+
+.home-usp-benefit-number {
+font-size:6px;
+letter-spacing:1px;
+margin-bottom:7px;
+}
+
+.home-usp-benefit strong {
+font-size:14px;
+}
+
+.home-usp-benefit p {
+margin-top:6px;
+font-size:9px;
+line-height:1.45;
+}
+
+.home-usp-popular-bridge {
+margin-top:43px;
+}
+
+.home-usp-popular-bridge p {
+font-size:11px;
+}
+
+}
+
+@media(max-width:390px) {
+
+.home-usp-question {
+font-size:clamp(34px,10.4vw,43px);
+}
+
+.home-usp-statement {
+font-size:clamp(23px,7vw,30px);
+}
+
+.home-usp-benefit {
+padding-left:10px;
+padding-right:10px;
+}
+
+.home-usp-benefit:first-child,
+.home-usp-benefit:nth-child(3) {
+padding-left:0;
+}
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+.home-usp-popular-arrow {
+animation:none;
+}
+
+}
+
+</style>
+
+
+<section
+class="home-usp-opening"
+aria-label="Custom made frameless rooflights"
+>
+
+<div class="home-usp-hero">
+
+<p class="home-usp-kicker">
+Factory Made Rooflights
+</p>
+
+<h1 class="home-usp-question">
+Need A New Rooflight<br>
+To Fit Your Existing Opening?
+</h1>
+
+<h2 class="home-usp-statement">
+Made To Fit.
+<span>Made Fast.</span>
+</h2>
+
+<p class="home-usp-copy">
+Whether you're replacing an existing rooflight or working with an opening that's already been constructed, we can manufacture a new frameless rooflight to the dimensions you need. Selected custom specifications are available from around 4 working days.
+</p>
+
+<div class="home-usp-actions">
+
+<a
+class="home-usp-primary"
+href="order-page.html?source=homepage-menu-custom-builder&focus=custom-builder&viewportOffset=0.30"
+>
+Build A Custom Rooflight
+</a>
+
+<a
+class="home-usp-secondary"
+href="standard-sizes.html"
+>
+Shop Standard Sizes →
+</a>
+
+</div>
+
+</div>
+
+
+<div
+class="home-usp-visual"
+aria-hidden="true"
+>
+
+<div class="home-usp-visual-inner">
+
+<img
+src="images/custom-rooflight-1.png"
+alt=""
+>
+
+</div>
+
+</div>
+
+
+<div class="home-usp-explainer">
+
+<p class="home-usp-explainer-kicker">
+Made Around Your Project
+</p>
+
+<h2 class="home-usp-explainer-title">
+Made To Fit Your Opening.<br>
+<span>Not The Other Way Around.</span>
+</h2>
+
+<p class="home-usp-explainer-copy">
+Standard sizes are convenient, but they don't suit every project. If you're replacing an existing rooflight or the roof opening has already been constructed, we can manufacture the rooflight around the dimensions you actually need.
+</p>
+
+
+<div
+class="home-usp-benefits"
+aria-label="Factory Toughened Rooflights benefits"
+>
+
+<div class="home-usp-benefit">
+
+<span class="home-usp-benefit-number">
+01
+</span>
+
+<strong>
+Custom Dimensions
+</strong>
+
+<p>
+Manufactured around the internal size required for your opening.
+</p>
+
+</div>
+
+
+<div class="home-usp-benefit">
+
+<span class="home-usp-benefit-number">
+02
+</span>
+
+<strong>
+Fast Manufacture
+</strong>
+
+<p>
+Selected custom specifications available from around 4 working days.
+</p>
+
+</div>
+
+
+<div class="home-usp-benefit">
+
+<span class="home-usp-benefit-number">
+03
+</span>
+
+<strong>
+Factory Direct
+</strong>
+
+<p>
+Made directly through our specialist glazing and sealing workshop.
+</p>
+
+</div>
+
+
+<div class="home-usp-benefit">
+
+<span class="home-usp-benefit-number">
+04
+</span>
+
+<strong>
+Frameless Design
+</strong>
+
+<p>
+Clean internal appearance with no visible internal frame.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="home-usp-popular-bridge">
+
+<p>
+Looking for a common size?<br>
+Our most popular rooflights are below.
+</p>
+
+<span
+class="home-usp-popular-arrow"
+aria-hidden="true"
+>
+↓
+</span>
+
+</div>
+
+</div>
+
+</section>
 <section
 class="home-popular-section"
 id="homepagePopular"
