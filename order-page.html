@@ -2005,7 +2005,7 @@ ORDER PAGE
 .order-page {
 position:relative;
 overflow:hidden;
-padding:38px 6% 54px;
+padding:47px 6% 54px;
 background:
 linear-gradient(
 180deg,
@@ -6566,7 +6566,7 @@ font-size:13px;
 }
 
 .order-page {
-padding:28px 3.5% 7px;
+padding:34px 3.5% 7px;
 }
 
 .home-popular-title-wrap {
@@ -7553,7 +7553,7 @@ Delivery Calculated by Postcode
 class="option-label"
 id="sizeControlLabel"
 >
-Size
+INTERNAL SIZE
 </div>
 
 <div
@@ -13725,45 +13725,6 @@ return (
 
 }
 
-function formatMasterLaminatedBottomGlassLabel(
-makeupResult
-) {
-
-const bottomPane =
-makeupResult?.panes?.bottom;
-
-if (
-!bottomPane
-) {
-
-return GLASS_SPECIFICATION_UNAVAILABLE;
-
-}
-
-const thickness =
-Number(
-bottomPane.thickness
-);
-
-if (
-!Number.isFinite(
-thickness
-) ||
-thickness <=
-0
-) {
-
-return GLASS_SPECIFICATION_UNAVAILABLE;
-
-}
-
-return (
-`${String(thickness)}mm ` +
-`Laminated Safety Glass`
-);
-
-}
-
 function getTopGlassLabelFor(
 size,
 border,
@@ -13786,19 +13747,6 @@ if (
 ) {
 
 return GLASS_SPECIFICATION_UNAVAILABLE;
-
-}
-
-if (
-normalizeMakeupBottomType(
-type
-) ===
-"lam"
-) {
-
-return formatMasterLaminatedBottomGlassLabel(
-makeupResult
-);
 
 }
 
@@ -14022,49 +13970,6 @@ expected
 
 console.warn(
 "Top-glass display formatting validation failed:",
-thickness,
-formatted
-);
-
-}
-
-}
-);
-
-[
-6.4,
-8.8
-]
-.forEach(
-thickness => {
-
-const formatted =
-formatMasterLaminatedBottomGlassLabel(
-{
-supported:true,
-panes:{
-bottom:{
-thickness:
-thickness,
-materialLabel:
-"Laminated Softcoat",
-construction:
-"laminated"
-}
-}
-}
-);
-
-const expected =
-`${thickness}mm Laminated Safety Glass`;
-
-if (
-formatted !==
-expected
-) {
-
-console.warn(
-"Laminated bottom-glass display formatting validation failed:",
 thickness,
 formatted
 );
