@@ -7945,78 +7945,169 @@ margin:0;
 
 /* =========================================
 INDEX CHANGE 4
-HOMEPAGE WELCOME / DIRECT ORDER PROCESS
+HOMEPAGE WELCOME / ORDER PROCESS
 ========================================= */
 
 .homepage-welcome-section {
+--welcome-gradient-x:84%;
+--welcome-gradient-y:12%;
+--welcome-gradient-hue:0deg;
+
 position:relative;
 isolation:isolate;
 overflow:hidden;
+
 padding:
-clamp(54px,6vw,86px)
+clamp(19px,2.1vw,30px)
 6%
 clamp(48px,5.6vw,78px);
+
 background:
-radial-gradient(
-circle at 88% 10%,
-rgba(232,120,23,.11) 0%,
-rgba(232,120,23,.035) 24%,
-transparent 46%
-),
 linear-gradient(
 145deg,
-#0a0c0c 0%,
-#111414 52%,
-#0b0d0d 100%
+#090b0b 0%,
+#101313 52%,
+#090b0b 100%
 );
+
 border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.homepage-welcome-colour-wash {
+position:absolute;
+inset:-14%;
+z-index:0;
+
+background:
+radial-gradient(
+circle at var(--welcome-gradient-x) var(--welcome-gradient-y),
+rgba(232,120,23,.145) 0%,
+rgba(232,120,23,.055) 22%,
+transparent 48%
+),
+radial-gradient(
+circle at calc(100% - var(--welcome-gradient-x)) 82%,
+rgba(41,77,115,.11) 0%,
+rgba(33,60,89,.04) 27%,
+transparent 54%
+),
+linear-gradient(
+135deg,
+rgba(22,60,45,.055) 0%,
+transparent 44%,
+rgba(184,154,98,.038) 100%
+);
+
+filter:
+hue-rotate(var(--welcome-gradient-hue))
+saturate(1.04);
+
+transform:scale(1.08);
+pointer-events:none;
+will-change:background,filter;
 }
 
 .homepage-welcome-section::before {
 content:"";
 position:absolute;
 inset:0;
-z-index:-2;
+z-index:1;
+
 background-image:
 linear-gradient(
-rgba(255,255,255,.018) 1px,
+rgba(255,255,255,.016) 1px,
 transparent 1px
 ),
 linear-gradient(
 90deg,
-rgba(255,255,255,.018) 1px,
+rgba(255,255,255,.016) 1px,
 transparent 1px
 );
+
 background-size:48px 48px;
-opacity:.42;
+opacity:.36;
 pointer-events:none;
 }
 
 .homepage-welcome-section::after {
-content:"WELCOME";
+content:"";
 position:absolute;
-right:-.025em;
-top:-.14em;
-z-index:-1;
+inset:0;
+z-index:1;
+
+background:
+linear-gradient(
+180deg,
+rgba(9,10,10,.12) 0%,
+transparent 22%,
+transparent 74%,
+rgba(9,10,10,.28) 100%
+);
+
+pointer-events:none;
+}
+
+.homepage-welcome-word-field {
+position:absolute;
+inset:0;
+z-index:1;
+overflow:hidden;
+pointer-events:none;
+user-select:none;
+}
+
+.homepage-welcome-word {
+position:absolute;
+display:block;
+
 font-family:
 "Bahnschrift Condensed",
 "Bahnschrift SemiCondensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-font-size:clamp(118px,17vw,250px);
+
 font-weight:900;
-line-height:1;
-letter-spacing:-8px;
-color:rgba(255,255,255,.018);
+line-height:.82;
+letter-spacing:-.055em;
+text-transform:uppercase;
 white-space:nowrap;
-pointer-events:none;
-user-select:none;
+
+color:rgba(247,247,243,.018);
+opacity:.014;
+
+transform-origin:center;
+will-change:transform,opacity;
+}
+
+.homepage-welcome-word-1 {
+top:3%;
+right:-7%;
+font-size:clamp(105px,16vw,235px);
+}
+
+.homepage-welcome-word-2 {
+top:31%;
+left:-8%;
+font-size:clamp(96px,14vw,205px);
+}
+
+.homepage-welcome-word-3 {
+top:54%;
+right:-10%;
+font-size:clamp(90px,13vw,190px);
+}
+
+.homepage-welcome-word-4 {
+bottom:-2%;
+left:6%;
+font-size:clamp(82px,11vw,165px);
+color:rgba(232,120,23,.018);
 }
 
 .homepage-welcome-inner {
 position:relative;
-z-index:2;
+z-index:3;
 width:100%;
 max-width:1180px;
 margin:0 auto;
@@ -8030,12 +8121,15 @@ max-width:900px;
 display:flex;
 align-items:center;
 gap:11px;
+
 margin:0 0 18px;
+
 font-family:
 "Bahnschrift",
 "Arial Narrow",
 "Aptos",
 sans-serif;
+
 font-size:10px;
 font-weight:800;
 line-height:1;
@@ -8056,36 +8150,41 @@ opacity:.92;
 .homepage-welcome-title {
 max-width:940px;
 margin:0;
+
 font-family:
 "Bahnschrift SemiCondensed",
 "Bahnschrift",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-font-size:clamp(46px,6.6vw,82px);
+
+font-size:clamp(37px,5.28vw,66px);
 font-weight:800;
 line-height:.91;
-letter-spacing:-2.5px;
+letter-spacing:-2px;
 color:var(--cream);
 }
 
 .homepage-welcome-title span {
 display:block;
 margin-top:8px;
+
 font-family:
 "Bahnschrift Condensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
+
 font-size:.78em;
 font-weight:750;
-letter-spacing:-1.6px;
+letter-spacing:-1.3px;
 color:var(--orange-bright);
 }
 
 .homepage-welcome-copy {
 max-width:760px;
 margin:26px 0 0;
+
 font-size:clamp(15px,1.45vw,18px);
 font-weight:500;
 line-height:1.68;
@@ -8097,13 +8196,47 @@ color:var(--cream);
 font-weight:700;
 }
 
+.homepage-welcome-how-it-works {
+display:flex;
+align-items:center;
+gap:11px;
+
+margin-top:30px;
+padding-top:23px;
+border-top:1px solid rgba(255,255,255,.09);
+
+font-family:
+"Bahnschrift SemiCondensed",
+"Bahnschrift",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+
+font-size:clamp(20px,2vw,27px);
+font-weight:800;
+line-height:1;
+letter-spacing:-.45px;
+color:var(--cream);
+}
+
+.homepage-welcome-how-it-works::before {
+content:"";
+display:block;
+width:22px;
+height:2px;
+background:var(--orange);
+box-shadow:0 0 12px rgba(232,120,23,.16);
+}
+
 .homepage-welcome-process {
 position:relative;
 display:grid;
 grid-template-columns:repeat(3,minmax(0,1fr));
 gap:1px;
+
 width:100%;
-margin-top:38px;
+margin-top:17px;
+
 border:1px solid rgba(255,255,255,.11);
 background:rgba(255,255,255,.11);
 box-shadow:0 24px 55px rgba(0,0,0,.22);
@@ -8114,12 +8247,16 @@ position:relative;
 min-width:0;
 min-height:188px;
 padding:24px 24px 22px;
+
 background:
 linear-gradient(
 160deg,
-rgba(22,25,25,.985),
-rgba(12,14,14,.985)
+rgba(22,25,25,.965),
+rgba(12,14,14,.975)
 );
+
+backdrop-filter:blur(2px);
+-webkit-backdrop-filter:blur(2px);
 }
 
 .homepage-welcome-step::before {
@@ -8140,18 +8277,19 @@ width:100%;
 .homepage-welcome-step-top {
 display:flex;
 align-items:flex-start;
-justify-content:space-between;
-gap:18px;
+justify-content:flex-start;
 margin-bottom:26px;
 }
 
 .homepage-welcome-icon {
 width:40px;
 height:40px;
+
 display:flex;
 align-items:center;
 justify-content:center;
 flex:0 0 auto;
+
 border:1px solid rgba(232,120,23,.34);
 background:rgba(232,120,23,.055);
 color:var(--orange-bright);
@@ -8161,6 +8299,7 @@ color:var(--orange-bright);
 width:23px;
 height:23px;
 display:block;
+
 fill:none;
 stroke:currentColor;
 stroke-width:1.7;
@@ -8168,27 +8307,16 @@ stroke-linecap:round;
 stroke-linejoin:round;
 }
 
-.homepage-welcome-step-number {
-font-family:
-"Bahnschrift Condensed",
-"Arial Narrow",
-"Aptos",
-sans-serif;
-font-size:12px;
-font-weight:800;
-line-height:1;
-letter-spacing:1.5px;
-color:rgba(247,247,243,.30);
-}
-
 .homepage-welcome-step h3 {
 margin:0;
+
 font-family:
 "Bahnschrift SemiCondensed",
 "Bahnschrift",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
+
 font-size:clamp(21px,2vw,28px);
 font-weight:800;
 line-height:1;
@@ -8203,45 +8331,61 @@ line-height:1.58;
 color:var(--muted-soft);
 }
 
-.homepage-welcome-route {
-display:flex;
-align-items:center;
-gap:9px;
-margin-top:22px;
-font-family:
-"Bahnschrift",
-"Aptos",
-sans-serif;
-font-size:8px;
-font-weight:800;
-line-height:1;
-letter-spacing:1.35px;
-text-transform:uppercase;
-color:rgba(247,247,243,.46);
+.homepage-welcome-ready {
+position:relative;
+margin-top:clamp(38px,4.8vw,64px);
+padding-top:clamp(34px,4.2vw,52px);
+border-top:1px solid rgba(255,255,255,.10);
 }
 
-.homepage-welcome-route-dot {
-width:5px;
-height:5px;
-border-radius:50%;
+.homepage-welcome-ready::before {
+content:"";
+position:absolute;
+top:-1px;
+left:50%;
+width:72px;
+height:1px;
 background:var(--orange);
-box-shadow:0 0 0 4px rgba(232,120,23,.08);
+opacity:.68;
+transform:translateX(-50%);
+}
+
+.homepage-welcome-ready .homepage-closing-actions {
+position:relative;
+z-index:4;
 }
 
 @media(max-width:760px) {
 
 .homepage-welcome-section {
 padding:
-44px
+15px
 6%
 48px;
 }
 
-.homepage-welcome-section::after {
-right:-.08em;
-top:.02em;
-font-size:116px;
-letter-spacing:-4px;
+.homepage-welcome-word-1 {
+top:2%;
+right:-24%;
+font-size:112px;
+}
+
+.homepage-welcome-word-2 {
+top:34%;
+left:-24%;
+font-size:104px;
+}
+
+.homepage-welcome-word-3 {
+top:58%;
+right:-28%;
+font-size:98px;
+}
+
+.homepage-welcome-word-4 {
+bottom:2%;
+left:-10%;
+font-size:84px;
 }
 
 .homepage-welcome-kicker {
@@ -8251,15 +8395,15 @@ margin-bottom:16px;
 }
 
 .homepage-welcome-title {
-font-size:clamp(39px,12vw,54px);
+font-size:clamp(31px,9.6vw,43px);
 line-height:.92;
-letter-spacing:-1.75px;
+letter-spacing:-1.4px;
 }
 
 .homepage-welcome-title span {
 margin-top:7px;
 font-size:.76em;
-letter-spacing:-1.1px;
+letter-spacing:-.9px;
 }
 
 .homepage-welcome-copy {
@@ -8268,9 +8412,15 @@ font-size:15.2px;
 line-height:1.62;
 }
 
+.homepage-welcome-how-it-works {
+margin-top:25px;
+padding-top:20px;
+font-size:21px;
+}
+
 .homepage-welcome-process {
 grid-template-columns:1fr;
-margin-top:31px;
+margin-top:15px;
 }
 
 .homepage-welcome-step {
@@ -8301,14 +8451,12 @@ font-size:24px;
 font-size:13.8px;
 }
 
-.homepage-welcome-route {
-margin-top:19px;
-font-size:7.4px;
-letter-spacing:1.05px;
+.homepage-welcome-ready {
+margin-top:38px;
+padding-top:34px;
 }
 
 }
-
 
 @media(max-width:560px) {
 
@@ -8427,6 +8575,14 @@ width:86%;
 animation:none !important;
 }
 
+.homepage-welcome-colour-wash {
+filter:none !important;
+}
+
+.homepage-welcome-word {
+transform:none !important;
+}
+
 }
 
 </style>
@@ -8436,6 +8592,50 @@ animation:none !important;
 class="homepage-welcome-section"
 aria-labelledby="homepageWelcomeTitle"
 >
+
+<div
+class="homepage-welcome-colour-wash"
+aria-hidden="true"
+></div>
+
+<div
+class="homepage-welcome-word-field"
+aria-hidden="true"
+>
+
+<span
+class="homepage-welcome-word homepage-welcome-word-1"
+data-welcome-word-x="42"
+data-welcome-word-y="-12"
+>
+Frameless
+</span>
+
+<span
+class="homepage-welcome-word homepage-welcome-word-2"
+data-welcome-word-x="-38"
+data-welcome-word-y="18"
+>
+Glass
+</span>
+
+<span
+class="homepage-welcome-word homepage-welcome-word-3"
+data-welcome-word-x="34"
+data-welcome-word-y="28"
+>
+Skylights
+</span>
+
+<span
+class="homepage-welcome-word homepage-welcome-word-4"
+data-welcome-word-x="-26"
+data-welcome-word-y="-16"
+>
+UK Manufactured
+</span>
+
+</div>
 
 <div class="homepage-welcome-inner">
 
@@ -8450,7 +8650,7 @@ class="homepage-welcome-title reveal"
 id="homepageWelcomeTitle"
 >
 Frameless Glass Skylights.
-<span>Made To Order.</span>
+<span>UK Manufactured.</span>
 </h2>
 
 <p class="homepage-welcome-copy reveal reveal-delay-1">
@@ -8459,12 +8659,8 @@ We specialise in frameless glass skylights. Every order placed through our websi
 from choosing your specification to receiving your finished rooflights.
 </p>
 
-<div
-class="homepage-welcome-route reveal reveal-delay-1"
-aria-label="Factory direct ordering"
->
-<span class="homepage-welcome-route-dot" aria-hidden="true"></span>
-<span>Factory Direct Ordering</span>
+<div class="homepage-welcome-how-it-works reveal reveal-delay-1">
+How It Works
 </div>
 
 </div>
@@ -8488,10 +8684,6 @@ aria-label="How ordering your rooflight works"
 <circle cx="14" cy="24" r="2.5"></circle>
 </svg>
 </div>
-
-<span class="homepage-welcome-step-number">
-01
-</span>
 
 </div>
 
@@ -8519,10 +8711,6 @@ Select your size, glazing, glass finish and options to build the rooflight you n
 </svg>
 </div>
 
-<span class="homepage-welcome-step-number">
-02
-</span>
-
 </div>
 
 <h3>
@@ -8549,10 +8737,6 @@ See an estimated delivery date for your chosen rooflight specification as you or
 </svg>
 </div>
 
-<span class="homepage-welcome-step-number">
-03
-</span>
-
 </div>
 
 <h3>
@@ -8567,9 +8751,257 @@ We manufacture your brand-new rooflights and deliver them directly to your addre
 
 </div>
 
+<div class="homepage-closing-option homepage-welcome-ready reveal">
+
+<h3>
+Ready To Order
+</h3>
+
+<p>
+Speak directly with our rooflight team for help with specifications,
+sizing, delivery, installation or anything else you need before ordering:
+</p>
+
+<div class="homepage-closing-actions">
+
+<button
+type="button"
+class="button secondary homepage-closing-contact"
+id="homepageWelcomeGetInTouch"
+>
+Get In Touch
+</button>
+
+<a
+href="standard-sizes.html"
+class="button homepage-closing-shop"
+>
+Shop Rooflights Now
+</a>
+
+</div>
+
+</div>
+
 </div>
 
 </section>
+
+<script>
+(() => {
+
+const section =
+document.querySelector(
+".homepage-welcome-section"
+);
+
+if (!section) {
+return;
+}
+
+const words =
+Array.from(
+section.querySelectorAll(
+".homepage-welcome-word"
+)
+);
+
+const reducedMotion =
+window.matchMedia(
+"(prefers-reduced-motion: reduce)"
+);
+
+let welcomeScrollFrame =
+null;
+
+function updateHomepageWelcomeScrollEffects() {
+
+welcomeScrollFrame =
+null;
+
+const rect =
+section.getBoundingClientRect();
+
+const viewportHeight =
+window.innerHeight ||
+document.documentElement.clientHeight ||
+1;
+
+const travel =
+viewportHeight +
+rect.height;
+
+const progress =
+Math.max(
+0,
+Math.min(
+1,
+(viewportHeight - rect.top) /
+travel
+)
+);
+
+section.style.setProperty(
+"--welcome-gradient-x",
+`${84 - (progress * 48)}%`
+);
+
+section.style.setProperty(
+"--welcome-gradient-y",
+`${12 + (progress * 62)}%`
+);
+
+section.style.setProperty(
+"--welcome-gradient-hue",
+`${progress * 14}deg`
+);
+
+words.forEach(
+(word,index) => {
+
+if (reducedMotion.matches) {
+word.style.transform = "none";
+word.style.opacity = ".016";
+return;
+}
+
+const phaseStart =
+index * .105;
+
+const localProgress =
+Math.max(
+0,
+Math.min(
+1,
+(progress - phaseStart) / .64
+)
+);
+
+const eased =
+localProgress *
+localProgress *
+(3 - (2 * localProgress));
+
+const startX =
+Number(
+word.dataset.welcomeWordX ||
+0
+);
+
+const startY =
+Number(
+word.dataset.welcomeWordY ||
+0
+);
+
+const x =
+startX *
+(1 - (eased * 1.16));
+
+const y =
+startY *
+(1 - (eased * 1.20));
+
+const scale =
+.91 +
+(eased * .19);
+
+const opacity =
+.012 +
+(eased * .014);
+
+word.style.transform =
+`translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+
+word.style.opacity =
+opacity.toFixed(3);
+
+}
+);
+
+}
+
+function requestHomepageWelcomeScrollEffects() {
+
+if (
+welcomeScrollFrame !==
+null
+) {
+return;
+}
+
+welcomeScrollFrame =
+requestAnimationFrame(
+updateHomepageWelcomeScrollEffects
+);
+
+}
+
+window.addEventListener(
+"scroll",
+requestHomepageWelcomeScrollEffects,
+{
+passive:true
+}
+);
+
+window.addEventListener(
+"resize",
+requestHomepageWelcomeScrollEffects
+);
+
+if (
+typeof reducedMotion.addEventListener ===
+"function"
+) {
+
+reducedMotion.addEventListener(
+"change",
+requestHomepageWelcomeScrollEffects
+);
+
+}
+
+const welcomeGetInTouch =
+document.getElementById(
+"homepageWelcomeGetInTouch"
+);
+
+if (welcomeGetInTouch) {
+
+welcomeGetInTouch.addEventListener(
+"click",
+() => {
+
+const existingGetInTouch =
+document.getElementById(
+"homepageGetInTouch"
+);
+
+if (
+existingGetInTouch &&
+existingGetInTouch !==
+welcomeGetInTouch
+) {
+
+existingGetInTouch.click();
+
+return;
+
+}
+
+window.location.hash =
+"contact";
+
+}
+);
+
+}
+
+updateHomepageWelcomeScrollEffects();
+
+})();
+</script>
 
 <section
 class="home-popular-section"
@@ -9882,6 +10314,48 @@ Request a Fitting Quotation
 
 </section>
 
+<section class="opening-section">
+
+<div class="opening-copy">
+
+<div class="section-label reveal">
+The Product
+</div>
+
+<h2 class="reveal">
+Modernising British Ceilings With Frameless Glass Design
+</h2>
+
+<p class="opening-desktop-copy reveal reveal-delay-1">
+The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
+Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
+rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
+The result is more natural light, a wider sky view and a rooflight that becomes part of the
+architecture rather than an added frame.
+</p>
+
+</div>
+
+<div class="interior-static-wrap reveal reveal-scale">
+
+<img
+src="images/interior-rooflight-3.png"
+class="interior-static-image"
+alt="Finished frameless rooflight viewed from inside the room"
+/>
+
+</div>
+
+<p class="opening-mobile-copy">
+The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
+Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
+rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
+The result is more natural light, a wider sky view and a rooflight that becomes part of the
+architecture rather than an added frame.
+</p>
+
+</section>
+
 <section class="buy-online-section">
 
 <div class="buy-online-inner">
@@ -9935,48 +10409,6 @@ Build A Custom Rooflight
 </div>
 
 </div>
-
-</section>
-
-<section class="opening-section">
-
-<div class="opening-copy">
-
-<div class="section-label reveal">
-The Product
-</div>
-
-<h2 class="reveal">
-Modernising British Ceilings With Frameless Glass Design
-</h2>
-
-<p class="opening-desktop-copy reveal reveal-delay-1">
-The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
-Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
-rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
-The result is more natural light, a wider sky view and a rooflight that becomes part of the
-architecture rather than an added frame.
-</p>
-
-</div>
-
-<div class="interior-static-wrap reveal reveal-scale">
-
-<img
-src="images/interior-rooflight-3.png"
-class="interior-static-image"
-alt="Finished frameless rooflight viewed from inside the room"
-/>
-
-</div>
-
-<p class="opening-mobile-copy">
-The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
-Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
-rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
-The result is more natural light, a wider sky view and a rooflight that becomes part of the
-architecture rather than an added frame.
-</p>
 
 </section>
 
