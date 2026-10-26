@@ -7942,6 +7942,374 @@ border-radius:6px;
 margin:0;
 }
 
+
+/* =========================================
+INDEX CHANGE 4
+HOMEPAGE WELCOME / DIRECT ORDER PROCESS
+========================================= */
+
+.homepage-welcome-section {
+position:relative;
+isolation:isolate;
+overflow:hidden;
+padding:
+clamp(54px,6vw,86px)
+6%
+clamp(48px,5.6vw,78px);
+background:
+radial-gradient(
+circle at 88% 10%,
+rgba(232,120,23,.11) 0%,
+rgba(232,120,23,.035) 24%,
+transparent 46%
+),
+linear-gradient(
+145deg,
+#0a0c0c 0%,
+#111414 52%,
+#0b0d0d 100%
+);
+border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.homepage-welcome-section::before {
+content:"";
+position:absolute;
+inset:0;
+z-index:-2;
+background-image:
+linear-gradient(
+rgba(255,255,255,.018) 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+rgba(255,255,255,.018) 1px,
+transparent 1px
+);
+background-size:48px 48px;
+opacity:.42;
+pointer-events:none;
+}
+
+.homepage-welcome-section::after {
+content:"WELCOME";
+position:absolute;
+right:-.025em;
+top:-.14em;
+z-index:-1;
+font-family:
+"Bahnschrift Condensed",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+font-size:clamp(118px,17vw,250px);
+font-weight:900;
+line-height:1;
+letter-spacing:-8px;
+color:rgba(255,255,255,.018);
+white-space:nowrap;
+pointer-events:none;
+user-select:none;
+}
+
+.homepage-welcome-inner {
+position:relative;
+z-index:2;
+width:100%;
+max-width:1180px;
+margin:0 auto;
+}
+
+.homepage-welcome-intro {
+max-width:900px;
+}
+
+.homepage-welcome-kicker {
+display:flex;
+align-items:center;
+gap:11px;
+margin:0 0 18px;
+font-family:
+"Bahnschrift",
+"Arial Narrow",
+"Aptos",
+sans-serif;
+font-size:10px;
+font-weight:800;
+line-height:1;
+letter-spacing:2.4px;
+text-transform:uppercase;
+color:var(--orange);
+}
+
+.homepage-welcome-kicker::before {
+content:"";
+display:block;
+width:30px;
+height:1px;
+background:var(--orange);
+opacity:.92;
+}
+
+.homepage-welcome-title {
+max-width:940px;
+margin:0;
+font-family:
+"Bahnschrift SemiCondensed",
+"Bahnschrift",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+font-size:clamp(46px,6.6vw,82px);
+font-weight:800;
+line-height:.91;
+letter-spacing:-2.5px;
+color:var(--cream);
+}
+
+.homepage-welcome-title span {
+display:block;
+margin-top:8px;
+font-family:
+"Bahnschrift Condensed",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+font-size:.78em;
+font-weight:750;
+letter-spacing:-1.6px;
+color:var(--orange-bright);
+}
+
+.homepage-welcome-copy {
+max-width:760px;
+margin:26px 0 0;
+font-size:clamp(15px,1.45vw,18px);
+font-weight:500;
+line-height:1.68;
+color:var(--muted);
+}
+
+.homepage-welcome-copy strong {
+color:var(--cream);
+font-weight:700;
+}
+
+.homepage-welcome-process {
+position:relative;
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:1px;
+width:100%;
+margin-top:38px;
+border:1px solid rgba(255,255,255,.11);
+background:rgba(255,255,255,.11);
+box-shadow:0 24px 55px rgba(0,0,0,.22);
+}
+
+.homepage-welcome-step {
+position:relative;
+min-width:0;
+min-height:188px;
+padding:24px 24px 22px;
+background:
+linear-gradient(
+160deg,
+rgba(22,25,25,.985),
+rgba(12,14,14,.985)
+);
+}
+
+.homepage-welcome-step::before {
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:0;
+height:2px;
+background:var(--orange);
+transition:width .38s ease;
+}
+
+.homepage-welcome-step:hover::before {
+width:100%;
+}
+
+.homepage-welcome-step-top {
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+gap:18px;
+margin-bottom:26px;
+}
+
+.homepage-welcome-icon {
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+flex:0 0 auto;
+border:1px solid rgba(232,120,23,.34);
+background:rgba(232,120,23,.055);
+color:var(--orange-bright);
+}
+
+.homepage-welcome-icon svg {
+width:23px;
+height:23px;
+display:block;
+fill:none;
+stroke:currentColor;
+stroke-width:1.7;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+
+.homepage-welcome-step-number {
+font-family:
+"Bahnschrift Condensed",
+"Arial Narrow",
+"Aptos",
+sans-serif;
+font-size:12px;
+font-weight:800;
+line-height:1;
+letter-spacing:1.5px;
+color:rgba(247,247,243,.30);
+}
+
+.homepage-welcome-step h3 {
+margin:0;
+font-family:
+"Bahnschrift SemiCondensed",
+"Bahnschrift",
+"Arial Narrow",
+"Aptos Display",
+sans-serif;
+font-size:clamp(21px,2vw,28px);
+font-weight:800;
+line-height:1;
+letter-spacing:-.65px;
+color:var(--cream);
+}
+
+.homepage-welcome-step p {
+margin:11px 0 0;
+font-size:14px;
+line-height:1.58;
+color:var(--muted-soft);
+}
+
+.homepage-welcome-route {
+display:flex;
+align-items:center;
+gap:9px;
+margin-top:22px;
+font-family:
+"Bahnschrift",
+"Aptos",
+sans-serif;
+font-size:8px;
+font-weight:800;
+line-height:1;
+letter-spacing:1.35px;
+text-transform:uppercase;
+color:rgba(247,247,243,.46);
+}
+
+.homepage-welcome-route-dot {
+width:5px;
+height:5px;
+border-radius:50%;
+background:var(--orange);
+box-shadow:0 0 0 4px rgba(232,120,23,.08);
+}
+
+@media(max-width:760px) {
+
+.homepage-welcome-section {
+padding:
+44px
+6%
+48px;
+}
+
+.homepage-welcome-section::after {
+right:-.08em;
+top:.02em;
+font-size:116px;
+letter-spacing:-4px;
+}
+
+.homepage-welcome-kicker {
+font-size:8.5px;
+letter-spacing:1.85px;
+margin-bottom:16px;
+}
+
+.homepage-welcome-title {
+font-size:clamp(39px,12vw,54px);
+line-height:.92;
+letter-spacing:-1.75px;
+}
+
+.homepage-welcome-title span {
+margin-top:7px;
+font-size:.76em;
+letter-spacing:-1.1px;
+}
+
+.homepage-welcome-copy {
+margin-top:22px;
+font-size:15.2px;
+line-height:1.62;
+}
+
+.homepage-welcome-process {
+grid-template-columns:1fr;
+margin-top:31px;
+}
+
+.homepage-welcome-step {
+min-height:0;
+padding:20px 19px 19px;
+}
+
+.homepage-welcome-step-top {
+align-items:center;
+margin-bottom:18px;
+}
+
+.homepage-welcome-icon {
+width:37px;
+height:37px;
+}
+
+.homepage-welcome-icon svg {
+width:21px;
+height:21px;
+}
+
+.homepage-welcome-step h3 {
+font-size:24px;
+}
+
+.homepage-welcome-step p {
+font-size:13.8px;
+}
+
+.homepage-welcome-route {
+margin-top:19px;
+font-size:7.4px;
+letter-spacing:1.05px;
+}
+
+}
+
+
 @media(max-width:560px) {
 
 .home-workshop-intro {
@@ -8062,6 +8430,146 @@ animation:none !important;
 }
 
 </style>
+
+
+<section
+class="homepage-welcome-section"
+aria-labelledby="homepageWelcomeTitle"
+>
+
+<div class="homepage-welcome-inner">
+
+<div class="homepage-welcome-intro">
+
+<div class="homepage-welcome-kicker reveal">
+Welcome To Our Order Page
+</div>
+
+<h2
+class="homepage-welcome-title reveal"
+id="homepageWelcomeTitle"
+>
+Frameless Glass Skylights.
+<span>Made To Order.</span>
+</h2>
+
+<p class="homepage-welcome-copy reveal reveal-delay-1">
+We specialise in frameless glass skylights. Every order placed through our website
+<strong>enters directly into our manufacturing queue</strong>, giving you a simple route
+from choosing your specification to receiving your finished rooflights.
+</p>
+
+<div
+class="homepage-welcome-route reveal reveal-delay-1"
+aria-label="Factory direct ordering"
+>
+<span class="homepage-welcome-route-dot" aria-hidden="true"></span>
+<span>Factory Direct Ordering</span>
+</div>
+
+</div>
+
+<div
+class="homepage-welcome-process"
+aria-label="How ordering your rooflight works"
+>
+
+<article class="homepage-welcome-step reveal reveal-delay-1">
+
+<div class="homepage-welcome-step-top">
+
+<div class="homepage-welcome-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M5 8h22"></path>
+<path d="M5 16h22"></path>
+<path d="M5 24h22"></path>
+<circle cx="11" cy="8" r="2.5"></circle>
+<circle cx="21" cy="16" r="2.5"></circle>
+<circle cx="14" cy="24" r="2.5"></circle>
+</svg>
+</div>
+
+<span class="homepage-welcome-step-number">
+01
+</span>
+
+</div>
+
+<h3>
+Choose Your Spec
+</h3>
+
+<p>
+Select your size, glazing, glass finish and options to build the rooflight you need.
+</p>
+
+</article>
+
+<article class="homepage-welcome-step reveal reveal-delay-2">
+
+<div class="homepage-welcome-step-top">
+
+<div class="homepage-welcome-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<rect x="5.5" y="7.5" width="21" height="19" rx="2"></rect>
+<path d="M10 4.5v6"></path>
+<path d="M22 4.5v6"></path>
+<path d="M5.5 12.5h21"></path>
+<path d="M11 19l3 3 7-7"></path>
+</svg>
+</div>
+
+<span class="homepage-welcome-step-number">
+02
+</span>
+
+</div>
+
+<h3>
+Get Your Estimated Delivery Date
+</h3>
+
+<p>
+See an estimated delivery date for your chosen rooflight specification as you order.
+</p>
+
+</article>
+
+<article class="homepage-welcome-step reveal reveal-delay-3">
+
+<div class="homepage-welcome-step-top">
+
+<div class="homepage-welcome-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M3.5 9.5h15v13h-15z"></path>
+<path d="M18.5 14h5.5l4.5 4.5v4h-10z"></path>
+<circle cx="9" cy="24" r="2.5"></circle>
+<circle cx="24" cy="24" r="2.5"></circle>
+<path d="M18.5 18.5h10"></path>
+</svg>
+</div>
+
+<span class="homepage-welcome-step-number">
+03
+</span>
+
+</div>
+
+<h3>
+Delivered To Your Door
+</h3>
+
+<p>
+We manufacture your brand-new rooflights and deliver them directly to your address.
+</p>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
 
 <section
 class="home-popular-section"
@@ -8557,104 +9065,6 @@ alt="Brand new frameless rooflight manufactured ready for installation"
 </div>
 </div>
 </div>
-
-</section>
-
-<section class="buy-online-section">
-
-<div class="buy-online-inner">
-
-<div class="section-label reveal">
-Order Direct
-</div>
-
-<h2 class="reveal">
-Buy Direct From Our Dedicated Glazing Teams
-</h2>
-
-<div class="buy-online-choice-group reveal reveal-delay-1">
-
-<p>
-Choose from our established standard rooflight sizes with toughened or laminated
-glazing options, along with clear, blue tinted, grey tinted or satin privacy glass
-finishes. If you need something more specific, build a custom rooflight to your own
-size and specification, or contact our team for larger architectural units.
-</p>
-
-<div class="hero-actions">
-
-<a href="order-page.html" class="button">
-Order Your Rooflight
-</a>
-
-<a href="standard-sizes.html" class="button">
-Shop Standard Sizes
-</a>
-
-<span class="or-divider">
-or
-</span>
-
-<a
-href="order-page.html?source=homepage-custom-builder&focus=custom-builder&viewportOffset=0.40"
-class="button"
-id="homepageBuildCustomRooflightButton"
->
-Build A Custom Rooflight
-</a>
-
-<a href="#oversized" class="button secondary oversized-button">
-<span>Oversized Rooflights</span>
-<span class="button-size-note">+4.5 m²</span>
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="opening-section">
-
-<div class="opening-copy">
-
-<div class="section-label reveal">
-The Product
-</div>
-
-<h2 class="reveal">
-Modernising British Ceilings With Frameless Glass Design
-</h2>
-
-<p class="opening-desktop-copy reveal reveal-delay-1">
-The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
-Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
-rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
-The result is more natural light, a wider sky view and a rooflight that becomes part of the
-architecture rather than an added frame.
-</p>
-
-</div>
-
-<div class="interior-static-wrap reveal reveal-scale">
-
-<img
-src="images/interior-rooflight-3.png"
-class="interior-static-image"
-alt="Finished frameless rooflight viewed from inside the room"
-/>
-
-</div>
-
-<p class="opening-mobile-copy">
-The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
-Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
-rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
-The result is more natural light, a wider sky view and a rooflight that becomes part of the
-architecture rather than an added frame.
-</p>
 
 </section>
 
@@ -9469,6 +9879,104 @@ Request a Fitting Quotation
 </div>
 
 </div>
+
+</section>
+
+<section class="buy-online-section">
+
+<div class="buy-online-inner">
+
+<div class="section-label reveal">
+Order Direct
+</div>
+
+<h2 class="reveal">
+Buy Direct From Our Dedicated Glazing Teams
+</h2>
+
+<div class="buy-online-choice-group reveal reveal-delay-1">
+
+<p>
+Choose from our established standard rooflight sizes with toughened or laminated
+glazing options, along with clear, blue tinted, grey tinted or satin privacy glass
+finishes. If you need something more specific, build a custom rooflight to your own
+size and specification, or contact our team for larger architectural units.
+</p>
+
+<div class="hero-actions">
+
+<a href="order-page.html" class="button">
+Order Your Rooflight
+</a>
+
+<a href="standard-sizes.html" class="button">
+Shop Standard Sizes
+</a>
+
+<span class="or-divider">
+or
+</span>
+
+<a
+href="order-page.html?source=homepage-custom-builder&focus=custom-builder&viewportOffset=0.40"
+class="button"
+id="homepageBuildCustomRooflightButton"
+>
+Build A Custom Rooflight
+</a>
+
+<a href="#oversized" class="button secondary oversized-button">
+<span>Oversized Rooflights</span>
+<span class="button-size-note">+4.5 m²</span>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="opening-section">
+
+<div class="opening-copy">
+
+<div class="section-label reveal">
+The Product
+</div>
+
+<h2 class="reveal">
+Modernising British Ceilings With Frameless Glass Design
+</h2>
+
+<p class="opening-desktop-copy reveal reveal-delay-1">
+The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
+Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
+rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
+The result is more natural light, a wider sky view and a rooflight that becomes part of the
+architecture rather than an added frame.
+</p>
+
+</div>
+
+<div class="interior-static-wrap reveal reveal-scale">
+
+<img
+src="images/interior-rooflight-3.png"
+class="interior-static-image"
+alt="Finished frameless rooflight viewed from inside the room"
+/>
+
+</div>
+
+<p class="opening-mobile-copy">
+The go-to minimalist rooflight design for a cleaner, uninterrupted ceiling finish.
+Designed to sit cleanly above the roof opening with no visible internal frame, our frameless
+rooflights create a simple, uninterrupted ceiling finish and maximise the visible area of glass.
+The result is more natural light, a wider sky view and a rooflight that becomes part of the
+architecture rather than an added frame.
+</p>
 
 </section>
 
