@@ -4857,8 +4857,12 @@ margin-bottom:38px;
 }
 
 .engineered-intro h2 {
-font-size:clamp(38px,5vw,61px);
+font-size:clamp(34.2px,4.5vw,54.9px);
 font-weight:750;
+}
+
+.engineered-intro > p {
+font-size:14.45px;
 }
 
 .engineered-grid {
@@ -5436,7 +5440,7 @@ max-width:620px;
 margin:
 18px
 0
-clamp(9.8px,1.05vw,13.3px);
+clamp(2.94px,.315vw,3.99px);
 }
 
 .footer-payment-logo-item {
@@ -6709,7 +6713,7 @@ font-size:20px;
 gap:10px;
 max-width:350px;
 margin-top:16px;
-margin-bottom:10.85px;
+margin-bottom:3.255px;
 }
 
 .footer-payment-logo-item img {
@@ -7533,6 +7537,13 @@ Oversized Rooflights
 Book A Fitting
 </a>
 
+<a
+href="shipping.html"
+onclick="closeMenu()"
+>
+Lead Times
+</a>
+
 <button
 type="button"
 class="menu-contact-button"
@@ -7540,13 +7551,6 @@ id="menuContactTeamButton"
 >
 Contact Our Team
 </button>
-
-<a
-href="shipping.html"
-onclick="closeMenu()"
->
-Lead Times
-</a>
 
 </nav>
 
@@ -7945,501 +7949,153 @@ margin:0;
 
 /* =========================================
 INDEX CHANGE 4
-HOMEPAGE WELCOME / ORDER PROCESS
+POPULAR SIZES — COMPACT ORDER PROCESS
 ========================================= */
 
-.homepage-welcome-section {
---welcome-gradient-x:84%;
---welcome-gradient-y:12%;
---welcome-gradient-hue:0deg;
-
+.popular-order-process {
 position:relative;
-isolation:isolate;
-overflow:hidden;
-
-padding:
-clamp(21.85px,2.415vw,34.5px)
-6%
-clamp(48px,5.6vw,78px);
-
-background:
-linear-gradient(
-145deg,
-#090b0b 0%,
-#101313 52%,
-#090b0b 100%
-);
-
-border-bottom:1px solid rgba(255,255,255,.09);
+z-index:3;
+max-width:1180px;
+margin:0 auto 22px;
+padding:0;
 }
 
-.homepage-welcome-colour-wash {
-position:absolute;
-inset:-14%;
-z-index:0;
-
-background:
-radial-gradient(
-circle at var(--welcome-gradient-x) var(--welcome-gradient-y),
-rgba(232,120,23,.145) 0%,
-rgba(232,120,23,.055) 22%,
-transparent 48%
-),
-radial-gradient(
-circle at calc(100% - var(--welcome-gradient-x)) 82%,
-rgba(41,77,115,.11) 0%,
-rgba(33,60,89,.04) 27%,
-transparent 54%
-),
-linear-gradient(
-135deg,
-rgba(22,60,45,.055) 0%,
-transparent 44%,
-rgba(184,154,98,.038) 100%
-);
-
-filter:
-hue-rotate(var(--welcome-gradient-hue))
-saturate(1.04);
-
-transform:scale(1.08);
-pointer-events:none;
-will-change:background,filter;
-}
-
-.homepage-welcome-section::before {
-content:"";
-position:absolute;
-inset:0;
-z-index:1;
-
-background-image:
-linear-gradient(
-rgba(255,255,255,.016) 1px,
-transparent 1px
-),
-linear-gradient(
-90deg,
-rgba(255,255,255,.016) 1px,
-transparent 1px
-);
-
-background-size:48px 48px;
-opacity:.36;
-pointer-events:none;
-}
-
-.homepage-welcome-section::after {
-content:"";
-position:absolute;
-inset:0;
-z-index:1;
-
-background:
-linear-gradient(
-180deg,
-rgba(9,10,10,.12) 0%,
-transparent 22%,
-transparent 74%,
-rgba(9,10,10,.28) 100%
-);
-
-pointer-events:none;
-}
-
-.homepage-welcome-word-field {
-position:absolute;
-inset:0;
-z-index:1;
-overflow:hidden;
-pointer-events:none;
-user-select:none;
-}
-
-.homepage-welcome-word {
-position:absolute;
-display:block;
-
+.popular-order-process-label {
+display:flex;
+align-items:center;
+gap:8px;
+margin:0 0 11px;
+color:var(--orange);
 font-family:
-"Bahnschrift Condensed",
+"Bahnschrift",
+"Bahnschrift SemiCondensed",
+"Arial Narrow",
+"Aptos",
+sans-serif;
+font-size:8.5px;
+font-weight:800;
+line-height:1;
+letter-spacing:1.7px;
+text-transform:uppercase;
+}
+
+.popular-order-process-label::before {
+content:"";
+display:block;
+width:18px;
+height:1px;
+background:var(--orange);
+opacity:.85;
+}
+
+.popular-order-process-grid {
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:8px;
+}
+
+.popular-order-step {
+display:grid;
+grid-template-columns:34px minmax(0,1fr);
+align-items:center;
+gap:10px;
+min-width:0;
+padding:11px 12px;
+border:1px solid rgba(255,255,255,.09);
+background:
+linear-gradient(
+155deg,
+rgba(22,25,25,.78),
+rgba(12,14,14,.86)
+);
+}
+
+.popular-order-icon {
+width:31px;
+height:31px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--orange-bright);
+opacity:.78;
+}
+
+.popular-order-icon svg {
+width:100%;
+height:100%;
+display:block;
+fill:none;
+stroke:currentColor;
+stroke-width:1.5;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+
+.popular-order-step-copy {
+min-width:0;
+}
+
+.popular-order-step h3 {
+margin:0;
+color:var(--cream);
+font-family:
 "Bahnschrift SemiCondensed",
 "Arial Narrow",
 "Aptos Display",
 sans-serif;
-
-font-weight:900;
-line-height:.82;
-letter-spacing:-.055em;
-text-transform:uppercase;
-white-space:nowrap;
-
-color:rgba(247,247,243,.018);
-opacity:.014;
-
-transform-origin:center;
-will-change:transform,opacity;
+font-size:13px;
+font-weight:750;
+line-height:1.05;
+letter-spacing:-.15px;
 }
 
-.homepage-welcome-word-1 {
-top:3%;
-right:-7%;
-font-size:clamp(105px,16vw,235px);
-}
-
-.homepage-welcome-word-2 {
-top:31%;
-left:-8%;
-font-size:clamp(96px,14vw,205px);
-}
-
-.homepage-welcome-word-3 {
-top:54%;
-right:-10%;
-font-size:clamp(90px,13vw,190px);
-}
-
-.homepage-welcome-word-4 {
-bottom:-2%;
-left:6%;
-font-size:clamp(82px,11vw,165px);
-color:rgba(232,120,23,.018);
-}
-
-.homepage-welcome-inner {
-position:relative;
-z-index:3;
-width:100%;
-max-width:1180px;
-margin:0 auto;
-}
-
-.homepage-welcome-intro {
-max-width:900px;
-}
-
-.homepage-welcome-kicker {
-display:flex;
-align-items:center;
-gap:7px;
-
-margin:0 0 18px;
-
-font-family:
-"Bahnschrift",
-"Arial Narrow",
-"Aptos",
-sans-serif;
-
-font-size:10px;
-font-weight:800;
-line-height:1;
-letter-spacing:2.1px;
-text-transform:none;
-color:var(--orange);
-}
-
-.homepage-welcome-home-dash {
-display:inline-block;
-font-size:.72em;
-font-weight:700;
-line-height:1;
-letter-spacing:0;
-transform:translateY(-.5px);
-opacity:.82;
-}
-
-.homepage-welcome-title {
-max-width:940px;
-margin:0;
-
-font-family:
-"Aptos Display",
-"Segoe UI Variable Display",
-"Segoe UI",
-sans-serif;
-
-font-size:clamp(37px,5.28vw,66px);
-font-weight:700;
-line-height:.92;
-letter-spacing:-1.7px;
-color:var(--cream);
-}
-
-.homepage-welcome-title span {
-display:block;
-margin-top:6px;
-
-font-family:
-"Aptos Display",
-"Segoe UI Variable Display",
-"Segoe UI",
-sans-serif;
-
-font-size:.78em;
-font-weight:650;
-letter-spacing:-1.15px;
-color:var(--orange-bright);
-}
-
-.homepage-welcome-copy {
-max-width:760px;
-margin:26px 0 0;
-
-font-size:clamp(15px,1.45vw,18px);
-font-weight:500;
-line-height:1.68;
-color:var(--muted);
-}
-
-.homepage-welcome-copy strong {
-color:var(--cream);
-font-weight:700;
-}
-
-.homepage-welcome-how-it-works {
-display:flex;
-align-items:center;
-gap:11px;
-
-margin-top:30px;
-padding-top:23px;
-border-top:1px solid rgba(255,255,255,.09);
-
-font-family:
-"Aptos Display",
-"Segoe UI Variable Display",
-"Segoe UI",
-sans-serif;
-
-font-size:clamp(20px,2vw,27px);
-font-weight:700;
-line-height:1;
-letter-spacing:-.35px;
-color:var(--cream);
-}
-
-.homepage-welcome-how-it-works::before {
-content:"";
-display:block;
-width:22px;
-height:2px;
-background:var(--orange);
-box-shadow:0 0 12px rgba(232,120,23,.16);
-}
-
-.homepage-welcome-process {
-position:relative;
-display:grid;
-grid-template-columns:1fr;
-gap:1px;
-
-width:100%;
-margin-top:17px;
-
-border:1px solid rgba(255,255,255,.11);
-background:rgba(255,255,255,.11);
-box-shadow:0 24px 55px rgba(0,0,0,.22);
-}
-
-.homepage-welcome-step {
-position:relative;
-display:grid;
-grid-template-columns:
-clamp(112px,12vw,154px)
-minmax(0,1fr);
-align-items:center;
-gap:clamp(22px,3vw,42px);
-
-min-width:0;
-min-height:172px;
-padding:
-24px
-clamp(24px,3.4vw,42px)
-24px
-clamp(20px,2.6vw,30px);
-
-background:
-linear-gradient(
-160deg,
-rgba(22,25,25,.965),
-rgba(12,14,14,.975)
-);
-
-backdrop-filter:blur(2px);
--webkit-backdrop-filter:blur(2px);
-}
-
-.homepage-welcome-step::before {
-content:"";
-position:absolute;
-left:0;
-top:0;
-width:2px;
-height:100%;
-background:
-linear-gradient(
-180deg,
-rgba(232,120,23,.22),
-var(--orange),
-rgba(232,120,23,.18)
-);
-opacity:.58;
-transition:opacity .28s ease;
-}
-
-.homepage-welcome-step:hover::before {
-opacity:1;
-}
-
-.homepage-welcome-icon {
-width:clamp(98px,10vw,132px);
-height:clamp(98px,10vw,132px);
-
-display:flex;
-align-items:center;
-justify-content:center;
-flex:0 0 auto;
-
-color:var(--orange-bright);
-opacity:.82;
-filter:drop-shadow(0 10px 24px rgba(0,0,0,.20));
-}
-
-.homepage-welcome-icon svg {
-width:100%;
-height:100%;
-display:block;
-
-fill:currentColor;
-stroke:none;
-}
-
-.homepage-welcome-step-copy {
-min-width:0;
-align-self:stretch;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding:4px 0;
-}
-
-.homepage-welcome-step h3 {
-margin:0;
-
-font-family:
-"Aptos Display",
-"Segoe UI Variable Display",
-"Segoe UI",
-sans-serif;
-
-font-size:clamp(25px,2.6vw,35px);
-font-weight:700;
-line-height:1;
-letter-spacing:-.8px;
-color:var(--cream);
-}
-
-.homepage-welcome-step p {
-max-width:800px;
-margin:13px 0 0;
-font-size:clamp(14.5px,1.3vw,16px);
-line-height:1.62;
+.popular-order-step p {
+margin:4px 0 0;
 color:var(--muted-soft);
+font-size:10.5px;
+font-weight:500;
+line-height:1.42;
+}
+
+.homepage-closing-section.homepage-ready-order-section {
+padding-top:34.32px;
 }
 
 @media(max-width:760px) {
 
-.homepage-welcome-section {
-padding:
-17.25px
-6%
-48px;
+.popular-order-process {
+padding:0 2.5%;
+margin-bottom:18px;
 }
 
-.homepage-welcome-word-1 {
-top:2%;
-right:-24%;
-font-size:112px;
-}
-
-.homepage-welcome-word-2 {
-top:34%;
-left:-24%;
-font-size:104px;
-}
-
-.homepage-welcome-word-3 {
-top:58%;
-right:-28%;
-font-size:98px;
-}
-
-.homepage-welcome-word-4 {
-bottom:2%;
-left:-10%;
-font-size:84px;
-}
-
-.homepage-welcome-kicker {
-font-size:8.5px;
-letter-spacing:1.85px;
-margin-bottom:16px;
-}
-
-.homepage-welcome-title {
-font-size:clamp(31px,9.6vw,43px);
-line-height:.92;
-letter-spacing:-1.4px;
-}
-
-.homepage-welcome-title span {
-margin-top:7px;
-font-size:.76em;
-letter-spacing:-.9px;
-}
-
-.homepage-welcome-copy {
-margin-top:22px;
-font-size:15.2px;
-line-height:1.62;
-}
-
-.homepage-welcome-how-it-works {
-margin-top:25px;
-padding-top:20px;
-font-size:21px;
-}
-
-.homepage-welcome-process {
+.popular-order-process-grid {
 grid-template-columns:1fr;
-margin-top:15px;
+gap:6px;
 }
 
-.homepage-welcome-step {
-grid-template-columns:78px minmax(0,1fr);
-gap:16px;
-min-height:132px;
-padding:17px 16px 17px 14px;
+.popular-order-step {
+grid-template-columns:30px minmax(0,1fr);
+gap:9px;
+padding:9px 10px;
 }
 
-.homepage-welcome-icon {
-width:72px;
-height:72px;
+.popular-order-icon {
+width:27px;
+height:27px;
 }
 
-.homepage-welcome-step-copy {
-padding:2px 0;
+.popular-order-step h3 {
+font-size:12.2px;
 }
 
-.homepage-welcome-step h3 {
-font-size:22px;
-line-height:1.02;
+.popular-order-step p {
+margin-top:3px;
+font-size:10.2px;
+line-height:1.38;
 }
 
-.homepage-welcome-step p {
-margin-top:9px;
-font-size:13.4px;
-line-height:1.52;
+.homepage-closing-section.homepage-ready-order-section {
+padding-top:31.98px;
 }
 
 }
@@ -8561,407 +8217,10 @@ width:86%;
 animation:none !important;
 }
 
-.homepage-welcome-colour-wash {
-filter:none !important;
-}
-
-.homepage-welcome-word {
-transform:none !important;
-}
-
 }
 
 </style>
 
-
-<section
-class="homepage-welcome-section"
-aria-labelledby="homepageWelcomeTitle"
->
-
-<div
-class="homepage-welcome-colour-wash"
-aria-hidden="true"
-></div>
-
-<div
-class="homepage-welcome-word-field"
-aria-hidden="true"
->
-
-<span
-class="homepage-welcome-word homepage-welcome-word-1"
-data-welcome-word-x="42"
-data-welcome-word-y="-12"
->
-Frameless
-</span>
-
-<span
-class="homepage-welcome-word homepage-welcome-word-2"
-data-welcome-word-x="-38"
-data-welcome-word-y="18"
->
-Glass
-</span>
-
-<span
-class="homepage-welcome-word homepage-welcome-word-3"
-data-welcome-word-x="34"
-data-welcome-word-y="28"
->
-Skylights
-</span>
-
-<span
-class="homepage-welcome-word homepage-welcome-word-4"
-data-welcome-word-x="-26"
-data-welcome-word-y="-16"
->
-UK Manufactured
-</span>
-
-</div>
-
-<div class="homepage-welcome-inner">
-
-<div class="homepage-welcome-intro">
-
-<div class="homepage-welcome-kicker reveal">
-<span class="homepage-welcome-home-dash" aria-hidden="true">-</span>
-<span>Home</span>
-</div>
-
-<h2
-class="homepage-welcome-title reveal"
-id="homepageWelcomeTitle"
->
-UK Manufactured
-<span>Frameless Glass Skylights</span>
-</h2>
-
-<p class="homepage-welcome-copy reveal reveal-delay-1">
-We specialise in frameless glass skylights. Every order placed through our website
-<strong>enters directly into our manufacturing queue</strong>, giving you a simple route
-from choosing your specification to receiving your finished rooflights.
-</p>
-
-<div class="homepage-welcome-how-it-works reveal reveal-delay-1">
-How It Works
-</div>
-
-</div>
-
-<div
-class="homepage-welcome-process"
-aria-label="How ordering your rooflight works"
->
-
-<article class="homepage-welcome-step reveal reveal-delay-1">
-
-<div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 120 120">
-<rect x="18" y="25" width="84" height="8" rx="4"></rect>
-<rect x="18" y="56" width="84" height="8" rx="4"></rect>
-<rect x="18" y="87" width="84" height="8" rx="4"></rect>
-<circle cx="42" cy="29" r="13"></circle>
-<circle cx="78" cy="60" r="13"></circle>
-<circle cx="52" cy="91" r="13"></circle>
-</svg>
-</div>
-
-<div class="homepage-welcome-step-copy">
-
-<h3>
-Choose Your Spec
-</h3>
-
-<p>
-Select your size, glazing, glass finish and options to build the rooflight you need.
-</p>
-
-</div>
-
-</article>
-
-<article class="homepage-welcome-step reveal reveal-delay-2">
-
-<div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 120 120">
-<path
-fill-rule="evenodd"
-clip-rule="evenodd"
-d="M26 20h68c7 0 12 5 12 12v66c0 7-5 12-12 12H26c-7 0-12-5-12-12V32c0-7 5-12 12-12Zm0 14v64h68V34H26Z"
-></path>
-<rect x="14" y="42" width="92" height="10"></rect>
-<rect x="33" y="10" width="10" height="24" rx="5"></rect>
-<rect x="77" y="10" width="10" height="24" rx="5"></rect>
-<path d="M39 72l14 14 29-31 8 8-37 39-22-22z"></path>
-</svg>
-</div>
-
-<div class="homepage-welcome-step-copy">
-
-<h3>
-Get Your Estimated Delivery Date
-</h3>
-
-<p>
-See an estimated delivery date for your chosen rooflight specification as you order.
-</p>
-
-</div>
-
-</article>
-
-<article class="homepage-welcome-step reveal reveal-delay-3">
-
-<div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 120 120">
-<path d="M12 36h55v43H12z"></path>
-<path d="M67 49h21l20 21v9H67z"></path>
-<path d="M84 54v16h17z"></path>
-<rect x="18" y="79" width="84" height="8" rx="4"></rect>
-<circle cx="34" cy="89" r="12"></circle>
-<circle cx="88" cy="89" r="12"></circle>
-</svg>
-</div>
-
-<div class="homepage-welcome-step-copy">
-
-<h3>
-Delivered To Your Door
-</h3>
-
-<p>
-We manufacture your brand-new rooflights and deliver them directly to your address.
-</p>
-
-</div>
-
-</article>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-(() => {
-
-const section =
-document.querySelector(
-".homepage-welcome-section"
-);
-
-if (!section) {
-return;
-}
-
-const words =
-Array.from(
-section.querySelectorAll(
-".homepage-welcome-word"
-)
-);
-
-const reducedMotion =
-window.matchMedia(
-"(prefers-reduced-motion: reduce)"
-);
-
-let welcomeScrollFrame =
-null;
-
-function updateHomepageWelcomeScrollEffects() {
-
-welcomeScrollFrame =
-null;
-
-const rect =
-section.getBoundingClientRect();
-
-const viewportHeight =
-window.innerHeight ||
-document.documentElement.clientHeight ||
-1;
-
-const travel =
-viewportHeight +
-rect.height;
-
-const progress =
-Math.max(
-0,
-Math.min(
-1,
-(viewportHeight - rect.top) /
-travel
-)
-);
-
-section.style.setProperty(
-"--welcome-gradient-x",
-`${84 - (progress * 48)}%`
-);
-
-section.style.setProperty(
-"--welcome-gradient-y",
-`${12 + (progress * 62)}%`
-);
-
-section.style.setProperty(
-"--welcome-gradient-hue",
-`${progress * 14}deg`
-);
-
-words.forEach(
-(word,index) => {
-
-if (reducedMotion.matches) {
-word.style.transform = "none";
-word.style.opacity = ".016";
-return;
-}
-
-const phaseStart =
-index * .105;
-
-const localProgress =
-Math.max(
-0,
-Math.min(
-1,
-(progress - phaseStart) / .64
-)
-);
-
-const eased =
-localProgress *
-localProgress *
-(3 - (2 * localProgress));
-
-const startX =
-Number(
-word.dataset.welcomeWordX ||
-0
-);
-
-const startY =
-Number(
-word.dataset.welcomeWordY ||
-0
-);
-
-const x =
-startX *
-(1 - (eased * 1.16));
-
-const y =
-startY *
-(1 - (eased * 1.20));
-
-const scale =
-.91 +
-(eased * .19);
-
-const opacity =
-.012 +
-(eased * .014);
-
-word.style.transform =
-`translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-
-word.style.opacity =
-opacity.toFixed(3);
-
-}
-);
-
-}
-
-function requestHomepageWelcomeScrollEffects() {
-
-if (
-welcomeScrollFrame !==
-null
-) {
-return;
-}
-
-welcomeScrollFrame =
-requestAnimationFrame(
-updateHomepageWelcomeScrollEffects
-);
-
-}
-
-window.addEventListener(
-"scroll",
-requestHomepageWelcomeScrollEffects,
-{
-passive:true
-}
-);
-
-window.addEventListener(
-"resize",
-requestHomepageWelcomeScrollEffects
-);
-
-if (
-typeof reducedMotion.addEventListener ===
-"function"
-) {
-
-reducedMotion.addEventListener(
-"change",
-requestHomepageWelcomeScrollEffects
-);
-
-}
-
-document.addEventListener(
-"click",
-event => {
-
-const welcomeGetInTouch =
-event.target.closest(
-"#homepageWelcomeGetInTouch"
-);
-
-if (!welcomeGetInTouch) {
-return;
-}
-
-const existingGetInTouch =
-document.getElementById(
-"homepageGetInTouch"
-);
-
-if (
-existingGetInTouch &&
-existingGetInTouch !==
-welcomeGetInTouch
-) {
-
-existingGetInTouch.click();
-
-return;
-
-}
-
-window.location.hash =
-"contact";
-
-}
-);
-
-updateHomepageWelcomeScrollEffects();
-
-})();
-</script>
 
 <section
 class="home-popular-section"
@@ -8974,6 +8233,78 @@ id="homepagePopular"
 Frameless Flat Rooflights
 <span>Popular Sizes</span>
 </h1>
+
+</div>
+
+<div
+class="popular-order-process reveal reveal-delay-1"
+aria-label="How ordering your rooflight works"
+>
+
+<div class="popular-order-process-label">
+How Ordering Works
+</div>
+
+<div class="popular-order-process-grid">
+
+<div class="popular-order-step">
+
+<div class="popular-order-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M5 8h22"></path>
+<path d="M5 16h22"></path>
+<path d="M5 24h22"></path>
+<circle cx="11" cy="8" r="2.5"></circle>
+<circle cx="21" cy="16" r="2.5"></circle>
+<circle cx="14" cy="24" r="2.5"></circle>
+</svg>
+</div>
+
+<div class="popular-order-step-copy">
+<h3>Choose Your Specification</h3>
+<p>Select your size, glazing and glass options.</p>
+</div>
+
+</div>
+
+<div class="popular-order-step">
+
+<div class="popular-order-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M7 5h18v22H7z"></path>
+<path d="M11 3v5"></path>
+<path d="M21 3v5"></path>
+<path d="M7 11h18"></path>
+<path d="M11 18l3 3 7-7"></path>
+</svg>
+</div>
+
+<div class="popular-order-step-copy">
+<h3>Place Your Order</h3>
+<p>Your confirmed order is released directly into our manufacturing schedule.</p>
+</div>
+
+</div>
+
+<div class="popular-order-step">
+
+<div class="popular-order-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M3 10h16v12H3z"></path>
+<path d="M19 14h5l5 5v3H19z"></path>
+<circle cx="9" cy="24" r="2.5"></circle>
+<circle cx="24" cy="24" r="2.5"></circle>
+</svg>
+</div>
+
+<div class="popular-order-step-copy">
+<h3>Delivered To Your Door</h3>
+<p>We manufacture your rooflights and arrange delivery directly to your address.</p>
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -10207,7 +9538,7 @@ aria-labelledby="homepageReadyToOrderTitle"
 <div class="homepage-closing-option reveal">
 
 <h3 id="homepageReadyToOrderTitle">
-Ready To Order
+Ready To Order?
 </h3>
 
 <p>
@@ -10241,6 +9572,43 @@ Shop Rooflights Now
 </div>
 
 </section>
+
+<script>
+document.addEventListener(
+"click",
+event => {
+
+const readyGetInTouch =
+event.target.closest(
+"#homepageWelcomeGetInTouch"
+);
+
+if (!readyGetInTouch) {
+return;
+}
+
+const existingGetInTouch =
+document.getElementById(
+"homepageGetInTouch"
+);
+
+if (
+existingGetInTouch &&
+existingGetInTouch !==
+readyGetInTouch
+) {
+
+existingGetInTouch.click();
+return;
+
+}
+
+window.location.hash =
+"contact";
+
+}
+);
+</script>
 
 <div class="lower-showcase-background-zone">
 
