@@ -11646,19 +11646,21 @@ left:0
 };
 
 /* Ultra Clear deliberately reuses Clear's exact product-card
-positioning/scale adjustments as well as the same image files. */
+image presentation. The image file prefix is identical to Clear,
+the size-level scale and rotation maps are shared automatically,
+and every Clear-specific finish adjustment is cloned for Ultra Clear. */
 Object.values(
 PRODUCT_IMAGE_FINISH_ADJUSTMENTS
 ).forEach(
 adjustments => {
 
 if (
-adjustments?.clear &&
-!adjustments.ultraclear
+adjustments?.clear
 ) {
 
-adjustments.ultraclear =
-adjustments.clear;
+adjustments.ultraclear = {
+...adjustments.clear
+};
 
 }
 
@@ -11813,6 +11815,157 @@ document.getElementById(
 const glazingSpec =
 document.getElementById(
 "glazingSpec"
+);
+
+/* =========================================
+STANDARD PRODUCT TITLE / ULTRA CLEAR DISPLAY
+========================================= */
+
+let productTitleSyncFrame =
+null;
+
+let productTitleIsSyncing =
+false;
+
+function getStandardProductTitleText() {
+
+const glazingLabel =
+state.glazing ===
+"triple"
+?
+"Triple"
+:
+"Double";
+
+const finishLabel =
+normalizeTint(
+state.tint
+) ===
+"ultraclear"
+?
+"Ultra Clear "
+:
+"";
+
+return (
+`${formatSize(state.size)} ` +
+`${finishLabel}` +
+`${glazingLabel} Glazed Frameless Skylight`
+);
+
+}
+
+function syncStandardProductTitle() {
+
+if (
+!productTitle
+) {
+
+return;
+
+}
+
+const nextTitle =
+getStandardProductTitleText();
+
+if (
+productTitle.textContent.trim() ===
+nextTitle
+) {
+
+return;
+
+}
+
+productTitleIsSyncing =
+true;
+
+productTitle.textContent =
+nextTitle;
+
+productTitleIsSyncing =
+false;
+
+}
+
+function requestStandardProductTitleSync() {
+
+if (
+productTitleSyncFrame !==
+null
+) {
+
+window.cancelAnimationFrame(
+productTitleSyncFrame
+);
+
+}
+
+productTitleSyncFrame =
+window.requestAnimationFrame(
+() => {
+
+productTitleSyncFrame =
+null;
+
+syncStandardProductTitle();
+
+}
+);
+
+}
+
+if (
+productTitle &&
+typeof MutationObserver ===
+"function"
+) {
+
+const productTitleObserver =
+new MutationObserver(
+() => {
+
+if (
+productTitleIsSyncing
+) {
+
+return;
+
+}
+
+requestStandardProductTitleSync();
+
+}
+);
+
+productTitleObserver.observe(
+productTitle,
+{
+childList:true,
+characterData:true,
+subtree:true
+}
+);
+
+}
+
+document.addEventListener(
+"click",
+event => {
+
+if (
+!event.target.closest(
+"[data-tint], [data-glazing], .size-dropdown-option"
+)
+) {
+
+return;
+
+}
+
+requestStandardProductTitleSync();
+
+}
 );
 
 const estimatedDeliveryRange =
@@ -13572,6 +13725,45 @@ return (
 
 }
 
+function formatMasterLaminatedBottomGlassLabel(
+makeupResult
+) {
+
+const bottomPane =
+makeupResult?.panes?.bottom;
+
+if (
+!bottomPane
+) {
+
+return GLASS_SPECIFICATION_UNAVAILABLE;
+
+}
+
+const thickness =
+Number(
+bottomPane.thickness
+);
+
+if (
+!Number.isFinite(
+thickness
+) ||
+thickness <=
+0
+) {
+
+return GLASS_SPECIFICATION_UNAVAILABLE;
+
+}
+
+return (
+`${String(thickness)}mm ` +
+`Laminated Safety Glass`
+);
+
+}
+
 function getTopGlassLabelFor(
 size,
 border,
@@ -13594,6 +13786,19 @@ if (
 ) {
 
 return GLASS_SPECIFICATION_UNAVAILABLE;
+
+}
+
+if (
+normalizeMakeupBottomType(
+type
+) ===
+"lam"
+) {
+
+return formatMasterLaminatedBottomGlassLabel(
+makeupResult
+);
 
 }
 
@@ -13817,6 +14022,49 @@ expected
 
 console.warn(
 "Top-glass display formatting validation failed:",
+thickness,
+formatted
+);
+
+}
+
+}
+);
+
+[
+6.4,
+8.8
+]
+.forEach(
+thickness => {
+
+const formatted =
+formatMasterLaminatedBottomGlassLabel(
+{
+supported:true,
+panes:{
+bottom:{
+thickness:
+thickness,
+materialLabel:
+"Laminated Softcoat",
+construction:
+"laminated"
+}
+}
+}
+);
+
+const expected =
+`${thickness}mm Laminated Safety Glass`;
+
+if (
+formatted !==
+expected
+) {
+
+console.warn(
+"Laminated bottom-glass display formatting validation failed:",
 thickness,
 formatted
 );
