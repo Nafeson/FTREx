@@ -2346,7 +2346,7 @@ left:50%;
 }
 
 /* =========================================
-GLASS FINISH / SLIDING TINT TRACK
+GLASS FINISH / THREE-ROW FINISH SELECTOR
 ========================================= */
 
 .tint-wrap {
@@ -2356,7 +2356,7 @@ padding-bottom:0;
 
 .tint-selector {
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(6,1fr);
 border:1px solid rgba(255,255,255,.16);
 border-radius:16px 16px 0 0;
 overflow:hidden;
@@ -2366,11 +2366,40 @@ background:#090a0a;
 .tint-selector button {
 min-height:40px;
 padding:0 4px;
+border-left:0;
+border-top:0;
 font-size:9.2px;
 letter-spacing:.9px;
 }
 
-.tint-selector button + button {
+.tint-selector button[data-tint="clear"] {
+grid-column:1 / span 3;
+grid-row:1;
+}
+
+.tint-selector button[data-tint="ultraclear"] {
+grid-column:4 / span 3;
+grid-row:1;
+border-left:1px solid rgba(255,255,255,.10);
+}
+
+.tint-selector button[data-tint="blue"] {
+grid-column:1 / span 2;
+grid-row:2;
+border-top:1px solid rgba(255,255,255,.10);
+}
+
+.tint-selector button[data-tint="grey"] {
+grid-column:3 / span 2;
+grid-row:2;
+border-top:1px solid rgba(255,255,255,.10);
+border-left:1px solid rgba(255,255,255,.10);
+}
+
+.tint-selector button[data-tint="satin"] {
+grid-column:5 / span 2;
+grid-row:2;
+border-top:1px solid rgba(255,255,255,.10);
 border-left:1px solid rgba(255,255,255,.10);
 }
 
@@ -2379,7 +2408,8 @@ background:#171919;
 color:var(--orange-bright);
 }
 
-.tint-selector button[data-tint="clear"].active {
+.tint-selector button[data-tint="clear"].active,
+.tint-selector button[data-tint="ultraclear"].active {
 background:#171919;
 color:var(--white);
 }
@@ -2424,7 +2454,8 @@ inset 0 1px 0 rgba(255,255,255,.12);
 }
 
 .tint-caption-track {
-position:relative;
+display:grid;
+grid-template-columns:repeat(3,1fr);
 width:100%;
 height:27px;
 overflow:hidden;
@@ -2437,11 +2468,7 @@ background:#0a0b0b;
 pointer-events:none;
 }
 
-.tint-caption {
-position:absolute;
-top:50%;
-left:0;
-width:25%;
+.tint-caption-static {
 display:flex;
 align-items:center;
 justify-content:center;
@@ -2455,15 +2482,20 @@ font-weight:800;
 line-height:1;
 letter-spacing:1.2px;
 text-transform:uppercase;
-opacity:0;
-transform:translateY(-50%);
-transition:
-left .28s ease,
-opacity .18s ease;
+}
+
+.tint-caption-static + .tint-caption-static {
+border-left:1px solid rgba(255,255,255,.10);
+}
+
+/* Retained as a hidden compatibility hook because OP-2
+still references #tintCaption when updating finish state. */
+.tint-caption {
+display:none !important;
 }
 
 .tint-caption.visible {
-opacity:1;
+display:none !important;
 }
 
 /* =========================================
@@ -5697,7 +5729,8 @@ height:20px;
 border-radius:0 0 12px 12px;
 }
 
-.tint-caption {
+.tint-caption,
+.tint-caption-static {
 font-size:6.35px;
 letter-spacing:.65px;
 }
@@ -7567,6 +7600,7 @@ aria-label="Choose glass finish"
 >
 
 <button type="button" class="active" data-tint="clear">Clear</button>
+<button type="button" data-tint="ultraclear">Ultra Clear</button>
 <button type="button" data-tint="blue">Blue</button>
 <button type="button" data-tint="grey">Grey</button>
 <button type="button" data-tint="satin">Satin</button>
@@ -7578,9 +7612,14 @@ class="tint-caption-track"
 aria-hidden="true"
 >
 
+<span class="tint-caption-static">Tint</span>
+<span class="tint-caption-static">Tint</span>
+<span class="tint-caption-static">Tint</span>
+
 <div
 class="tint-caption"
 id="tintCaption"
+aria-hidden="true"
 >
 Tint
 </div>
@@ -10810,6 +10849,7 @@ const SIZE_DROPDOWN_ORDER = [
 const TINT_IMAGE_PREFIX = {
 
 clear:"",
+ultraclear:"",
 blue:"blue-",
 grey:"grey-",
 satin:"satin-"
@@ -11563,6 +11603,26 @@ left:0
 }
 
 };
+
+/* Ultra Clear deliberately reuses Clear's exact product-card
+positioning/scale adjustments as well as the same image files. */
+Object.values(
+PRODUCT_IMAGE_FINISH_ADJUSTMENTS
+).forEach(
+adjustments => {
+
+if (
+adjustments?.clear &&
+!adjustments.ultraclear
+) {
+
+adjustments.ultraclear =
+adjustments.clear;
+
+}
+
+}
+);
 
 const PRODUCT_IMAGE_ROTATIONS = {
 
@@ -12829,6 +12889,17 @@ finish ?? ""
 .toLowerCase();
 
 if (
+value === "ultraclear" ||
+value === "ultra clear" ||
+value === "ultra-clear" ||
+value === "ultra_clear"
+) {
+
+return "ultraclear";
+
+}
+
+if (
 value === "blue" ||
 value === "blue tinted" ||
 value === "blue-tinted"
@@ -13160,6 +13231,10 @@ return null;
 
 const supportedFinishInputs = [
 "clear",
+"ultraclear",
+"ultra clear",
+"ultra-clear",
+"ultra_clear",
 "blue",
 "blue tinted",
 "blue-tinted",
@@ -13188,9 +13263,24 @@ return null;
 
 }
 
-return normalizeTint(
+const normalizedFinish =
+normalizeTint(
 rawFinish
 );
+
+/* Ultra Clear remains a distinct configurator/pricing value,
+but until the make-up master has its own Ultra Clear material
+entry it safely uses the same structural make-up as Clear. */
+if (
+normalizedFinish ===
+"ultraclear"
+) {
+
+return "clear";
+
+}
+
+return normalizedFinish;
 
 }
 
@@ -13515,6 +13605,13 @@ border:100,
 glazing:"double",
 type:"toughened",
 finish:"clear"
+},
+{
+size:"1000x1500",
+border:100,
+glazing:"double",
+type:"toughened",
+finish:"ultraclear"
 },
 {
 size:"1000x2500",
