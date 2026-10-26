@@ -3537,7 +3537,7 @@ font-size:16px;
 
 .workshop-trust-grid {
 display:grid;
-grid-template-columns:repeat(3,minmax(0,1fr));
+grid-template-columns:repeat(4,minmax(0,1fr));
 border-top:1px solid rgba(255,255,255,.10);
 border-left:1px solid rgba(255,255,255,.10);
 }
@@ -7960,37 +7960,9 @@ margin:0 auto 22px;
 padding:0;
 }
 
-.popular-order-process-label {
-display:flex;
-align-items:center;
-gap:8px;
-margin:0 0 11px;
-color:var(--orange);
-font-family:
-"Bahnschrift",
-"Bahnschrift SemiCondensed",
-"Arial Narrow",
-"Aptos",
-sans-serif;
-font-size:8.5px;
-font-weight:800;
-line-height:1;
-letter-spacing:1.7px;
-text-transform:uppercase;
-}
-
-.popular-order-process-label::before {
-content:"";
-display:block;
-width:18px;
-height:1px;
-background:var(--orange);
-opacity:.85;
-}
-
 .popular-order-process-grid {
 display:grid;
-grid-template-columns:repeat(3,minmax(0,1fr));
+grid-template-columns:repeat(4,minmax(0,1fr));
 gap:8px;
 }
 
@@ -8057,6 +8029,22 @@ font-weight:500;
 line-height:1.42;
 }
 
+.home-popular-moved-title {
+margin:24px 0 0;
+font-family:
+"Bahnschrift SemiCondensed",
+"Aptos Display",
+"Inter",
+Arial,
+sans-serif;
+font-size:clamp(32px,4.8vw,58px);
+line-height:.98;
+letter-spacing:-1.35px;
+font-weight:800;
+color:var(--cream);
+text-transform:none;
+}
+
 .homepage-closing-section.homepage-ready-order-section {
 padding-top:34.32px;
 }
@@ -8069,7 +8057,7 @@ margin-bottom:18px;
 }
 
 .popular-order-process-grid {
-grid-template-columns:1fr;
+grid-template-columns:repeat(2,minmax(0,1fr));
 gap:6px;
 }
 
@@ -8101,6 +8089,15 @@ padding-top:31.98px;
 }
 
 @media(max-width:560px) {
+
+.popular-order-process-grid {
+grid-template-columns:1fr;
+}
+
+.home-popular-moved-title {
+margin-top:20px;
+font-size:clamp(30px,10vw,42px);
+}
 
 .home-workshop-intro {
 padding:0 2.5%;
@@ -8231,19 +8228,14 @@ id="homepagePopular"
 
 <h1 class="home-opening-title">
 Frameless Flat Rooflights
-<span>Popular Sizes</span>
 </h1>
 
 </div>
 
 <div
 class="popular-order-process reveal reveal-delay-1"
-aria-label="How ordering your rooflight works"
+aria-label="Ordering your rooflight"
 >
-
-<div class="popular-order-process-label">
-How Ordering Works
-</div>
 
 <div class="popular-order-process-grid">
 
@@ -8290,6 +8282,26 @@ How Ordering Works
 
 <div class="popular-order-icon" aria-hidden="true">
 <svg viewBox="0 0 32 32">
+<rect x="5" y="6" width="22" height="21" rx="1"></rect>
+<path d="M10 3v6"></path>
+<path d="M22 3v6"></path>
+<path d="M5 12h22"></path>
+<path d="M10 17h5"></path>
+<path d="M10 21h9"></path>
+</svg>
+</div>
+
+<div class="popular-order-step-copy">
+<h3>Estimated Delivery Date</h3>
+<p>See an estimated delivery date for your rooflight before completing your order.</p>
+</div>
+
+</div>
+
+<div class="popular-order-step">
+
+<div class="popular-order-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
 <path d="M3 10h16v12H3z"></path>
 <path d="M19 14h5l5 5v3H19z"></path>
 <circle cx="9" cy="24" r="2.5"></circle>
@@ -8313,6 +8325,10 @@ How Ordering Works
 <p class="home-workshop-copy">
 Discover our range of brand-new frameless rooflights, manufactured here in the UK by our dedicated rooflight teams. Designed to bring more natural light into your space with a clean, contemporary finish, our rooflights are available in a wide choice of sizes, glazing specifications and glass finishes to suit
 </p>
+
+<h2 class="home-popular-moved-title">
+Popular Sizes
+</h2>
 
 </div>
 
