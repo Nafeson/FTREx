@@ -3280,7 +3280,7 @@ font-size:19px;
 max-width:860px;
 line-height:1.62;
 color:var(--muted);
-margin:0 0 48px;
+margin:0 0 19.2px;
 }
 
 .interior-static-wrap {
@@ -5436,7 +5436,7 @@ max-width:620px;
 margin:
 18px
 0
-clamp(28px,3vw,38px);
+clamp(9.8px,1.05vw,13.3px);
 }
 
 .footer-payment-logo-item {
@@ -6055,7 +6055,7 @@ overflow-wrap:anywhere;
 }
 
 .opening-section {
-padding:37px 0 58px;
+padding:37px 0 23.2px;
 }
 
 .opening-section h2 {
@@ -6709,7 +6709,7 @@ font-size:20px;
 gap:10px;
 max-width:350px;
 margin-top:16px;
-margin-bottom:31px;
+margin-bottom:10.85px;
 }
 
 .footer-payment-logo-item img {
@@ -7798,7 +7798,7 @@ z-index:2;
 background:transparent;
 
 padding:
-72px
+25.2px
 6%
 48px;
 }
@@ -7958,7 +7958,7 @@ isolation:isolate;
 overflow:hidden;
 
 padding:
-clamp(19px,2.1vw,30px)
+clamp(21.85px,2.415vw,34.5px)
 6%
 clamp(48px,5.6vw,78px);
 
@@ -8120,7 +8120,7 @@ max-width:900px;
 .homepage-welcome-kicker {
 display:flex;
 align-items:center;
-gap:11px;
+gap:7px;
 
 margin:0 0 18px;
 
@@ -8133,18 +8133,19 @@ sans-serif;
 font-size:10px;
 font-weight:800;
 line-height:1;
-letter-spacing:2.4px;
-text-transform:uppercase;
+letter-spacing:2.1px;
+text-transform:none;
 color:var(--orange);
 }
 
-.homepage-welcome-kicker::before {
-content:"";
-display:block;
-width:30px;
-height:1px;
-background:var(--orange);
-opacity:.92;
+.homepage-welcome-home-dash {
+display:inline-block;
+font-size:.72em;
+font-weight:700;
+line-height:1;
+letter-spacing:0;
+transform:translateY(-.5px);
+opacity:.82;
 }
 
 .homepage-welcome-title {
@@ -8152,32 +8153,31 @@ max-width:940px;
 margin:0;
 
 font-family:
-"Bahnschrift SemiCondensed",
-"Bahnschrift",
-"Arial Narrow",
 "Aptos Display",
+"Segoe UI Variable Display",
+"Segoe UI",
 sans-serif;
 
 font-size:clamp(37px,5.28vw,66px);
-font-weight:800;
-line-height:.91;
-letter-spacing:-2px;
+font-weight:700;
+line-height:.92;
+letter-spacing:-1.7px;
 color:var(--cream);
 }
 
 .homepage-welcome-title span {
 display:block;
-margin-top:8px;
+margin-top:6px;
 
 font-family:
-"Bahnschrift Condensed",
-"Arial Narrow",
 "Aptos Display",
+"Segoe UI Variable Display",
+"Segoe UI",
 sans-serif;
 
 font-size:.78em;
-font-weight:750;
-letter-spacing:-1.3px;
+font-weight:650;
+letter-spacing:-1.15px;
 color:var(--orange-bright);
 }
 
@@ -8206,16 +8206,15 @@ padding-top:23px;
 border-top:1px solid rgba(255,255,255,.09);
 
 font-family:
-"Bahnschrift SemiCondensed",
-"Bahnschrift",
-"Arial Narrow",
 "Aptos Display",
+"Segoe UI Variable Display",
+"Segoe UI",
 sans-serif;
 
 font-size:clamp(20px,2vw,27px);
-font-weight:800;
+font-weight:700;
 line-height:1;
-letter-spacing:-.45px;
+letter-spacing:-.35px;
 color:var(--cream);
 }
 
@@ -8231,7 +8230,7 @@ box-shadow:0 0 12px rgba(232,120,23,.16);
 .homepage-welcome-process {
 position:relative;
 display:grid;
-grid-template-columns:repeat(3,minmax(0,1fr));
+grid-template-columns:1fr;
 gap:1px;
 
 width:100%;
@@ -8244,9 +8243,20 @@ box-shadow:0 24px 55px rgba(0,0,0,.22);
 
 .homepage-welcome-step {
 position:relative;
+display:grid;
+grid-template-columns:
+clamp(112px,12vw,154px)
+minmax(0,1fr);
+align-items:center;
+gap:clamp(22px,3vw,42px);
+
 min-width:0;
-min-height:188px;
-padding:24px 24px 22px;
+min-height:172px;
+padding:
+24px
+clamp(24px,3.4vw,42px)
+24px
+clamp(20px,2.6vw,30px);
 
 background:
 linear-gradient(
@@ -8264,102 +8274,84 @@ content:"";
 position:absolute;
 left:0;
 top:0;
-width:0;
-height:2px;
-background:var(--orange);
-transition:width .38s ease;
+width:2px;
+height:100%;
+background:
+linear-gradient(
+180deg,
+rgba(232,120,23,.22),
+var(--orange),
+rgba(232,120,23,.18)
+);
+opacity:.58;
+transition:opacity .28s ease;
 }
 
 .homepage-welcome-step:hover::before {
-width:100%;
-}
-
-.homepage-welcome-step-top {
-display:flex;
-align-items:flex-start;
-justify-content:flex-start;
-margin-bottom:26px;
+opacity:1;
 }
 
 .homepage-welcome-icon {
-width:40px;
-height:40px;
+width:clamp(98px,10vw,132px);
+height:clamp(98px,10vw,132px);
 
 display:flex;
 align-items:center;
 justify-content:center;
 flex:0 0 auto;
 
-border:1px solid rgba(232,120,23,.34);
-background:rgba(232,120,23,.055);
 color:var(--orange-bright);
+opacity:.82;
+filter:drop-shadow(0 10px 24px rgba(0,0,0,.20));
 }
 
 .homepage-welcome-icon svg {
-width:23px;
-height:23px;
+width:100%;
+height:100%;
 display:block;
 
-fill:none;
-stroke:currentColor;
-stroke-width:1.7;
-stroke-linecap:round;
-stroke-linejoin:round;
+fill:currentColor;
+stroke:none;
+}
+
+.homepage-welcome-step-copy {
+min-width:0;
+align-self:stretch;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:4px 0;
 }
 
 .homepage-welcome-step h3 {
 margin:0;
 
 font-family:
-"Bahnschrift SemiCondensed",
-"Bahnschrift",
-"Arial Narrow",
 "Aptos Display",
+"Segoe UI Variable Display",
+"Segoe UI",
 sans-serif;
 
-font-size:clamp(21px,2vw,28px);
-font-weight:800;
+font-size:clamp(25px,2.6vw,35px);
+font-weight:700;
 line-height:1;
-letter-spacing:-.65px;
+letter-spacing:-.8px;
 color:var(--cream);
 }
 
 .homepage-welcome-step p {
-margin:11px 0 0;
-font-size:14px;
-line-height:1.58;
+max-width:800px;
+margin:13px 0 0;
+font-size:clamp(14.5px,1.3vw,16px);
+line-height:1.62;
 color:var(--muted-soft);
-}
-
-.homepage-welcome-ready {
-position:relative;
-margin-top:clamp(38px,4.8vw,64px);
-padding-top:clamp(34px,4.2vw,52px);
-border-top:1px solid rgba(255,255,255,.10);
-}
-
-.homepage-welcome-ready::before {
-content:"";
-position:absolute;
-top:-1px;
-left:50%;
-width:72px;
-height:1px;
-background:var(--orange);
-opacity:.68;
-transform:translateX(-50%);
-}
-
-.homepage-welcome-ready .homepage-closing-actions {
-position:relative;
-z-index:4;
 }
 
 @media(max-width:760px) {
 
 .homepage-welcome-section {
 padding:
-15px
+17.25px
 6%
 48px;
 }
@@ -8424,36 +8416,30 @@ margin-top:15px;
 }
 
 .homepage-welcome-step {
-min-height:0;
-padding:20px 19px 19px;
-}
-
-.homepage-welcome-step-top {
-align-items:center;
-margin-bottom:18px;
+grid-template-columns:78px minmax(0,1fr);
+gap:16px;
+min-height:132px;
+padding:17px 16px 17px 14px;
 }
 
 .homepage-welcome-icon {
-width:37px;
-height:37px;
+width:72px;
+height:72px;
 }
 
-.homepage-welcome-icon svg {
-width:21px;
-height:21px;
+.homepage-welcome-step-copy {
+padding:2px 0;
 }
 
 .homepage-welcome-step h3 {
-font-size:24px;
+font-size:22px;
+line-height:1.02;
 }
 
 .homepage-welcome-step p {
-font-size:13.8px;
-}
-
-.homepage-welcome-ready {
-margin-top:38px;
-padding-top:34px;
+margin-top:9px;
+font-size:13.4px;
+line-height:1.52;
 }
 
 }
@@ -8493,7 +8479,7 @@ padding-top:0;
 
 .oversized-showcase-section .oversized-section {
 padding:
-80px
+28px
 6%
 32px;
 }
@@ -8642,15 +8628,16 @@ UK Manufactured
 <div class="homepage-welcome-intro">
 
 <div class="homepage-welcome-kicker reveal">
-Welcome To Our Order Page
+<span class="homepage-welcome-home-dash" aria-hidden="true">-</span>
+<span>Home</span>
 </div>
 
 <h2
 class="homepage-welcome-title reveal"
 id="homepageWelcomeTitle"
 >
-Frameless Glass Skylights.
-<span>UK Manufactured.</span>
+UK Manufactured
+<span>Frameless Glass Skylights</span>
 </h2>
 
 <p class="homepage-welcome-copy reveal reveal-delay-1">
@@ -8672,20 +8659,18 @@ aria-label="How ordering your rooflight works"
 
 <article class="homepage-welcome-step reveal reveal-delay-1">
 
-<div class="homepage-welcome-step-top">
-
 <div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 32 32">
-<path d="M5 8h22"></path>
-<path d="M5 16h22"></path>
-<path d="M5 24h22"></path>
-<circle cx="11" cy="8" r="2.5"></circle>
-<circle cx="21" cy="16" r="2.5"></circle>
-<circle cx="14" cy="24" r="2.5"></circle>
+<svg viewBox="0 0 120 120">
+<rect x="18" y="25" width="84" height="8" rx="4"></rect>
+<rect x="18" y="56" width="84" height="8" rx="4"></rect>
+<rect x="18" y="87" width="84" height="8" rx="4"></rect>
+<circle cx="42" cy="29" r="13"></circle>
+<circle cx="78" cy="60" r="13"></circle>
+<circle cx="52" cy="91" r="13"></circle>
 </svg>
 </div>
 
-</div>
+<div class="homepage-welcome-step-copy">
 
 <h3>
 Choose Your Spec
@@ -8695,23 +8680,27 @@ Choose Your Spec
 Select your size, glazing, glass finish and options to build the rooflight you need.
 </p>
 
+</div>
+
 </article>
 
 <article class="homepage-welcome-step reveal reveal-delay-2">
 
-<div class="homepage-welcome-step-top">
-
 <div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 32 32">
-<rect x="5.5" y="7.5" width="21" height="19" rx="2"></rect>
-<path d="M10 4.5v6"></path>
-<path d="M22 4.5v6"></path>
-<path d="M5.5 12.5h21"></path>
-<path d="M11 19l3 3 7-7"></path>
+<svg viewBox="0 0 120 120">
+<path
+fill-rule="evenodd"
+clip-rule="evenodd"
+d="M26 20h68c7 0 12 5 12 12v66c0 7-5 12-12 12H26c-7 0-12-5-12-12V32c0-7 5-12 12-12Zm0 14v64h68V34H26Z"
+></path>
+<rect x="14" y="42" width="92" height="10"></rect>
+<rect x="33" y="10" width="10" height="24" rx="5"></rect>
+<rect x="77" y="10" width="10" height="24" rx="5"></rect>
+<path d="M39 72l14 14 29-31 8 8-37 39-22-22z"></path>
 </svg>
 </div>
 
-</div>
+<div class="homepage-welcome-step-copy">
 
 <h3>
 Get Your Estimated Delivery Date
@@ -8721,23 +8710,24 @@ Get Your Estimated Delivery Date
 See an estimated delivery date for your chosen rooflight specification as you order.
 </p>
 
+</div>
+
 </article>
 
 <article class="homepage-welcome-step reveal reveal-delay-3">
 
-<div class="homepage-welcome-step-top">
-
 <div class="homepage-welcome-icon" aria-hidden="true">
-<svg viewBox="0 0 32 32">
-<path d="M3.5 9.5h15v13h-15z"></path>
-<path d="M18.5 14h5.5l4.5 4.5v4h-10z"></path>
-<circle cx="9" cy="24" r="2.5"></circle>
-<circle cx="24" cy="24" r="2.5"></circle>
-<path d="M18.5 18.5h10"></path>
+<svg viewBox="0 0 120 120">
+<path d="M12 36h55v43H12z"></path>
+<path d="M67 49h21l20 21v9H67z"></path>
+<path d="M84 54v16h17z"></path>
+<rect x="18" y="79" width="84" height="8" rx="4"></rect>
+<circle cx="34" cy="89" r="12"></circle>
+<circle cx="88" cy="89" r="12"></circle>
 </svg>
 </div>
 
-</div>
+<div class="homepage-welcome-step-copy">
 
 <h3>
 Delivered To Your Door
@@ -8747,39 +8737,9 @@ Delivered To Your Door
 We manufacture your brand-new rooflights and deliver them directly to your address.
 </p>
 
+</div>
+
 </article>
-
-</div>
-
-<div class="homepage-closing-option homepage-welcome-ready reveal">
-
-<h3>
-Ready To Order
-</h3>
-
-<p>
-Speak directly with our rooflight team for help with specifications,
-sizing, delivery, installation or anything else you need before ordering:
-</p>
-
-<div class="homepage-closing-actions">
-
-<button
-type="button"
-class="button secondary homepage-closing-contact"
-id="homepageWelcomeGetInTouch"
->
-Get In Touch
-</button>
-
-<a
-href="standard-sizes.html"
-class="button homepage-closing-shop"
->
-Shop Rooflights Now
-</a>
-
-</div>
 
 </div>
 
@@ -8962,16 +8922,18 @@ requestHomepageWelcomeScrollEffects
 
 }
 
+document.addEventListener(
+"click",
+event => {
+
 const welcomeGetInTouch =
-document.getElementById(
-"homepageWelcomeGetInTouch"
+event.target.closest(
+"#homepageWelcomeGetInTouch"
 );
 
-if (welcomeGetInTouch) {
-
-welcomeGetInTouch.addEventListener(
-"click",
-() => {
+if (!welcomeGetInTouch) {
+return;
+}
 
 const existingGetInTouch =
 document.getElementById(
@@ -8995,8 +8957,6 @@ window.location.hash =
 
 }
 );
-
-}
 
 updateHomepageWelcomeScrollEffects();
 
@@ -10230,6 +10190,54 @@ View Size
 <a href="standard-sizes.html" class="button secondary range-cta-button">
 View All Sizes
 </a>
+</div>
+
+</section>
+
+<section
+class="homepage-closing-section homepage-ready-order-section"
+id="homepageReadyToOrder"
+aria-labelledby="homepageReadyToOrderTitle"
+>
+
+<div class="homepage-closing-inner">
+
+<div class="homepage-closing-options">
+
+<div class="homepage-closing-option reveal">
+
+<h3 id="homepageReadyToOrderTitle">
+Ready To Order
+</h3>
+
+<p>
+Speak directly with our rooflight team for help with specifications,
+sizing, delivery, installation or anything else you need before ordering:
+</p>
+
+<div class="homepage-closing-actions">
+
+<button
+type="button"
+class="button secondary homepage-closing-contact"
+id="homepageWelcomeGetInTouch"
+>
+Get In Touch
+</button>
+
+<a
+href="standard-sizes.html"
+class="button homepage-closing-shop"
+>
+Shop Rooflights Now
+</a>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </section>
