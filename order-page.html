@@ -2005,7 +2005,7 @@ ORDER PAGE
 .order-page {
 position:relative;
 overflow:hidden;
-padding:47px 6% 54px;
+padding:28px 6% 54px;
 background:
 linear-gradient(
 180deg,
@@ -6566,7 +6566,7 @@ font-size:13px;
 }
 
 .order-page {
-padding:34px 3.5% 7px;
+padding:18px 3.5% 7px;
 }
 
 .home-popular-title-wrap {
@@ -7527,7 +7527,7 @@ UK Manufactured
 class="product-assurance-item"
 id="productGlassSpec"
 >
-6mm Toughened Safety Glass
+Toughened Safety Glass
 </div>
 
 <div
@@ -8352,6 +8352,18 @@ role="option"
 aria-selected="true"
 >
 Clear
+</button>
+
+<button
+type="button"
+class="custom-build-dropdown-option"
+data-custom-build-dropdown-option
+data-value="ultraclear"
+data-label="Ultra Clear"
+role="option"
+aria-selected="false"
+>
+Ultra Clear
 </button>
 
 <button
@@ -13758,13 +13770,12 @@ makeupResult
 
 function getTopGlassLabel() {
 
-return getTopGlassLabelFor(
-state.size,
-state.border,
-state.glazing,
-state.type,
-state.tint
-);
+return (
+state.type ===
+"laminated"
+)
+? "Laminated Safety Glass"
+: "Toughened Safety Glass";
 
 }
 
@@ -19697,7 +19708,10 @@ return type === "laminated"
 }
 
 function getTintDisplayName(tint) {
-switch (tint) {
+switch (normalizeTint(tint)) {
+case "ultraclear":
+return "Ultra Clear";
+
 case "blue":
 return "Blue Tinted";
 
@@ -23165,8 +23179,8 @@ glazingConfiguration: state.glazing,
 type: state.type,
 glazingConstruction: state.type,
 border: state.border,
-tint: state.tint,
-finish: state.tint,
+tint: normalizeTint(state.tint),
+finish: normalizeTint(state.tint),
 selfCleaning:
 normalizeSelfCleaningSelection(
 state.selfCleaning
@@ -23332,8 +23346,8 @@ glazingConfiguration: customState.glazing,
 type: customState.type,
 glazingConstruction: customState.type,
 border: Number(customState.border),
-tint: customState.tint,
-finish: customState.tint,
+tint: normalizeTint(customState.tint),
+finish: normalizeTint(customState.tint),
 selfCleaning:
 normalizeSelfCleaningSelection(
 customState.selfCleaning
@@ -25450,6 +25464,21 @@ finish ??
 
 if (
 value ===
+"ultraclear" ||
+value ===
+"ultra clear" ||
+value ===
+"ultra-clear" ||
+value ===
+"ultra_clear"
+) {
+
+return "ultraclear";
+
+}
+
+if (
+value ===
 "blue" ||
 value ===
 "blue tinted" ||
@@ -27133,6 +27162,23 @@ op3aNormalizeTint(
 finish
 );
 
+/*
+Ultra Clear remains a distinct canonical
+Order Page finish for state, summaries,
+basket storage and future pricing.
+
+Until master-makeup-logic.js carries a
+separate Ultra Clear material definition,
+its structural pane make-up follows Clear.
+*/
+const makeupFinish =
+normalizedFinish ===
+"ultraclear"
+?
+"clear"
+:
+normalizedFinish;
+
 const normalizedType =
 op3aNormalizeGlassType(
 type
@@ -27169,7 +27215,7 @@ glazing
 ),
 
 finish:
-normalizedFinish,
+makeupFinish,
 
 bottomType:
 bottomType
@@ -27220,7 +27266,7 @@ glazing
 ),
 
 finish:
-normalizedFinish,
+makeupFinish,
 
 bottomType:
 "tough"
@@ -27384,13 +27430,25 @@ finish
 
 function op3aGetTopGlassLabel() {
 
-return op3aGetTopGlassLabelFor(
-state.size,
-state.border,
-state.glazing,
-state.type,
-state.tint
-);
+/*
+This no-argument label is used only for the
+short assurance line beneath UK Manufactured.
+
+It intentionally does not describe a pane,
+thickness, finish or make-up result.
+
+TOP GLASS in Order Summary, Custom Order
+Summary and Basket continues to use
+op3aGetTopGlassLabelFor() above.
+*/
+return op3aNormalizeGlassType(
+state.type
+) ===
+"laminated"
+?
+"Laminated Safety Glass"
+:
+"Toughened Safety Glass";
 
 }
 
@@ -27581,7 +27639,7 @@ Self Cleaning choice itself is retained.
 Old items default to No.
 
 The finish is preserved and normalised,
-including solarcontrol.
+including ultraclear and solarcontrol.
 ========================================= */
 
 function op3aRepriceBasketItem(
@@ -30734,6 +30792,9 @@ false;
 globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
 false;
 
+globalThis.OP3C_ULTRA_CLEAR_VALIDATED =
+false;
+
 globalThis.OP3_ACTIVE_PRICE_STRATEGY =
 null;
 
@@ -31193,7 +31254,7 @@ must also prove a positive difference over the
 same configuration with Self Cleaning = No.
 
 The finish is preserved, including
-solarcontrol.
+ultraclear and solarcontrol.
 ========================================= */
 
 function op3cSafeRepriceBasketItem(
@@ -32939,6 +33000,145 @@ return detectedStrategy;
 }
 
 /* =========================================
+ULTRA CLEAR INTEGRATION VALIDATION
+
+Ultra Clear is a distinct canonical Order
+Page finish.
+
+Checks:
+- OP-1 and OP-3A normalisation preserve
+  ultraclear;
+- standard and custom pricing option builders
+  pass ultraclear through unchanged so future
+  master pricing can distinguish it;
+- master make-up uses the Clear structural
+  make-up fallback without losing the
+  ultraclear Order Page finish;
+- TOP GLASS remains available through the
+  make-up-backed breakdown route.
+
+This validation does not invent an Ultra
+Clear surcharge or local selling price.
+========================================= */
+
+function op3cAssertUltraClearIntegration() {
+
+if (
+normalizeTint(
+"ultraclear"
+) !==
+"ultraclear" ||
+op3aNormalizeTint(
+"ultraclear"
+) !==
+"ultraclear"
+) {
+
+throw new Error(
+"OP-3C Ultra Clear normalisation failed."
+);
+
+}
+
+const standardOptions =
+op3aBuildStandardPricingOptions(
+{
+size:"600x900",
+glazing:"triple",
+type:"toughened",
+finish:"ultraclear",
+border:100
+}
+);
+
+if (
+!standardOptions ||
+standardOptions.tint !==
+"ultraclear" ||
+standardOptions.finish !==
+"ultraclear"
+) {
+
+throw new Error(
+"OP-3C Ultra Clear standard pricing options lost the finish identifier."
+);
+
+}
+
+const customOptions =
+op3aBuildCustomPricingOptions(
+{
+width:725,
+length:1375,
+glazing:"double",
+type:"toughened",
+finish:"ultraclear",
+border:100
+}
+);
+
+if (
+!customOptions ||
+customOptions.tint !==
+"ultraclear" ||
+customOptions.finish !==
+"ultraclear"
+) {
+
+throw new Error(
+"OP-3C Ultra Clear custom pricing options lost the finish identifier."
+);
+
+}
+
+const makeupResult =
+op3aResolveMasterMakeup(
+"600x900",
+100,
+"triple",
+"toughened",
+"ultraclear"
+);
+
+if (
+!makeupResult ||
+makeupResult.supported !==
+true ||
+!makeupResult.panes?.top
+) {
+
+throw new Error(
+"OP-3C Ultra Clear structural make-up fallback failed."
+);
+
+}
+
+const topGlassLabel =
+op3aGetTopGlassLabelFor(
+"600x900",
+100,
+"triple",
+"toughened",
+"ultraclear"
+);
+
+if (
+!topGlassLabel ||
+topGlassLabel ===
+"Glass Specification Unavailable"
+) {
+
+throw new Error(
+"OP-3C Ultra Clear TOP GLASS breakdown label is unavailable."
+);
+
+}
+
+return true;
+
+}
+
+/* =========================================
 SOLAR CONTROL CUSTOM PRICING VALIDATION
 
 The shared pricing master is authoritative.
@@ -34338,6 +34538,8 @@ op3cAssertLiveMasterOwnership();
 const activeStrategy =
 op3cAssertMasterPricingRange();
 
+op3cAssertUltraClearIntegration();
+
 op3cAssertSolarControlPricing();
 
 op3cAssertMasterMakeupRange();
@@ -34347,6 +34549,9 @@ op3cAssertSolarControlMakeup();
 op3cAssertMasterDeliveryRange();
 
 globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
+true;
+
+globalThis.OP3C_ULTRA_CLEAR_VALIDATED =
 true;
 
 return activeStrategy;
@@ -34380,6 +34585,9 @@ globalThis.OP3C_CUSTOM_SELF_CLEANING_VALIDATED =
 false;
 
 globalThis.OP3C_SOLAR_CONTROL_VALIDATED =
+false;
+
+globalThis.OP3C_ULTRA_CLEAR_VALIDATED =
 false;
 
 console.error(
@@ -34418,6 +34626,7 @@ this final integration section.
 OP-3C waits for OP-3A and OP-3B, validates:
 - the 3000mm custom range;
 - master standard/custom pricing;
+- Ultra Clear canonical finish preservation;
 - Solar Control custom pricing;
 - Solar Control glass make-up;
 - Self Cleaning capability where available;
@@ -34531,7 +34740,7 @@ true
 updateCheckoutAvailability();
 
 console.info(
-`OP-3C PASSED: OP-3A product pricing / Self Cleaning / make-up, OP-3B delivery, Solar Control validation, basket pricing safety and the 3000mm custom calculator range are compatible.${activeStrategy ? ` Active master pricing strategy: ${activeStrategy}.` : ""}`
+`OP-3C PASSED: OP-3A product pricing / Self Cleaning / make-up, OP-3B delivery, Ultra Clear finish preservation, Solar Control validation, basket pricing safety and the 3000mm custom calculator range are compatible.${activeStrategy ? ` Active master pricing strategy: ${activeStrategy}.` : ""}`
 );
 
 return true;
