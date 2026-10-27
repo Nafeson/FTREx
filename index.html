@@ -7614,6 +7614,44 @@ margin-bottom:36px;
 border-radius:6px;
 }
 
+/* =========================================
+ORDER DIRECT — REMOVE LEFT INDENT / KEEP CENTRED
+========================================= */
+
+.buy-online-inner {
+border-left:0 !important;
+padding-left:0 !important;
+text-align:center;
+}
+
+.buy-online-section .section-label {
+justify-content:center;
+}
+
+.buy-online-inner h2,
+.buy-online-inner p {
+margin-left:auto;
+margin-right:auto;
+text-align:center;
+}
+
+.buy-online-section .hero-actions {
+justify-content:center;
+align-items:center;
+}
+
+/* =========================================
+THE PRODUCT — PARAGRAPH TEXT SIZE -20%
+========================================= */
+
+.opening-section .opening-desktop-copy {
+font-size:15.2px !important;
+}
+
+.opening-section .opening-mobile-copy {
+font-size:12.92px !important;
+}
+
 .home-product-link.view-size-auto-animate,
 .home-product-link.is-encouraged {
 animation:
@@ -8224,14 +8262,6 @@ class="home-popular-section"
 id="homepagePopular"
 >
 
-<div class="home-popular-title-wrap reveal">
-
-<h1 class="home-opening-title">
-Frameless Flat Rooflights
-</h1>
-
-</div>
-
 <div
 class="popular-order-process reveal reveal-delay-1"
 aria-label="Ordering your rooflight"
@@ -8263,25 +8293,6 @@ aria-label="Ordering your rooflight"
 
 <div class="popular-order-icon" aria-hidden="true">
 <svg viewBox="0 0 32 32">
-<path d="M7 5h18v22H7z"></path>
-<path d="M11 3v5"></path>
-<path d="M21 3v5"></path>
-<path d="M7 11h18"></path>
-<path d="M11 18l3 3 7-7"></path>
-</svg>
-</div>
-
-<div class="popular-order-step-copy">
-<h3>Place Your Order</h3>
-<p>Your confirmed order is released directly into our manufacturing schedule.</p>
-</div>
-
-</div>
-
-<div class="popular-order-step">
-
-<div class="popular-order-icon" aria-hidden="true">
-<svg viewBox="0 0 32 32">
 <rect x="5" y="6" width="22" height="21" rx="1"></rect>
 <path d="M10 3v6"></path>
 <path d="M22 3v6"></path>
@@ -8294,6 +8305,25 @@ aria-label="Ordering your rooflight"
 <div class="popular-order-step-copy">
 <h3>Estimated Delivery Date</h3>
 <p>See an estimated delivery date for your rooflight before completing your order.</p>
+</div>
+
+</div>
+
+<div class="popular-order-step">
+
+<div class="popular-order-icon" aria-hidden="true">
+<svg viewBox="0 0 32 32">
+<path d="M7 5h18v22H7z"></path>
+<path d="M11 3v5"></path>
+<path d="M21 3v5"></path>
+<path d="M7 11h18"></path>
+<path d="M11 18l3 3 7-7"></path>
+</svg>
+</div>
+
+<div class="popular-order-step-copy">
+<h3>Place Your Order</h3>
+<p>Your confirmed order is released directly into our manufacturing schedule.</p>
 </div>
 
 </div>
@@ -8326,9 +8356,14 @@ aria-label="Ordering your rooflight"
 Discover our range of brand-new frameless rooflights, manufactured here in the UK by our dedicated rooflight teams. Designed to bring more natural light into your space with a clean, contemporary finish, our rooflights are available in a wide choice of sizes, glazing specifications and glass finishes to suit
 </p>
 
-<h2 class="home-popular-moved-title">
-Popular Sizes
-</h2>
+<div class="home-popular-title-wrap reveal">
+
+<h1 class="home-opening-title">
+Frameless Flat Rooflights
+<span>Popular Sizes</span>
+</h1>
+
+</div>
 
 </div>
 
